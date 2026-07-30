@@ -32,6 +32,10 @@
 
 * { box-sizing: border-box; }
 
+/* .loading/.fatal/main 처럼 display 를 명시한 요소는 hidden 속성이 UA 규칙으로는 안 먹는다.
+   author 스타일이 UA 스타일을 이기기 때문 — 반드시 여기서 강제한다. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0; padding: 0;
   background: var(--bg);
