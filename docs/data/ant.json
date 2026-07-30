@@ -1,0 +1,164 @@
+{
+ "market": "KOSPI",
+ "yearly": [
+  {
+   "year": "2023",
+   "days": 123,
+   "corrIF": -0.675,
+   "baseline20": -0.35,
+   "indivHeavyR20": -1.35,
+   "excess": -1.0,
+   "grade": "D"
+  },
+  {
+   "year": "2024",
+   "days": 244,
+   "corrIF": -0.751,
+   "baseline20": 0.02,
+   "indivHeavyR20": 0.72,
+   "excess": 0.71,
+   "grade": "C"
+  },
+  {
+   "year": "2025",
+   "days": 242,
+   "corrIF": -0.855,
+   "baseline20": 5.74,
+   "indivHeavyR20": 5.86,
+   "excess": 0.13,
+   "grade": "C"
+  },
+  {
+   "year": "2026",
+   "days": 141,
+   "corrIF": -0.834,
+   "baseline20": 7.63,
+   "indivHeavyR20": -0.46,
+   "excess": -8.09,
+   "grade": "F"
+  }
+ ],
+ "sample": {
+  "days": 750,
+  "from": "2023-06-30",
+  "to": "2026-07-30"
+ },
+ "baseline": {
+  "r1": 0.12,
+  "r5": 0.67,
+  "r20": 3.11
+ },
+ "correlation": {
+  "individual_foreign": -0.832,
+  "individual_institution": -0.576,
+  "foreign_institution": 0.032
+ },
+ "oppositeRate": {
+  "vsForeign": 78.9,
+  "vsInstitution": 74.4
+ },
+ "actors": {
+  "individual": {
+   "timing": {
+    "corr1": -0.077,
+    "corr5": -0.074,
+    "corr20": -0.113
+   },
+   "heavyBuy": {
+    "r1": -0.08,
+    "r5": 0.76,
+    "r20": 3.49,
+    "n": 150
+   },
+   "excess20": 0.38,
+   "grade": "C",
+   "todayValue": -14309.0,
+   "todayPercentile": 6.2
+  },
+  "foreign": {
+   "timing": {
+    "corr1": 0.118,
+    "corr5": 0.094,
+    "corr20": 0.107
+   },
+   "heavyBuy": {
+    "r1": 0.26,
+    "r5": 1.27,
+    "r20": 4.67,
+    "n": 150
+   },
+   "excess20": 1.56,
+   "grade": "B",
+   "todayValue": 13280.0,
+   "todayPercentile": 97.3
+  },
+  "institution": {
+   "timing": {
+    "corr1": -0.047,
+    "corr5": -0.026,
+    "corr20": 0.005
+   },
+   "heavyBuy": {
+    "r1": 0.27,
+    "r5": 1.08,
+    "r20": 4.22,
+    "n": 150
+   },
+   "excess20": 1.11,
+   "grade": "B",
+   "todayValue": 805.0,
+   "todayPercentile": 54.9
+  }
+ },
+ "contrarianRead": {
+  "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
+  "side": "sell",
+  "n": 141,
+  "r20": 5.23,
+  "baseline20": 3.11,
+  "excess": 2.12
+ },
+ "hallOfFame": [
+  {
+   "date": "2026-06-23",
+   "amount": 85910.0,
+   "close": 8203.84,
+   "after20": 6797.7,
+   "return20": -17.14
+  },
+  {
+   "date": "2026-06-26",
+   "amount": 81919.0,
+   "close": 8411.21,
+   "after20": 6755.75,
+   "return20": -19.68
+  },
+  {
+   "date": "2026-05-15",
+   "amount": 72308.0,
+   "close": 7493.18,
+   "after20": 8726.6,
+   "return20": 16.46
+  },
+  {
+   "date": "2026-03-23",
+   "amount": 70029.0,
+   "close": 5405.75,
+   "after20": 6219.09,
+   "return20": 15.05
+  },
+  {
+   "date": "2026-02-05",
+   "amount": 67791.0,
+   "close": 5163.57,
+   "after20": 5609.95,
+   "return20": 8.64
+  }
+ ],
+ "caveats": [
+  "표본은 2023-06-30~2026-07-30 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+  "이 기간 지수의 20거래일 평균 수익률은 +3.11% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+  "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
+  "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
+ ]
+}

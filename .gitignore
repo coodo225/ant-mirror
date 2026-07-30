@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+collector/.fred_key
+_probe*.py
+_krx_direct.py
+_alt.py
+_fomc.py
+.DS_Store

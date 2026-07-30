@@ -1,0 +1,25 @@
+{
+ "generatedAt": "2026-07-30T18:32:21.723674+09:00",
+ "generatedAtText": "2026-07-30 18:32:21 KST",
+ "phase": "장마감",
+ "warnings": [],
+ "sources": [
+  {
+   "name": "네이버 금융",
+   "for": "개인/외국인/기관 수급, 지수, 종목, 업종"
+  },
+  {
+   "name": "FinanceDataReader",
+   "for": "코스피/코스닥 일봉"
+  },
+  {
+   "name": "yfinance",
+   "for": "미국 지수·선물·금리·환율·원자재"
+  },
+  {
+   "name": "Federal Reserve",
+   "for": "FOMC 일정"
+  }
+ ],
+ "caveat": "장중 수급은 잠정치이며 장 마감 후 확정치로 정정됩니다."
+}

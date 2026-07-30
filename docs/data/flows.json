@@ -1,0 +1,4404 @@
+{
+ "unit": "억원",
+ "chartDays": 120,
+ "markets": {
+  "KOSPI": {
+   "daily": [
+    {
+     "date": "2026-02-02",
+     "individual": 45874.0,
+     "foreign": -25168.0,
+     "institution": -22125.0,
+     "inst_fin_inv": -21755.0,
+     "inst_insurance": 522.0,
+     "inst_trust": -709.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": 222.0,
+     "inst_pension": -399.0,
+     "other_corp": 1419.0,
+     "cum": {
+      "individual": 45874.0,
+      "foreign": -25168.0,
+      "institution": -22125.0
+     }
+    },
+    {
+     "date": "2026-02-03",
+     "individual": -29423.0,
+     "foreign": 7038.0,
+     "institution": 21708.0,
+     "inst_fin_inv": 14513.0,
+     "inst_insurance": -139.0,
+     "inst_trust": 5880.0,
+     "inst_bank": 21.0,
+     "inst_other_fin": 474.0,
+     "inst_pension": 958.0,
+     "other_corp": 677.0,
+     "cum": {
+      "individual": 16451.0,
+      "foreign": -18130.0,
+      "institution": -417.0
+     }
+    },
+    {
+     "date": "2026-02-04",
+     "individual": -10119.0,
+     "foreign": -9413.0,
+     "institution": 17836.0,
+     "inst_fin_inv": 14945.0,
+     "inst_insurance": -234.0,
+     "inst_trust": 2572.0,
+     "inst_bank": 177.0,
+     "inst_other_fin": 86.0,
+     "inst_pension": 290.0,
+     "other_corp": 1695.0,
+     "cum": {
+      "individual": 6332.0,
+      "foreign": -27543.0,
+      "institution": 17419.0
+     }
+    },
+    {
+     "date": "2026-02-05",
+     "individual": 67791.0,
+     "foreign": -50108.0,
+     "institution": -20693.0,
+     "inst_fin_inv": -18829.0,
+     "inst_insurance": 332.0,
+     "inst_trust": -1419.0,
+     "inst_bank": 209.0,
+     "inst_other_fin": -2.0,
+     "inst_pension": -985.0,
+     "other_corp": 3010.0,
+     "cum": {
+      "individual": 74123.0,
+      "foreign": -77651.0,
+      "institution": -3274.0
+     }
+    },
+    {
+     "date": "2026-02-06",
+     "individual": 21736.0,
+     "foreign": -33233.0,
+     "institution": 9414.0,
+     "inst_fin_inv": 5782.0,
+     "inst_insurance": 239.0,
+     "inst_trust": 1899.0,
+     "inst_bank": 212.0,
+     "inst_other_fin": -42.0,
+     "inst_pension": 1323.0,
+     "other_corp": 2083.0,
+     "cum": {
+      "individual": 95859.0,
+      "foreign": -110884.0,
+      "institution": 6140.0
+     }
+    },
+    {
+     "date": "2026-02-09",
+     "individual": -32947.0,
+     "foreign": 4320.0,
+     "institution": 27123.0,
+     "inst_fin_inv": 24244.0,
+     "inst_insurance": -428.0,
+     "inst_trust": 4265.0,
+     "inst_bank": -95.0,
+     "inst_other_fin": 0.0,
+     "inst_pension": -863.0,
+     "other_corp": 1504.0,
+     "cum": {
+      "individual": 62912.0,
+      "foreign": -106564.0,
+      "institution": 33263.0
+     }
+    },
+    {
+     "date": "2026-02-10",
+     "individual": -8780.0,
+     "foreign": 1474.0,
+     "institution": 5643.0,
+     "inst_fin_inv": 7442.0,
+     "inst_insurance": -249.0,
+     "inst_trust": -618.0,
+     "inst_bank": -50.0,
+     "inst_other_fin": 95.0,
+     "inst_pension": -977.0,
+     "other_corp": 1663.0,
+     "cum": {
+      "individual": 54132.0,
+      "foreign": -105090.0,
+      "institution": 38906.0
+     }
+    },
+    {
+     "date": "2026-02-11",
+     "individual": -17149.0,
+     "foreign": 8461.0,
+     "institution": 6927.0,
+     "inst_fin_inv": 5223.0,
+     "inst_insurance": -332.0,
+     "inst_trust": 2188.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": 112.0,
+     "inst_pension": -263.0,
+     "other_corp": 1761.0,
+     "cum": {
+      "individual": 36983.0,
+      "foreign": -96629.0,
+      "institution": 45833.0
+     }
+    },
+    {
+     "date": "2026-02-12",
+     "individual": -44547.0,
+     "foreign": 29954.0,
+     "institution": 13800.0,
+     "inst_fin_inv": 10816.0,
+     "inst_insurance": -815.0,
+     "inst_trust": 2718.0,
+     "inst_bank": 201.0,
+     "inst_other_fin": 158.0,
+     "inst_pension": 722.0,
+     "other_corp": 793.0,
+     "cum": {
+      "individual": -7564.0,
+      "foreign": -66675.0,
+      "institution": 59633.0
+     }
+    },
+    {
+     "date": "2026-02-13",
+     "individual": 7141.0,
+     "foreign": -9220.0,
+     "institution": 831.0,
+     "inst_fin_inv": 1810.0,
+     "inst_insurance": -688.0,
+     "inst_trust": -897.0,
+     "inst_bank": -26.0,
+     "inst_other_fin": 69.0,
+     "inst_pension": 563.0,
+     "other_corp": 1248.0,
+     "cum": {
+      "individual": -423.0,
+      "foreign": -75895.0,
+      "institution": 60464.0
+     }
+    },
+    {
+     "date": "2026-02-19",
+     "individual": -8609.0,
+     "foreign": -9396.0,
+     "institution": 16542.0,
+     "inst_fin_inv": 16691.0,
+     "inst_insurance": -1452.0,
+     "inst_trust": 1100.0,
+     "inst_bank": -27.0,
+     "inst_other_fin": 77.0,
+     "inst_pension": 154.0,
+     "other_corp": 1463.0,
+     "cum": {
+      "individual": -9032.0,
+      "foreign": -85291.0,
+      "institution": 77006.0
+     }
+    },
+    {
+     "date": "2026-02-20",
+     "individual": -9872.0,
+     "foreign": -7420.0,
+     "institution": 16149.0,
+     "inst_fin_inv": 19351.0,
+     "inst_insurance": -739.0,
+     "inst_trust": -972.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": -72.0,
+     "inst_pension": -1422.0,
+     "other_corp": 1143.0,
+     "cum": {
+      "individual": -18904.0,
+      "foreign": -92711.0,
+      "institution": 93155.0
+     }
+    },
+    {
+     "date": "2026-02-23",
+     "individual": 10815.0,
+     "foreign": -11132.0,
+     "institution": -1271.0,
+     "inst_fin_inv": 5330.0,
+     "inst_insurance": -1600.0,
+     "inst_trust": -2279.0,
+     "inst_bank": -20.0,
+     "inst_other_fin": -16.0,
+     "inst_pension": -2685.0,
+     "other_corp": 1588.0,
+     "cum": {
+      "individual": -8089.0,
+      "foreign": -103843.0,
+      "institution": 91884.0
+     }
+    },
+    {
+     "date": "2026-02-24",
+     "individual": -22861.0,
+     "foreign": -2013.0,
+     "institution": 23773.0,
+     "inst_fin_inv": 26669.0,
+     "inst_insurance": -466.0,
+     "inst_trust": -1683.0,
+     "inst_bank": 15.0,
+     "inst_other_fin": -44.0,
+     "inst_pension": -718.0,
+     "other_corp": 1102.0,
+     "cum": {
+      "individual": -30950.0,
+      "foreign": -105856.0,
+      "institution": 115657.0
+     }
+    },
+    {
+     "date": "2026-02-25",
+     "individual": 2307.0,
+     "foreign": -13082.0,
+     "institution": 14701.0,
+     "inst_fin_inv": 19937.0,
+     "inst_insurance": -1314.0,
+     "inst_trust": -4730.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": 65.0,
+     "inst_pension": 750.0,
+     "other_corp": -3926.0,
+     "cum": {
+      "individual": -28643.0,
+      "foreign": -118938.0,
+      "institution": 130358.0
+     }
+    },
+    {
+     "date": "2026-02-26",
+     "individual": 6498.0,
+     "foreign": -21135.0,
+     "institution": 12569.0,
+     "inst_fin_inv": 16371.0,
+     "inst_insurance": -2084.0,
+     "inst_trust": -756.0,
+     "inst_bank": -100.0,
+     "inst_other_fin": 119.0,
+     "inst_pension": -981.0,
+     "other_corp": 2068.0,
+     "cum": {
+      "individual": -22145.0,
+      "foreign": -140073.0,
+      "institution": 142927.0
+     }
+    },
+    {
+     "date": "2026-02-27",
+     "individual": 62496.0,
+     "foreign": -70528.0,
+     "institution": 5666.0,
+     "inst_fin_inv": 11043.0,
+     "inst_insurance": -654.0,
+     "inst_trust": -2544.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": 109.0,
+     "inst_pension": -2283.0,
+     "other_corp": 2366.0,
+     "cum": {
+      "individual": 40351.0,
+      "foreign": -210601.0,
+      "institution": 148593.0
+     }
+    },
+    {
+     "date": "2026-03-03",
+     "individual": 57974.0,
+     "foreign": -51487.0,
+     "institution": -8859.0,
+     "inst_fin_inv": -7283.0,
+     "inst_insurance": 425.0,
+     "inst_trust": -1904.0,
+     "inst_bank": -305.0,
+     "inst_other_fin": -204.0,
+     "inst_pension": 412.0,
+     "other_corp": 2372.0,
+     "cum": {
+      "individual": 98325.0,
+      "foreign": -262088.0,
+      "institution": 139734.0
+     }
+    },
+    {
+     "date": "2026-03-04",
+     "individual": 796.0,
+     "foreign": 2303.0,
+     "institution": -5978.0,
+     "inst_fin_inv": -5830.0,
+     "inst_insurance": 600.0,
+     "inst_trust": 209.0,
+     "inst_bank": -223.0,
+     "inst_other_fin": -7.0,
+     "inst_pension": -727.0,
+     "other_corp": 2880.0,
+     "cum": {
+      "individual": 99121.0,
+      "foreign": -259785.0,
+      "institution": 133756.0
+     }
+    },
+    {
+     "date": "2026-03-05",
+     "individual": 18228.0,
+     "foreign": -1446.0,
+     "institution": -17186.0,
+     "inst_fin_inv": -12234.0,
+     "inst_insurance": -652.0,
+     "inst_trust": -2520.0,
+     "inst_bank": -720.0,
+     "inst_other_fin": -189.0,
+     "inst_pension": -872.0,
+     "other_corp": 403.0,
+     "cum": {
+      "individual": 117349.0,
+      "foreign": -261231.0,
+      "institution": 116570.0
+     }
+    },
+    {
+     "date": "2026-03-06",
+     "individual": 29488.0,
+     "foreign": -19418.0,
+     "institution": -11142.0,
+     "inst_fin_inv": -5975.0,
+     "inst_insurance": -273.0,
+     "inst_trust": -3625.0,
+     "inst_bank": 47.0,
+     "inst_other_fin": 432.0,
+     "inst_pension": -1748.0,
+     "other_corp": 1072.0,
+     "cum": {
+      "individual": 146837.0,
+      "foreign": -280649.0,
+      "institution": 105428.0
+     }
+    },
+    {
+     "date": "2026-03-09",
+     "individual": 46242.0,
+     "foreign": -31735.0,
+     "institution": -15441.0,
+     "inst_fin_inv": -11713.0,
+     "inst_insurance": 111.0,
+     "inst_trust": -2954.0,
+     "inst_bank": -174.0,
+     "inst_other_fin": 310.0,
+     "inst_pension": -1020.0,
+     "other_corp": 934.0,
+     "cum": {
+      "individual": 193079.0,
+      "foreign": -312384.0,
+      "institution": 89987.0
+     }
+    },
+    {
+     "date": "2026-03-10",
+     "individual": -18340.0,
+     "foreign": 10283.0,
+     "institution": 9164.0,
+     "inst_fin_inv": 7448.0,
+     "inst_insurance": -447.0,
+     "inst_trust": 1956.0,
+     "inst_bank": 26.0,
+     "inst_other_fin": 275.0,
+     "inst_pension": -93.0,
+     "other_corp": -1107.0,
+     "cum": {
+      "individual": 174739.0,
+      "foreign": -302101.0,
+      "institution": 99151.0
+     }
+    },
+    {
+     "date": "2026-03-11",
+     "individual": -5086.0,
+     "foreign": -2563.0,
+     "institution": 7821.0,
+     "inst_fin_inv": 7254.0,
+     "inst_insurance": -269.0,
+     "inst_trust": 1425.0,
+     "inst_bank": 94.0,
+     "inst_other_fin": 211.0,
+     "inst_pension": -893.0,
+     "other_corp": -173.0,
+     "cum": {
+      "individual": 169653.0,
+      "foreign": -304664.0,
+      "institution": 106972.0
+     }
+    },
+    {
+     "date": "2026-03-12",
+     "individual": 22291.0,
+     "foreign": -23831.0,
+     "institution": 775.0,
+     "inst_fin_inv": -746.0,
+     "inst_insurance": 125.0,
+     "inst_trust": 1812.0,
+     "inst_bank": 12.0,
+     "inst_other_fin": -53.0,
+     "inst_pension": -374.0,
+     "other_corp": 764.0,
+     "cum": {
+      "individual": 191944.0,
+      "foreign": -328495.0,
+      "institution": 107747.0
+     }
+    },
+    {
+     "date": "2026-03-13",
+     "individual": 24512.0,
+     "foreign": -14502.0,
+     "institution": -10434.0,
+     "inst_fin_inv": -9500.0,
+     "inst_insurance": 13.0,
+     "inst_trust": -1482.0,
+     "inst_bank": 32.0,
+     "inst_other_fin": 218.0,
+     "inst_pension": 285.0,
+     "other_corp": 424.0,
+     "cum": {
+      "individual": 216456.0,
+      "foreign": -342997.0,
+      "institution": 97313.0
+     }
+    },
+    {
+     "date": "2026-03-16",
+     "individual": 7164.0,
+     "foreign": -8485.0,
+     "institution": 911.0,
+     "inst_fin_inv": -1040.0,
+     "inst_insurance": 135.0,
+     "inst_trust": 1164.0,
+     "inst_bank": -13.0,
+     "inst_other_fin": 253.0,
+     "inst_pension": 412.0,
+     "other_corp": 411.0,
+     "cum": {
+      "individual": 223620.0,
+      "foreign": -351482.0,
+      "institution": 98224.0
+     }
+    },
+    {
+     "date": "2026-03-17",
+     "individual": -5752.0,
+     "foreign": -1740.0,
+     "institution": 7341.0,
+     "inst_fin_inv": 4274.0,
+     "inst_insurance": -472.0,
+     "inst_trust": 2543.0,
+     "inst_bank": -14.0,
+     "inst_other_fin": 167.0,
+     "inst_pension": 843.0,
+     "other_corp": 152.0,
+     "cum": {
+      "individual": 217868.0,
+      "foreign": -353222.0,
+      "institution": 105565.0
+     }
+    },
+    {
+     "date": "2026-03-18",
+     "individual": -38717.0,
+     "foreign": 8802.0,
+     "institution": 31093.0,
+     "inst_fin_inv": 30984.0,
+     "inst_insurance": -452.0,
+     "inst_trust": -612.0,
+     "inst_bank": 67.0,
+     "inst_other_fin": 146.0,
+     "inst_pension": 960.0,
+     "other_corp": -1178.0,
+     "cum": {
+      "individual": 179151.0,
+      "foreign": -344420.0,
+      "institution": 136658.0
+     }
+    },
+    {
+     "date": "2026-03-19",
+     "individual": 24116.0,
+     "foreign": -18760.0,
+     "institution": -6649.0,
+     "inst_fin_inv": -6655.0,
+     "inst_insurance": 30.0,
+     "inst_trust": 417.0,
+     "inst_bank": 38.0,
+     "inst_other_fin": 170.0,
+     "inst_pension": -649.0,
+     "other_corp": 1294.0,
+     "cum": {
+      "individual": 203267.0,
+      "foreign": -363180.0,
+      "institution": 130009.0
+     }
+    },
+    {
+     "date": "2026-03-20",
+     "individual": 22338.0,
+     "foreign": -12402.0,
+     "institution": -10260.0,
+     "inst_fin_inv": 4566.0,
+     "inst_insurance": -14326.0,
+     "inst_trust": -1182.0,
+     "inst_bank": -8.0,
+     "inst_other_fin": 84.0,
+     "inst_pension": 606.0,
+     "other_corp": 323.0,
+     "cum": {
+      "individual": 225605.0,
+      "foreign": -375582.0,
+      "institution": 119749.0
+     }
+    },
+    {
+     "date": "2026-03-23",
+     "individual": 70029.0,
+     "foreign": -36751.0,
+     "institution": -38173.0,
+     "inst_fin_inv": -30239.0,
+     "inst_insurance": 159.0,
+     "inst_trust": -6649.0,
+     "inst_bank": 64.0,
+     "inst_other_fin": 108.0,
+     "inst_pension": -1617.0,
+     "other_corp": 4895.0,
+     "cum": {
+      "individual": 295634.0,
+      "foreign": -412333.0,
+      "institution": 81576.0
+     }
+    },
+    {
+     "date": "2026-03-24",
+     "individual": 7270.0,
+     "foreign": -19863.0,
+     "institution": 9683.0,
+     "inst_fin_inv": 10178.0,
+     "inst_insurance": -320.0,
+     "inst_trust": -734.0,
+     "inst_bank": -12.0,
+     "inst_other_fin": 136.0,
+     "inst_pension": 435.0,
+     "other_corp": 2910.0,
+     "cum": {
+      "individual": 302904.0,
+      "foreign": -432196.0,
+      "institution": 91259.0
+     }
+    },
+    {
+     "date": "2026-03-25",
+     "individual": -13402.0,
+     "foreign": -12895.0,
+     "institution": 23230.0,
+     "inst_fin_inv": 23351.0,
+     "inst_insurance": -312.0,
+     "inst_trust": -92.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": 133.0,
+     "inst_pension": 147.0,
+     "other_corp": 3067.0,
+     "cum": {
+      "individual": 289502.0,
+      "foreign": -445091.0,
+      "institution": 114489.0
+     }
+    },
+    {
+     "date": "2026-03-26",
+     "individual": 30598.0,
+     "foreign": -29370.0,
+     "institution": -2999.0,
+     "inst_fin_inv": 3185.0,
+     "inst_insurance": 76.0,
+     "inst_trust": -3811.0,
+     "inst_bank": -122.0,
+     "inst_other_fin": 96.0,
+     "inst_pension": -2423.0,
+     "other_corp": 1771.0,
+     "cum": {
+      "individual": 320100.0,
+      "foreign": -474461.0,
+      "institution": 111490.0
+     }
+    },
+    {
+     "date": "2026-03-27",
+     "individual": 22596.0,
+     "foreign": -34286.0,
+     "institution": 7785.0,
+     "inst_fin_inv": 4181.0,
+     "inst_insurance": 436.0,
+     "inst_trust": 3236.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": 170.0,
+     "inst_pension": -228.0,
+     "other_corp": 3905.0,
+     "cum": {
+      "individual": 342696.0,
+      "foreign": -508747.0,
+      "institution": 119275.0
+     }
+    },
+    {
+     "date": "2026-03-30",
+     "individual": 8945.0,
+     "foreign": -20945.0,
+     "institution": 8450.0,
+     "inst_fin_inv": 7440.0,
+     "inst_insurance": 93.0,
+     "inst_trust": 1674.0,
+     "inst_bank": -80.0,
+     "inst_other_fin": 133.0,
+     "inst_pension": -812.0,
+     "other_corp": 3550.0,
+     "cum": {
+      "individual": 351641.0,
+      "foreign": -529692.0,
+      "institution": 127725.0
+     }
+    },
+    {
+     "date": "2026-03-31",
+     "individual": 24400.0,
+     "foreign": -38386.0,
+     "institution": 10251.0,
+     "inst_fin_inv": 9477.0,
+     "inst_insurance": 453.0,
+     "inst_trust": 528.0,
+     "inst_bank": -40.0,
+     "inst_other_fin": 123.0,
+     "inst_pension": -291.0,
+     "other_corp": 3735.0,
+     "cum": {
+      "individual": 376041.0,
+      "foreign": -568078.0,
+      "institution": 137976.0
+     }
+    },
+    {
+     "date": "2026-04-01",
+     "individual": -37628.0,
+     "foreign": -6411.0,
+     "institution": 40419.0,
+     "inst_fin_inv": 34308.0,
+     "inst_insurance": -136.0,
+     "inst_trust": 6145.0,
+     "inst_bank": 12.0,
+     "inst_other_fin": 281.0,
+     "inst_pension": -192.0,
+     "other_corp": 3620.0,
+     "cum": {
+      "individual": 338413.0,
+      "foreign": -574489.0,
+      "institution": 178395.0
+     }
+    },
+    {
+     "date": "2026-04-02",
+     "individual": 12097.0,
+     "foreign": -1368.0,
+     "institution": -14517.0,
+     "inst_fin_inv": -16900.0,
+     "inst_insurance": 279.0,
+     "inst_trust": 1630.0,
+     "inst_bank": 75.0,
+     "inst_other_fin": 310.0,
+     "inst_pension": 91.0,
+     "other_corp": 3788.0,
+     "cum": {
+      "individual": 350510.0,
+      "foreign": -575857.0,
+      "institution": 163878.0
+     }
+    },
+    {
+     "date": "2026-04-03",
+     "individual": -20952.0,
+     "foreign": 8035.0,
+     "institution": 7390.0,
+     "inst_fin_inv": 2839.0,
+     "inst_insurance": 92.0,
+     "inst_trust": 4960.0,
+     "inst_bank": 28.0,
+     "inst_other_fin": 28.0,
+     "inst_pension": -557.0,
+     "other_corp": 5527.0,
+     "cum": {
+      "individual": 329558.0,
+      "foreign": -567822.0,
+      "institution": 171268.0
+     }
+    },
+    {
+     "date": "2026-04-06",
+     "individual": -10502.0,
+     "foreign": -1596.0,
+     "institution": 8371.0,
+     "inst_fin_inv": 7597.0,
+     "inst_insurance": 99.0,
+     "inst_trust": 1373.0,
+     "inst_bank": -135.0,
+     "inst_other_fin": 288.0,
+     "inst_pension": -850.0,
+     "other_corp": 3726.0,
+     "cum": {
+      "individual": 319056.0,
+      "foreign": -569418.0,
+      "institution": 179639.0
+     }
+    },
+    {
+     "date": "2026-04-07",
+     "individual": -3429.0,
+     "foreign": 3704.0,
+     "institution": -4001.0,
+     "inst_fin_inv": -3918.0,
+     "inst_insurance": 127.0,
+     "inst_trust": 310.0,
+     "inst_bank": 33.0,
+     "inst_other_fin": 265.0,
+     "inst_pension": -818.0,
+     "other_corp": 3726.0,
+     "cum": {
+      "individual": 315627.0,
+      "foreign": -565714.0,
+      "institution": 175638.0
+     }
+    },
+    {
+     "date": "2026-04-08",
+     "individual": -54161.0,
+     "foreign": 19089.0,
+     "institution": 27268.0,
+     "inst_fin_inv": 29960.0,
+     "inst_insurance": -648.0,
+     "inst_trust": -148.0,
+     "inst_bank": 60.0,
+     "inst_other_fin": 126.0,
+     "inst_pension": -2083.0,
+     "other_corp": 7805.0,
+     "cum": {
+      "individual": 261466.0,
+      "foreign": -546625.0,
+      "institution": 202906.0
+     }
+    },
+    {
+     "date": "2026-04-09",
+     "individual": 2950.0,
+     "foreign": 18476.0,
+     "institution": -25125.0,
+     "inst_fin_inv": 5040.0,
+     "inst_insurance": 334.0,
+     "inst_trust": 368.0,
+     "inst_bank": -31117.0,
+     "inst_other_fin": 201.0,
+     "inst_pension": 49.0,
+     "other_corp": 3698.0,
+     "cum": {
+      "individual": 264416.0,
+      "foreign": -528149.0,
+      "institution": 177781.0
+     }
+    },
+    {
+     "date": "2026-04-10",
+     "individual": -12280.0,
+     "foreign": 10641.0,
+     "institution": -2031.0,
+     "inst_fin_inv": 868.0,
+     "inst_insurance": -215.0,
+     "inst_trust": -2196.0,
+     "inst_bank": -218.0,
+     "inst_other_fin": 145.0,
+     "inst_pension": -416.0,
+     "other_corp": 3670.0,
+     "cum": {
+      "individual": 252136.0,
+      "foreign": -517508.0,
+      "institution": 175750.0
+     }
+    },
+    {
+     "date": "2026-04-13",
+     "individual": 7173.0,
+     "foreign": -4579.0,
+     "institution": -6698.0,
+     "inst_fin_inv": -4814.0,
+     "inst_insurance": -295.0,
+     "inst_trust": -194.0,
+     "inst_bank": 208.0,
+     "inst_other_fin": 130.0,
+     "inst_pension": -1733.0,
+     "other_corp": 4104.0,
+     "cum": {
+      "individual": 259309.0,
+      "foreign": -522087.0,
+      "institution": 169052.0
+     }
+    },
+    {
+     "date": "2026-04-14",
+     "individual": -23919.0,
+     "foreign": 8276.0,
+     "institution": 12545.0,
+     "inst_fin_inv": 13513.0,
+     "inst_insurance": -652.0,
+     "inst_trust": 103.0,
+     "inst_bank": -129.0,
+     "inst_other_fin": -35.0,
+     "inst_pension": -256.0,
+     "other_corp": 3098.0,
+     "cum": {
+      "individual": 235390.0,
+      "foreign": -513811.0,
+      "institution": 181597.0
+     }
+    },
+    {
+     "date": "2026-04-15",
+     "individual": -9400.0,
+     "foreign": 4973.0,
+     "institution": 368.0,
+     "inst_fin_inv": 8214.0,
+     "inst_insurance": -1459.0,
+     "inst_trust": -5294.0,
+     "inst_bank": 9.0,
+     "inst_other_fin": 14.0,
+     "inst_pension": -1116.0,
+     "other_corp": 4059.0,
+     "cum": {
+      "individual": 225990.0,
+      "foreign": -508838.0,
+      "institution": 181965.0
+     }
+    },
+    {
+     "date": "2026-04-16",
+     "individual": -18050.0,
+     "foreign": 4814.0,
+     "institution": 10783.0,
+     "inst_fin_inv": 12460.0,
+     "inst_insurance": -447.0,
+     "inst_trust": -772.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -153.0,
+     "inst_pension": -299.0,
+     "other_corp": 2453.0,
+     "cum": {
+      "individual": 207940.0,
+      "foreign": -504024.0,
+      "institution": 192748.0
+     }
+    },
+    {
+     "date": "2026-04-17",
+     "individual": 14464.0,
+     "foreign": -19974.0,
+     "institution": 1501.0,
+     "inst_fin_inv": 4343.0,
+     "inst_insurance": -622.0,
+     "inst_trust": -1253.0,
+     "inst_bank": -85.0,
+     "inst_other_fin": -125.0,
+     "inst_pension": -757.0,
+     "other_corp": 4009.0,
+     "cum": {
+      "individual": 222404.0,
+      "foreign": -523998.0,
+      "institution": 194249.0
+     }
+    },
+    {
+     "date": "2026-04-20",
+     "individual": -3158.0,
+     "foreign": -2338.0,
+     "institution": 2938.0,
+     "inst_fin_inv": 5183.0,
+     "inst_insurance": -610.0,
+     "inst_trust": -1676.0,
+     "inst_bank": 33.0,
+     "inst_other_fin": -72.0,
+     "inst_pension": 80.0,
+     "other_corp": 2558.0,
+     "cum": {
+      "individual": 219246.0,
+      "foreign": -526336.0,
+      "institution": 197187.0
+     }
+    },
+    {
+     "date": "2026-04-21",
+     "individual": -19204.0,
+     "foreign": 11565.0,
+     "institution": 9181.0,
+     "inst_fin_inv": 9753.0,
+     "inst_insurance": -1056.0,
+     "inst_trust": 117.0,
+     "inst_bank": -206.0,
+     "inst_other_fin": -50.0,
+     "inst_pension": 622.0,
+     "other_corp": -1541.0,
+     "cum": {
+      "individual": 200042.0,
+      "foreign": -514771.0,
+      "institution": 206368.0
+     }
+    },
+    {
+     "date": "2026-04-22",
+     "individual": 11984.0,
+     "foreign": -6762.0,
+     "institution": -4046.0,
+     "inst_fin_inv": -4102.0,
+     "inst_insurance": -270.0,
+     "inst_trust": -720.0,
+     "inst_bank": 55.0,
+     "inst_other_fin": -5.0,
+     "inst_pension": 995.0,
+     "other_corp": -1176.0,
+     "cum": {
+      "individual": 212026.0,
+      "foreign": -521533.0,
+      "institution": 202322.0
+     }
+    },
+    {
+     "date": "2026-04-23",
+     "individual": 4514.0,
+     "foreign": -820.0,
+     "institution": -2965.0,
+     "inst_fin_inv": 177.0,
+     "inst_insurance": -1027.0,
+     "inst_trust": -2299.0,
+     "inst_bank": -14.0,
+     "inst_other_fin": 1.0,
+     "inst_pension": 197.0,
+     "other_corp": -728.0,
+     "cum": {
+      "individual": 216540.0,
+      "foreign": -522353.0,
+      "institution": 199357.0
+     }
+    },
+    {
+     "date": "2026-04-24",
+     "individual": 11832.0,
+     "foreign": -19496.0,
+     "institution": 8053.0,
+     "inst_fin_inv": 10383.0,
+     "inst_insurance": -409.0,
+     "inst_trust": -1332.0,
+     "inst_bank": -390.0,
+     "inst_other_fin": 3.0,
+     "inst_pension": -202.0,
+     "other_corp": -389.0,
+     "cum": {
+      "individual": 228372.0,
+      "foreign": -541849.0,
+      "institution": 207410.0
+     }
+    },
+    {
+     "date": "2026-04-27",
+     "individual": -19758.0,
+     "foreign": 8563.0,
+     "institution": 11349.0,
+     "inst_fin_inv": 15492.0,
+     "inst_insurance": -915.0,
+     "inst_trust": -1395.0,
+     "inst_bank": -145.0,
+     "inst_other_fin": 82.0,
+     "inst_pension": -1771.0,
+     "other_corp": -155.0,
+     "cum": {
+      "individual": 208614.0,
+      "foreign": -533286.0,
+      "institution": 218759.0
+     }
+    },
+    {
+     "date": "2026-04-28",
+     "individual": -1306.0,
+     "foreign": -1843.0,
+     "institution": 3532.0,
+     "inst_fin_inv": 6839.0,
+     "inst_insurance": -1227.0,
+     "inst_trust": -1564.0,
+     "inst_bank": -267.0,
+     "inst_other_fin": 29.0,
+     "inst_pension": -277.0,
+     "other_corp": -383.0,
+     "cum": {
+      "individual": 207308.0,
+      "foreign": -535129.0,
+      "institution": 222291.0
+     }
+    },
+    {
+     "date": "2026-04-29",
+     "individual": 1681.0,
+     "foreign": -6071.0,
+     "institution": 4771.0,
+     "inst_fin_inv": 1646.0,
+     "inst_insurance": 129.0,
+     "inst_trust": 3058.0,
+     "inst_bank": -26.0,
+     "inst_other_fin": -15.0,
+     "inst_pension": -21.0,
+     "other_corp": -381.0,
+     "cum": {
+      "individual": 208989.0,
+      "foreign": -541200.0,
+      "institution": 227062.0
+     }
+    },
+    {
+     "date": "2026-04-30",
+     "individual": 11824.0,
+     "foreign": -14559.0,
+     "institution": 2838.0,
+     "inst_fin_inv": 5089.0,
+     "inst_insurance": -473.0,
+     "inst_trust": -2219.0,
+     "inst_bank": -32.0,
+     "inst_other_fin": 123.0,
+     "inst_pension": 350.0,
+     "other_corp": -103.0,
+     "cum": {
+      "individual": 220813.0,
+      "foreign": -555759.0,
+      "institution": 229900.0
+     }
+    },
+    {
+     "date": "2026-05-04",
+     "individual": -47936.0,
+     "foreign": 29308.0,
+     "institution": 20098.0,
+     "inst_fin_inv": 19159.0,
+     "inst_insurance": -1221.0,
+     "inst_trust": 2657.0,
+     "inst_bank": -79.0,
+     "inst_other_fin": 89.0,
+     "inst_pension": -507.0,
+     "other_corp": -1470.0,
+     "cum": {
+      "individual": 172877.0,
+      "foreign": -526451.0,
+      "institution": 249998.0
+     }
+    },
+    {
+     "date": "2026-05-06",
+     "individual": -5715.0,
+     "foreign": 31085.0,
+     "institution": -22894.0,
+     "inst_fin_inv": -8284.0,
+     "inst_insurance": -5084.0,
+     "inst_trust": -7843.0,
+     "inst_bank": -118.0,
+     "inst_other_fin": 24.0,
+     "inst_pension": -1590.0,
+     "other_corp": -2476.0,
+     "cum": {
+      "individual": 167162.0,
+      "foreign": -495366.0,
+      "institution": 227104.0
+     }
+    },
+    {
+     "date": "2026-05-07",
+     "individual": 59925.0,
+     "foreign": -66987.0,
+     "institution": 8917.0,
+     "inst_fin_inv": 17617.0,
+     "inst_insurance": -806.0,
+     "inst_trust": -8154.0,
+     "inst_bank": -246.0,
+     "inst_other_fin": 11.0,
+     "inst_pension": 494.0,
+     "other_corp": -1855.0,
+     "cum": {
+      "individual": 227087.0,
+      "foreign": -562353.0,
+      "institution": 236021.0
+     }
+    },
+    {
+     "date": "2026-05-08",
+     "individual": 39707.0,
+     "foreign": -52967.0,
+     "institution": 12542.0,
+     "inst_fin_inv": 15166.0,
+     "inst_insurance": -826.0,
+     "inst_trust": -1357.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": 67.0,
+     "inst_pension": -502.0,
+     "other_corp": 718.0,
+     "cum": {
+      "individual": 266794.0,
+      "foreign": -615320.0,
+      "institution": 248563.0
+     }
+    },
+    {
+     "date": "2026-05-11",
+     "individual": 28669.0,
+     "foreign": -28147.0,
+     "institution": -458.0,
+     "inst_fin_inv": 10028.0,
+     "inst_insurance": -3964.0,
+     "inst_trust": -4006.0,
+     "inst_bank": 20.0,
+     "inst_other_fin": 412.0,
+     "inst_pension": -2948.0,
+     "other_corp": -63.0,
+     "cum": {
+      "individual": 295463.0,
+      "foreign": -643467.0,
+      "institution": 248105.0
+     }
+    },
+    {
+     "date": "2026-05-12",
+     "individual": 66818.0,
+     "foreign": -56090.0,
+     "institution": -12138.0,
+     "inst_fin_inv": -6205.0,
+     "inst_insurance": -1420.0,
+     "inst_trust": -2476.0,
+     "inst_bank": -110.0,
+     "inst_other_fin": -70.0,
+     "inst_pension": -1857.0,
+     "other_corp": 1409.0,
+     "cum": {
+      "individual": 362281.0,
+      "foreign": -699557.0,
+      "institution": 235967.0
+     }
+    },
+    {
+     "date": "2026-05-13",
+     "individual": 18868.0,
+     "foreign": -37227.0,
+     "institution": 16876.0,
+     "inst_fin_inv": 18852.0,
+     "inst_insurance": -630.0,
+     "inst_trust": 1250.0,
+     "inst_bank": 67.0,
+     "inst_other_fin": -300.0,
+     "inst_pension": -2363.0,
+     "other_corp": 1482.0,
+     "cum": {
+      "individual": 381149.0,
+      "foreign": -736784.0,
+      "institution": 252843.0
+     }
+    },
+    {
+     "date": "2026-05-14",
+     "individual": 18499.0,
+     "foreign": -21450.0,
+     "institution": 1927.0,
+     "inst_fin_inv": 12618.0,
+     "inst_insurance": -1750.0,
+     "inst_trust": -6788.0,
+     "inst_bank": -121.0,
+     "inst_other_fin": -98.0,
+     "inst_pension": -1933.0,
+     "other_corp": 1024.0,
+     "cum": {
+      "individual": 399648.0,
+      "foreign": -758234.0,
+      "institution": 254770.0
+     }
+    },
+    {
+     "date": "2026-05-15",
+     "individual": 72308.0,
+     "foreign": -56040.0,
+     "institution": -17347.0,
+     "inst_fin_inv": -9325.0,
+     "inst_insurance": -278.0,
+     "inst_trust": -6808.0,
+     "inst_bank": -26.0,
+     "inst_other_fin": 39.0,
+     "inst_pension": -949.0,
+     "other_corp": 1079.0,
+     "cum": {
+      "individual": 471956.0,
+      "foreign": -814274.0,
+      "institution": 237423.0
+     }
+    },
+    {
+     "date": "2026-05-18",
+     "individual": 22094.0,
+     "foreign": -36492.0,
+     "institution": 13904.0,
+     "inst_fin_inv": 14000.0,
+     "inst_insurance": -121.0,
+     "inst_trust": 158.0,
+     "inst_bank": -251.0,
+     "inst_other_fin": 102.0,
+     "inst_pension": 16.0,
+     "other_corp": 494.0,
+     "cum": {
+      "individual": 494050.0,
+      "foreign": -850766.0,
+      "institution": 251327.0
+     }
+    },
+    {
+     "date": "2026-05-19",
+     "individual": 56289.0,
+     "foreign": -57242.0,
+     "institution": 1575.0,
+     "inst_fin_inv": 3215.0,
+     "inst_insurance": -7.0,
+     "inst_trust": -376.0,
+     "inst_bank": -43.0,
+     "inst_other_fin": 172.0,
+     "inst_pension": -1386.0,
+     "other_corp": -622.0,
+     "cum": {
+      "individual": 550339.0,
+      "foreign": -908008.0,
+      "institution": 252902.0
+     }
+    },
+    {
+     "date": "2026-05-20",
+     "individual": 17104.0,
+     "foreign": -29310.0,
+     "institution": 11070.0,
+     "inst_fin_inv": 9774.0,
+     "inst_insurance": 68.0,
+     "inst_trust": 2553.0,
+     "inst_bank": 40.0,
+     "inst_other_fin": 150.0,
+     "inst_pension": -1515.0,
+     "other_corp": 1135.0,
+     "cum": {
+      "individual": 567443.0,
+      "foreign": -937318.0,
+      "institution": 263972.0
+     }
+    },
+    {
+     "date": "2026-05-21",
+     "individual": -26754.0,
+     "foreign": -2212.0,
+     "institution": 29008.0,
+     "inst_fin_inv": 26231.0,
+     "inst_insurance": -600.0,
+     "inst_trust": 4452.0,
+     "inst_bank": 49.0,
+     "inst_other_fin": -165.0,
+     "inst_pension": -959.0,
+     "other_corp": -43.0,
+     "cum": {
+      "individual": 540689.0,
+      "foreign": -939530.0,
+      "institution": 292980.0
+     }
+    },
+    {
+     "date": "2026-05-22",
+     "individual": 10655.0,
+     "foreign": -19221.0,
+     "institution": 7583.0,
+     "inst_fin_inv": 7815.0,
+     "inst_insurance": -635.0,
+     "inst_trust": 1435.0,
+     "inst_bank": 6.0,
+     "inst_other_fin": 123.0,
+     "inst_pension": -1161.0,
+     "other_corp": 984.0,
+     "cum": {
+      "individual": 551344.0,
+      "foreign": -958751.0,
+      "institution": 300563.0
+     }
+    },
+    {
+     "date": "2026-05-26",
+     "individual": -5745.0,
+     "foreign": -1321.0,
+     "institution": 8168.0,
+     "inst_fin_inv": 1708.0,
+     "inst_insurance": -1958.0,
+     "inst_trust": 9984.0,
+     "inst_bank": -308.0,
+     "inst_other_fin": -97.0,
+     "inst_pension": -1162.0,
+     "other_corp": -1102.0,
+     "cum": {
+      "individual": 545599.0,
+      "foreign": -960072.0,
+      "institution": 308731.0
+     }
+    },
+    {
+     "date": "2026-05-27",
+     "individual": 4064.0,
+     "foreign": -2493.0,
+     "institution": -126.0,
+     "inst_fin_inv": 11199.0,
+     "inst_insurance": -3055.0,
+     "inst_trust": -3987.0,
+     "inst_bank": -204.0,
+     "inst_other_fin": -149.0,
+     "inst_pension": -3930.0,
+     "other_corp": -1446.0,
+     "cum": {
+      "individual": 549663.0,
+      "foreign": -962565.0,
+      "institution": 308605.0
+     }
+    },
+    {
+     "date": "2026-05-28",
+     "individual": 36146.0,
+     "foreign": -27414.0,
+     "institution": -10422.0,
+     "inst_fin_inv": -3532.0,
+     "inst_insurance": -212.0,
+     "inst_trust": -6343.0,
+     "inst_bank": -79.0,
+     "inst_other_fin": 19.0,
+     "inst_pension": -275.0,
+     "other_corp": 1690.0,
+     "cum": {
+      "individual": 585809.0,
+      "foreign": -989979.0,
+      "institution": 298183.0
+     }
+    },
+    {
+     "date": "2026-05-29",
+     "individual": -14054.0,
+     "foreign": -10421.0,
+     "institution": 23688.0,
+     "inst_fin_inv": 19139.0,
+     "inst_insurance": -409.0,
+     "inst_trust": 4102.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -46.0,
+     "inst_pension": 909.0,
+     "other_corp": 787.0,
+     "cum": {
+      "individual": 571755.0,
+      "foreign": -1000400.0,
+      "institution": 321871.0
+     }
+    },
+    {
+     "date": "2026-06-01",
+     "individual": 3862.0,
+     "foreign": -28219.0,
+     "institution": 24427.0,
+     "inst_fin_inv": 26892.0,
+     "inst_insurance": -2597.0,
+     "inst_trust": 612.0,
+     "inst_bank": -113.0,
+     "inst_other_fin": -61.0,
+     "inst_pension": -305.0,
+     "other_corp": -70.0,
+     "cum": {
+      "individual": 575617.0,
+      "foreign": -1028619.0,
+      "institution": 346298.0
+     }
+    },
+    {
+     "date": "2026-06-02",
+     "individual": 63537.0,
+     "foreign": -63035.0,
+     "institution": -546.0,
+     "inst_fin_inv": 3408.0,
+     "inst_insurance": -696.0,
+     "inst_trust": -3986.0,
+     "inst_bank": -21.0,
+     "inst_other_fin": 42.0,
+     "inst_pension": 707.0,
+     "other_corp": 44.0,
+     "cum": {
+      "individual": 639154.0,
+      "foreign": -1091654.0,
+      "institution": 345752.0
+     }
+    },
+    {
+     "date": "2026-06-04",
+     "individual": 50135.0,
+     "foreign": -66663.0,
+     "institution": 15255.0,
+     "inst_fin_inv": 14443.0,
+     "inst_insurance": -451.0,
+     "inst_trust": 1645.0,
+     "inst_bank": -26.0,
+     "inst_other_fin": 136.0,
+     "inst_pension": -492.0,
+     "other_corp": 1273.0,
+     "cum": {
+      "individual": 689289.0,
+      "foreign": -1158317.0,
+      "institution": 361007.0
+     }
+    },
+    {
+     "date": "2026-06-05",
+     "individual": 42240.0,
+     "foreign": -27638.0,
+     "institution": -13809.0,
+     "inst_fin_inv": -9410.0,
+     "inst_insurance": -64.0,
+     "inst_trust": -3689.0,
+     "inst_bank": -124.0,
+     "inst_other_fin": 86.0,
+     "inst_pension": -607.0,
+     "other_corp": -793.0,
+     "cum": {
+      "individual": 731529.0,
+      "foreign": -1185955.0,
+      "institution": 347198.0
+     }
+    },
+    {
+     "date": "2026-06-08",
+     "individual": 17628.0,
+     "foreign": -2644.0,
+     "institution": -17164.0,
+     "inst_fin_inv": -14373.0,
+     "inst_insurance": 156.0,
+     "inst_trust": -3359.0,
+     "inst_bank": -210.0,
+     "inst_other_fin": 137.0,
+     "inst_pension": 485.0,
+     "other_corp": 2181.0,
+     "cum": {
+      "individual": 749157.0,
+      "foreign": -1188599.0,
+      "institution": 330034.0
+     }
+    },
+    {
+     "date": "2026-06-09",
+     "individual": -6167.0,
+     "foreign": -20064.0,
+     "institution": 25048.0,
+     "inst_fin_inv": 18795.0,
+     "inst_insurance": -883.0,
+     "inst_trust": 7161.0,
+     "inst_bank": 178.0,
+     "inst_other_fin": 30.0,
+     "inst_pension": -233.0,
+     "other_corp": 1183.0,
+     "cum": {
+      "individual": 742990.0,
+      "foreign": -1208663.0,
+      "institution": 355082.0
+     }
+    },
+    {
+     "date": "2026-06-10",
+     "individual": 48643.0,
+     "foreign": -27754.0,
+     "institution": -22665.0,
+     "inst_fin_inv": -14247.0,
+     "inst_insurance": 520.0,
+     "inst_trust": -6362.0,
+     "inst_bank": 47.0,
+     "inst_other_fin": 19.0,
+     "inst_pension": -2642.0,
+     "other_corp": 1776.0,
+     "cum": {
+      "individual": 791633.0,
+      "foreign": -1236417.0,
+      "institution": 332417.0
+     }
+    },
+    {
+     "date": "2026-06-11",
+     "individual": 20803.0,
+     "foreign": -14640.0,
+     "institution": -7561.0,
+     "inst_fin_inv": -14328.0,
+     "inst_insurance": 1039.0,
+     "inst_trust": 6907.0,
+     "inst_bank": -17.0,
+     "inst_other_fin": -38.0,
+     "inst_pension": -1125.0,
+     "other_corp": 1399.0,
+     "cum": {
+      "individual": 812436.0,
+      "foreign": -1251057.0,
+      "institution": 324856.0
+     }
+    },
+    {
+     "date": "2026-06-12",
+     "individual": -43174.0,
+     "foreign": 22041.0,
+     "institution": 22870.0,
+     "inst_fin_inv": 16534.0,
+     "inst_insurance": -580.0,
+     "inst_trust": 10141.0,
+     "inst_bank": 114.0,
+     "inst_other_fin": -91.0,
+     "inst_pension": -3248.0,
+     "other_corp": -1736.0,
+     "cum": {
+      "individual": 769262.0,
+      "foreign": -1229016.0,
+      "institution": 347726.0
+     }
+    },
+    {
+     "date": "2026-06-15",
+     "individual": -15124.0,
+     "foreign": 10774.0,
+     "institution": 4462.0,
+     "inst_fin_inv": 7120.0,
+     "inst_insurance": -575.0,
+     "inst_trust": -2519.0,
+     "inst_bank": 14.0,
+     "inst_other_fin": 172.0,
+     "inst_pension": 250.0,
+     "other_corp": -112.0,
+     "cum": {
+      "individual": 754138.0,
+      "foreign": -1218242.0,
+      "institution": 352188.0
+     }
+    },
+    {
+     "date": "2026-06-16",
+     "individual": -21841.0,
+     "foreign": 15353.0,
+     "institution": 7076.0,
+     "inst_fin_inv": 2129.0,
+     "inst_insurance": -335.0,
+     "inst_trust": 5928.0,
+     "inst_bank": 47.0,
+     "inst_other_fin": -355.0,
+     "inst_pension": -338.0,
+     "other_corp": -588.0,
+     "cum": {
+      "individual": 732297.0,
+      "foreign": -1202889.0,
+      "institution": 359264.0
+     }
+    },
+    {
+     "date": "2026-06-17",
+     "individual": 5254.0,
+     "foreign": -9952.0,
+     "institution": 5957.0,
+     "inst_fin_inv": 5194.0,
+     "inst_insurance": -647.0,
+     "inst_trust": 3099.0,
+     "inst_bank": -87.0,
+     "inst_other_fin": 73.0,
+     "inst_pension": -1676.0,
+     "other_corp": -1259.0,
+     "cum": {
+      "individual": 737551.0,
+      "foreign": -1212841.0,
+      "institution": 365221.0
+     }
+    },
+    {
+     "date": "2026-06-18",
+     "individual": -4156.0,
+     "foreign": 12776.0,
+     "institution": -7682.0,
+     "inst_fin_inv": 1577.0,
+     "inst_insurance": -1530.0,
+     "inst_trust": -3851.0,
+     "inst_bank": 80.0,
+     "inst_other_fin": -37.0,
+     "inst_pension": -3921.0,
+     "other_corp": -938.0,
+     "cum": {
+      "individual": 733395.0,
+      "foreign": -1200065.0,
+      "institution": 357539.0
+     }
+    },
+    {
+     "date": "2026-06-19",
+     "individual": 16478.0,
+     "foreign": -3555.0,
+     "institution": -12244.0,
+     "inst_fin_inv": -1994.0,
+     "inst_insurance": -2537.0,
+     "inst_trust": -2489.0,
+     "inst_bank": 42.0,
+     "inst_other_fin": 1.0,
+     "inst_pension": -5267.0,
+     "other_corp": -679.0,
+     "cum": {
+      "individual": 749873.0,
+      "foreign": -1203620.0,
+      "institution": 345295.0
+     }
+    },
+    {
+     "date": "2026-06-22",
+     "individual": 21506.0,
+     "foreign": -25466.0,
+     "institution": 3034.0,
+     "inst_fin_inv": 4859.0,
+     "inst_insurance": -860.0,
+     "inst_trust": 1038.0,
+     "inst_bank": -19.0,
+     "inst_other_fin": -150.0,
+     "inst_pension": -1834.0,
+     "other_corp": 926.0,
+     "cum": {
+      "individual": 771379.0,
+      "foreign": -1229086.0,
+      "institution": 348329.0
+     }
+    },
+    {
+     "date": "2026-06-23",
+     "individual": 85910.0,
+     "foreign": -42047.0,
+     "institution": -44760.0,
+     "inst_fin_inv": -20908.0,
+     "inst_insurance": -1018.0,
+     "inst_trust": -19662.0,
+     "inst_bank": -165.0,
+     "inst_other_fin": -69.0,
+     "inst_pension": -2937.0,
+     "other_corp": 898.0,
+     "cum": {
+      "individual": 857289.0,
+      "foreign": -1271133.0,
+      "institution": 303569.0
+     }
+    },
+    {
+     "date": "2026-06-24",
+     "individual": 26312.0,
+     "foreign": -46546.0,
+     "institution": 19095.0,
+     "inst_fin_inv": 17479.0,
+     "inst_insurance": -103.0,
+     "inst_trust": 1524.0,
+     "inst_bank": 27.0,
+     "inst_other_fin": 37.0,
+     "inst_pension": 131.0,
+     "other_corp": 1138.0,
+     "cum": {
+      "individual": 883601.0,
+      "foreign": -1317679.0,
+      "institution": 322664.0
+     }
+    },
+    {
+     "date": "2026-06-25",
+     "individual": -24136.0,
+     "foreign": -8754.0,
+     "institution": 33244.0,
+     "inst_fin_inv": 24024.0,
+     "inst_insurance": -1082.0,
+     "inst_trust": 10293.0,
+     "inst_bank": 62.0,
+     "inst_other_fin": -29.0,
+     "inst_pension": -25.0,
+     "other_corp": -354.0,
+     "cum": {
+      "individual": 859465.0,
+      "foreign": -1326433.0,
+      "institution": 355908.0
+     }
+    },
+    {
+     "date": "2026-06-26",
+     "individual": 81919.0,
+     "foreign": -42906.0,
+     "institution": -41224.0,
+     "inst_fin_inv": -19935.0,
+     "inst_insurance": -302.0,
+     "inst_trust": -20491.0,
+     "inst_bank": -11.0,
+     "inst_other_fin": -3.0,
+     "inst_pension": -482.0,
+     "other_corp": 2211.0,
+     "cum": {
+      "individual": 941384.0,
+      "foreign": -1369339.0,
+      "institution": 314684.0
+     }
+    },
+    {
+     "date": "2026-06-29",
+     "individual": 45975.0,
+     "foreign": -77332.0,
+     "institution": 29327.0,
+     "inst_fin_inv": 30270.0,
+     "inst_insurance": 40.0,
+     "inst_trust": -1419.0,
+     "inst_bank": -112.0,
+     "inst_other_fin": -33.0,
+     "inst_pension": 581.0,
+     "other_corp": 2030.0,
+     "cum": {
+      "individual": 987359.0,
+      "foreign": -1446671.0,
+      "institution": 344011.0
+     }
+    },
+    {
+     "date": "2026-06-30",
+     "individual": 8401.0,
+     "foreign": -37992.0,
+     "institution": 29332.0,
+     "inst_fin_inv": 16121.0,
+     "inst_insurance": 925.0,
+     "inst_trust": 12623.0,
+     "inst_bank": 14.0,
+     "inst_other_fin": 43.0,
+     "inst_pension": -394.0,
+     "other_corp": 259.0,
+     "cum": {
+      "individual": 995760.0,
+      "foreign": -1484663.0,
+      "institution": 373343.0
+     }
+    },
+    {
+     "date": "2026-07-01",
+     "individual": 17370.0,
+     "foreign": -17028.0,
+     "institution": -700.0,
+     "inst_fin_inv": -983.0,
+     "inst_insurance": 482.0,
+     "inst_trust": 1457.0,
+     "inst_bank": 49.0,
+     "inst_other_fin": 472.0,
+     "inst_pension": -2177.0,
+     "other_corp": 359.0,
+     "cum": {
+      "individual": 1013130.0,
+      "foreign": -1501691.0,
+      "institution": 372643.0
+     }
+    },
+    {
+     "date": "2026-07-02",
+     "individual": 62413.0,
+     "foreign": -43706.0,
+     "institution": -20825.0,
+     "inst_fin_inv": -3928.0,
+     "inst_insurance": 556.0,
+     "inst_trust": -17424.0,
+     "inst_bank": 9.0,
+     "inst_other_fin": 457.0,
+     "inst_pension": -495.0,
+     "other_corp": 2118.0,
+     "cum": {
+      "individual": 1075543.0,
+      "foreign": -1545397.0,
+      "institution": 351818.0
+     }
+    },
+    {
+     "date": "2026-07-03",
+     "individual": -22942.0,
+     "foreign": -21750.0,
+     "institution": 44079.0,
+     "inst_fin_inv": 30153.0,
+     "inst_insurance": 1040.0,
+     "inst_trust": 11761.0,
+     "inst_bank": 149.0,
+     "inst_other_fin": 413.0,
+     "inst_pension": 563.0,
+     "other_corp": 614.0,
+     "cum": {
+      "individual": 1052601.0,
+      "foreign": -1567147.0,
+      "institution": 395897.0
+     }
+    },
+    {
+     "date": "2026-07-06",
+     "individual": 26829.0,
+     "foreign": -13144.0,
+     "institution": -14618.0,
+     "inst_fin_inv": -14299.0,
+     "inst_insurance": -129.0,
+     "inst_trust": -516.0,
+     "inst_bank": 126.0,
+     "inst_other_fin": 538.0,
+     "inst_pension": -338.0,
+     "other_corp": 933.0,
+     "cum": {
+      "individual": 1079430.0,
+      "foreign": -1580291.0,
+      "institution": 381279.0
+     }
+    },
+    {
+     "date": "2026-07-07",
+     "individual": 31359.0,
+     "foreign": -29172.0,
+     "institution": -3108.0,
+     "inst_fin_inv": 4356.0,
+     "inst_insurance": 437.0,
+     "inst_trust": -8590.0,
+     "inst_bank": -57.0,
+     "inst_other_fin": 462.0,
+     "inst_pension": 285.0,
+     "other_corp": 921.0,
+     "cum": {
+      "individual": 1110789.0,
+      "foreign": -1609463.0,
+      "institution": 378171.0
+     }
+    },
+    {
+     "date": "2026-07-08",
+     "individual": -358.0,
+     "foreign": 3437.0,
+     "institution": -3552.0,
+     "inst_fin_inv": 1605.0,
+     "inst_insurance": 477.0,
+     "inst_trust": -5050.0,
+     "inst_bank": -56.0,
+     "inst_other_fin": 423.0,
+     "inst_pension": -950.0,
+     "other_corp": 473.0,
+     "cum": {
+      "individual": 1110431.0,
+      "foreign": -1606026.0,
+      "institution": 374619.0
+     }
+    },
+    {
+     "date": "2026-07-09",
+     "individual": -13278.0,
+     "foreign": 1343.0,
+     "institution": 12884.0,
+     "inst_fin_inv": 2822.0,
+     "inst_insurance": 950.0,
+     "inst_trust": 7921.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": 454.0,
+     "inst_pension": 736.0,
+     "other_corp": -950.0,
+     "cum": {
+      "individual": 1097153.0,
+      "foreign": -1604683.0,
+      "institution": 387503.0
+     }
+    },
+    {
+     "date": "2026-07-10",
+     "individual": -7805.0,
+     "foreign": -3228.0,
+     "institution": 11314.0,
+     "inst_fin_inv": 11349.0,
+     "inst_insurance": 579.0,
+     "inst_trust": -1498.0,
+     "inst_bank": 69.0,
+     "inst_other_fin": 460.0,
+     "inst_pension": 355.0,
+     "other_corp": -282.0,
+     "cum": {
+      "individual": 1089348.0,
+      "foreign": -1607911.0,
+      "institution": 398817.0
+     }
+    },
+    {
+     "date": "2026-07-13",
+     "individual": 38869.0,
+     "foreign": -16705.0,
+     "institution": -22338.0,
+     "inst_fin_inv": -328.0,
+     "inst_insurance": 67.0,
+     "inst_trust": -21361.0,
+     "inst_bank": -562.0,
+     "inst_other_fin": 508.0,
+     "inst_pension": -662.0,
+     "other_corp": 175.0,
+     "cum": {
+      "individual": 1128217.0,
+      "foreign": -1624616.0,
+      "institution": 376479.0
+     }
+    },
+    {
+     "date": "2026-07-14",
+     "individual": -41411.0,
+     "foreign": 9565.0,
+     "institution": 32117.0,
+     "inst_fin_inv": 18926.0,
+     "inst_insurance": 1508.0,
+     "inst_trust": 11264.0,
+     "inst_bank": -344.0,
+     "inst_other_fin": -106.0,
+     "inst_pension": 868.0,
+     "other_corp": -271.0,
+     "cum": {
+      "individual": 1086806.0,
+      "foreign": -1615051.0,
+      "institution": 408596.0
+     }
+    },
+    {
+     "date": "2026-07-15",
+     "individual": -24666.0,
+     "foreign": 23031.0,
+     "institution": 1992.0,
+     "inst_fin_inv": -8431.0,
+     "inst_insurance": -421.0,
+     "inst_trust": 10538.0,
+     "inst_bank": 39.0,
+     "inst_other_fin": 62.0,
+     "inst_pension": 205.0,
+     "other_corp": -357.0,
+     "cum": {
+      "individual": 1062140.0,
+      "foreign": -1592020.0,
+      "institution": 410588.0
+     }
+    },
+    {
+     "date": "2026-07-16",
+     "individual": 36647.0,
+     "foreign": -13665.0,
+     "institution": -23831.0,
+     "inst_fin_inv": -15258.0,
+     "inst_insurance": -545.0,
+     "inst_trust": -8648.0,
+     "inst_bank": 6.0,
+     "inst_other_fin": 24.0,
+     "inst_pension": 592.0,
+     "other_corp": 849.0,
+     "cum": {
+      "individual": 1098787.0,
+      "foreign": -1605685.0,
+      "institution": 386757.0
+     }
+    },
+    {
+     "date": "2026-07-20",
+     "individual": 3490.0,
+     "foreign": 5198.0,
+     "institution": -9235.0,
+     "inst_fin_inv": -4931.0,
+     "inst_insurance": 584.0,
+     "inst_trust": -5576.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -48.0,
+     "inst_pension": 743.0,
+     "other_corp": 547.0,
+     "cum": {
+      "individual": 1102277.0,
+      "foreign": -1600487.0,
+      "institution": 377522.0
+     }
+    },
+    {
+     "date": "2026-07-21",
+     "individual": -16421.0,
+     "foreign": 2952.0,
+     "institution": 13744.0,
+     "inst_fin_inv": 8891.0,
+     "inst_insurance": 1157.0,
+     "inst_trust": 3158.0,
+     "inst_bank": 4.0,
+     "inst_other_fin": -66.0,
+     "inst_pension": 600.0,
+     "other_corp": -275.0,
+     "cum": {
+      "individual": 1085856.0,
+      "foreign": -1597535.0,
+      "institution": 391266.0
+     }
+    },
+    {
+     "date": "2026-07-22",
+     "individual": -12176.0,
+     "foreign": 26211.0,
+     "institution": -13963.0,
+     "inst_fin_inv": -9758.0,
+     "inst_insurance": 162.0,
+     "inst_trust": -3670.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": 12.0,
+     "inst_pension": -706.0,
+     "other_corp": -72.0,
+     "cum": {
+      "individual": 1073680.0,
+      "foreign": -1571324.0,
+      "institution": 377303.0
+     }
+    },
+    {
+     "date": "2026-07-23",
+     "individual": -22077.0,
+     "foreign": 21359.0,
+     "institution": 976.0,
+     "inst_fin_inv": -10139.0,
+     "inst_insurance": 261.0,
+     "inst_trust": 10118.0,
+     "inst_bank": 43.0,
+     "inst_other_fin": -49.0,
+     "inst_pension": 741.0,
+     "other_corp": -257.0,
+     "cum": {
+      "individual": 1051603.0,
+      "foreign": -1549965.0,
+      "institution": 378279.0
+     }
+    },
+    {
+     "date": "2026-07-24",
+     "individual": 51782.0,
+     "foreign": -32683.0,
+     "institution": -19514.0,
+     "inst_fin_inv": -8740.0,
+     "inst_insurance": -1753.0,
+     "inst_trust": -9393.0,
+     "inst_bank": 12.0,
+     "inst_other_fin": 33.0,
+     "inst_pension": 326.0,
+     "other_corp": 416.0,
+     "cum": {
+      "individual": 1103385.0,
+      "foreign": -1582648.0,
+      "institution": 358765.0
+     }
+    },
+    {
+     "date": "2026-07-27",
+     "individual": 19788.0,
+     "foreign": -28811.0,
+     "institution": 8595.0,
+     "inst_fin_inv": 4691.0,
+     "inst_insurance": 614.0,
+     "inst_trust": 4089.0,
+     "inst_bank": -70.0,
+     "inst_other_fin": -5.0,
+     "inst_pension": -724.0,
+     "other_corp": 427.0,
+     "cum": {
+      "individual": 1123173.0,
+      "foreign": -1611459.0,
+      "institution": 367360.0
+     }
+    },
+    {
+     "date": "2026-07-28",
+     "individual": 43152.0,
+     "foreign": -45009.0,
+     "institution": 1830.0,
+     "inst_fin_inv": 6947.0,
+     "inst_insurance": 213.0,
+     "inst_trust": -6301.0,
+     "inst_bank": -184.0,
+     "inst_other_fin": -10.0,
+     "inst_pension": 1165.0,
+     "other_corp": 26.0,
+     "cum": {
+      "individual": 1166325.0,
+      "foreign": -1656468.0,
+      "institution": 369190.0
+     }
+    },
+    {
+     "date": "2026-07-29",
+     "individual": -19701.0,
+     "foreign": -12502.0,
+     "institution": 31769.0,
+     "inst_fin_inv": 18563.0,
+     "inst_insurance": 1260.0,
+     "inst_trust": 8639.0,
+     "inst_bank": -126.0,
+     "inst_other_fin": 53.0,
+     "inst_pension": 3381.0,
+     "other_corp": 434.0,
+     "cum": {
+      "individual": 1146624.0,
+      "foreign": -1668970.0,
+      "institution": 400959.0
+     }
+    },
+    {
+     "date": "2026-07-30",
+     "individual": -14309.0,
+     "foreign": 13280.0,
+     "institution": 805.0,
+     "inst_fin_inv": -2713.0,
+     "inst_insurance": 1053.0,
+     "inst_trust": -1371.0,
+     "inst_bank": -164.0,
+     "inst_other_fin": 199.0,
+     "inst_pension": 3802.0,
+     "other_corp": 224.0,
+     "cum": {
+      "individual": 1132315.0,
+      "foreign": -1655690.0,
+      "institution": 401764.0
+     }
+    }
+   ],
+   "latest": {
+    "date": "2026-07-30",
+    "individual": -14309.0,
+    "foreign": 13280.0,
+    "institution": 805.0,
+    "inst_fin_inv": -2713.0,
+    "inst_insurance": 1053.0,
+    "inst_trust": -1371.0,
+    "inst_bank": -164.0,
+    "inst_other_fin": 199.0,
+    "inst_pension": 3802.0,
+    "other_corp": 224.0,
+    "cum": {
+     "individual": 1132315.0,
+     "foreign": -1655690.0,
+     "institution": 401764.0
+    }
+   },
+   "streaks": {
+    "individual": {
+     "days": 2,
+     "side": "sell",
+     "total": -34010.0
+    },
+    "foreign": {
+     "days": 1,
+     "side": "buy",
+     "total": 13280.0
+    },
+    "institution": {
+     "days": 4,
+     "side": "buy",
+     "total": 42999.0
+    }
+   }
+  },
+  "KOSDAQ": {
+   "daily": [
+    {
+     "date": "2026-02-02",
+     "individual": 2127.0,
+     "foreign": 4108.0,
+     "institution": -5484.0,
+     "inst_fin_inv": -3823.0,
+     "inst_insurance": -165.0,
+     "inst_trust": -1327.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -24.0,
+     "inst_pension": -143.0,
+     "other_corp": -750.0,
+     "cum": {
+      "individual": 2127.0,
+      "foreign": 4108.0,
+      "institution": -5484.0
+     }
+    },
+    {
+     "date": "2026-02-03",
+     "individual": -7085.0,
+     "foreign": -896.0,
+     "institution": 8633.0,
+     "inst_fin_inv": 7994.0,
+     "inst_insurance": -94.0,
+     "inst_trust": 735.0,
+     "inst_bank": 13.0,
+     "inst_other_fin": 7.0,
+     "inst_pension": -22.0,
+     "other_corp": -652.0,
+     "cum": {
+      "individual": -4958.0,
+      "foreign": 3212.0,
+      "institution": 3149.0
+     }
+    },
+    {
+     "date": "2026-02-04",
+     "individual": 2399.0,
+     "foreign": 49.0,
+     "institution": -1515.0,
+     "inst_fin_inv": 864.0,
+     "inst_insurance": -232.0,
+     "inst_trust": -1343.0,
+     "inst_bank": 22.0,
+     "inst_other_fin": -150.0,
+     "inst_pension": -677.0,
+     "other_corp": -933.0,
+     "cum": {
+      "individual": -2559.0,
+      "foreign": 3261.0,
+      "institution": 1634.0
+     }
+    },
+    {
+     "date": "2026-02-05",
+     "individual": 9063.0,
+     "foreign": -2756.0,
+     "institution": -5385.0,
+     "inst_fin_inv": -1523.0,
+     "inst_insurance": -128.0,
+     "inst_trust": -2396.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -293.0,
+     "inst_pension": -1044.0,
+     "other_corp": -921.0,
+     "cum": {
+      "individual": 6504.0,
+      "foreign": 505.0,
+      "institution": -3751.0
+     }
+    },
+    {
+     "date": "2026-02-06",
+     "individual": 1484.0,
+     "foreign": 728.0,
+     "institution": -1643.0,
+     "inst_fin_inv": 60.0,
+     "inst_insurance": -111.0,
+     "inst_trust": -1363.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": -22.0,
+     "inst_pension": -199.0,
+     "other_corp": -570.0,
+     "cum": {
+      "individual": 7988.0,
+      "foreign": 1233.0,
+      "institution": -5394.0
+     }
+    },
+    {
+     "date": "2026-02-09",
+     "individual": -6236.0,
+     "foreign": 2317.0,
+     "institution": 4877.0,
+     "inst_fin_inv": 3812.0,
+     "inst_insurance": 42.0,
+     "inst_trust": 1368.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": -108.0,
+     "inst_pension": -227.0,
+     "other_corp": -958.0,
+     "cum": {
+      "individual": 1752.0,
+      "foreign": 3550.0,
+      "institution": -517.0
+     }
+    },
+    {
+     "date": "2026-02-10",
+     "individual": 3239.0,
+     "foreign": -1955.0,
+     "institution": -808.0,
+     "inst_fin_inv": 108.0,
+     "inst_insurance": -32.0,
+     "inst_trust": -426.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -58.0,
+     "inst_pension": -396.0,
+     "other_corp": -476.0,
+     "cum": {
+      "individual": 4991.0,
+      "foreign": 1595.0,
+      "institution": -1325.0
+     }
+    },
+    {
+     "date": "2026-02-11",
+     "individual": -514.0,
+     "foreign": 191.0,
+     "institution": 608.0,
+     "inst_fin_inv": 488.0,
+     "inst_insurance": -67.0,
+     "inst_trust": 505.0,
+     "inst_bank": -18.0,
+     "inst_other_fin": -40.0,
+     "inst_pension": -260.0,
+     "other_corp": -285.0,
+     "cum": {
+      "individual": 4477.0,
+      "foreign": 1786.0,
+      "institution": -717.0
+     }
+    },
+    {
+     "date": "2026-02-12",
+     "individual": 860.0,
+     "foreign": -1066.0,
+     "institution": 997.0,
+     "inst_fin_inv": 1082.0,
+     "inst_insurance": -26.0,
+     "inst_trust": 296.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -120.0,
+     "inst_pension": -235.0,
+     "other_corp": -792.0,
+     "cum": {
+      "individual": 5337.0,
+      "foreign": 720.0,
+      "institution": 280.0
+     }
+    },
+    {
+     "date": "2026-02-13",
+     "individual": 6220.0,
+     "foreign": -2414.0,
+     "institution": -3381.0,
+     "inst_fin_inv": -2079.0,
+     "inst_insurance": -30.0,
+     "inst_trust": -641.0,
+     "inst_bank": -18.0,
+     "inst_other_fin": -173.0,
+     "inst_pension": -441.0,
+     "other_corp": -425.0,
+     "cum": {
+      "individual": 11557.0,
+      "foreign": -1694.0,
+      "institution": -3101.0
+     }
+    },
+    {
+     "date": "2026-02-19",
+     "individual": -18301.0,
+     "foreign": 8540.0,
+     "institution": 10541.0,
+     "inst_fin_inv": 9354.0,
+     "inst_insurance": -168.0,
+     "inst_trust": 807.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": -164.0,
+     "inst_pension": 711.0,
+     "other_corp": -781.0,
+     "cum": {
+      "individual": -6744.0,
+      "foreign": 6846.0,
+      "institution": 7440.0
+     }
+    },
+    {
+     "date": "2026-02-20",
+     "individual": 2318.0,
+     "foreign": -2073.0,
+     "institution": 231.0,
+     "inst_fin_inv": 954.0,
+     "inst_insurance": -38.0,
+     "inst_trust": -569.0,
+     "inst_bank": -8.0,
+     "inst_other_fin": -191.0,
+     "inst_pension": 82.0,
+     "other_corp": -475.0,
+     "cum": {
+      "individual": -4426.0,
+      "foreign": 4773.0,
+      "institution": 7671.0
+     }
+    },
+    {
+     "date": "2026-02-23",
+     "individual": 2179.0,
+     "foreign": 1805.0,
+     "institution": -3624.0,
+     "inst_fin_inv": -1786.0,
+     "inst_insurance": -12.0,
+     "inst_trust": -1489.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -129.0,
+     "inst_pension": -208.0,
+     "other_corp": -360.0,
+     "cum": {
+      "individual": -2247.0,
+      "foreign": 6578.0,
+      "institution": 4047.0
+     }
+    },
+    {
+     "date": "2026-02-24",
+     "individual": 2286.0,
+     "foreign": 2790.0,
+     "institution": -1468.0,
+     "inst_fin_inv": -1200.0,
+     "inst_insurance": 111.0,
+     "inst_trust": -384.0,
+     "inst_bank": 4.0,
+     "inst_other_fin": -284.0,
+     "inst_pension": 285.0,
+     "other_corp": -3608.0,
+     "cum": {
+      "individual": 39.0,
+      "foreign": 9368.0,
+      "institution": 2579.0
+     }
+    },
+    {
+     "date": "2026-02-25",
+     "individual": 3906.0,
+     "foreign": -2159.0,
+     "institution": -1277.0,
+     "inst_fin_inv": -506.0,
+     "inst_insurance": -22.0,
+     "inst_trust": -609.0,
+     "inst_bank": -9.0,
+     "inst_other_fin": -121.0,
+     "inst_pension": -10.0,
+     "other_corp": -470.0,
+     "cum": {
+      "individual": 3945.0,
+      "foreign": 7209.0,
+      "institution": 1302.0
+     }
+    },
+    {
+     "date": "2026-02-26",
+     "individual": -5459.0,
+     "foreign": 4247.0,
+     "institution": 1901.0,
+     "inst_fin_inv": 1513.0,
+     "inst_insurance": -63.0,
+     "inst_trust": 370.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -151.0,
+     "inst_pension": 231.0,
+     "other_corp": -689.0,
+     "cum": {
+      "individual": -1514.0,
+      "foreign": 11456.0,
+      "institution": 3203.0
+     }
+    },
+    {
+     "date": "2026-02-27",
+     "individual": -4724.0,
+     "foreign": 623.0,
+     "institution": 4460.0,
+     "inst_fin_inv": 3962.0,
+     "inst_insurance": 41.0,
+     "inst_trust": 387.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -58.0,
+     "inst_pension": 129.0,
+     "other_corp": -358.0,
+     "cum": {
+      "individual": -6238.0,
+      "foreign": 12079.0,
+      "institution": 7663.0
+     }
+    },
+    {
+     "date": "2026-03-03",
+     "individual": -7614.0,
+     "foreign": 5934.0,
+     "institution": 2388.0,
+     "inst_fin_inv": 1391.0,
+     "inst_insurance": 25.0,
+     "inst_trust": 726.0,
+     "inst_bank": 10.0,
+     "inst_other_fin": -97.0,
+     "inst_pension": 333.0,
+     "other_corp": -708.0,
+     "cum": {
+      "individual": -13852.0,
+      "foreign": 18013.0,
+      "institution": 10051.0
+     }
+    },
+    {
+     "date": "2026-03-04",
+     "individual": -12030.0,
+     "foreign": 11703.0,
+     "institution": 323.0,
+     "inst_fin_inv": 846.0,
+     "inst_insurance": 6.0,
+     "inst_trust": -357.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -73.0,
+     "inst_pension": -98.0,
+     "other_corp": 4.0,
+     "cum": {
+      "individual": -25882.0,
+      "foreign": 29716.0,
+      "institution": 10374.0
+     }
+    },
+    {
+     "date": "2026-03-05",
+     "individual": -15514.0,
+     "foreign": 8322.0,
+     "institution": 7393.0,
+     "inst_fin_inv": 4222.0,
+     "inst_insurance": 101.0,
+     "inst_trust": 2517.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -165.0,
+     "inst_pension": 717.0,
+     "other_corp": -201.0,
+     "cum": {
+      "individual": -41396.0,
+      "foreign": 38038.0,
+      "institution": 17767.0
+     }
+    },
+    {
+     "date": "2026-03-06",
+     "individual": -800.0,
+     "foreign": -3862.0,
+     "institution": 4761.0,
+     "inst_fin_inv": 2200.0,
+     "inst_insurance": 269.0,
+     "inst_trust": 692.0,
+     "inst_bank": 16.0,
+     "inst_other_fin": -72.0,
+     "inst_pension": 1656.0,
+     "other_corp": -99.0,
+     "cum": {
+      "individual": -42196.0,
+      "foreign": 34176.0,
+      "institution": 22528.0
+     }
+    },
+    {
+     "date": "2026-03-09",
+     "individual": 5065.0,
+     "foreign": -5389.0,
+     "institution": 447.0,
+     "inst_fin_inv": 1709.0,
+     "inst_insurance": 10.0,
+     "inst_trust": -1789.0,
+     "inst_bank": -11.0,
+     "inst_other_fin": -81.0,
+     "inst_pension": 609.0,
+     "other_corp": -123.0,
+     "cum": {
+      "individual": -37131.0,
+      "foreign": 28787.0,
+      "institution": 22975.0
+     }
+    },
+    {
+     "date": "2026-03-10",
+     "individual": 136.0,
+     "foreign": -4021.0,
+     "institution": 4298.0,
+     "inst_fin_inv": 3583.0,
+     "inst_insurance": 74.0,
+     "inst_trust": 156.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": -62.0,
+     "inst_pension": 557.0,
+     "other_corp": -414.0,
+     "cum": {
+      "individual": -36995.0,
+      "foreign": 24766.0,
+      "institution": 27273.0
+     }
+    },
+    {
+     "date": "2026-03-11",
+     "individual": 2542.0,
+     "foreign": -812.0,
+     "institution": -1267.0,
+     "inst_fin_inv": -773.0,
+     "inst_insurance": -27.0,
+     "inst_trust": -382.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -210.0,
+     "inst_pension": 125.0,
+     "other_corp": -464.0,
+     "cum": {
+      "individual": -34453.0,
+      "foreign": 23954.0,
+      "institution": 26006.0
+     }
+    },
+    {
+     "date": "2026-03-12",
+     "individual": 5064.0,
+     "foreign": -6867.0,
+     "institution": 2531.0,
+     "inst_fin_inv": 1870.0,
+     "inst_insurance": -18.0,
+     "inst_trust": 617.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -335.0,
+     "inst_pension": 400.0,
+     "other_corp": -728.0,
+     "cum": {
+      "individual": -29389.0,
+      "foreign": 17087.0,
+      "institution": 28537.0
+     }
+    },
+    {
+     "date": "2026-03-13",
+     "individual": -1325.0,
+     "foreign": -829.0,
+     "institution": 2526.0,
+     "inst_fin_inv": 1127.0,
+     "inst_insurance": 88.0,
+     "inst_trust": 1123.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -207.0,
+     "inst_pension": 397.0,
+     "other_corp": -373.0,
+     "cum": {
+      "individual": -30714.0,
+      "foreign": 16258.0,
+      "institution": 31063.0
+     }
+    },
+    {
+     "date": "2026-03-16",
+     "individual": 7104.0,
+     "foreign": -5012.0,
+     "institution": -1696.0,
+     "inst_fin_inv": -1131.0,
+     "inst_insurance": -13.0,
+     "inst_trust": -67.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": -496.0,
+     "inst_pension": 8.0,
+     "other_corp": -395.0,
+     "cum": {
+      "individual": -23610.0,
+      "foreign": 11246.0,
+      "institution": 29367.0
+     }
+    },
+    {
+     "date": "2026-03-17",
+     "individual": 1380.0,
+     "foreign": -585.0,
+     "institution": -359.0,
+     "inst_fin_inv": -226.0,
+     "inst_insurance": -23.0,
+     "inst_trust": 282.0,
+     "inst_bank": -21.0,
+     "inst_other_fin": -63.0,
+     "inst_pension": -308.0,
+     "other_corp": -436.0,
+     "cum": {
+      "individual": -22230.0,
+      "foreign": 10661.0,
+      "institution": 29008.0
+     }
+    },
+    {
+     "date": "2026-03-18",
+     "individual": -3928.0,
+     "foreign": 4924.0,
+     "institution": -253.0,
+     "inst_fin_inv": 306.0,
+     "inst_insurance": -27.0,
+     "inst_trust": -263.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": -169.0,
+     "inst_pension": -91.0,
+     "other_corp": -743.0,
+     "cum": {
+      "individual": -26158.0,
+      "foreign": 15585.0,
+      "institution": 28755.0
+     }
+    },
+    {
+     "date": "2026-03-19",
+     "individual": 5018.0,
+     "foreign": -2004.0,
+     "institution": -2612.0,
+     "inst_fin_inv": -1812.0,
+     "inst_insurance": 46.0,
+     "inst_trust": -634.0,
+     "inst_bank": -8.0,
+     "inst_other_fin": -186.0,
+     "inst_pension": -17.0,
+     "other_corp": -403.0,
+     "cum": {
+      "individual": -21140.0,
+      "foreign": 13581.0,
+      "institution": 26143.0
+     }
+    },
+    {
+     "date": "2026-03-20",
+     "individual": -1171.0,
+     "foreign": 2347.0,
+     "institution": -942.0,
+     "inst_fin_inv": 229.0,
+     "inst_insurance": 67.0,
+     "inst_trust": -827.0,
+     "inst_bank": -29.0,
+     "inst_other_fin": -171.0,
+     "inst_pension": -212.0,
+     "other_corp": -234.0,
+     "cum": {
+      "individual": -22311.0,
+      "foreign": 15928.0,
+      "institution": 25201.0
+     }
+    },
+    {
+     "date": "2026-03-23",
+     "individual": 4647.0,
+     "foreign": -2592.0,
+     "institution": -1998.0,
+     "inst_fin_inv": 272.0,
+     "inst_insurance": -20.0,
+     "inst_trust": -2175.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -57.0,
+     "inst_pension": -16.0,
+     "other_corp": -58.0,
+     "cum": {
+      "individual": -17664.0,
+      "foreign": 13336.0,
+      "institution": 23203.0
+     }
+    },
+    {
+     "date": "2026-03-24",
+     "individual": -2113.0,
+     "foreign": 1733.0,
+     "institution": 158.0,
+     "inst_fin_inv": -123.0,
+     "inst_insurance": 17.0,
+     "inst_trust": 339.0,
+     "inst_bank": 9.0,
+     "inst_other_fin": -89.0,
+     "inst_pension": 5.0,
+     "other_corp": 222.0,
+     "cum": {
+      "individual": -19777.0,
+      "foreign": 15069.0,
+      "institution": 23361.0
+     }
+    },
+    {
+     "date": "2026-03-25",
+     "individual": -3821.0,
+     "foreign": 3732.0,
+     "institution": 224.0,
+     "inst_fin_inv": -895.0,
+     "inst_insurance": 143.0,
+     "inst_trust": 878.0,
+     "inst_bank": -8.0,
+     "inst_other_fin": -8.0,
+     "inst_pension": 113.0,
+     "other_corp": -136.0,
+     "cum": {
+      "individual": -23598.0,
+      "foreign": 18801.0,
+      "institution": 23585.0
+     }
+    },
+    {
+     "date": "2026-03-26",
+     "individual": 4846.0,
+     "foreign": -2963.0,
+     "institution": -1337.0,
+     "inst_fin_inv": -1636.0,
+     "inst_insurance": 2.0,
+     "inst_trust": 412.0,
+     "inst_bank": -9.0,
+     "inst_other_fin": -235.0,
+     "inst_pension": 129.0,
+     "other_corp": -546.0,
+     "cum": {
+      "individual": -18752.0,
+      "foreign": 15838.0,
+      "institution": 22248.0
+     }
+    },
+    {
+     "date": "2026-03-27",
+     "individual": 1703.0,
+     "foreign": -2337.0,
+     "institution": 507.0,
+     "inst_fin_inv": 127.0,
+     "inst_insurance": 86.0,
+     "inst_trust": 295.0,
+     "inst_bank": -9.0,
+     "inst_other_fin": -47.0,
+     "inst_pension": 55.0,
+     "other_corp": 127.0,
+     "cum": {
+      "individual": -17049.0,
+      "foreign": 13501.0,
+      "institution": 22755.0
+     }
+    },
+    {
+     "date": "2026-03-30",
+     "individual": 3041.0,
+     "foreign": -1314.0,
+     "institution": -1179.0,
+     "inst_fin_inv": -407.0,
+     "inst_insurance": -48.0,
+     "inst_trust": -329.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -92.0,
+     "inst_pension": -303.0,
+     "other_corp": -548.0,
+     "cum": {
+      "individual": -14008.0,
+      "foreign": 12187.0,
+      "institution": 21576.0
+     }
+    },
+    {
+     "date": "2026-03-31",
+     "individual": 497.0,
+     "foreign": 1188.0,
+     "institution": -687.0,
+     "inst_fin_inv": 590.0,
+     "inst_insurance": -99.0,
+     "inst_trust": -717.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": -152.0,
+     "inst_pension": -309.0,
+     "other_corp": -998.0,
+     "cum": {
+      "individual": -13511.0,
+      "foreign": 13375.0,
+      "institution": 20889.0
+     }
+    },
+    {
+     "date": "2026-04-01",
+     "individual": -9011.0,
+     "foreign": 4385.0,
+     "institution": 4609.0,
+     "inst_fin_inv": 2820.0,
+     "inst_insurance": 45.0,
+     "inst_trust": 1640.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": -41.0,
+     "inst_pension": 144.0,
+     "other_corp": 17.0,
+     "cum": {
+      "individual": -22522.0,
+      "foreign": 17760.0,
+      "institution": 25498.0
+     }
+    },
+    {
+     "date": "2026-04-02",
+     "individual": 6157.0,
+     "foreign": -863.0,
+     "institution": -5055.0,
+     "inst_fin_inv": -2231.0,
+     "inst_insurance": -113.0,
+     "inst_trust": -1511.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -157.0,
+     "inst_pension": -1041.0,
+     "other_corp": -240.0,
+     "cum": {
+      "individual": -16365.0,
+      "foreign": 16897.0,
+      "institution": 20443.0
+     }
+    },
+    {
+     "date": "2026-04-03",
+     "individual": 4067.0,
+     "foreign": -1966.0,
+     "institution": -2173.0,
+     "inst_fin_inv": -1510.0,
+     "inst_insurance": -55.0,
+     "inst_trust": -334.0,
+     "inst_bank": -9.0,
+     "inst_other_fin": -25.0,
+     "inst_pension": -241.0,
+     "other_corp": 71.0,
+     "cum": {
+      "individual": -12298.0,
+      "foreign": 14931.0,
+      "institution": 18270.0
+     }
+    },
+    {
+     "date": "2026-04-06",
+     "individual": 4266.0,
+     "foreign": 868.0,
+     "institution": -3592.0,
+     "inst_fin_inv": -2117.0,
+     "inst_insurance": -107.0,
+     "inst_trust": -1163.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -18.0,
+     "inst_pension": -186.0,
+     "other_corp": -1542.0,
+     "cum": {
+      "individual": -8032.0,
+      "foreign": 15799.0,
+      "institution": 14678.0
+     }
+    },
+    {
+     "date": "2026-04-07",
+     "individual": -322.0,
+     "foreign": 1798.0,
+     "institution": -1200.0,
+     "inst_fin_inv": 420.0,
+     "inst_insurance": -43.0,
+     "inst_trust": -1378.0,
+     "inst_bank": 5.0,
+     "inst_other_fin": -17.0,
+     "inst_pension": -187.0,
+     "other_corp": -275.0,
+     "cum": {
+      "individual": -8354.0,
+      "foreign": 17597.0,
+      "institution": 13478.0
+     }
+    },
+    {
+     "date": "2026-04-08",
+     "individual": -5833.0,
+     "foreign": 2397.0,
+     "institution": 3729.0,
+     "inst_fin_inv": 3700.0,
+     "inst_insurance": 23.0,
+     "inst_trust": 251.0,
+     "inst_bank": 7.0,
+     "inst_other_fin": -70.0,
+     "inst_pension": -181.0,
+     "other_corp": -293.0,
+     "cum": {
+      "individual": -14187.0,
+      "foreign": 19994.0,
+      "institution": 17207.0
+     }
+    },
+    {
+     "date": "2026-04-09",
+     "individual": 9281.0,
+     "foreign": -4249.0,
+     "institution": -5080.0,
+     "inst_fin_inv": -3200.0,
+     "inst_insurance": -46.0,
+     "inst_trust": -1326.0,
+     "inst_bank": -16.0,
+     "inst_other_fin": -38.0,
+     "inst_pension": -454.0,
+     "other_corp": 48.0,
+     "cum": {
+      "individual": -4906.0,
+      "foreign": 15745.0,
+      "institution": 12127.0
+     }
+    },
+    {
+     "date": "2026-04-10",
+     "individual": -824.0,
+     "foreign": -19.0,
+     "institution": 931.0,
+     "inst_fin_inv": -734.0,
+     "inst_insurance": 76.0,
+     "inst_trust": 1864.0,
+     "inst_bank": -15.0,
+     "inst_other_fin": -72.0,
+     "inst_pension": -188.0,
+     "other_corp": -89.0,
+     "cum": {
+      "individual": -5730.0,
+      "foreign": 15726.0,
+      "institution": 13058.0
+     }
+    },
+    {
+     "date": "2026-04-13",
+     "individual": 2620.0,
+     "foreign": -1491.0,
+     "institution": -923.0,
+     "inst_fin_inv": -971.0,
+     "inst_insurance": 61.0,
+     "inst_trust": 152.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -62.0,
+     "inst_pension": -101.0,
+     "other_corp": -205.0,
+     "cum": {
+      "individual": -3110.0,
+      "foreign": 14235.0,
+      "institution": 12135.0
+     }
+    },
+    {
+     "date": "2026-04-14",
+     "individual": 1160.0,
+     "foreign": -64.0,
+     "institution": -1288.0,
+     "inst_fin_inv": -1453.0,
+     "inst_insurance": 30.0,
+     "inst_trust": 133.0,
+     "inst_bank": 4.0,
+     "inst_other_fin": -147.0,
+     "inst_pension": 146.0,
+     "other_corp": 191.0,
+     "cum": {
+      "individual": -1950.0,
+      "foreign": 14171.0,
+      "institution": 10847.0
+     }
+    },
+    {
+     "date": "2026-04-15",
+     "individual": -2561.0,
+     "foreign": 2209.0,
+     "institution": 1767.0,
+     "inst_fin_inv": 153.0,
+     "inst_insurance": 16.0,
+     "inst_trust": 1448.0,
+     "inst_bank": 5.0,
+     "inst_other_fin": -74.0,
+     "inst_pension": 218.0,
+     "other_corp": -1415.0,
+     "cum": {
+      "individual": -4511.0,
+      "foreign": 16380.0,
+      "institution": 12614.0
+     }
+    },
+    {
+     "date": "2026-04-16",
+     "individual": 3605.0,
+     "foreign": -2463.0,
+     "institution": -640.0,
+     "inst_fin_inv": -1047.0,
+     "inst_insurance": 54.0,
+     "inst_trust": 519.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -109.0,
+     "inst_pension": -59.0,
+     "other_corp": -502.0,
+     "cum": {
+      "individual": -906.0,
+      "foreign": 13917.0,
+      "institution": 11974.0
+     }
+    },
+    {
+     "date": "2026-04-17",
+     "individual": 14.0,
+     "foreign": 133.0,
+     "institution": 138.0,
+     "inst_fin_inv": -401.0,
+     "inst_insurance": -65.0,
+     "inst_trust": 542.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -56.0,
+     "inst_pension": 122.0,
+     "other_corp": -285.0,
+     "cum": {
+      "individual": -892.0,
+      "foreign": 14050.0,
+      "institution": 12112.0
+     }
+    },
+    {
+     "date": "2026-04-20",
+     "individual": 1622.0,
+     "foreign": 216.0,
+     "institution": -1604.0,
+     "inst_fin_inv": -1487.0,
+     "inst_insurance": -64.0,
+     "inst_trust": 215.0,
+     "inst_bank": -9.0,
+     "inst_other_fin": -101.0,
+     "inst_pension": -159.0,
+     "other_corp": -233.0,
+     "cum": {
+      "individual": 730.0,
+      "foreign": 14266.0,
+      "institution": 10508.0
+     }
+    },
+    {
+     "date": "2026-04-21",
+     "individual": 4909.0,
+     "foreign": -2830.0,
+     "institution": -1202.0,
+     "inst_fin_inv": -368.0,
+     "inst_insurance": -118.0,
+     "inst_trust": -673.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -75.0,
+     "inst_pension": 30.0,
+     "other_corp": -877.0,
+     "cum": {
+      "individual": 5639.0,
+      "foreign": 11436.0,
+      "institution": 9306.0
+     }
+    },
+    {
+     "date": "2026-04-22",
+     "individual": 2969.0,
+     "foreign": 1621.0,
+     "institution": -3691.0,
+     "inst_fin_inv": -2273.0,
+     "inst_insurance": -131.0,
+     "inst_trust": -509.0,
+     "inst_bank": -12.0,
+     "inst_other_fin": -71.0,
+     "inst_pension": -695.0,
+     "other_corp": -898.0,
+     "cum": {
+      "individual": 8608.0,
+      "foreign": 13057.0,
+      "institution": 5615.0
+     }
+    },
+    {
+     "date": "2026-04-23",
+     "individual": 3249.0,
+     "foreign": -1462.0,
+     "institution": -1495.0,
+     "inst_fin_inv": -938.0,
+     "inst_insurance": -51.0,
+     "inst_trust": -424.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -44.0,
+     "inst_pension": -31.0,
+     "other_corp": -292.0,
+     "cum": {
+      "individual": 11857.0,
+      "foreign": 11595.0,
+      "institution": 4120.0
+     }
+    },
+    {
+     "date": "2026-04-24",
+     "individual": -8990.0,
+     "foreign": 7325.0,
+     "institution": 1887.0,
+     "inst_fin_inv": 806.0,
+     "inst_insurance": 85.0,
+     "inst_trust": 827.0,
+     "inst_bank": 19.0,
+     "inst_other_fin": -56.0,
+     "inst_pension": 206.0,
+     "other_corp": -222.0,
+     "cum": {
+      "individual": 2867.0,
+      "foreign": 18920.0,
+      "institution": 6007.0
+     }
+    },
+    {
+     "date": "2026-04-27",
+     "individual": 1418.0,
+     "foreign": -1722.0,
+     "institution": 849.0,
+     "inst_fin_inv": 415.0,
+     "inst_insurance": -84.0,
+     "inst_trust": 862.0,
+     "inst_bank": 5.0,
+     "inst_other_fin": -58.0,
+     "inst_pension": -290.0,
+     "other_corp": -545.0,
+     "cum": {
+      "individual": 4285.0,
+      "foreign": 17198.0,
+      "institution": 6856.0
+     }
+    },
+    {
+     "date": "2026-04-28",
+     "individual": 7962.0,
+     "foreign": -4949.0,
+     "institution": -2543.0,
+     "inst_fin_inv": -1877.0,
+     "inst_insurance": -70.0,
+     "inst_trust": -538.0,
+     "inst_bank": -17.0,
+     "inst_other_fin": -52.0,
+     "inst_pension": 11.0,
+     "other_corp": -471.0,
+     "cum": {
+      "individual": 12247.0,
+      "foreign": 12249.0,
+      "institution": 4313.0
+     }
+    },
+    {
+     "date": "2026-04-29",
+     "individual": 1379.0,
+     "foreign": -21.0,
+     "institution": -729.0,
+     "inst_fin_inv": 369.0,
+     "inst_insurance": -119.0,
+     "inst_trust": -427.0,
+     "inst_bank": -35.0,
+     "inst_other_fin": -61.0,
+     "inst_pension": -456.0,
+     "other_corp": -630.0,
+     "cum": {
+      "individual": 13626.0,
+      "foreign": 12228.0,
+      "institution": 3584.0
+     }
+    },
+    {
+     "date": "2026-04-30",
+     "individual": 5532.0,
+     "foreign": -2112.0,
+     "institution": -3045.0,
+     "inst_fin_inv": -1448.0,
+     "inst_insurance": -135.0,
+     "inst_trust": -1124.0,
+     "inst_bank": -12.0,
+     "inst_other_fin": -55.0,
+     "inst_pension": -270.0,
+     "other_corp": -375.0,
+     "cum": {
+      "individual": 19158.0,
+      "foreign": 10116.0,
+      "institution": 539.0
+     }
+    },
+    {
+     "date": "2026-05-04",
+     "individual": -4422.0,
+     "foreign": 5548.0,
+     "institution": -729.0,
+     "inst_fin_inv": -1515.0,
+     "inst_insurance": -105.0,
+     "inst_trust": 874.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -132.0,
+     "inst_pension": 148.0,
+     "other_corp": -397.0,
+     "cum": {
+      "individual": 14736.0,
+      "foreign": 15664.0,
+      "institution": -190.0
+     }
+    },
+    {
+     "date": "2026-05-06",
+     "individual": 6105.0,
+     "foreign": -615.0,
+     "institution": -5435.0,
+     "inst_fin_inv": -4264.0,
+     "inst_insurance": -327.0,
+     "inst_trust": -360.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -14.0,
+     "inst_pension": -473.0,
+     "other_corp": -56.0,
+     "cum": {
+      "individual": 20841.0,
+      "foreign": 15049.0,
+      "institution": -5625.0
+     }
+    },
+    {
+     "date": "2026-05-07",
+     "individual": -177.0,
+     "foreign": 1747.0,
+     "institution": -1323.0,
+     "inst_fin_inv": -119.0,
+     "inst_insurance": 53.0,
+     "inst_trust": -1074.0,
+     "inst_bank": -19.0,
+     "inst_other_fin": -102.0,
+     "inst_pension": -63.0,
+     "other_corp": -246.0,
+     "cum": {
+      "individual": 20664.0,
+      "foreign": 16796.0,
+      "institution": -6948.0
+     }
+    },
+    {
+     "date": "2026-05-08",
+     "individual": -4694.0,
+     "foreign": 4046.0,
+     "institution": 803.0,
+     "inst_fin_inv": 681.0,
+     "inst_insurance": -42.0,
+     "inst_trust": 402.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": -116.0,
+     "inst_pension": -113.0,
+     "other_corp": -155.0,
+     "cum": {
+      "individual": 15970.0,
+      "foreign": 20842.0,
+      "institution": -6145.0
+     }
+    },
+    {
+     "date": "2026-05-11",
+     "individual": 847.0,
+     "foreign": 1160.0,
+     "institution": -1630.0,
+     "inst_fin_inv": -2598.0,
+     "inst_insurance": -184.0,
+     "inst_trust": 1090.0,
+     "inst_bank": -4.0,
+     "inst_other_fin": -77.0,
+     "inst_pension": 144.0,
+     "other_corp": -377.0,
+     "cum": {
+      "individual": 16817.0,
+      "foreign": 22002.0,
+      "institution": -7775.0
+     }
+    },
+    {
+     "date": "2026-05-12",
+     "individual": -2234.0,
+     "foreign": 5216.0,
+     "institution": -2584.0,
+     "inst_fin_inv": 1319.0,
+     "inst_insurance": 2.0,
+     "inst_trust": -3803.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -7.0,
+     "inst_pension": -88.0,
+     "other_corp": -399.0,
+     "cum": {
+      "individual": 14583.0,
+      "foreign": 27218.0,
+      "institution": -10359.0
+     }
+    },
+    {
+     "date": "2026-05-13",
+     "individual": 5899.0,
+     "foreign": -6016.0,
+     "institution": 39.0,
+     "inst_fin_inv": 315.0,
+     "inst_insurance": -27.0,
+     "inst_trust": 365.0,
+     "inst_bank": 4.0,
+     "inst_other_fin": -86.0,
+     "inst_pension": -532.0,
+     "other_corp": 78.0,
+     "cum": {
+      "individual": 20482.0,
+      "foreign": 21202.0,
+      "institution": -10320.0
+     }
+    },
+    {
+     "date": "2026-05-14",
+     "individual": 911.0,
+     "foreign": -1349.0,
+     "institution": 595.0,
+     "inst_fin_inv": 9.0,
+     "inst_insurance": 22.0,
+     "inst_trust": 747.0,
+     "inst_bank": 91.0,
+     "inst_other_fin": -303.0,
+     "inst_pension": 29.0,
+     "other_corp": -158.0,
+     "cum": {
+      "individual": 21393.0,
+      "foreign": 19853.0,
+      "institution": -9725.0
+     }
+    },
+    {
+     "date": "2026-05-15",
+     "individual": -1448.0,
+     "foreign": 4081.0,
+     "institution": -1673.0,
+     "inst_fin_inv": -240.0,
+     "inst_insurance": -17.0,
+     "inst_trust": -978.0,
+     "inst_bank": -17.0,
+     "inst_other_fin": -148.0,
+     "inst_pension": -273.0,
+     "other_corp": -959.0,
+     "cum": {
+      "individual": 19945.0,
+      "foreign": 23934.0,
+      "institution": -11398.0
+     }
+    },
+    {
+     "date": "2026-05-18",
+     "individual": -84.0,
+     "foreign": 2369.0,
+     "institution": -2540.0,
+     "inst_fin_inv": -908.0,
+     "inst_insurance": -57.0,
+     "inst_trust": -778.0,
+     "inst_bank": -13.0,
+     "inst_other_fin": -85.0,
+     "inst_pension": -699.0,
+     "other_corp": 255.0,
+     "cum": {
+      "individual": 19861.0,
+      "foreign": 26303.0,
+      "institution": -13938.0
+     }
+    },
+    {
+     "date": "2026-05-19",
+     "individual": 1032.0,
+     "foreign": 1307.0,
+     "institution": -659.0,
+     "inst_fin_inv": 933.0,
+     "inst_insurance": 26.0,
+     "inst_trust": -1038.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": -18.0,
+     "inst_pension": -557.0,
+     "other_corp": -1680.0,
+     "cum": {
+      "individual": 20893.0,
+      "foreign": 27610.0,
+      "institution": -14597.0
+     }
+    },
+    {
+     "date": "2026-05-20",
+     "individual": -580.0,
+     "foreign": 2009.0,
+     "institution": -1367.0,
+     "inst_fin_inv": -317.0,
+     "inst_insurance": 8.0,
+     "inst_trust": -557.0,
+     "inst_bank": 7.0,
+     "inst_other_fin": -143.0,
+     "inst_pension": -366.0,
+     "other_corp": -62.0,
+     "cum": {
+      "individual": 20313.0,
+      "foreign": 29619.0,
+      "institution": -15964.0
+     }
+    },
+    {
+     "date": "2026-05-21",
+     "individual": -2509.0,
+     "foreign": 1366.0,
+     "institution": 1391.0,
+     "inst_fin_inv": 337.0,
+     "inst_insurance": 1.0,
+     "inst_trust": 1253.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -135.0,
+     "inst_pension": -60.0,
+     "other_corp": -248.0,
+     "cum": {
+      "individual": 17804.0,
+      "foreign": 30985.0,
+      "institution": -14573.0
+     }
+    },
+    {
+     "date": "2026-05-22",
+     "individual": -8793.0,
+     "foreign": 5975.0,
+     "institution": 3010.0,
+     "inst_fin_inv": 1006.0,
+     "inst_insurance": 129.0,
+     "inst_trust": 1232.0,
+     "inst_bank": 18.0,
+     "inst_other_fin": -234.0,
+     "inst_pension": 858.0,
+     "other_corp": -192.0,
+     "cum": {
+      "individual": 9011.0,
+      "foreign": 36960.0,
+      "institution": -11563.0
+     }
+    },
+    {
+     "date": "2026-05-26",
+     "individual": 2306.0,
+     "foreign": -1031.0,
+     "institution": -256.0,
+     "inst_fin_inv": -758.0,
+     "inst_insurance": -62.0,
+     "inst_trust": 533.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -125.0,
+     "inst_pension": 153.0,
+     "other_corp": -1018.0,
+     "cum": {
+      "individual": 11317.0,
+      "foreign": 35929.0,
+      "institution": -11819.0
+     }
+    },
+    {
+     "date": "2026-05-27",
+     "individual": 6315.0,
+     "foreign": -847.0,
+     "institution": -5411.0,
+     "inst_fin_inv": -4915.0,
+     "inst_insurance": -103.0,
+     "inst_trust": -632.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -132.0,
+     "inst_pension": 373.0,
+     "other_corp": -57.0,
+     "cum": {
+      "individual": 17632.0,
+      "foreign": 35082.0,
+      "institution": -17230.0
+     }
+    },
+    {
+     "date": "2026-05-28",
+     "individual": 381.0,
+     "foreign": 3821.0,
+     "institution": -4011.0,
+     "inst_fin_inv": -1905.0,
+     "inst_insurance": -22.0,
+     "inst_trust": -1775.0,
+     "inst_bank": -10.0,
+     "inst_other_fin": -25.0,
+     "inst_pension": -275.0,
+     "other_corp": -192.0,
+     "cum": {
+      "individual": 18013.0,
+      "foreign": 38903.0,
+      "institution": -21241.0
+     }
+    },
+    {
+     "date": "2026-05-29",
+     "individual": 3094.0,
+     "foreign": 115.0,
+     "institution": -3140.0,
+     "inst_fin_inv": -882.0,
+     "inst_insurance": -232.0,
+     "inst_trust": -1427.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -180.0,
+     "inst_pension": -415.0,
+     "other_corp": -69.0,
+     "cum": {
+      "individual": 21107.0,
+      "foreign": 39018.0,
+      "institution": -24381.0
+     }
+    },
+    {
+     "date": "2026-06-01",
+     "individual": -4916.0,
+     "foreign": 8064.0,
+     "institution": -2912.0,
+     "inst_fin_inv": 1104.0,
+     "inst_insurance": -335.0,
+     "inst_trust": -2787.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": -35.0,
+     "inst_pension": -853.0,
+     "other_corp": -236.0,
+     "cum": {
+      "individual": 16191.0,
+      "foreign": 47082.0,
+      "institution": -27293.0
+     }
+    },
+    {
+     "date": "2026-06-02",
+     "individual": -4090.0,
+     "foreign": 3401.0,
+     "institution": 1327.0,
+     "inst_fin_inv": 2445.0,
+     "inst_insurance": -70.0,
+     "inst_trust": -551.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -15.0,
+     "inst_pension": -479.0,
+     "other_corp": -637.0,
+     "cum": {
+      "individual": 12101.0,
+      "foreign": 50483.0,
+      "institution": -25966.0
+     }
+    },
+    {
+     "date": "2026-06-04",
+     "individual": -1633.0,
+     "foreign": -424.0,
+     "institution": 2066.0,
+     "inst_fin_inv": 562.0,
+     "inst_insurance": 46.0,
+     "inst_trust": 1293.0,
+     "inst_bank": 9.0,
+     "inst_other_fin": -42.0,
+     "inst_pension": 199.0,
+     "other_corp": -9.0,
+     "cum": {
+      "individual": 10468.0,
+      "foreign": 50059.0,
+      "institution": -23900.0
+     }
+    },
+    {
+     "date": "2026-06-05",
+     "individual": 337.0,
+     "foreign": -1878.0,
+     "institution": 1508.0,
+     "inst_fin_inv": -324.0,
+     "inst_insurance": 37.0,
+     "inst_trust": 1529.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -43.0,
+     "inst_pension": 311.0,
+     "other_corp": 33.0,
+     "cum": {
+      "individual": 10805.0,
+      "foreign": 48181.0,
+      "institution": -22392.0
+     }
+    },
+    {
+     "date": "2026-06-08",
+     "individual": -1245.0,
+     "foreign": 2976.0,
+     "institution": -1466.0,
+     "inst_fin_inv": 759.0,
+     "inst_insurance": -113.0,
+     "inst_trust": -1357.0,
+     "inst_bank": -24.0,
+     "inst_other_fin": -190.0,
+     "inst_pension": -541.0,
+     "other_corp": -265.0,
+     "cum": {
+      "individual": 9560.0,
+      "foreign": 51157.0,
+      "institution": -23858.0
+     }
+    },
+    {
+     "date": "2026-06-09",
+     "individual": -5112.0,
+     "foreign": 3126.0,
+     "institution": 1996.0,
+     "inst_fin_inv": 293.0,
+     "inst_insurance": 35.0,
+     "inst_trust": 1403.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": 3.0,
+     "inst_pension": 266.0,
+     "other_corp": -9.0,
+     "cum": {
+      "individual": 4448.0,
+      "foreign": 54283.0,
+      "institution": -21862.0
+     }
+    },
+    {
+     "date": "2026-06-10",
+     "individual": 1167.0,
+     "foreign": 1420.0,
+     "institution": -1125.0,
+     "inst_fin_inv": -1075.0,
+     "inst_insurance": 43.0,
+     "inst_trust": 199.0,
+     "inst_bank": 18.0,
+     "inst_other_fin": -114.0,
+     "inst_pension": -196.0,
+     "other_corp": -1462.0,
+     "cum": {
+      "individual": 5615.0,
+      "foreign": 55703.0,
+      "institution": -22987.0
+     }
+    },
+    {
+     "date": "2026-06-11",
+     "individual": -3634.0,
+     "foreign": -3601.0,
+     "institution": 7149.0,
+     "inst_fin_inv": 6212.0,
+     "inst_insurance": 202.0,
+     "inst_trust": -143.0,
+     "inst_bank": 15.0,
+     "inst_other_fin": -16.0,
+     "inst_pension": 878.0,
+     "other_corp": 86.0,
+     "cum": {
+      "individual": 1981.0,
+      "foreign": 52102.0,
+      "institution": -15838.0
+     }
+    },
+    {
+     "date": "2026-06-12",
+     "individual": -9416.0,
+     "foreign": 2769.0,
+     "institution": 6315.0,
+     "inst_fin_inv": -7010.0,
+     "inst_insurance": 91.0,
+     "inst_trust": 12612.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": -29.0,
+     "inst_pension": 648.0,
+     "other_corp": 332.0,
+     "cum": {
+      "individual": -7435.0,
+      "foreign": 54871.0,
+      "institution": -9523.0
+     }
+    },
+    {
+     "date": "2026-06-15",
+     "individual": 6162.0,
+     "foreign": -8164.0,
+     "institution": 2166.0,
+     "inst_fin_inv": 725.0,
+     "inst_insurance": -92.0,
+     "inst_trust": 1853.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": -15.0,
+     "inst_pension": -306.0,
+     "other_corp": -164.0,
+     "cum": {
+      "individual": -1273.0,
+      "foreign": 46707.0,
+      "institution": -7357.0
+     }
+    },
+    {
+     "date": "2026-06-16",
+     "individual": 7907.0,
+     "foreign": -3095.0,
+     "institution": -4630.0,
+     "inst_fin_inv": -2087.0,
+     "inst_insurance": -41.0,
+     "inst_trust": -2353.0,
+     "inst_bank": 1.0,
+     "inst_other_fin": -40.0,
+     "inst_pension": -110.0,
+     "other_corp": -183.0,
+     "cum": {
+      "individual": 6634.0,
+      "foreign": 43612.0,
+      "institution": -11987.0
+     }
+    },
+    {
+     "date": "2026-06-17",
+     "individual": -335.0,
+     "foreign": 400.0,
+     "institution": -101.0,
+     "inst_fin_inv": 1330.0,
+     "inst_insurance": 32.0,
+     "inst_trust": -1741.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": -36.0,
+     "inst_pension": 311.0,
+     "other_corp": 36.0,
+     "cum": {
+      "individual": 6299.0,
+      "foreign": 44012.0,
+      "institution": -12088.0
+     }
+    },
+    {
+     "date": "2026-06-18",
+     "individual": 3842.0,
+     "foreign": -1235.0,
+     "institution": -2659.0,
+     "inst_fin_inv": -2138.0,
+     "inst_insurance": -115.0,
+     "inst_trust": -372.0,
+     "inst_bank": -8.0,
+     "inst_other_fin": -60.0,
+     "inst_pension": 34.0,
+     "other_corp": 52.0,
+     "cum": {
+      "individual": 10141.0,
+      "foreign": 42777.0,
+      "institution": -14747.0
+     }
+    },
+    {
+     "date": "2026-06-19",
+     "individual": 750.0,
+     "foreign": 4977.0,
+     "institution": -5838.0,
+     "inst_fin_inv": -2801.0,
+     "inst_insurance": -161.0,
+     "inst_trust": -2744.0,
+     "inst_bank": -6.0,
+     "inst_other_fin": -2.0,
+     "inst_pension": -125.0,
+     "other_corp": 112.0,
+     "cum": {
+      "individual": 10891.0,
+      "foreign": 47754.0,
+      "institution": -20585.0
+     }
+    },
+    {
+     "date": "2026-06-22",
+     "individual": -4634.0,
+     "foreign": 3152.0,
+     "institution": 1456.0,
+     "inst_fin_inv": 1434.0,
+     "inst_insurance": 3.0,
+     "inst_trust": -246.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": -68.0,
+     "inst_pension": 330.0,
+     "other_corp": 26.0,
+     "cum": {
+      "individual": 6257.0,
+      "foreign": 50906.0,
+      "institution": -19129.0
+     }
+    },
+    {
+     "date": "2026-06-23",
+     "individual": -3979.0,
+     "foreign": 2746.0,
+     "institution": 1329.0,
+     "inst_fin_inv": 3423.0,
+     "inst_insurance": -28.0,
+     "inst_trust": -1940.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -13.0,
+     "inst_pension": -107.0,
+     "other_corp": -96.0,
+     "cum": {
+      "individual": 2278.0,
+      "foreign": 53652.0,
+      "institution": -17800.0
+     }
+    },
+    {
+     "date": "2026-06-24",
+     "individual": -3184.0,
+     "foreign": -320.0,
+     "institution": 3363.0,
+     "inst_fin_inv": 2777.0,
+     "inst_insurance": 8.0,
+     "inst_trust": 292.0,
+     "inst_bank": 3.0,
+     "inst_other_fin": 6.0,
+     "inst_pension": 277.0,
+     "other_corp": 141.0,
+     "cum": {
+      "individual": -906.0,
+      "foreign": 53332.0,
+      "institution": -14437.0
+     }
+    },
+    {
+     "date": "2026-06-25",
+     "individual": 1452.0,
+     "foreign": 212.0,
+     "institution": -1707.0,
+     "inst_fin_inv": -1713.0,
+     "inst_insurance": 11.0,
+     "inst_trust": -155.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -2.0,
+     "inst_pension": 153.0,
+     "other_corp": 43.0,
+     "cum": {
+      "individual": 546.0,
+      "foreign": 53544.0,
+      "institution": -16144.0
+     }
+    },
+    {
+     "date": "2026-06-26",
+     "individual": -6688.0,
+     "foreign": 3510.0,
+     "institution": 3084.0,
+     "inst_fin_inv": 3049.0,
+     "inst_insurance": 16.0,
+     "inst_trust": -244.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -65.0,
+     "inst_pension": 331.0,
+     "other_corp": 95.0,
+     "cum": {
+      "individual": -6142.0,
+      "foreign": 57054.0,
+      "institution": -13060.0
+     }
+    },
+    {
+     "date": "2026-06-29",
+     "individual": -5272.0,
+     "foreign": 266.0,
+     "institution": 5043.0,
+     "inst_fin_inv": 5305.0,
+     "inst_insurance": 52.0,
+     "inst_trust": -861.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -13.0,
+     "inst_pension": 562.0,
+     "other_corp": -37.0,
+     "cum": {
+      "individual": -11414.0,
+      "foreign": 57320.0,
+      "institution": -8017.0
+     }
+    },
+    {
+     "date": "2026-06-30",
+     "individual": 3909.0,
+     "foreign": -2464.0,
+     "institution": -1428.0,
+     "inst_fin_inv": 1559.0,
+     "inst_insurance": 74.0,
+     "inst_trust": -3348.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -39.0,
+     "inst_pension": 330.0,
+     "other_corp": -17.0,
+     "cum": {
+      "individual": -7505.0,
+      "foreign": 54856.0,
+      "institution": -9445.0
+     }
+    },
+    {
+     "date": "2026-07-01",
+     "individual": -1082.0,
+     "foreign": 2472.0,
+     "institution": -1255.0,
+     "inst_fin_inv": 1537.0,
+     "inst_insurance": 49.0,
+     "inst_trust": -3331.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -12.0,
+     "inst_pension": 498.0,
+     "other_corp": -134.0,
+     "cum": {
+      "individual": -8587.0,
+      "foreign": 57328.0,
+      "institution": -10700.0
+     }
+    },
+    {
+     "date": "2026-07-02",
+     "individual": 4859.0,
+     "foreign": -1942.0,
+     "institution": -3091.0,
+     "inst_fin_inv": 1680.0,
+     "inst_insurance": -40.0,
+     "inst_trust": -3905.0,
+     "inst_bank": 4.0,
+     "inst_other_fin": -1.0,
+     "inst_pension": -829.0,
+     "other_corp": 173.0,
+     "cum": {
+      "individual": -3728.0,
+      "foreign": 55386.0,
+      "institution": -13791.0
+     }
+    },
+    {
+     "date": "2026-07-03",
+     "individual": 1075.0,
+     "foreign": -202.0,
+     "institution": -1037.0,
+     "inst_fin_inv": -345.0,
+     "inst_insurance": -98.0,
+     "inst_trust": -323.0,
+     "inst_bank": 7.0,
+     "inst_other_fin": -1.0,
+     "inst_pension": -277.0,
+     "other_corp": 164.0,
+     "cum": {
+      "individual": -2653.0,
+      "foreign": 55184.0,
+      "institution": -14828.0
+     }
+    },
+    {
+     "date": "2026-07-06",
+     "individual": 2591.0,
+     "foreign": -447.0,
+     "institution": -2244.0,
+     "inst_fin_inv": -603.0,
+     "inst_insurance": -145.0,
+     "inst_trust": -804.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -73.0,
+     "inst_pension": -615.0,
+     "other_corp": 100.0,
+     "cum": {
+      "individual": -62.0,
+      "foreign": 54737.0,
+      "institution": -17072.0
+     }
+    },
+    {
+     "date": "2026-07-07",
+     "individual": -3616.0,
+     "foreign": 3742.0,
+     "institution": -100.0,
+     "inst_fin_inv": 1454.0,
+     "inst_insurance": -23.0,
+     "inst_trust": -1477.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -11.0,
+     "inst_pension": -43.0,
+     "other_corp": -27.0,
+     "cum": {
+      "individual": -3678.0,
+      "foreign": 58479.0,
+      "institution": -17172.0
+     }
+    },
+    {
+     "date": "2026-07-08",
+     "individual": -1959.0,
+     "foreign": 3376.0,
+     "institution": -1453.0,
+     "inst_fin_inv": -87.0,
+     "inst_insurance": -70.0,
+     "inst_trust": -999.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -9.0,
+     "inst_pension": -288.0,
+     "other_corp": 36.0,
+     "cum": {
+      "individual": -5637.0,
+      "foreign": 61855.0,
+      "institution": -18625.0
+     }
+    },
+    {
+     "date": "2026-07-09",
+     "individual": -3217.0,
+     "foreign": 221.0,
+     "institution": 3081.0,
+     "inst_fin_inv": 1488.0,
+     "inst_insurance": 83.0,
+     "inst_trust": 1218.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": 11.0,
+     "inst_pension": 284.0,
+     "other_corp": -86.0,
+     "cum": {
+      "individual": -8854.0,
+      "foreign": 62076.0,
+      "institution": -15544.0
+     }
+    },
+    {
+     "date": "2026-07-10",
+     "individual": -4213.0,
+     "foreign": -1563.0,
+     "institution": 5825.0,
+     "inst_fin_inv": 1845.0,
+     "inst_insurance": 68.0,
+     "inst_trust": 3501.0,
+     "inst_bank": 5.0,
+     "inst_other_fin": -11.0,
+     "inst_pension": 416.0,
+     "other_corp": -49.0,
+     "cum": {
+      "individual": -13067.0,
+      "foreign": 60513.0,
+      "institution": -9719.0
+     }
+    },
+    {
+     "date": "2026-07-13",
+     "individual": 1833.0,
+     "foreign": -3878.0,
+     "institution": 1843.0,
+     "inst_fin_inv": -910.0,
+     "inst_insurance": 30.0,
+     "inst_trust": 2828.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": 2.0,
+     "inst_pension": -107.0,
+     "other_corp": 203.0,
+     "cum": {
+      "individual": -11234.0,
+      "foreign": 56635.0,
+      "institution": -7876.0
+     }
+    },
+    {
+     "date": "2026-07-14",
+     "individual": 698.0,
+     "foreign": -2471.0,
+     "institution": 1587.0,
+     "inst_fin_inv": 245.0,
+     "inst_insurance": -43.0,
+     "inst_trust": 1436.0,
+     "inst_bank": -32.0,
+     "inst_other_fin": -11.0,
+     "inst_pension": -9.0,
+     "other_corp": 186.0,
+     "cum": {
+      "individual": -10536.0,
+      "foreign": 54164.0,
+      "institution": -6289.0
+     }
+    },
+    {
+     "date": "2026-07-15",
+     "individual": -1542.0,
+     "foreign": 231.0,
+     "institution": 1086.0,
+     "inst_fin_inv": -884.0,
+     "inst_insurance": 74.0,
+     "inst_trust": 1817.0,
+     "inst_bank": -4.0,
+     "inst_other_fin": -14.0,
+     "inst_pension": 97.0,
+     "other_corp": 226.0,
+     "cum": {
+      "individual": -12078.0,
+      "foreign": 54395.0,
+      "institution": -5203.0
+     }
+    },
+    {
+     "date": "2026-07-16",
+     "individual": 4184.0,
+     "foreign": -2919.0,
+     "institution": -1553.0,
+     "inst_fin_inv": -1123.0,
+     "inst_insurance": -72.0,
+     "inst_trust": 86.0,
+     "inst_bank": -2.0,
+     "inst_other_fin": -26.0,
+     "inst_pension": -416.0,
+     "other_corp": 287.0,
+     "cum": {
+      "individual": -7894.0,
+      "foreign": 51476.0,
+      "institution": -6756.0
+     }
+    },
+    {
+     "date": "2026-07-20",
+     "individual": 1907.0,
+     "foreign": -518.0,
+     "institution": -1330.0,
+     "inst_fin_inv": -573.0,
+     "inst_insurance": -42.0,
+     "inst_trust": -379.0,
+     "inst_bank": -7.0,
+     "inst_other_fin": -22.0,
+     "inst_pension": -307.0,
+     "other_corp": -59.0,
+     "cum": {
+      "individual": -5987.0,
+      "foreign": 50958.0,
+      "institution": -8086.0
+     }
+    },
+    {
+     "date": "2026-07-21",
+     "individual": 1474.0,
+     "foreign": -1360.0,
+     "institution": -129.0,
+     "inst_fin_inv": -115.0,
+     "inst_insurance": 29.0,
+     "inst_trust": 123.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -43.0,
+     "inst_pension": -123.0,
+     "other_corp": 14.0,
+     "cum": {
+      "individual": -4513.0,
+      "foreign": 49598.0,
+      "institution": -8215.0
+     }
+    },
+    {
+     "date": "2026-07-22",
+     "individual": 2636.0,
+     "foreign": -815.0,
+     "institution": -1914.0,
+     "inst_fin_inv": -1644.0,
+     "inst_insurance": -21.0,
+     "inst_trust": -524.0,
+     "inst_bank": -1.0,
+     "inst_other_fin": -33.0,
+     "inst_pension": 308.0,
+     "other_corp": 93.0,
+     "cum": {
+      "individual": -1877.0,
+      "foreign": 48783.0,
+      "institution": -10129.0
+     }
+    },
+    {
+     "date": "2026-07-23",
+     "individual": -2373.0,
+     "foreign": 1675.0,
+     "institution": 643.0,
+     "inst_fin_inv": 1416.0,
+     "inst_insurance": -39.0,
+     "inst_trust": -630.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -4.0,
+     "inst_pension": -100.0,
+     "other_corp": 55.0,
+     "cum": {
+      "individual": -4250.0,
+      "foreign": 50458.0,
+      "institution": -9486.0
+     }
+    },
+    {
+     "date": "2026-07-24",
+     "individual": 4881.0,
+     "foreign": -1315.0,
+     "institution": -3580.0,
+     "inst_fin_inv": -1523.0,
+     "inst_insurance": -167.0,
+     "inst_trust": -1015.0,
+     "inst_bank": -5.0,
+     "inst_other_fin": -71.0,
+     "inst_pension": -799.0,
+     "other_corp": 14.0,
+     "cum": {
+      "individual": 631.0,
+      "foreign": 49143.0,
+      "institution": -13066.0
+     }
+    },
+    {
+     "date": "2026-07-27",
+     "individual": -1550.0,
+     "foreign": -1422.0,
+     "institution": 2731.0,
+     "inst_fin_inv": 2124.0,
+     "inst_insurance": 20.0,
+     "inst_trust": 438.0,
+     "inst_bank": 0.0,
+     "inst_other_fin": -22.0,
+     "inst_pension": 172.0,
+     "other_corp": 241.0,
+     "cum": {
+      "individual": -919.0,
+      "foreign": 47721.0,
+      "institution": -10335.0
+     }
+    },
+    {
+     "date": "2026-07-28",
+     "individual": 480.0,
+     "foreign": 860.0,
+     "institution": -1345.0,
+     "inst_fin_inv": 99.0,
+     "inst_insurance": -82.0,
+     "inst_trust": -1078.0,
+     "inst_bank": 2.0,
+     "inst_other_fin": -6.0,
+     "inst_pension": -280.0,
+     "other_corp": 5.0,
+     "cum": {
+      "individual": -439.0,
+      "foreign": 48581.0,
+      "institution": -11680.0
+     }
+    },
+    {
+     "date": "2026-07-29",
+     "individual": -4579.0,
+     "foreign": 3082.0,
+     "institution": 1474.0,
+     "inst_fin_inv": 1952.0,
+     "inst_insurance": -36.0,
+     "inst_trust": -7.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -21.0,
+     "inst_pension": -411.0,
+     "other_corp": 23.0,
+     "cum": {
+      "individual": -5018.0,
+      "foreign": 51663.0,
+      "institution": -10206.0
+     }
+    },
+    {
+     "date": "2026-07-30",
+     "individual": -1108.0,
+     "foreign": 2483.0,
+     "institution": -1435.0,
+     "inst_fin_inv": -456.0,
+     "inst_insurance": -68.0,
+     "inst_trust": -452.0,
+     "inst_bank": -3.0,
+     "inst_other_fin": -17.0,
+     "inst_pension": -439.0,
+     "other_corp": 60.0,
+     "cum": {
+      "individual": -6126.0,
+      "foreign": 54146.0,
+      "institution": -11641.0
+     }
+    }
+   ],
+   "latest": {
+    "date": "2026-07-30",
+    "individual": -1108.0,
+    "foreign": 2483.0,
+    "institution": -1435.0,
+    "inst_fin_inv": -456.0,
+    "inst_insurance": -68.0,
+    "inst_trust": -452.0,
+    "inst_bank": -3.0,
+    "inst_other_fin": -17.0,
+    "inst_pension": -439.0,
+    "other_corp": 60.0,
+    "cum": {
+     "individual": -6126.0,
+     "foreign": 54146.0,
+     "institution": -11641.0
+    }
+   },
+   "streaks": {
+    "individual": {
+     "days": 2,
+     "side": "sell",
+     "total": -5687.0
+    },
+    "foreign": {
+     "days": 3,
+     "side": "buy",
+     "total": 6425.0
+    },
+    "institution": {
+     "days": 1,
+     "side": "sell",
+     "total": -1435.0
+    }
+   }
+  }
+ }
+}

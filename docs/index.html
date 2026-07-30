@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>개미의 거울 — 개인 · 외국인 · 기관 수급 대시보드</title>
+<meta name="description" content="개미는 정말 늘 반대로 가는가, 그래서 틀렸는가. 개인·외국인·기관의 돈 흐름과 타이밍 성적표를 실제 데이터로. 코스피·코스닥 수급, 시총상위 종목, 미국장과 FOMC까지.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="style.css?v=4">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
+</head>
+<body>
+
+<div id="loading" class="loading">
+  <div class="loading-dot"></div>
+  <p id="loading-msg">시장 데이터를 불러오는 중…</p>
+  <p id="loading-detail" class="dim small"></p>
+</div>
+
+<div id="fatal" class="fatal" hidden>
+  <h2>데이터를 불러오지 못했습니다</h2>
+  <p id="fatal-msg"></p>
+  <div id="fatal-hint" class="fatal-hint"></div>
+  <button id="fatal-retry" class="retry-btn">다시 시도</button>
+</div>
+
+<main id="app" hidden>
+
+  <!-- ══════════════════ 헤더 ══════════════════ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1><span class="ant-mark">🐜</span> 개미의 거울</h1>
+      <p class="sub">개인 <span class="vs">vs</span> 외국인 <span class="vs">vs</span> 기관 —
+         오늘 한국 증시에서 누가 사고 누가 팔았나</p>
+    </div>
+    <div class="topbar-right">
+      <span id="phase-badge" class="badge"></span>
+      <span id="updated" class="updated"></span>
+    </div>
+  </header>
+
+  <div class="mirror" id="mirror">
+    <p class="mirror-line" id="mirror-line"></p>
+    <p class="mirror-sub" id="mirror-sub"></p>
+  </div>
+
+  <div id="provisional" class="notice" hidden>
+    <strong>잠정치</strong> 장중 수급은 추정값이며, 장 마감 후 확정치로 정정됩니다.
+  </div>
+
+  <!-- ══════════════════ 히어로: 오늘의 줄다리기 ══════════════════ -->
+  <section class="card hero">
+    <div class="card-head">
+      <h2>오늘의 수급 줄다리기</h2>
+      <div class="seg" id="hero-market-seg">
+        <button data-market="KOSPI" class="on">코스피</button>
+        <button data-market="KOSDAQ">코스닥</button>
+      </div>
+    </div>
+
+    <p class="hero-date" id="hero-date"></p>
+
+    <!-- 매수세 vs 매도세 균형 게이지 -->
+    <div class="balance">
+      <div class="balance-labels">
+        <span class="b-sell">파는 힘</span>
+        <span class="b-buy">사는 힘</span>
+      </div>
+      <div class="balance-track"><!-- 구성 막대는 app.js 에서 채운다 --></div>
+      <p class="balance-caption" id="balance-caption"></p>
+    </div>
+
+    <!-- 3주체 다이버징 바 -->
+    <div class="tug" id="tug"></div>
+
+    <p class="axis-hint">
+      <span class="arrow">◀</span> 순매도 (팔았다) &nbsp;·&nbsp; 순매수 (샀다) <span class="arrow">▶</span>
+      &nbsp;·&nbsp; 단위 억원
+    </p>
+  </section>
+
+  <!-- ══════════════════ 개미 온도계 ══════════════════ -->
+  <section class="card" id="thermo-card">
+    <div class="card-head">
+      <h2>오늘의 개미 온도계</h2>
+      <span class="dim small">최근 <b id="thermo-sample"></b>거래일 중 오늘의 매수 강도</span>
+    </div>
+    <div class="thermo">
+      <div class="thermo-scale">
+        <span>패닉 매도</span><span>관망</span><span>영끌 매수</span>
+      </div>
+      <div class="thermo-track">
+        <div class="thermo-zone z-sell"></div>
+        <div class="thermo-zone z-mid"></div>
+        <div class="thermo-zone z-buy"></div>
+        <div class="thermo-ant" id="thermo-ant">🐜</div>
+      </div>
+      <div class="thermo-nums" id="thermo-nums"></div>
+    </div>
+    <div class="contrarian" id="contrarian"></div>
+  </section>
+
+  <!-- ══════════════════ 선물 · 빚투 ══════════════════ -->
+  <section class="grid-2">
+    <div class="card" id="futures-card">
+      <div class="card-head">
+        <h2>외국인의 본심 <span class="dim">선물</span></h2>
+        <span class="dim small">단위: 계약 · 코스피200 선물</span>
+      </div>
+      <p class="report-intro" style="margin-bottom:12px">
+        외국인은 현물보다 선물을 먼저 움직이는 경우가 많습니다.
+        현물과 선물의 방향이 갈리면, 지금 보이는 매도가 진심이 아닐 수 있습니다.
+      </p>
+      <div id="fut-divergence" class="divergence"></div>
+      <div class="chart-wrap"><svg id="fut-chart" class="chart chart-xs"></svg></div>
+      <p class="dim small" id="fut-note" style="margin:8px 0 0"></p>
+    </div>
+
+    <div class="card" id="credit-card">
+      <div class="card-head">
+        <h2>빚투 체온계</h2>
+        <span class="dim small">신용융자 · 반대매매 (금융투자협회)</span>
+      </div>
+      <div class="credit-stats" id="credit-stats"></div>
+      <div class="chart-wrap"><svg id="credit-chart" class="chart chart-xs"></svg></div>
+      <p class="dim small" id="credit-note" style="margin:8px 0 0"></p>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 한 줄 브리핑 ══════════════════ -->
+  <section class="card">
+    <div class="card-head"><h2>지금 시장에서 벌어지는 일</h2></div>
+    <div class="insights" id="insights"></div>
+  </section>
+
+  <!-- ══════════════════ 지수 ══════════════════ -->
+  <section class="grid-2" id="indices"></section>
+
+  <!-- ══════════════════ 개미 성적표 ══════════════════ -->
+  <section class="card" id="report-card">
+    <div class="card-head">
+      <h2>성적표</h2>
+      <span class="dim small" id="report-sample"></span>
+    </div>
+    <p class="report-intro">
+      각 주체가 <b>크게 사들인 날</b>(상위 20%)로부터 20거래일 뒤,
+      지수가 실제로 얼마나 움직였는지를 시장 평균과 비교했습니다.
+      타이밍이 좋았다면 평균보다 높고, 나빴다면 낮습니다.
+    </p>
+    <div class="grades" id="grades"></div>
+    <div class="legend" id="timing-legend"></div>
+    <div class="chart-wrap"><svg id="timing-chart" class="chart chart-sm"></svg></div>
+    <p class="dim small" style="margin:8px 0 0">
+      막대가 점선(시장 평균)보다 높으면 그 주체가 산 시점이 평균보다 좋았다는 뜻입니다.
+    </p>
+    <div class="yearly" id="yearly"></div>
+  </section>
+
+  <!-- ══════════════════ 반대로 가는 본능 ══════════════════ -->
+  <section class="grid-2">
+    <div class="card">
+      <div class="card-head"><h2>반대로 가는 본능</h2></div>
+      <div class="oppose" id="oppose"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>그런데 이건 아이러니가 아닙니다</h2></div>
+      <div class="zero-sum">
+        <p>순매수 총합은 <b>언제나 0</b>입니다. 개미가 산 물량은 누군가 판 물량이고,
+           외국인이 판 물량은 누군가 받은 물량입니다.
+           <b>개미가 외국인과 반대로 가는 건 아이러니가 아니라 산수입니다.</b></p>
+        <p class="zero-sum-punch">
+          진짜 문제는 방향이 아니라 <b>타이밍</b>입니다.
+          누가 먼저 움직이고, 누가 마지막에 받느냐.
+        </p>
+        <p class="dim small">
+          위 상관계수가 −1에 가까운 건 개미가 유별나서가 아니라,
+          시장이 그렇게 생겼기 때문입니다. 그러니 자책할 일도 아닙니다.
+          다만 성적표는 봐야 합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 흑역사 ══════════════════ -->
+  <section class="card">
+    <div class="card-head">
+      <h2>개미가 가장 크게 질렀던 날들</h2>
+      <span class="dim small">그리고 20거래일 뒤 벌어진 일</span>
+    </div>
+    <div class="hall" id="hall"></div>
+    <p class="hall-verdict" id="hall-verdict"></p>
+  </section>
+
+  <!-- ══════════════════ 수급 흐름 차트 ══════════════════ -->
+  <section class="card">
+    <div class="card-head">
+      <h2>수급 흐름</h2>
+      <div class="seg-group">
+        <div class="seg" id="flow-range-seg">
+          <button data-range="40" class="on">40일</button>
+          <button data-range="120">120일</button>
+        </div>
+        <div class="seg" id="flow-mode-seg">
+          <button data-mode="cum" class="on">누적</button>
+          <button data-mode="daily">일별</button>
+        </div>
+      </div>
+    </div>
+    <div class="legend" id="flow-legend"></div>
+    <div class="chart-wrap"><svg id="flow-chart" class="chart"></svg></div>
+    <p class="dim small" id="flow-note"></p>
+  </section>
+
+  <!-- ══════════════════ 연속 매매 + 기관 분해 ══════════════════ -->
+  <section class="grid-2">
+    <div class="card">
+      <div class="card-head"><h2>연속 매매 기록</h2></div>
+      <div class="streaks" id="streaks"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>기관은 누가 움직였나 <span class="dim">오늘</span></h2></div>
+      <div class="inst" id="inst-breakdown"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 종목 트리맵 ══════════════════ -->
+  <section class="card">
+    <div class="card-head">
+      <h2>시가총액 상위 종목</h2>
+      <div class="seg" id="tree-market-seg">
+        <button data-tmarket="KOSPI" class="on">코스피</button>
+        <button data-tmarket="KOSDAQ">코스닥</button>
+      </div>
+    </div>
+    <div class="stock-search">
+      <input id="stock-search" type="search" placeholder="종목 검색 (예: 삼성전자, 에코프로)"
+             autocomplete="off" spellcheck="false">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <p class="dim small" style="margin:0 0 10px">칸 크기 = 시총 · 색 = 등락률 · 누르면 수급이 나옵니다</p>
+    <div class="treemap-wrap"><div id="treemap" class="treemap"></div></div>
+    <p id="treemap-caption" class="dim small" style="margin:8px 0 0"></p>
+    <div id="stock-detail" class="stock-detail" hidden></div>
+  </section>
+
+  <!-- ══════════════════ 업종 ══════════════════ -->
+  <section class="grid-2">
+    <div class="card">
+      <div class="card-head"><h2>오늘 가장 많이 오른 업종</h2></div>
+      <div class="bars" id="ind-up"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>오늘 가장 많이 빠진 업종</h2></div>
+      <div class="bars" id="ind-down"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 글로벌 ══════════════════ -->
+  <section class="card">
+    <div class="card-head">
+      <h2>한국장에 영향 주는 바깥 지표</h2>
+      <span class="dim small">간밤 미국장 · 환율 · 금리 · 원자재</span>
+    </div>
+    <div class="globals" id="globals"></div>
+    <div class="macro" id="macro"></div>
+  </section>
+
+  <!-- ══════════════════ 이벤트 ══════════════════ -->
+  <section class="card">
+    <div class="card-head">
+      <h2>다가오는 이벤트</h2>
+      <span class="dim small">한국장이 흔들리는 날들</span>
+    </div>
+    <div class="events" id="events"></div>
+  </section>
+
+  <!-- ══════════════════ 성적표를 믿기 전에 ══════════════════ -->
+  <section class="card caveat-card">
+    <div class="card-head">
+      <h2>성적표를 믿기 전에 읽을 것</h2>
+      <span class="dim small">이 페이지가 스스로에 대해 하는 고백</span>
+    </div>
+    <ul class="caveats" id="caveats"></ul>
+    <p class="caveat-close">
+      개미를 비웃자고 만든 페이지가 아닙니다. 개미가 지는 이유가
+      <b>멍청해서가 아니라 늘 마지막에 정보를 받기 때문</b>이라면,
+      필요한 건 조롱이 아니라 같은 숫자를 같은 시각에 보는 일입니다.
+    </p>
+  </section>
+
+  <!-- ══════════════════ 푸터 ══════════════════ -->
+  <footer class="footer">
+    <p><strong>데이터 출처</strong> <span id="sources"></span></p>
+    <p class="dim" id="caveat"></p>
+    <p class="disclaimer">
+      이 페이지는 공개된 시장 데이터를 정리해 보여주는 <strong>정보 도구</strong>입니다.
+      투자 자문이나 매매 권유가 아니며, 수치에 오류나 지연이 있을 수 있습니다.
+      투자 판단과 그 결과는 투자자 본인에게 있습니다.
+    </p>
+    <div id="warnings" class="warnings" hidden></div>
+  </footer>
+
+</main>
+
+<div id="tooltip" class="tooltip" hidden></div>
+
+<script src="app.js?v=4"></script>
+</body>
+</html>
