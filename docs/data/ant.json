@@ -31,10 +31,10 @@
   {
    "year": "2026",
    "days": 142,
-   "corrIF": -0.842,
-   "baseline20": 7.43,
-   "indivHeavyR20": -1.15,
-   "excess": -8.58,
+   "corrIF": -0.846,
+   "baseline20": 7.45,
+   "indivHeavyR20": -1.07,
+   "excess": -8.52,
    "grade": "F"
   }
  ],
@@ -44,70 +44,70 @@
   "to": "2026-07-31"
  },
  "baseline": {
-  "r1": 0.14,
+  "r1": 0.15,
   "r5": 0.67,
   "r20": 3.09
  },
  "correlation": {
-  "individual_foreign": -0.838,
-  "individual_institution": -0.566,
-  "foreign_institution": 0.03
+  "individual_foreign": -0.84,
+  "individual_institution": -0.569,
+  "foreign_institution": 0.038
  },
  "oppositeRate": {
   "vsForeign": 79.1,
-  "vsInstitution": 74.3
+  "vsInstitution": 74.4
  },
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.084,
-    "corr5": -0.079,
-    "corr20": -0.124
+    "corr1": -0.085,
+    "corr5": -0.077,
+    "corr20": -0.123
    },
    "heavyBuy": {
     "r1": -0.08,
-    "r5": 0.73,
-    "r20": 3.35,
+    "r5": 0.74,
+    "r20": 3.36,
     "n": 150
    },
-   "excess20": 0.26,
+   "excess20": 0.27,
    "grade": "C",
-   "todayValue": -68113.0,
+   "todayValue": -83335.0,
    "todayPercentile": 0.1
   },
   "foreign": {
    "timing": {
     "corr1": 0.127,
-    "corr5": 0.097,
-    "corr20": 0.117
+    "corr5": 0.096,
+    "corr20": 0.116
    },
    "heavyBuy": {
-    "r1": 0.31,
+    "r1": 0.33,
     "r5": 1.22,
     "r20": 4.45,
     "n": 150
    },
    "excess20": 1.36,
    "grade": "B",
-   "todayValue": 69696.0,
+   "todayValue": 77076.0,
    "todayPercentile": 99.9
   },
   "institution": {
    "timing": {
     "corr1": -0.045,
-    "corr5": -0.021,
-    "corr20": 0.014
+    "corr5": -0.023,
+    "corr20": 0.013
    },
    "heavyBuy": {
-    "r1": 0.27,
-    "r5": 1.08,
-    "r20": 4.22,
+    "r1": 0.28,
+    "r5": 1.1,
+    "r20": 4.26,
     "n": 150
    },
-   "excess20": 1.13,
+   "excess20": 1.17,
    "grade": "B",
-   "todayValue": -707.0,
-   "todayPercentile": 35.7
+   "todayValue": 7026.0,
+   "todayPercentile": 87.5
   }
  },
  "contrarianRead": {
