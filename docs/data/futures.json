@@ -770,52 +770,52 @@
   },
   {
    "date": "2026-07-31",
-   "individual": -118.0,
-   "foreign": 2780.0,
-   "institution": -3038.0,
-   "inst_fin_inv": -4907.0,
-   "inst_insurance": 61.0,
-   "inst_trust": 1896.0,
-   "inst_bank": -115.0,
-   "inst_other_fin": 80.0,
-   "inst_pension": -53.0,
-   "other_corp": 376.0
+   "individual": -1616.0,
+   "foreign": 92.0,
+   "institution": 1194.0,
+   "inst_fin_inv": -4958.0,
+   "inst_insurance": 463.0,
+   "inst_trust": 5817.0,
+   "inst_bank": -136.0,
+   "inst_other_fin": 45.0,
+   "inst_pension": -37.0,
+   "other_corp": 330.0
   }
  ],
  "latest": {
   "date": "2026-07-31",
-  "individual": -118.0,
-  "foreign": 2780.0,
-  "institution": -3038.0,
-  "inst_fin_inv": -4907.0,
-  "inst_insurance": 61.0,
-  "inst_trust": 1896.0,
-  "inst_bank": -115.0,
-  "inst_other_fin": 80.0,
-  "inst_pension": -53.0,
-  "other_corp": 376.0
+  "individual": -1616.0,
+  "foreign": 92.0,
+  "institution": 1194.0,
+  "inst_fin_inv": -4958.0,
+  "inst_insurance": 463.0,
+  "inst_trust": 5817.0,
+  "inst_bank": -136.0,
+  "inst_other_fin": 45.0,
+  "inst_pension": -37.0,
+  "other_corp": 330.0
  },
  "streaks": {
   "individual": {
    "days": 1,
    "side": "sell",
-   "total": -118.0
+   "total": -1616.0
   },
   "foreign": {
    "days": 1,
    "side": "buy",
-   "total": 2780.0
+   "total": 92.0
   },
   "institution": {
-   "days": 1,
-   "side": "sell",
-   "total": -3038.0
+   "days": 2,
+   "side": "buy",
+   "total": 2240.0
   }
  },
  "divergence": {
   "window": 5,
-  "spotForeign": 4034.0,
-  "futuresForeign": 11623,
-  "aligned": true
+  "spotForeign": -628.0,
+  "futuresForeign": 8935,
+  "aligned": false
  }
 }
