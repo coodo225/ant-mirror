@@ -12,13 +12,6 @@
    "marketCapText": "1,534조 6,481억원",
    "flow": [
     {
-     "date": "20260724",
-     "individual": 6675340.0,
-     "foreign": -3428259.0,
-     "institution": -3378638.0,
-     "foreignHoldRatio": 46.71
-    },
-    {
      "date": "20260727",
      "individual": 2801281.0,
      "foreign": -3319368.0,
@@ -45,9 +38,16 @@
      "foreign": 656680.0,
      "institution": -237928.0,
      "foreignHoldRatio": 46.53
+    },
+    {
+     "date": "20260731",
+     "individual": -11681307.0,
+     "foreign": 8359011.0,
+     "institution": 3618959.0,
+     "foreignHoldRatio": 46.68
     }
    ],
-   "foreignHoldRatio": 46.53
+   "foreignHoldRatio": 46.68
   },
   {
    "code": "000660",
@@ -60,13 +60,6 @@
    "tradingValue": 17287902.0,
    "marketCapText": "1,254조 9,859억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 1431548.0,
-     "foreign": -976779.0,
-     "institution": -483881.0,
-     "foreignHoldRatio": 52.44
-    },
     {
      "date": "20260727",
      "individual": 376010.0,
@@ -94,9 +87,16 @@
      "foreign": 444498.0,
      "institution": -80151.0,
      "foreignHoldRatio": 50.86
+    },
+    {
+     "date": "20260731",
+     "individual": -2463959.0,
+     "foreign": 2205767.0,
+     "institution": 277183.0,
+     "foreignHoldRatio": 51.16
     }
    ],
-   "foreignHoldRatio": 50.86
+   "foreignHoldRatio": 51.16
   },
   {
    "code": "005935",
@@ -109,13 +109,6 @@
    "tradingValue": 1598505.0,
    "marketCapText": "153조 2,529억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 417246.0,
-     "foreign": -47179.0,
-     "institution": -364550.0,
-     "foreignHoldRatio": 76.72
-    },
     {
      "date": "20260727",
      "individual": 33454.0,
@@ -143,9 +136,16 @@
      "foreign": 242276.0,
      "institution": -116214.0,
      "foreignHoldRatio": 76.87
+    },
+    {
+     "date": "20260731",
+     "individual": -1649583.0,
+     "foreign": 1443852.0,
+     "institution": 239160.0,
+     "foreignHoldRatio": 77.05
     }
    ],
-   "foreignHoldRatio": 76.87
+   "foreignHoldRatio": 77.05
   },
   {
    "code": "402340",
@@ -158,13 +158,6 @@
    "tradingValue": 1058268.0,
    "marketCapText": "136조 9,728억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 122484.0,
-     "foreign": 81645.0,
-     "institution": -209708.0,
-     "foreignHoldRatio": 45.54
-    },
     {
      "date": "20260727",
      "individual": 60692.0,
@@ -192,9 +185,16 @@
      "foreign": 204799.0,
      "institution": -226652.0,
      "foreignHoldRatio": 45.88
+    },
+    {
+     "date": "20260731",
+     "individual": -298159.0,
+     "foreign": 327069.0,
+     "institution": -17231.0,
+     "foreignHoldRatio": 46.13
     }
    ],
-   "foreignHoldRatio": 45.88
+   "foreignHoldRatio": 46.13
   },
   {
    "code": "009150",
@@ -207,13 +207,6 @@
    "tradingValue": 691914.0,
    "marketCapText": "85조 3,002억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 208866.0,
-     "foreign": -156510.0,
-     "institution": -54076.0,
-     "foreignHoldRatio": 39.52
-    },
     {
      "date": "20260727",
      "individual": 99020.0,
@@ -241,9 +234,16 @@
      "foreign": -90340.0,
      "institution": -68236.0,
      "foreignHoldRatio": 39.31
+    },
+    {
+     "date": "20260731",
+     "individual": -262564.0,
+     "foreign": 193624.0,
+     "institution": 72663.0,
+     "foreignHoldRatio": 39.57
     }
    ],
-   "foreignHoldRatio": 39.31
+   "foreignHoldRatio": 39.57
   },
   {
    "code": "005380",
@@ -256,13 +256,6 @@
    "tradingValue": 411212.0,
    "marketCapText": "79조 4,460억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 371096.0,
-     "foreign": -191290.0,
-     "institution": -185803.0,
-     "foreignHoldRatio": 25.0
-    },
     {
      "date": "20260727",
      "individual": 30229.0,
@@ -290,9 +283,16 @@
      "foreign": 73521.0,
      "institution": -9389.0,
      "foreignHoldRatio": 24.97
+    },
+    {
+     "date": "20260731",
+     "individual": -2516.0,
+     "foreign": 110551.0,
+     "institution": -111934.0,
+     "foreignHoldRatio": 25.02
     }
    ],
-   "foreignHoldRatio": 24.97
+   "foreignHoldRatio": 25.02
   },
   {
    "code": "373220",
@@ -305,13 +305,6 @@
    "tradingValue": 158591.0,
    "marketCapText": "76조 7,520억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 24796.0,
-     "foreign": 16711.0,
-     "institution": -43780.0,
-     "foreignHoldRatio": 5.53
-    },
     {
      "date": "20260727",
      "individual": 4942.0,
@@ -339,9 +332,16 @@
      "foreign": 19896.0,
      "institution": 64306.0,
      "foreignHoldRatio": 5.57
+    },
+    {
+     "date": "20260731",
+     "individual": 45249.0,
+     "foreign": -40210.0,
+     "institution": -4596.0,
+     "foreignHoldRatio": 5.55
     }
    ],
-   "foreignHoldRatio": 5.57
+   "foreignHoldRatio": 5.55
   },
   {
    "code": "207940",
@@ -354,13 +354,6 @@
    "tradingValue": 134124.0,
    "marketCapText": "68조 7,421억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -115841.0,
-     "foreign": 45686.0,
-     "institution": 73138.0,
-     "foreignHoldRatio": 12.95
-    },
     {
      "date": "20260727",
      "individual": -21235.0,
@@ -388,6 +381,13 @@
      "foreign": 989.0,
      "institution": 18454.0,
      "foreignHoldRatio": 12.93
+    },
+    {
+     "date": "20260731",
+     "individual": 19672.0,
+     "foreign": -1594.0,
+     "institution": -19385.0,
+     "foreignHoldRatio": 12.93
     }
    ],
    "foreignHoldRatio": 12.93
@@ -403,13 +403,6 @@
    "tradingValue": 171940.0,
    "marketCapText": "62조 3,000억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -5637.0,
-     "foreign": 88493.0,
-     "institution": -79944.0,
-     "foreignHoldRatio": 23.4
-    },
     {
      "date": "20260727",
      "individual": 1296.0,
@@ -437,9 +430,16 @@
      "foreign": -37669.0,
      "institution": 47698.0,
      "foreignHoldRatio": 23.4
+    },
+    {
+     "date": "20260731",
+     "individual": -16588.0,
+     "foreign": 29024.0,
+     "institution": -16557.0,
+     "foreignHoldRatio": 23.41
     }
    ],
-   "foreignHoldRatio": 23.4
+   "foreignHoldRatio": 23.41
   },
   {
    "code": "105560",
@@ -452,13 +452,6 @@
    "tradingValue": 252110.0,
    "marketCapText": "59조 7,649억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 111076.0,
-     "foreign": -36411.0,
-     "institution": -63306.0,
-     "foreignHoldRatio": 79.46
-    },
     {
      "date": "20260727",
      "individual": -25886.0,
@@ -486,9 +479,16 @@
      "foreign": -146575.0,
      "institution": 193587.0,
      "foreignHoldRatio": 79.2
+    },
+    {
+     "date": "20260731",
+     "individual": 35777.0,
+     "foreign": 219091.0,
+     "institution": -243605.0,
+     "foreignHoldRatio": 79.26
     }
    ],
-   "foreignHoldRatio": 79.2
+   "foreignHoldRatio": 79.26
   },
   {
    "code": "028260",
@@ -501,13 +501,6 @@
    "tradingValue": 417473.0,
    "marketCapText": "57조 19억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 1683.0,
-     "foreign": 27064.0,
-     "institution": -28592.0,
-     "foreignHoldRatio": 30.88
-    },
     {
      "date": "20260727",
      "individual": 7162.0,
@@ -535,9 +528,16 @@
      "foreign": -46016.0,
      "institution": 97937.0,
      "foreignHoldRatio": 30.76
+    },
+    {
+     "date": "20260731",
+     "individual": -39500.0,
+     "foreign": -82874.0,
+     "institution": 125522.0,
+     "foreignHoldRatio": 30.71
     }
    ],
-   "foreignHoldRatio": 30.76
+   "foreignHoldRatio": 30.71
   },
   {
    "code": "000270",
@@ -550,13 +550,6 @@
    "tradingValue": 184997.0,
    "marketCapText": "51조 4,955억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 725277.0,
-     "foreign": -219872.0,
-     "institution": -513021.0,
-     "foreignHoldRatio": 38.92
-    },
     {
      "date": "20260727",
      "individual": 143972.0,
@@ -584,9 +577,16 @@
      "foreign": 72588.0,
      "institution": 21229.0,
      "foreignHoldRatio": 38.97
+    },
+    {
+     "date": "20260731",
+     "individual": -184596.0,
+     "foreign": 391271.0,
+     "institution": -203934.0,
+     "foreignHoldRatio": 39.07
     }
    ],
-   "foreignHoldRatio": 38.97
+   "foreignHoldRatio": 39.07
   },
   {
    "code": "329180",
@@ -599,13 +599,6 @@
    "tradingValue": 132819.0,
    "marketCapText": "50조 4,863억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 7184.0,
-     "foreign": -23403.0,
-     "institution": 16255.0,
-     "foreignHoldRatio": 13.8
-    },
     {
      "date": "20260727",
      "individual": 6738.0,
@@ -633,9 +626,16 @@
      "foreign": -32392.0,
      "institution": 39915.0,
      "foreignHoldRatio": 13.86
+    },
+    {
+     "date": "20260731",
+     "individual": 15826.0,
+     "foreign": -14367.0,
+     "institution": -6908.0,
+     "foreignHoldRatio": 13.85
     }
    ],
-   "foreignHoldRatio": 13.86
+   "foreignHoldRatio": 13.85
   },
   {
    "code": "012450",
@@ -648,13 +648,6 @@
    "tradingValue": 235473.0,
    "marketCapText": "47조 2,836억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -12696.0,
-     "foreign": -30405.0,
-     "institution": 44355.0,
-     "foreignHoldRatio": 45.3
-    },
     {
      "date": "20260727",
      "individual": 18213.0,
@@ -682,9 +675,16 @@
      "foreign": 3059.0,
      "institution": 38432.0,
      "foreignHoldRatio": 45.19
+    },
+    {
+     "date": "20260731",
+     "individual": 13610.0,
+     "foreign": 15576.0,
+     "institution": -29505.0,
+     "foreignHoldRatio": 45.22
     }
    ],
-   "foreignHoldRatio": 45.19
+   "foreignHoldRatio": 45.22
   },
   {
    "code": "055550",
@@ -697,13 +697,6 @@
    "tradingValue": 171248.0,
    "marketCapText": "47조 2,736억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -131909.0,
-     "foreign": 216296.0,
-     "institution": -84142.0,
-     "foreignHoldRatio": 61.64
-    },
     {
      "date": "20260727",
      "individual": 1561.0,
@@ -731,9 +724,16 @@
      "foreign": -134837.0,
      "institution": 175325.0,
      "foreignHoldRatio": 61.47
+    },
+    {
+     "date": "20260731",
+     "individual": 21730.0,
+     "foreign": 168445.0,
+     "institution": -186413.0,
+     "foreignHoldRatio": 62.18
     }
    ],
-   "foreignHoldRatio": 61.47
+   "foreignHoldRatio": 62.18
   },
   {
    "code": "068270",
@@ -746,13 +746,6 @@
    "tradingValue": 209523.0,
    "marketCapText": "43조 4,178억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -278845.0,
-     "foreign": 116712.0,
-     "institution": 165495.0,
-     "foreignHoldRatio": 24.91
-    },
     {
      "date": "20260727",
      "individual": -61721.0,
@@ -780,9 +773,16 @@
      "foreign": 49127.0,
      "institution": 346063.0,
      "foreignHoldRatio": 24.78
+    },
+    {
+     "date": "20260731",
+     "individual": 256119.0,
+     "foreign": -33654.0,
+     "institution": -223625.0,
+     "foreignHoldRatio": 24.77
     }
    ],
-   "foreignHoldRatio": 24.78
+   "foreignHoldRatio": 24.77
   },
   {
    "code": "012330",
@@ -795,13 +795,6 @@
    "tradingValue": 167041.0,
    "marketCapText": "43조 1,887억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 63245.0,
-     "foreign": -12379.0,
-     "institution": -49233.0,
-     "foreignHoldRatio": 37.22
-    },
     {
      "date": "20260727",
      "individual": 82190.0,
@@ -829,9 +822,16 @@
      "foreign": 1905.0,
      "institution": 34465.0,
      "foreignHoldRatio": 37.29
+    },
+    {
+     "date": "20260731",
+     "individual": -11074.0,
+     "foreign": 22228.0,
+     "institution": -12629.0,
+     "foreignHoldRatio": 37.32
     }
    ],
-   "foreignHoldRatio": 37.29
+   "foreignHoldRatio": 37.32
   },
   {
    "code": "034020",
@@ -844,13 +844,6 @@
    "tradingValue": 211775.0,
    "marketCapText": "42조 9,817억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 209421.0,
-     "foreign": -89147.0,
-     "institution": -124306.0,
-     "foreignHoldRatio": 24.14
-    },
     {
      "date": "20260727",
      "individual": 427051.0,
@@ -878,9 +871,16 @@
      "foreign": 165082.0,
      "institution": 59114.0,
      "foreignHoldRatio": 24.1
+    },
+    {
+     "date": "20260731",
+     "individual": -488363.0,
+     "foreign": 594935.0,
+     "institution": -69740.0,
+     "foreignHoldRatio": 24.19
     }
    ],
-   "foreignHoldRatio": 24.1
+   "foreignHoldRatio": 24.19
   },
   {
    "code": "034730",
@@ -893,13 +893,6 @@
    "tradingValue": 228706.0,
    "marketCapText": "40조 3,840억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 16068.0,
-     "foreign": -25707.0,
-     "institution": 9332.0,
-     "foreignHoldRatio": 29.63
-    },
     {
      "date": "20260727",
      "individual": -4331.0,
@@ -927,9 +920,16 @@
      "foreign": 27078.0,
      "institution": -27092.0,
      "foreignHoldRatio": 29.78
+    },
+    {
+     "date": "20260731",
+     "individual": 12206.0,
+     "foreign": -44190.0,
+     "institution": 28956.0,
+     "foreignHoldRatio": 29.72
     }
    ],
-   "foreignHoldRatio": 29.78
+   "foreignHoldRatio": 29.72
   },
   {
    "code": "086790",
@@ -942,13 +942,6 @@
    "tradingValue": 130772.0,
    "marketCapText": "34조 4,057억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -136416.0,
-     "foreign": 168569.0,
-     "institution": -32288.0,
-     "foreignHoldRatio": 68.55
-    },
     {
      "date": "20260727",
      "individual": 45642.0,
@@ -976,9 +969,16 @@
      "foreign": -125005.0,
      "institution": 138543.0,
      "foreignHoldRatio": 68.33
+    },
+    {
+     "date": "20260731",
+     "individual": 9909.0,
+     "foreign": 35006.0,
+     "institution": -47228.0,
+     "foreignHoldRatio": 68.34
     }
    ],
-   "foreignHoldRatio": 68.33
+   "foreignHoldRatio": 68.34
   },
   {
    "code": "035420",
@@ -991,13 +991,6 @@
    "tradingValue": 363944.0,
    "marketCapText": "32조 6,444억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 93871.0,
-     "foreign": -169779.0,
-     "institution": 59167.0,
-     "foreignHoldRatio": 35.16
-    },
     {
      "date": "20260727",
      "individual": 321116.0,
@@ -1025,9 +1018,16 @@
      "foreign": 57712.0,
      "institution": -7641.0,
      "foreignHoldRatio": 34.88
+    },
+    {
+     "date": "20260731",
+     "individual": -21613.0,
+     "foreign": 26008.0,
+     "institution": -38375.0,
+     "foreignHoldRatio": 34.89
     }
    ],
-   "foreignHoldRatio": 34.88
+   "foreignHoldRatio": 34.89
   },
   {
    "code": "006400",
@@ -1040,13 +1040,6 @@
    "tradingValue": 260252.0,
    "marketCapText": "31조 9,925억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 83778.0,
-     "foreign": -31339.0,
-     "institution": -51142.0,
-     "foreignHoldRatio": 26.41
-    },
     {
      "date": "20260727",
      "individual": 53481.0,
@@ -1074,9 +1067,16 @@
      "foreign": -38686.0,
      "institution": -45668.0,
      "foreignHoldRatio": 26.34
+    },
+    {
+     "date": "20260731",
+     "individual": -33514.0,
+     "foreign": 65381.0,
+     "institution": -30633.0,
+     "foreignHoldRatio": 26.42
     }
    ],
-   "foreignHoldRatio": 26.34
+   "foreignHoldRatio": 26.42
   },
   {
    "code": "000810",
@@ -1089,13 +1089,6 @@
    "tradingValue": 83280.0,
    "marketCapText": "28조 2,172억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -1848.0,
-     "foreign": 748.0,
-     "institution": 1195.0,
-     "foreignHoldRatio": 58.19
-    },
     {
      "date": "20260727",
      "individual": -135.0,
@@ -1123,9 +1116,16 @@
      "foreign": -35036.0,
      "institution": 37714.0,
      "foreignHoldRatio": 58.05
+    },
+    {
+     "date": "20260731",
+     "individual": 219.0,
+     "foreign": 875.0,
+     "institution": -1089.0,
+     "foreignHoldRatio": 58.06
     }
    ],
-   "foreignHoldRatio": 58.05
+   "foreignHoldRatio": 58.06
   },
   {
    "code": "010120",
@@ -1138,13 +1138,6 @@
    "tradingValue": 309302.0,
    "marketCapText": "27조 7,200억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 298764.0,
-     "foreign": -220397.0,
-     "institution": -87043.0,
-     "foreignHoldRatio": 18.01
-    },
     {
      "date": "20260727",
      "individual": 91848.0,
@@ -1172,9 +1165,16 @@
      "foreign": 5968.0,
      "institution": -82591.0,
      "foreignHoldRatio": 18.08
+    },
+    {
+     "date": "20260731",
+     "individual": -262835.0,
+     "foreign": 134400.0,
+     "institution": 133585.0,
+     "foreignHoldRatio": 18.17
     }
    ],
-   "foreignHoldRatio": 18.08
+   "foreignHoldRatio": 18.17
   },
   {
    "code": "009540",
@@ -1187,13 +1187,6 @@
    "tradingValue": 102109.0,
    "marketCapText": "27조 2,123억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -6933.0,
-     "foreign": -9501.0,
-     "institution": 16109.0,
-     "foreignHoldRatio": 33.43
-    },
     {
      "date": "20260727",
      "individual": -788.0,
@@ -1221,9 +1214,16 @@
      "foreign": -25502.0,
      "institution": 63929.0,
      "foreignHoldRatio": 33.31
+    },
+    {
+     "date": "20260731",
+     "individual": -16808.0,
+     "foreign": -16764.0,
+     "institution": 33821.0,
+     "foreignHoldRatio": 33.29
     }
    ],
-   "foreignHoldRatio": 33.31
+   "foreignHoldRatio": 33.29
   },
   {
    "code": "066570",
@@ -1236,13 +1236,6 @@
    "tradingValue": 277257.0,
    "marketCapText": "26조 4,036억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 425392.0,
-     "foreign": -234445.0,
-     "institution": -188135.0,
-     "foreignHoldRatio": 28.93
-    },
     {
      "date": "20260727",
      "individual": 13623.0,
@@ -1270,9 +1263,16 @@
      "foreign": 131571.0,
      "institution": -19680.0,
      "foreignHoldRatio": 29.14
+    },
+    {
+     "date": "20260731",
+     "individual": 96793.0,
+     "foreign": -90804.0,
+     "institution": -13951.0,
+     "foreignHoldRatio": 29.09
     }
    ],
-   "foreignHoldRatio": 29.14
+   "foreignHoldRatio": 29.09
   },
   {
    "code": "042660",
@@ -1285,13 +1285,6 @@
    "tradingValue": 156291.0,
    "marketCapText": "26조 1,064억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 200550.0,
-     "foreign": -71870.0,
-     "institution": -125764.0,
-     "foreignHoldRatio": 9.36
-    },
     {
      "date": "20260727",
      "individual": 97617.0,
@@ -1319,9 +1312,16 @@
      "foreign": 520913.0,
      "institution": 202817.0,
      "foreignHoldRatio": 9.77
+    },
+    {
+     "date": "20260731",
+     "individual": -265758.0,
+     "foreign": 189584.0,
+     "institution": 83214.0,
+     "foreignHoldRatio": 9.83
     }
    ],
-   "foreignHoldRatio": 9.77
+   "foreignHoldRatio": 9.83
   },
   {
    "code": "005490",
@@ -1334,13 +1334,6 @@
    "tradingValue": 133055.0,
    "marketCapText": "24조 7,630억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 16586.0,
-     "foreign": 12280.0,
-     "institution": -27470.0,
-     "foreignHoldRatio": 32.54
-    },
     {
      "date": "20260727",
      "individual": -7872.0,
@@ -1368,9 +1361,16 @@
      "foreign": 26117.0,
      "institution": 74969.0,
      "foreignHoldRatio": 32.47
+    },
+    {
+     "date": "20260731",
+     "individual": -34965.0,
+     "foreign": 34093.0,
+     "institution": -542.0,
+     "foreignHoldRatio": 32.52
     }
    ],
-   "foreignHoldRatio": 32.47
+   "foreignHoldRatio": 32.52
   },
   {
    "code": "267260",
@@ -1383,13 +1383,6 @@
    "tradingValue": 170505.0,
    "marketCapText": "24조 6,562억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 9002.0,
-     "foreign": -27330.0,
-     "institution": 18170.0,
-     "foreignHoldRatio": 34.34
-    },
     {
      "date": "20260727",
      "individual": 13072.0,
@@ -1417,9 +1410,16 @@
      "foreign": 49466.0,
      "institution": -29338.0,
      "foreignHoldRatio": 34.42
+    },
+    {
+     "date": "20260731",
+     "individual": -15673.0,
+     "foreign": 29153.0,
+     "institution": -12745.0,
+     "foreignHoldRatio": 34.5
     }
    ],
-   "foreignHoldRatio": 34.42
+   "foreignHoldRatio": 34.5
   },
   {
    "code": "069500",
@@ -1432,13 +1432,6 @@
    "tradingValue": 3444279.0,
    "marketCapText": "24조 5,933억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 1009378.0,
-     "foreign": -160762.0,
-     "institution": -875897.0,
-     "foreignHoldRatio": 22.83
-    },
     {
      "date": "20260727",
      "individual": 160446.0,
@@ -1466,9 +1459,16 @@
      "foreign": 263151.0,
      "institution": -651059.0,
      "foreignHoldRatio": 22.84
+    },
+    {
+     "date": "20260731",
+     "individual": -2656901.0,
+     "foreign": -242379.0,
+     "institution": 2994503.0,
+     "foreignHoldRatio": 22.73
     }
    ],
-   "foreignHoldRatio": 22.84
+   "foreignHoldRatio": 22.73
   },
   {
    "code": "316140",
@@ -1481,13 +1481,6 @@
    "tradingValue": 95224.0,
    "marketCapText": "24조 4,638억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 150515.0,
-     "foreign": 103010.0,
-     "institution": -257482.0,
-     "foreignHoldRatio": 45.89
-    },
     {
      "date": "20260727",
      "individual": -1478543.0,
@@ -1515,9 +1508,16 @@
      "foreign": 118072.0,
      "institution": 588425.0,
      "foreignHoldRatio": 46.03
+    },
+    {
+     "date": "20260731",
+     "individual": -375096.0,
+     "foreign": 555070.0,
+     "institution": -178227.0,
+     "foreignHoldRatio": 46.1
     }
    ],
-   "foreignHoldRatio": 46.03
+   "foreignHoldRatio": 46.1
   },
   {
    "code": "298040",
@@ -1530,13 +1530,6 @@
    "tradingValue": 244490.0,
    "marketCapText": "22조 5,374억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 5380.0,
-     "foreign": -4512.0,
-     "institution": -1151.0,
-     "foreignHoldRatio": 26.57
-    },
     {
      "date": "20260727",
      "individual": 3883.0,
@@ -1564,9 +1557,16 @@
      "foreign": 32365.0,
      "institution": -36807.0,
      "foreignHoldRatio": 26.9
+    },
+    {
+     "date": "20260731",
+     "individual": -12442.0,
+     "foreign": 12303.0,
+     "institution": 308.0,
+     "foreignHoldRatio": 27.04
     }
    ],
-   "foreignHoldRatio": 26.9
+   "foreignHoldRatio": 27.04
   },
   {
    "code": "015760",
@@ -1579,13 +1579,6 @@
    "tradingValue": 61554.0,
    "marketCapText": "22조 3,403억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -80642.0,
-     "foreign": 362824.0,
-     "institution": -234410.0,
-     "foreignHoldRatio": 21.07
-    },
     {
      "date": "20260727",
      "individual": -59213.0,
@@ -1613,9 +1606,16 @@
      "foreign": -91991.0,
      "institution": 246743.0,
      "foreignHoldRatio": 21.08
+    },
+    {
+     "date": "20260731",
+     "individual": -397496.0,
+     "foreign": 479791.0,
+     "institution": -153301.0,
+     "foreignHoldRatio": 21.15
     }
    ],
-   "foreignHoldRatio": 21.08
+   "foreignHoldRatio": 21.15
   },
   {
    "code": "010130",
@@ -1628,13 +1628,6 @@
    "tradingValue": 25242.0,
    "marketCapText": "20조 8,521억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -2323.0,
-     "foreign": -1814.0,
-     "institution": 4082.0,
-     "foreignHoldRatio": 28.14
-    },
     {
      "date": "20260727",
      "individual": 1337.0,
@@ -1662,9 +1655,16 @@
      "foreign": 631.0,
      "institution": 901.0,
      "foreignHoldRatio": 28.1
+    },
+    {
+     "date": "20260731",
+     "individual": -1352.0,
+     "foreign": 1456.0,
+     "institution": -1032.0,
+     "foreignHoldRatio": 28.11
     }
    ],
-   "foreignHoldRatio": 28.1
+   "foreignHoldRatio": 28.11
   },
   {
    "code": "138040",
@@ -1677,13 +1677,6 @@
    "tradingValue": 39992.0,
    "marketCapText": "20조 7,511억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -229731.0,
-     "foreign": 71303.0,
-     "institution": 164159.0,
-     "foreignHoldRatio": 14.24
-    },
     {
      "date": "20260727",
      "individual": -58730.0,
@@ -1711,6 +1704,13 @@
      "foreign": 20799.0,
      "institution": 136936.0,
      "foreignHoldRatio": 14.23
+    },
+    {
+     "date": "20260731",
+     "individual": -4464.0,
+     "foreign": -2635.0,
+     "institution": 7794.0,
+     "foreignHoldRatio": 14.23
     }
    ],
    "foreignHoldRatio": 14.23
@@ -1726,13 +1726,6 @@
    "tradingValue": 451404.0,
    "marketCapText": "20조 4,445억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 140231.0,
-     "foreign": -60849.0,
-     "institution": -65994.0,
-     "foreignHoldRatio": 7.09
-    },
     {
      "date": "20260727",
      "individual": 14256.0,
@@ -1760,9 +1753,16 @@
      "foreign": 144393.0,
      "institution": -30861.0,
      "foreignHoldRatio": 7.65
+    },
+    {
+     "date": "20260731",
+     "individual": -457276.0,
+     "foreign": 427479.0,
+     "institution": 24503.0,
+     "foreignHoldRatio": 8.1
     }
    ],
-   "foreignHoldRatio": 7.65
+   "foreignHoldRatio": 8.1
   },
   {
    "code": "011200",
@@ -1775,13 +1775,6 @@
    "tradingValue": 30939.0,
    "marketCapText": "19조 7,608억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -1135255.0,
-     "foreign": 366890.0,
-     "institution": 781763.0,
-     "foreignHoldRatio": 8.11
-    },
     {
      "date": "20260727",
      "individual": -132446.0,
@@ -1809,9 +1802,16 @@
      "foreign": 471317.0,
      "institution": 173085.0,
      "foreignHoldRatio": 8.24
+    },
+    {
+     "date": "20260731",
+     "individual": -175238.0,
+     "foreign": 412067.0,
+     "institution": -236112.0,
+     "foreignHoldRatio": 8.29
     }
    ],
-   "foreignHoldRatio": 8.24
+   "foreignHoldRatio": 8.29
   },
   {
    "code": "360750",
@@ -1824,13 +1824,6 @@
    "tradingValue": 1020953.0,
    "marketCapText": "19조 7,495억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 1150962.0,
-     "foreign": 165270.0,
-     "institution": -1306197.0,
-     "foreignHoldRatio": 0.15
-    },
     {
      "date": "20260727",
      "individual": 1029038.0,
@@ -1858,9 +1851,16 @@
      "foreign": -230740.0,
      "institution": -314723.0,
      "foreignHoldRatio": 0.15
+    },
+    {
+     "date": "20260731",
+     "individual": 1583696.0,
+     "foreign": 1397138.0,
+     "institution": -2958600.0,
+     "foreignHoldRatio": 0.34
     }
    ],
-   "foreignHoldRatio": 0.15
+   "foreignHoldRatio": 0.34
   },
   {
    "code": "006800",
@@ -1873,13 +1873,6 @@
    "tradingValue": 101725.0,
    "marketCapText": "19조 3,330억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 799764.0,
-     "foreign": -14985.0,
-     "institution": -796179.0,
-     "foreignHoldRatio": 10.09
-    },
     {
      "date": "20260727",
      "individual": -39270.0,
@@ -1907,9 +1900,16 @@
      "foreign": 708616.0,
      "institution": -378487.0,
      "foreignHoldRatio": 10.53
+    },
+    {
+     "date": "20260731",
+     "individual": -715849.0,
+     "foreign": 887056.0,
+     "institution": -171506.0,
+     "foreignHoldRatio": 10.69
     }
    ],
-   "foreignHoldRatio": 10.53
+   "foreignHoldRatio": 10.69
   },
   {
    "code": "000150",
@@ -1922,13 +1922,6 @@
    "tradingValue": 152972.0,
    "marketCapText": "18조 9,468억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 1261.0,
-     "foreign": 5795.0,
-     "institution": -6986.0,
-     "foreignHoldRatio": 21.13
-    },
     {
      "date": "20260727",
      "individual": 3107.0,
@@ -1956,9 +1949,16 @@
      "foreign": -305.0,
      "institution": -3286.0,
      "foreignHoldRatio": 20.82
+    },
+    {
+     "date": "20260731",
+     "individual": 930.0,
+     "foreign": -13251.0,
+     "institution": 10795.0,
+     "foreignHoldRatio": 20.74
     }
    ],
-   "foreignHoldRatio": 20.82
+   "foreignHoldRatio": 20.74
   },
   {
    "code": "010140",
@@ -1971,13 +1971,6 @@
    "tradingValue": 101785.0,
    "marketCapText": "18조 7,880억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 68999.0,
-     "foreign": 108373.0,
-     "institution": -164753.0,
-     "foreignHoldRatio": 29.08
-    },
     {
      "date": "20260727",
      "individual": 533322.0,
@@ -2005,9 +1998,16 @@
      "foreign": 1069235.0,
      "institution": 271981.0,
      "foreignHoldRatio": 29.18
+    },
+    {
+     "date": "20260731",
+     "individual": 496506.0,
+     "foreign": -284149.0,
+     "institution": -217440.0,
+     "foreignHoldRatio": 29.14
     }
    ],
-   "foreignHoldRatio": 29.18
+   "foreignHoldRatio": 29.14
   },
   {
    "code": "096770",
@@ -2020,13 +2020,6 @@
    "tradingValue": 199501.0,
    "marketCapText": "18조 6,803억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -225976.0,
-     "foreign": 19764.0,
-     "institution": 435333.0,
-     "foreignHoldRatio": 14.73
-    },
     {
      "date": "20260727",
      "individual": 91897.0,
@@ -2054,9 +2047,16 @@
      "foreign": -110812.0,
      "institution": 242909.0,
      "foreignHoldRatio": 14.64
+    },
+    {
+     "date": "20260731",
+     "individual": 450767.0,
+     "foreign": -290884.0,
+     "institution": -180852.0,
+     "foreignHoldRatio": 14.47
     }
    ],
-   "foreignHoldRatio": 14.64
+   "foreignHoldRatio": 14.47
   },
   {
    "code": "033780",
@@ -2069,13 +2069,6 @@
    "tradingValue": 90288.0,
    "marketCapText": "18조 5,925억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -40111.0,
-     "foreign": -10471.0,
-     "institution": 50739.0,
-     "foreignHoldRatio": 51.35
-    },
     {
      "date": "20260727",
      "individual": 348.0,
@@ -2103,9 +2096,16 @@
      "foreign": -30774.0,
      "institution": 35061.0,
      "foreignHoldRatio": 51.14
+    },
+    {
+     "date": "20260731",
+     "individual": 30537.0,
+     "foreign": 21297.0,
+     "institution": -52700.0,
+     "foreignHoldRatio": 51.16
     }
    ],
-   "foreignHoldRatio": 51.14
+   "foreignHoldRatio": 51.16
   },
   {
    "code": "051910",
@@ -2118,13 +2118,6 @@
    "tradingValue": 77843.0,
    "marketCapText": "18조 2,128억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -2309.0,
-     "foreign": 30351.0,
-     "institution": -26595.0,
-     "foreignHoldRatio": 37.53
-    },
     {
      "date": "20260727",
      "individual": 5764.0,
@@ -2152,9 +2145,16 @@
      "foreign": 45640.0,
      "institution": 3288.0,
      "foreignHoldRatio": 37.6
+    },
+    {
+     "date": "20260731",
+     "individual": -5516.0,
+     "foreign": -12565.0,
+     "institution": 18691.0,
+     "foreignHoldRatio": 37.58
     }
    ],
-   "foreignHoldRatio": 37.6
+   "foreignHoldRatio": 37.58
   },
   {
    "code": "017670",
@@ -2167,13 +2167,6 @@
    "tradingValue": 111926.0,
    "marketCapText": "17조 4,839억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 96135.0,
-     "foreign": -1104725.0,
-     "institution": 977122.0,
-     "foreignHoldRatio": 36.94
-    },
     {
      "date": "20260727",
      "individual": 330426.0,
@@ -2201,9 +2194,16 @@
      "foreign": 86867.0,
      "institution": 44338.0,
      "foreignHoldRatio": 36.09
+    },
+    {
+     "date": "20260731",
+     "individual": 384193.0,
+     "foreign": -348256.0,
+     "institution": -41128.0,
+     "foreignHoldRatio": 35.93
     }
    ],
-   "foreignHoldRatio": 36.09
+   "foreignHoldRatio": 35.93
   },
   {
    "code": "035720",
@@ -2216,13 +2216,6 @@
    "tradingValue": 111399.0,
    "marketCapText": "16조 5,675억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 84714.0,
-     "foreign": -85095.0,
-     "institution": -5717.0,
-     "foreignHoldRatio": 28.59
-    },
     {
      "date": "20260727",
      "individual": -157178.0,
@@ -2250,9 +2243,16 @@
      "foreign": 341626.0,
      "institution": 189081.0,
      "foreignHoldRatio": 28.83
+    },
+    {
+     "date": "20260731",
+     "individual": -375634.0,
+     "foreign": 479042.0,
+     "institution": -100901.0,
+     "foreignHoldRatio": 28.94
     }
    ],
-   "foreignHoldRatio": 28.83
+   "foreignHoldRatio": 28.94
   },
   {
    "code": "024110",
@@ -2265,13 +2265,6 @@
    "tradingValue": 34679.0,
    "marketCapText": "16조 4,668억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -206191.0,
-     "foreign": 254855.0,
-     "institution": -28530.0,
-     "foreignHoldRatio": 13.88
-    },
     {
      "date": "20260727",
      "individual": -67778.0,
@@ -2299,6 +2292,13 @@
      "foreign": 144799.0,
      "institution": 118667.0,
      "foreignHoldRatio": 13.62
+    },
+    {
+     "date": "20260731",
+     "individual": 121897.0,
+     "foreign": -18358.0,
+     "institution": -103632.0,
+     "foreignHoldRatio": 13.62
     }
    ],
    "foreignHoldRatio": 13.62
@@ -2314,13 +2314,6 @@
    "tradingValue": 91738.0,
    "marketCapText": "15조 9,398억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 201.0,
-     "foreign": -19446.0,
-     "institution": 20078.0,
-     "foreignHoldRatio": 18.51
-    },
     {
      "date": "20260727",
      "individual": 25783.0,
@@ -2348,9 +2341,16 @@
      "foreign": -21659.0,
      "institution": 63664.0,
      "foreignHoldRatio": 18.24
+    },
+    {
+     "date": "20260731",
+     "individual": 65383.0,
+     "foreign": -27373.0,
+     "institution": -37685.0,
+     "foreignHoldRatio": 18.2
     }
    ],
-   "foreignHoldRatio": 18.24
+   "foreignHoldRatio": 18.2
   },
   {
    "code": "267250",
@@ -2363,13 +2363,6 @@
    "tradingValue": 40352.0,
    "marketCapText": "15조 7,670억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -14327.0,
-     "foreign": -61341.0,
-     "institution": 76621.0,
-     "foreignHoldRatio": 27.22
-    },
     {
      "date": "20260727",
      "individual": 614.0,
@@ -2397,9 +2390,16 @@
      "foreign": -20045.0,
      "institution": 38713.0,
      "foreignHoldRatio": 27.14
+    },
+    {
+     "date": "20260731",
+     "individual": 10637.0,
+     "foreign": -18217.0,
+     "institution": 7670.0,
+     "foreignHoldRatio": 27.12
     }
    ],
-   "foreignHoldRatio": 27.14
+   "foreignHoldRatio": 27.12
   },
   {
    "code": "079550",
@@ -2412,13 +2412,6 @@
    "tradingValue": 82101.0,
    "marketCapText": "15조 3,780억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -19742.0,
-     "foreign": -12471.0,
-     "institution": 32406.0,
-     "foreignHoldRatio": 25.94
-    },
     {
      "date": "20260727",
      "individual": 1360.0,
@@ -2446,9 +2439,16 @@
      "foreign": 7868.0,
      "institution": 32231.0,
      "foreignHoldRatio": 26.19
+    },
+    {
+     "date": "20260731",
+     "individual": -18890.0,
+     "foreign": 25753.0,
+     "institution": -6317.0,
+     "foreignHoldRatio": 26.31
     }
    ],
-   "foreignHoldRatio": 26.19
+   "foreignHoldRatio": 26.31
   },
   {
    "code": "003550",
@@ -2461,13 +2461,6 @@
    "tradingValue": 59011.0,
    "marketCapText": "15조 2,855억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 5033.0,
-     "foreign": 37479.0,
-     "institution": -42260.0,
-     "foreignHoldRatio": 36.8
-    },
     {
      "date": "20260727",
      "individual": 5196.0,
@@ -2495,9 +2488,16 @@
      "foreign": 88142.0,
      "institution": -9628.0,
      "foreignHoldRatio": 36.96
+    },
+    {
+     "date": "20260731",
+     "individual": -24317.0,
+     "foreign": 57201.0,
+     "institution": -32697.0,
+     "foreignHoldRatio": 36.99
     }
    ],
-   "foreignHoldRatio": 36.96
+   "foreignHoldRatio": 36.99
   },
   {
    "code": "086280",
@@ -2510,13 +2510,6 @@
    "tradingValue": 43343.0,
    "marketCapText": "15조원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -69212.0,
-     "foreign": -1820.0,
-     "institution": 72345.0,
-     "foreignHoldRatio": 46.23
-    },
     {
      "date": "20260727",
      "individual": -7302.0,
@@ -2544,9 +2537,16 @@
      "foreign": 14475.0,
      "institution": 35443.0,
      "foreignHoldRatio": 46.23
+    },
+    {
+     "date": "20260731",
+     "individual": -6952.0,
+     "foreign": 24230.0,
+     "institution": -17229.0,
+     "foreignHoldRatio": 46.26
     }
    ],
-   "foreignHoldRatio": 46.23
+   "foreignHoldRatio": 46.26
   },
   {
    "code": "064350",
@@ -2559,13 +2559,6 @@
    "tradingValue": 113032.0,
    "marketCapText": "14조 5,923억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 38696.0,
-     "foreign": 66627.0,
-     "institution": -104982.0,
-     "foreignHoldRatio": 38.68
-    },
     {
      "date": "20260727",
      "individual": 391097.0,
@@ -2593,9 +2586,16 @@
      "foreign": 96170.0,
      "institution": -4755.0,
      "foreignHoldRatio": 38.76
+    },
+    {
+     "date": "20260731",
+     "individual": -146684.0,
+     "foreign": 261763.0,
+     "institution": -112997.0,
+     "foreignHoldRatio": 39.0
     }
    ],
-   "foreignHoldRatio": 38.76
+   "foreignHoldRatio": 39.0
   },
   {
    "code": "010950",
@@ -2608,13 +2608,6 @@
    "tradingValue": 59422.0,
    "marketCapText": "14조 3,318억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -131352.0,
-     "foreign": -117248.0,
-     "institution": 255114.0,
-     "foreignHoldRatio": 79.91
-    },
     {
      "date": "20260727",
      "individual": 18821.0,
@@ -2642,9 +2635,16 @@
      "foreign": -136372.0,
      "institution": 130499.0,
      "foreignHoldRatio": 79.8
+    },
+    {
+     "date": "20260731",
+     "individual": 20162.0,
+     "foreign": 36665.0,
+     "institution": -66243.0,
+     "foreignHoldRatio": 79.83
     }
    ],
-   "foreignHoldRatio": 79.8
+   "foreignHoldRatio": 79.83
   },
   {
    "code": "030200",
@@ -2657,13 +2657,6 @@
    "tradingValue": 25407.0,
    "marketCapText": "13조 799억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -111870.0,
-     "foreign": -2477.0,
-     "institution": 116273.0,
-     "foreignHoldRatio": 49.0
-    },
     {
      "date": "20260727",
      "individual": -83920.0,
@@ -2691,6 +2684,13 @@
      "foreign": -3738.0,
      "institution": -11083.0,
      "foreignHoldRatio": 49.0
+    },
+    {
+     "date": "20260731",
+     "individual": 286284.0,
+     "foreign": -6330.0,
+     "institution": -282294.0,
+     "foreignHoldRatio": 49.0
     }
    ],
    "foreignHoldRatio": 49.0
@@ -2706,13 +2706,6 @@
    "tradingValue": 92157.0,
    "marketCapText": "12조 4,086억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -17312.0,
-     "foreign": -64219.0,
-     "institution": 90323.0,
-     "foreignHoldRatio": 24.35
-    },
     {
      "date": "20260727",
      "individual": 129393.0,
@@ -2740,9 +2733,16 @@
      "foreign": 175742.0,
      "institution": -50242.0,
      "foreignHoldRatio": 24.26
+    },
+    {
+     "date": "20260731",
+     "individual": 23002.0,
+     "foreign": 13320.0,
+     "institution": -30309.0,
+     "foreignHoldRatio": 24.27
     }
    ],
-   "foreignHoldRatio": 24.26
+   "foreignHoldRatio": 24.27
   },
   {
    "code": "003670",
@@ -2755,13 +2755,6 @@
    "tradingValue": 55924.0,
    "marketCapText": "12조 2,479억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 44454.0,
-     "foreign": -4636.0,
-     "institution": -39990.0,
-     "foreignHoldRatio": 9.7
-    },
     {
      "date": "20260727",
      "individual": -539.0,
@@ -2789,9 +2782,16 @@
      "foreign": 84917.0,
      "institution": 9230.0,
      "foreignHoldRatio": 9.94
+    },
+    {
+     "date": "20260731",
+     "individual": 20862.0,
+     "foreign": -45287.0,
+     "institution": 24625.0,
+     "foreignHoldRatio": 9.89
     }
    ],
-   "foreignHoldRatio": 9.94
+   "foreignHoldRatio": 9.89
   },
   {
    "code": "011070",
@@ -2804,13 +2804,6 @@
    "tradingValue": 270944.0,
    "marketCapText": "12조 1,649억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 29138.0,
-     "foreign": -2268.0,
-     "institution": -26837.0,
-     "foreignHoldRatio": 28.08
-    },
     {
      "date": "20260727",
      "individual": 56662.0,
@@ -2838,9 +2831,16 @@
      "foreign": 72467.0,
      "institution": -71204.0,
      "foreignHoldRatio": 28.05
+    },
+    {
+     "date": "20260731",
+     "individual": 47096.0,
+     "foreign": -21543.0,
+     "institution": -24369.0,
+     "foreignHoldRatio": 27.96
     }
    ],
-   "foreignHoldRatio": 28.05
+   "foreignHoldRatio": 27.96
   },
   {
    "code": "278470",
@@ -2853,13 +2853,6 @@
    "tradingValue": 66436.0,
    "marketCapText": "11조 9,802억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 15191.0,
-     "foreign": -10757.0,
-     "institution": -2643.0,
-     "foreignHoldRatio": 37.62
-    },
     {
      "date": "20260727",
      "individual": 4049.0,
@@ -2887,9 +2880,16 @@
      "foreign": -277.0,
      "institution": -6429.0,
      "foreignHoldRatio": 37.64
+    },
+    {
+     "date": "20260731",
+     "individual": 13074.0,
+     "foreign": 35471.0,
+     "institution": -46857.0,
+     "foreignHoldRatio": 37.73
     }
    ],
-   "foreignHoldRatio": 37.64
+   "foreignHoldRatio": 37.73
   },
   {
    "code": "272210",
@@ -2902,13 +2902,6 @@
    "tradingValue": 49910.0,
    "marketCapText": "11조 8,075억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 183843.0,
-     "foreign": -76929.0,
-     "institution": -113839.0,
-     "foreignHoldRatio": 10.02
-    },
     {
      "date": "20260727",
      "individual": 115516.0,
@@ -2936,9 +2929,16 @@
      "foreign": 153278.0,
      "institution": 54694.0,
      "foreignHoldRatio": 10.16
+    },
+    {
+     "date": "20260731",
+     "individual": -209476.0,
+     "foreign": 260842.0,
+     "institution": -50432.0,
+     "foreignHoldRatio": 10.3
     }
    ],
-   "foreignHoldRatio": 10.16
+   "foreignHoldRatio": 10.3
   },
   {
    "code": "196170",
@@ -2951,13 +2951,6 @@
    "tradingValue": 105291.0,
    "marketCapText": "16조 5,314억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -20888.0,
-     "foreign": 31856.0,
-     "institution": -10709.0,
-     "foreignHoldRatio": 14.82
-    },
     {
      "date": "20260727",
      "individual": -47151.0,
@@ -2985,9 +2978,16 @@
      "foreign": 18947.0,
      "institution": -19595.0,
      "foreignHoldRatio": 14.61
+    },
+    {
+     "date": "20260731",
+     "individual": -58602.0,
+     "foreign": 64404.0,
+     "institution": -9617.0,
+     "foreignHoldRatio": 14.73
     }
    ],
-   "foreignHoldRatio": 14.61
+   "foreignHoldRatio": 14.73
   },
   {
    "code": "086520",
@@ -3000,13 +3000,6 @@
    "tradingValue": 104820.0,
    "marketCapText": "10조 7,399억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 206800.0,
-     "foreign": -73367.0,
-     "institution": -133188.0,
-     "foreignHoldRatio": 19.34
-    },
     {
      "date": "20260727",
      "individual": 44875.0,
@@ -3034,9 +3027,16 @@
      "foreign": 257849.0,
      "institution": 56921.0,
      "foreignHoldRatio": 19.38
+    },
+    {
+     "date": "20260731",
+     "individual": -338419.0,
+     "foreign": 205643.0,
+     "institution": 133995.0,
+     "foreignHoldRatio": 19.53
     }
    ],
-   "foreignHoldRatio": 19.38
+   "foreignHoldRatio": 19.53
   },
   {
    "code": "247540",
@@ -3049,13 +3049,6 @@
    "tradingValue": 50922.0,
    "marketCapText": "10조 1,254억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 90426.0,
-     "foreign": -17809.0,
-     "institution": -72901.0,
-     "foreignHoldRatio": 14.96
-    },
     {
      "date": "20260727",
      "individual": 12362.0,
@@ -3083,9 +3076,16 @@
      "foreign": 95352.0,
      "institution": 14593.0,
      "foreignHoldRatio": 15.04
+    },
+    {
+     "date": "20260731",
+     "individual": -8075.0,
+     "foreign": -23400.0,
+     "institution": 31584.0,
+     "foreignHoldRatio": 15.02
     }
    ],
-   "foreignHoldRatio": 15.04
+   "foreignHoldRatio": 15.02
   },
   {
    "code": "277810",
@@ -3098,13 +3098,6 @@
    "tradingValue": 112521.0,
    "marketCapText": "8조 4,001억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 159187.0,
-     "foreign": -114540.0,
-     "institution": -45046.0,
-     "foreignHoldRatio": 5.1
-    },
     {
      "date": "20260727",
      "individual": -20177.0,
@@ -3132,9 +3125,16 @@
      "foreign": -39141.0,
      "institution": -19916.0,
      "foreignHoldRatio": 4.58
+    },
+    {
+     "date": "20260731",
+     "individual": -88032.0,
+     "foreign": 80548.0,
+     "institution": 9477.0,
+     "foreignHoldRatio": 5.0
     }
    ],
-   "foreignHoldRatio": 4.58
+   "foreignHoldRatio": 5.0
   },
   {
    "code": "036930",
@@ -3147,13 +3147,6 @@
    "tradingValue": 300641.0,
    "marketCapText": "5조 7,869억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 51528.0,
-     "foreign": 58894.0,
-     "institution": -107608.0,
-     "foreignHoldRatio": 6.55
-    },
     {
      "date": "20260727",
      "individual": -128066.0,
@@ -3181,9 +3174,16 @@
      "foreign": 174473.0,
      "institution": -212406.0,
      "foreignHoldRatio": 8.47
+    },
+    {
+     "date": "20260731",
+     "individual": -192516.0,
+     "foreign": 46777.0,
+     "institution": 141970.0,
+     "foreignHoldRatio": 8.57
     }
    ],
-   "foreignHoldRatio": 8.47
+   "foreignHoldRatio": 8.57
   },
   {
    "code": "058470",
@@ -3196,13 +3196,6 @@
    "tradingValue": 63606.0,
    "marketCapText": "4조 8,852억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 81104.0,
-     "foreign": -11846.0,
-     "institution": -72678.0,
-     "foreignHoldRatio": 32.63
-    },
     {
      "date": "20260727",
      "individual": -12005.0,
@@ -3230,9 +3223,16 @@
      "foreign": 117397.0,
      "institution": -80536.0,
      "foreignHoldRatio": 33.1
+    },
+    {
+     "date": "20260731",
+     "individual": -32915.0,
+     "foreign": -50852.0,
+     "institution": 88037.0,
+     "foreignHoldRatio": 33.03
     }
    ],
-   "foreignHoldRatio": 33.1
+   "foreignHoldRatio": 33.03
   },
   {
    "code": "240810",
@@ -3245,13 +3245,6 @@
    "tradingValue": 200204.0,
    "marketCapText": "4조 7,906억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 168062.0,
-     "foreign": 33859.0,
-     "institution": -195598.0,
-     "foreignHoldRatio": 13.97
-    },
     {
      "date": "20260727",
      "individual": -93861.0,
@@ -3279,9 +3272,16 @@
      "foreign": 208953.0,
      "institution": -173170.0,
      "foreignHoldRatio": 15.98
+    },
+    {
+     "date": "20260731",
+     "individual": -77608.0,
+     "foreign": -184567.0,
+     "institution": 248170.0,
+     "foreignHoldRatio": 15.61
     }
    ],
-   "foreignHoldRatio": 15.98
+   "foreignHoldRatio": 15.61
   },
   {
    "code": "028300",
@@ -3294,13 +3294,6 @@
    "tradingValue": 29971.0,
    "marketCapText": "4조 759억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 383594.0,
-     "foreign": -261394.0,
-     "institution": -121397.0,
-     "foreignHoldRatio": 18.14
-    },
     {
      "date": "20260727",
      "individual": -205362.0,
@@ -3328,9 +3321,16 @@
      "foreign": -2423.0,
      "institution": -32996.0,
      "foreignHoldRatio": 18.51
+    },
+    {
+     "date": "20260731",
+     "individual": -23137.0,
+     "foreign": 31594.0,
+     "institution": 20982.0,
+     "foreignHoldRatio": 18.54
     }
    ],
-   "foreignHoldRatio": 18.51
+   "foreignHoldRatio": 18.54
   },
   {
    "code": "319660",
@@ -3343,13 +3343,6 @@
    "tradingValue": 101404.0,
    "marketCapText": "3조 7,541억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 4649.0,
-     "foreign": 161887.0,
-     "institution": -160396.0,
-     "foreignHoldRatio": 21.16
-    },
     {
      "date": "20260727",
      "individual": -2688.0,
@@ -3377,9 +3370,16 @@
      "foreign": 211892.0,
      "institution": -164602.0,
      "foreignHoldRatio": 23.17
+    },
+    {
+     "date": "20260731",
+     "individual": 36030.0,
+     "foreign": -323097.0,
+     "institution": 284269.0,
+     "foreignHoldRatio": 22.05
     }
    ],
-   "foreignHoldRatio": 23.17
+   "foreignHoldRatio": 22.05
   },
   {
    "code": "298380",
@@ -3392,13 +3392,6 @@
    "tradingValue": 22196.0,
    "marketCapText": "3조 7,400억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 2528.0,
-     "foreign": -3929.0,
-     "institution": 1857.0,
-     "foreignHoldRatio": 13.96
-    },
     {
      "date": "20260727",
      "individual": -7641.0,
@@ -3426,9 +3419,16 @@
      "foreign": 74843.0,
      "institution": -18306.0,
      "foreignHoldRatio": 14.51
+    },
+    {
+     "date": "20260731",
+     "individual": -83737.0,
+     "foreign": 42047.0,
+     "institution": 41488.0,
+     "foreignHoldRatio": 14.59
     }
    ],
-   "foreignHoldRatio": 14.51
+   "foreignHoldRatio": 14.59
   },
   {
    "code": "039030",
@@ -3441,13 +3441,6 @@
    "tradingValue": 53810.0,
    "marketCapText": "3조 6,466억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 7378.0,
-     "foreign": 9516.0,
-     "institution": -17366.0,
-     "foreignHoldRatio": 30.19
-    },
     {
      "date": "20260727",
      "individual": -6676.0,
@@ -3475,9 +3468,16 @@
      "foreign": -10963.0,
      "institution": 12143.0,
      "foreignHoldRatio": 29.98
+    },
+    {
+     "date": "20260731",
+     "individual": -7371.0,
+     "foreign": -13860.0,
+     "institution": 21161.0,
+     "foreignHoldRatio": 29.87
     }
    ],
-   "foreignHoldRatio": 29.98
+   "foreignHoldRatio": 29.87
   },
   {
    "code": "214450",
@@ -3490,13 +3490,6 @@
    "tradingValue": 86748.0,
    "marketCapText": "3조 5,169억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -17129.0,
-     "foreign": -6589.0,
-     "institution": 22512.0,
-     "foreignHoldRatio": 6.99
-    },
     {
      "date": "20260727",
      "individual": -32864.0,
@@ -3524,9 +3517,16 @@
      "foreign": 7568.0,
      "institution": 6592.0,
      "foreignHoldRatio": 4.46
+    },
+    {
+     "date": "20260731",
+     "individual": 37208.0,
+     "foreign": 40202.0,
+     "institution": -76358.0,
+     "foreignHoldRatio": 4.84
     }
    ],
-   "foreignHoldRatio": 4.46
+   "foreignHoldRatio": 4.84
   },
   {
    "code": "000250",
@@ -3539,13 +3539,6 @@
    "tradingValue": 45299.0,
    "marketCapText": "3조 5,092억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 56373.0,
-     "foreign": -49804.0,
-     "institution": -8240.0,
-     "foreignHoldRatio": 5.0
-    },
     {
      "date": "20260727",
      "individual": -43154.0,
@@ -3573,9 +3566,16 @@
      "foreign": -9014.0,
      "institution": 12865.0,
      "foreignHoldRatio": 5.29
+    },
+    {
+     "date": "20260731",
+     "individual": -44374.0,
+     "foreign": 28104.0,
+     "institution": 19235.0,
+     "foreignHoldRatio": 5.41
     }
    ],
-   "foreignHoldRatio": 5.29
+   "foreignHoldRatio": 5.41
   },
   {
    "code": "141080",
@@ -3588,13 +3588,6 @@
    "tradingValue": 27712.0,
    "marketCapText": "3조 2,392억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 5657.0,
-     "foreign": 33206.0,
-     "institution": -29924.0,
-     "foreignHoldRatio": 11.7
-    },
     {
      "date": "20260727",
      "individual": -1497.0,
@@ -3622,9 +3615,16 @@
      "foreign": 113072.0,
      "institution": -96070.0,
      "foreignHoldRatio": 12.44
+    },
+    {
+     "date": "20260731",
+     "individual": -58783.0,
+     "foreign": 13636.0,
+     "institution": 50934.0,
+     "foreignHoldRatio": 12.48
     }
    ],
-   "foreignHoldRatio": 12.44
+   "foreignHoldRatio": 12.48
   },
   {
    "code": "440110",
@@ -3637,13 +3637,6 @@
    "tradingValue": 53108.0,
    "marketCapText": "3조 1,770억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 62033.0,
-     "foreign": 50498.0,
-     "institution": -108822.0,
-     "foreignHoldRatio": 27.57
-    },
     {
      "date": "20260727",
      "individual": -34093.0,
@@ -3671,9 +3664,16 @@
      "foreign": -4227.0,
      "institution": -21754.0,
      "foreignHoldRatio": 27.85
+    },
+    {
+     "date": "20260731",
+     "individual": -2985.0,
+     "foreign": -231205.0,
+     "institution": 226827.0,
+     "foreignHoldRatio": 27.38
     }
    ],
-   "foreignHoldRatio": 27.85
+   "foreignHoldRatio": 27.38
   },
   {
    "code": "222800",
@@ -3686,13 +3686,6 @@
    "tradingValue": 69592.0,
    "marketCapText": "3조 1,058억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 64067.0,
-     "foreign": 121332.0,
-     "institution": -185960.0,
-     "foreignHoldRatio": 10.72
-    },
     {
      "date": "20260727",
      "individual": -37617.0,
@@ -3720,9 +3713,16 @@
      "foreign": 68199.0,
      "institution": -100708.0,
      "foreignHoldRatio": 12.95
+    },
+    {
+     "date": "20260731",
+     "individual": -222043.0,
+     "foreign": 44371.0,
+     "institution": 180005.0,
+     "foreignHoldRatio": 13.07
     }
    ],
-   "foreignHoldRatio": 12.95
+   "foreignHoldRatio": 13.07
   },
   {
    "code": "214370",
@@ -3735,13 +3735,6 @@
    "tradingValue": 5642.0,
    "marketCapText": "2조 9,866억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -8069.0,
-     "foreign": 20284.0,
-     "institution": -12016.0,
-     "foreignHoldRatio": 4.39
-    },
     {
      "date": "20260727",
      "individual": -10589.0,
@@ -3769,9 +3762,16 @@
      "foreign": 41652.0,
      "institution": -3453.0,
      "foreignHoldRatio": 4.37
+    },
+    {
+     "date": "20260731",
+     "individual": -20165.0,
+     "foreign": 15428.0,
+     "institution": 7032.0,
+     "foreignHoldRatio": 4.4
     }
    ],
-   "foreignHoldRatio": 4.37
+   "foreignHoldRatio": 4.4
   },
   {
    "code": "087010",
@@ -3784,13 +3784,6 @@
    "tradingValue": 22944.0,
    "marketCapText": "2조 9,800억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 26172.0,
-     "foreign": -4345.0,
-     "institution": -21870.0,
-     "foreignHoldRatio": 5.53
-    },
     {
      "date": "20260727",
      "individual": 32209.0,
@@ -3818,9 +3811,16 @@
      "foreign": -6205.0,
      "institution": 14425.0,
      "foreignHoldRatio": 4.24
+    },
+    {
+     "date": "20260731",
+     "individual": -11673.0,
+     "foreign": 17500.0,
+     "institution": -5872.0,
+     "foreignHoldRatio": 4.31
     }
    ],
-   "foreignHoldRatio": 4.24
+   "foreignHoldRatio": 4.31
   },
   {
    "code": "145020",
@@ -3833,13 +3833,6 @@
    "tradingValue": 7995.0,
    "marketCapText": "2조 9,098억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 169.0,
-     "foreign": 5770.0,
-     "institution": -5942.0,
-     "foreignHoldRatio": 57.6
-    },
     {
      "date": "20260727",
      "individual": -5165.0,
@@ -3867,9 +3860,16 @@
      "foreign": 2516.0,
      "institution": -3249.0,
      "foreignHoldRatio": 56.37
+    },
+    {
+     "date": "20260731",
+     "individual": 1358.0,
+     "foreign": 5636.0,
+     "institution": -7023.0,
+     "foreignHoldRatio": 56.41
     }
    ],
-   "foreignHoldRatio": 56.37
+   "foreignHoldRatio": 56.41
   },
   {
    "code": "403870",
@@ -3882,13 +3882,6 @@
    "tradingValue": 159970.0,
    "marketCapText": "2조 8,476억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 564910.0,
-     "foreign": -436847.0,
-     "institution": -162991.0,
-     "foreignHoldRatio": 31.59
-    },
     {
      "date": "20260727",
      "individual": -307354.0,
@@ -3916,9 +3909,16 @@
      "foreign": 29941.0,
      "institution": -80251.0,
      "foreignHoldRatio": 32.3
+    },
+    {
+     "date": "20260731",
+     "individual": -16421.0,
+     "foreign": -78158.0,
+     "institution": 121009.0,
+     "foreignHoldRatio": 32.2
     }
    ],
-   "foreignHoldRatio": 32.3
+   "foreignHoldRatio": 32.2
   },
   {
    "code": "095340",
@@ -3931,13 +3931,6 @@
    "tradingValue": 22759.0,
    "marketCapText": "2조 7,471억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 17338.0,
-     "foreign": 17719.0,
-     "institution": -35073.0,
-     "foreignHoldRatio": 31.57
-    },
     {
      "date": "20260727",
      "individual": 4692.0,
@@ -3965,9 +3958,16 @@
      "foreign": 16380.0,
      "institution": -10998.0,
      "foreignHoldRatio": 31.54
+    },
+    {
+     "date": "20260731",
+     "individual": -7547.0,
+     "foreign": -45362.0,
+     "institution": 52603.0,
+     "foreignHoldRatio": 31.33
     }
    ],
-   "foreignHoldRatio": 31.54
+   "foreignHoldRatio": 31.33
   },
   {
    "code": "108490",
@@ -3980,13 +3980,6 @@
    "tradingValue": 51470.0,
    "marketCapText": "2조 6,947억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 83127.0,
-     "foreign": -46240.0,
-     "institution": -38449.0,
-     "foreignHoldRatio": 6.21
-    },
     {
      "date": "20260727",
      "individual": -6615.0,
@@ -4014,9 +4007,16 @@
      "foreign": -29303.0,
      "institution": -6995.0,
      "foreignHoldRatio": 5.57
+    },
+    {
+     "date": "20260731",
+     "individual": -76678.0,
+     "foreign": 72390.0,
+     "institution": 4514.0,
+     "foreignHoldRatio": 6.07
     }
    ],
-   "foreignHoldRatio": 5.57
+   "foreignHoldRatio": 6.07
   },
   {
    "code": "214150",
@@ -4029,13 +4029,6 @@
    "tradingValue": 7721.0,
    "marketCapText": "2조 6,844억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -29006.0,
-     "foreign": 50930.0,
-     "institution": -21830.0,
-     "foreignHoldRatio": 70.92
-    },
     {
      "date": "20260727",
      "individual": -39926.0,
@@ -4063,9 +4056,16 @@
      "foreign": 6735.0,
      "institution": 17830.0,
      "foreignHoldRatio": 70.95
+    },
+    {
+     "date": "20260731",
+     "individual": -39567.0,
+     "foreign": 23124.0,
+     "institution": 16118.0,
+     "foreignHoldRatio": 70.98
     }
    ],
-   "foreignHoldRatio": 70.95
+   "foreignHoldRatio": 70.98
   },
   {
    "code": "084370",
@@ -4078,13 +4078,6 @@
    "tradingValue": 36432.0,
    "marketCapText": "2조 5,735억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 24069.0,
-     "foreign": 511.0,
-     "institution": -24681.0,
-     "foreignHoldRatio": 36.58
-    },
     {
      "date": "20260727",
      "individual": 3927.0,
@@ -4112,9 +4105,16 @@
      "foreign": 567.0,
      "institution": -6645.0,
      "foreignHoldRatio": 36.65
+    },
+    {
+     "date": "20260731",
+     "individual": -4477.0,
+     "foreign": -26023.0,
+     "institution": 30650.0,
+     "foreignHoldRatio": 36.54
     }
    ],
-   "foreignHoldRatio": 36.65
+   "foreignHoldRatio": 36.54
   },
   {
    "code": "095610",
@@ -4127,13 +4127,6 @@
    "tradingValue": 50458.0,
    "marketCapText": "2조 5,168억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 122783.0,
-     "foreign": 58196.0,
-     "institution": -172353.0,
-     "foreignHoldRatio": 8.68
-    },
     {
      "date": "20260727",
      "individual": -23896.0,
@@ -4161,9 +4154,16 @@
      "foreign": 164360.0,
      "institution": -166987.0,
      "foreignHoldRatio": 10.86
+    },
+    {
+     "date": "20260731",
+     "individual": -104418.0,
+     "foreign": -51939.0,
+     "institution": 156311.0,
+     "foreignHoldRatio": 10.59
     }
    ],
-   "foreignHoldRatio": 10.86
+   "foreignHoldRatio": 10.59
   },
   {
    "code": "319400",
@@ -4176,13 +4176,6 @@
    "tradingValue": 49730.0,
    "marketCapText": "2조 3,723억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 366699.0,
-     "foreign": -293549.0,
-     "institution": -70371.0,
-     "foreignHoldRatio": 1.61
-    },
     {
      "date": "20260727",
      "individual": -82977.0,
@@ -4210,9 +4203,16 @@
      "foreign": -412975.0,
      "institution": -43255.0,
      "foreignHoldRatio": 1.15
+    },
+    {
+     "date": "20260731",
+     "individual": -543894.0,
+     "foreign": 547357.0,
+     "institution": -7198.0,
+     "foreignHoldRatio": 1.64
     }
    ],
-   "foreignHoldRatio": 1.15
+   "foreignHoldRatio": 1.64
   },
   {
    "code": "347850",
@@ -4225,13 +4225,6 @@
    "tradingValue": 47393.0,
    "marketCapText": "2조 3,102억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -22691.0,
-     "foreign": 12744.0,
-     "institution": 12068.0,
-     "foreignHoldRatio": 5.78
-    },
     {
      "date": "20260727",
      "individual": 130981.0,
@@ -4259,9 +4252,16 @@
      "foreign": 119907.0,
      "institution": -31065.0,
      "foreignHoldRatio": 6.52
+    },
+    {
+     "date": "20260731",
+     "individual": -67943.0,
+     "foreign": 75384.0,
+     "institution": -7916.0,
+     "foreignHoldRatio": 6.68
     }
    ],
-   "foreignHoldRatio": 6.52
+   "foreignHoldRatio": 6.68
   },
   {
    "code": "080220",
@@ -4274,13 +4274,6 @@
    "tradingValue": 214066.0,
    "marketCapText": "2조 2,422억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 394021.0,
-     "foreign": -315888.0,
-     "institution": -82192.0,
-     "foreignHoldRatio": 0.0
-    },
     {
      "date": "20260727",
      "individual": -66981.0,
@@ -4308,9 +4301,16 @@
      "foreign": 211252.0,
      "institution": -43941.0,
      "foreignHoldRatio": 2.72
+    },
+    {
+     "date": "20260731",
+     "individual": -125630.0,
+     "foreign": -7816.0,
+     "institution": 103102.0,
+     "foreignHoldRatio": 2.7
     }
    ],
-   "foreignHoldRatio": 2.72
+   "foreignHoldRatio": 2.7
   },
   {
    "code": "257720",
@@ -4323,13 +4323,6 @@
    "tradingValue": 19299.0,
    "marketCapText": "2조 2,263억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 8923.0,
-     "foreign": 19890.0,
-     "institution": -29083.0,
-     "foreignHoldRatio": 7.11
-    },
     {
      "date": "20260727",
      "individual": -286176.0,
@@ -4357,9 +4350,16 @@
      "foreign": 9288.0,
      "institution": -46808.0,
      "foreignHoldRatio": 7.39
+    },
+    {
+     "date": "20260731",
+     "individual": 70683.0,
+     "foreign": 47027.0,
+     "institution": -121082.0,
+     "foreignHoldRatio": 7.46
     }
    ],
-   "foreignHoldRatio": 7.39
+   "foreignHoldRatio": 7.46
   },
   {
    "code": "031980",
@@ -4372,13 +4372,6 @@
    "tradingValue": 32225.0,
    "marketCapText": "2조 1,088억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 50831.0,
-     "foreign": 91308.0,
-     "institution": -142855.0,
-     "foreignHoldRatio": 6.64
-    },
     {
      "date": "20260727",
      "individual": -18650.0,
@@ -4406,9 +4399,16 @@
      "foreign": 49904.0,
      "institution": -34831.0,
      "foreignHoldRatio": 7.34
+    },
+    {
+     "date": "20260731",
+     "individual": -23278.0,
+     "foreign": -137769.0,
+     "institution": 160094.0,
+     "foreignHoldRatio": 6.7
     }
    ],
-   "foreignHoldRatio": 7.34
+   "foreignHoldRatio": 6.7
   },
   {
    "code": "178320",
@@ -4421,13 +4421,6 @@
    "tradingValue": 32674.0,
    "marketCapText": "2조 1,005억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 244378.0,
-     "foreign": -187999.0,
-     "institution": -52702.0,
-     "foreignHoldRatio": 16.36
-    },
     {
      "date": "20260727",
      "individual": 8022.0,
@@ -4455,9 +4448,16 @@
      "foreign": 74670.0,
      "institution": -11757.0,
      "foreignHoldRatio": 16.54
+    },
+    {
+     "date": "20260731",
+     "individual": 84104.0,
+     "foreign": -172920.0,
+     "institution": 75768.0,
+     "foreignHoldRatio": 16.27
     }
    ],
-   "foreignHoldRatio": 16.54
+   "foreignHoldRatio": 16.27
   },
   {
    "code": "058610",
@@ -4470,13 +4470,6 @@
    "tradingValue": 186998.0,
    "marketCapText": "2조 980억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 148854.0,
-     "foreign": -110090.0,
-     "institution": -41796.0,
-     "foreignHoldRatio": 5.77
-    },
     {
      "date": "20260727",
      "individual": 18328.0,
@@ -4504,9 +4497,16 @@
      "foreign": -100308.0,
      "institution": -3109.0,
      "foreignHoldRatio": 4.08
+    },
+    {
+     "date": "20260731",
+     "individual": -187275.0,
+     "foreign": 152601.0,
+     "institution": 47607.0,
+     "foreignHoldRatio": 4.77
     }
    ],
-   "foreignHoldRatio": 4.08
+   "foreignHoldRatio": 4.77
   },
   {
    "code": "263750",
@@ -4519,13 +4519,6 @@
    "tradingValue": 8190.0,
    "marketCapText": "2조 864억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 24443.0,
-     "foreign": 13300.0,
-     "institution": -36464.0,
-     "foreignHoldRatio": 8.3
-    },
     {
      "date": "20260727",
      "individual": -85040.0,
@@ -4553,6 +4546,13 @@
      "foreign": 2278.0,
      "institution": 20617.0,
      "foreignHoldRatio": 8.01
+    },
+    {
+     "date": "20260731",
+     "individual": -6967.0,
+     "foreign": 1124.0,
+     "institution": 6327.0,
+     "foreignHoldRatio": 8.01
     }
    ],
    "foreignHoldRatio": 8.01
@@ -4568,13 +4568,6 @@
    "tradingValue": 15833.0,
    "marketCapText": "2조 641억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -29667.0,
-     "foreign": 118557.0,
-     "institution": -81756.0,
-     "foreignHoldRatio": 11.11
-    },
     {
      "date": "20260727",
      "individual": -14612.0,
@@ -4602,9 +4595,16 @@
      "foreign": 22293.0,
      "institution": -35107.0,
      "foreignHoldRatio": 12.5
+    },
+    {
+     "date": "20260731",
+     "individual": -14786.0,
+     "foreign": -23786.0,
+     "institution": 38594.0,
+     "foreignHoldRatio": 12.28
     }
    ],
-   "foreignHoldRatio": 12.5
+   "foreignHoldRatio": 12.28
   },
   {
    "code": "310210",
@@ -4617,13 +4617,6 @@
    "tradingValue": 8648.0,
    "marketCapText": "2조 453억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -1308.0,
-     "foreign": 11581.0,
-     "institution": -9956.0,
-     "foreignHoldRatio": 7.8
-    },
     {
      "date": "20260727",
      "individual": -19857.0,
@@ -4651,9 +4644,16 @@
      "foreign": 15268.0,
      "institution": -13489.0,
      "foreignHoldRatio": 8.25
+    },
+    {
+     "date": "20260731",
+     "individual": -2353.0,
+     "foreign": -4172.0,
+     "institution": 8520.0,
+     "foreignHoldRatio": 8.22
     }
    ],
-   "foreignHoldRatio": 8.25
+   "foreignHoldRatio": 8.22
   },
   {
    "code": "226950",
@@ -4666,13 +4666,6 @@
    "tradingValue": 25912.0,
    "marketCapText": "1조 9,968억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": -22527.0,
-     "foreign": -26643.0,
-     "institution": 48560.0,
-     "foreignHoldRatio": 7.94
-    },
     {
      "date": "20260727",
      "individual": -12975.0,
@@ -4700,9 +4693,16 @@
      "foreign": 43084.0,
      "institution": -60280.0,
      "foreignHoldRatio": 8.15
+    },
+    {
+     "date": "20260731",
+     "individual": 4507.0,
+     "foreign": 59769.0,
+     "institution": -62031.0,
+     "foreignHoldRatio": 8.43
     }
    ],
-   "foreignHoldRatio": 8.15
+   "foreignHoldRatio": 8.43
   },
   {
    "code": "005290",
@@ -4715,13 +4715,6 @@
    "tradingValue": 27415.0,
    "marketCapText": "1조 9,955억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 115208.0,
-     "foreign": -73712.0,
-     "institution": -42062.0,
-     "foreignHoldRatio": 13.87
-    },
     {
      "date": "20260727",
      "individual": -39461.0,
@@ -4749,9 +4742,16 @@
      "foreign": 10427.0,
      "institution": 18916.0,
      "foreignHoldRatio": 14.25
+    },
+    {
+     "date": "20260731",
+     "individual": 8112.0,
+     "foreign": -132978.0,
+     "institution": 123866.0,
+     "foreignHoldRatio": 13.99
     }
    ],
-   "foreignHoldRatio": 14.25
+   "foreignHoldRatio": 13.99
   },
   {
    "code": "067310",
@@ -4764,13 +4764,6 @@
    "tradingValue": 86381.0,
    "marketCapText": "1조 9,748억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 43879.0,
-     "foreign": 61992.0,
-     "institution": -107006.0,
-     "foreignHoldRatio": 20.27
-    },
     {
      "date": "20260727",
      "individual": -252209.0,
@@ -4798,9 +4791,16 @@
      "foreign": 22732.0,
      "institution": -12501.0,
      "foreignHoldRatio": 21.98
+    },
+    {
+     "date": "20260731",
+     "individual": 222680.0,
+     "foreign": -410296.0,
+     "institution": 167072.0,
+     "foreignHoldRatio": 21.36
     }
    ],
-   "foreignHoldRatio": 21.98
+   "foreignHoldRatio": 21.36
   },
   {
    "code": "357780",
@@ -4813,13 +4813,6 @@
    "tradingValue": 11252.0,
    "marketCapText": "1조 9,641억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 8892.0,
-     "foreign": -4946.0,
-     "institution": -4374.0,
-     "foreignHoldRatio": 29.82
-    },
     {
      "date": "20260727",
      "individual": -761.0,
@@ -4847,9 +4840,16 @@
      "foreign": 16251.0,
      "institution": -10441.0,
      "foreignHoldRatio": 30.17
+    },
+    {
+     "date": "20260731",
+     "individual": 305.0,
+     "foreign": -4190.0,
+     "institution": 3932.0,
+     "foreignHoldRatio": 30.11
     }
    ],
-   "foreignHoldRatio": 30.17
+   "foreignHoldRatio": 30.11
   },
   {
    "code": "098460",
@@ -4862,13 +4862,6 @@
    "tradingValue": 80515.0,
    "marketCapText": "1조 8,586억원",
    "flow": [
-    {
-     "date": "20260724",
-     "individual": 89773.0,
-     "foreign": -14264.0,
-     "institution": -75857.0,
-     "foreignHoldRatio": 25.0
-    },
     {
      "date": "20260727",
      "individual": -135631.0,
@@ -4896,9 +4889,16 @@
      "foreign": 261110.0,
      "institution": -124982.0,
      "foreignHoldRatio": 24.4
+    },
+    {
+     "date": "20260731",
+     "individual": -565190.0,
+     "foreign": 404391.0,
+     "institution": 157852.0,
+     "foreignHoldRatio": 24.99
     }
    ],
-   "foreignHoldRatio": 24.4
+   "foreignHoldRatio": 24.99
   }
  ],
  "industries": [
