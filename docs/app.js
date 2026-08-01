@@ -66,7 +66,8 @@ function shares(v) {
 
 /* ── 부트 ─────────────────────────────────────────────── */
 
-const FILES = ['meta', 'flows', 'ant', 'futures', 'credit', 'market', 'stocks', 'global', 'events', 'insights'];
+const FILES = ['meta', 'flows', 'ant', 'analog', 'antstocks', 'futures', 'credit',
+               'market', 'stocks', 'global', 'events', 'insights'];
 
 /** 응답이 없으면 무한정 기다리지 않는다. 실패하면 왜 실패했는지 남긴다. */
 async function fetchJSON(name, { timeout = 8000, tries = 2 } = {}) {
@@ -161,6 +162,8 @@ async function boot() {
   safe(renderCaveats, '한계 고백');
   safe(renderInsights, '브리핑');
   safe(renderIndices, '지수');
+  safe(renderAnalog, '유사 국면');
+  safe(renderBaskets, '장바구니 비교');
   safe(renderFlowChart, '수급 차트');
   safe(renderStreaks, '연속 매매');
   safe(renderInstBreakdown, '기관 분해');
@@ -188,7 +191,7 @@ async function refresh() {
   RENDER_ERRORS.length = 0;
   [[renderMeta, '헤더'], [renderMirror, '거울 한 줄'], [renderHero, '줄다리기'],
    [renderThermo, '개미 온도계'], [renderFutures, '선물'], [renderCredit, '빚투 체온계'],
-   [renderInsights, '브리핑'], [renderIndices, '지수'],
+   [renderAnalog, '유사 국면'], [renderInsights, '브리핑'], [renderIndices, '지수'],
    [renderFlowChart, '수급 차트'], [renderStreaks, '연속 매매'],
    [renderInstBreakdown, '기관 분해']].forEach(([fn, label]) => safe(fn, label));
   reportRenderErrors();
@@ -379,6 +382,94 @@ function renderThermo() {
     같은 기간 시장 평균은 <b>${cr.baseline20 >= 0 ? '+' : ''}${cr.baseline20}%</b>였습니다.
     시장 평균 대비 <b class="${better ? 'up' : 'down'}">${cr.excess >= 0 ? '+' : ''}${cr.excess}%p</b>.
     <div class="c-note">과거 기록이지 예측이 아닙니다. 표본 ${cr.n}개는 결론을 내리기엔 적은 수입니다.</div>`;
+}
+
+/* ── 지금과 비슷했던 날들 ────────────────────────────── */
+
+function renderAnalog() {
+  const card = $('#analog-card');
+  const a = D.analog;
+  if (!a || !a.matches?.length) { card.hidden = true; return; }
+  card.hidden = false;
+
+  $('#analog-sample').textContent =
+    `${a.sample.from} ~ ${a.sample.to} · ${a.sample.days}거래일에서 검색`;
+
+  const t = a.today;
+  $('#analog-today').innerHTML =
+    `오늘(${t.date})의 조합 — 코스피 <b class="${dirCls(t.ret1)}">${t.ret1 >= 0 ? '+' : ''}${t.ret1}%</b>, ` +
+    `개인 <b class="${dirCls(t.individual)}">${eok(t.individual)}</b> · ` +
+    `외국인 <b class="${dirCls(t.foreign)}">${eok(t.foreign)}</b> · ` +
+    `기관 <b class="${dirCls(t.institution)}">${eok(t.institution)}</b>. ` +
+    `이 조합과 가장 가까웠던 ${a.matches.length}일:`;
+
+  const list = $('#analog-list');
+  list.innerHTML = '';
+  a.matches.forEach((m, i) => {
+    const row = el('div', 'analog-row', `
+      <div class="analog-date">${m.date}</div>
+      <div class="analog-desc">코스피 <b class="${dirCls(m.ret1)}">${m.ret1 >= 0 ? '+' : ''}${m.ret1}%</b> ·
+        개인 <b class="${dirCls(m.individual)}">${eok(m.individual)}</b> ·
+        외인 <b class="${dirCls(m.foreign)}">${eok(m.foreign)}</b> · ${nfmt(m.close, 0)}p</div>
+      <div class="analog-out ${dirCls(m.ret20)}">${m.ret20 >= 0 ? '+' : ''}${m.ret20}%<small>20거래일 뒤</small></div>`);
+    row.style.animationDelay = `${i * 50}ms`;
+    list.appendChild(row);
+  });
+
+  const better = a.avgRet20 >= a.baseline20;
+  $('#analog-verdict').innerHTML =
+    `이 ${a.matches.length}일의 20거래일 뒤 평균은 <b class="${dirCls(a.avgRet20)}">${a.avgRet20 >= 0 ? '+' : ''}${a.avgRet20}%</b> ` +
+    `(전체 기간 평균 <b>${a.baseline20 >= 0 ? '+' : ''}${a.baseline20}%</b>) — ` +
+    (better ? '비슷한 날들의 뒤가 평균보다 좋았습니다.' : '비슷한 날들의 뒤가 평균보다 나빴습니다.') +
+    `<br><span class="dim small">표본 ${a.matches.length}개는 통계가 아니라 일화입니다. 그날과 지금은 다른 시장입니다.</span>`;
+}
+
+/* ── 개미 장바구니 vs 외인 장바구니 ──────────────────── */
+
+function renderBaskets() {
+  const card = $('#basket-card');
+  const b = D.antstocks;
+  if (!b || !b.antBasket?.length) { card.hidden = true; return; }
+  card.hidden = false;
+
+  $('#basket-window').textContent =
+    `최근 ${b.window.days}거래일 (${b.window.from.slice(4,6)}/${b.window.from.slice(6,8)} ~ ` +
+    `${b.window.to.slice(4,6)}/${b.window.to.slice(6,8)}) · 시총상위 ${b.universe}종목 대상`;
+
+  const antWin = (b.antAvgChange ?? -999) >= (b.foreignAvgChange ?? -999);
+  $('#basket-headline').innerHTML = `
+    <div class="bh-side ${antWin ? 'winner' : ''}">
+      <div class="bh-who">🐜 개미가 담은 10종목</div>
+      <div class="bh-chg ${dirCls(b.antAvgChange)}">${b.antAvgChange >= 0 ? '+' : ''}${b.antAvgChange}%</div>
+      <div class="bh-sub">평균 등락률</div>
+    </div>
+    <div class="bh-vs">VS</div>
+    <div class="bh-side ${antWin ? '' : 'winner'}">
+      <div class="bh-who">🦅 외인이 담은 10종목</div>
+      <div class="bh-chg ${dirCls(b.foreignAvgChange)}">${b.foreignAvgChange >= 0 ? '+' : ''}${b.foreignAvgChange}%</div>
+      <div class="bh-sub">평균 등락률</div>
+    </div>`;
+
+  const col = (title, items) => `
+    <div class="basket-col">
+      <h3>${title}</h3>
+      ${items.map(x => `
+        <div class="basket-item">
+          <span class="bi-name">${x.name}<small>${x.market === 'KOSDAQ' ? '코스닥' : ''}</small></span>
+          <span class="bi-val">${eok(x.value)}</span>
+          <span class="bi-chg ${dirCls(x.change)}">${x.change >= 0 ? '+' : ''}${x.change}%</span>
+        </div>`).join('')}
+    </div>`;
+  $('#basket-grid').innerHTML =
+    col('🐜 개미 순매수 TOP 10', b.antBasket) + col('🦅 외인 순매수 TOP 10', b.foreignBasket);
+
+  const exRow = x => `<div class="row"><span>${x.name}</span>
+    <b class="${dirCls(x.change)}">${x.change >= 0 ? '+' : ''}${x.change}%</b></div>`;
+  $('#basket-extremes').innerHTML = `
+    <div class="extreme tears"><h3>💧 개미의 눈물 — 담았는데 빠진 종목</h3>${b.tears.map(exRow).join('')}</div>
+    <div class="extreme wins"><h3>🏆 개미의 승리 — 담았고 올랐던 종목</h3>${b.wins.map(exRow).join('')}</div>`;
+
+  $('#basket-note').textContent = b.note;
 }
 
 /* ── 선물: 외국인의 본심 ─────────────────────────────── */

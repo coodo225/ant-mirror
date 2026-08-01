@@ -423,11 +423,12 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
         except Exception as e:  # noqa: BLE001
             warn(f"{market} 시총상위 실패: {e}")
 
-    # 종목별 개인/외인/기관 (수량 기준)
+    # 종목별 개인/외인/기관 — 네이버 API 는 최대 60거래일까지 준다.
+    # 화면 상세에는 최근 5일만 싣고, 60일 전체는 장바구니 통계(stat60)로 요약한다.
     for s in out["top"]:
         try:
             tr = get_json(
-                f"https://m.stock.naver.com/api/stock/{s['code']}/trend?pageSize=5&page=1"
+                f"https://m.stock.naver.com/api/stock/{s['code']}/trend?pageSize=60&page=1"
             )
             days = []
             for d in tr if isinstance(tr, list) else []:
@@ -438,13 +439,30 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
                         "foreign": num(d.get("foreignerPureBuyQuant")),
                         "institution": num(d.get("organPureBuyQuant")),
                         "foreignHoldRatio": num(d.get("foreignerHoldRatio")),
+                        "close": num(d.get("closePrice")),
                     }
                 )
             days.sort(key=lambda d: d["date"] or "")
-            s["flow"] = days
+
+            # 60일 장바구니 요약: 순매수 수량 × 그날 종가 ≈ 순매수 금액(억원, 근사)
+            valid = [d for d in days if d["close"]]
+            if len(valid) >= 20:
+                def net_value(key):
+                    return round(sum((d[key] or 0) * d["close"] for d in valid) / 1e8, 1)
+                s["stat60"] = {
+                    "days": len(valid),
+                    "from": valid[0]["date"], "to": valid[-1]["date"],
+                    "indivValue": net_value("individual"),
+                    "foreignValue": net_value("foreign"),
+                    "instValue": net_value("institution"),
+                    "change": round((valid[-1]["close"] / valid[0]["close"] - 1) * 100, 2),
+                }
+
+            s["flow"] = [{k: d[k] for k in ("date", "individual", "foreign", "institution", "foreignHoldRatio")}
+                         for d in days[-5:]]
             if days:
                 s["foreignHoldRatio"] = days[-1]["foreignHoldRatio"]
-            time.sleep(0.15)
+            time.sleep(0.12)
         except Exception as e:  # noqa: BLE001
             warn(f"{s['name']} 수급 실패: {e}")
             s["flow"] = []
@@ -466,6 +484,55 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
     except Exception as e:  # noqa: BLE001
         warn(f"업종 실패: {e}")
     return out
+
+
+# ---------------------------------------------------------------- 개미 장바구니 vs 외인 장바구니
+
+def build_ant_stocks(stocks: dict) -> dict:
+    """
+    최근 60거래일, 개미와 외국인이 각각 어떤 종목을 담았고 그 종목들이 어떻게 됐는지.
+    순매수 금액은 (일별 순매수 수량 × 그날 종가)의 합 — 근사치임을 화면에 명시한다.
+    """
+    pool = [s for s in stocks.get("top", []) if s.get("stat60")]
+    if len(pool) < 10:
+        warn(f"장바구니 비교: stat60 있는 종목 부족({len(pool)})")
+        return {}
+
+    def pick(key, reverse=True, n=10):
+        ranked = sorted(pool, key=lambda s: s["stat60"][key], reverse=reverse)
+        chosen = [s for s in ranked if (s["stat60"][key] > 0 if reverse else s["stat60"][key] < 0)][:n]
+        return [
+            {
+                "code": s["code"], "name": s["name"], "market": s["market"],
+                "value": s["stat60"][key], "change": s["stat60"]["change"],
+                "price": s["price"],
+            }
+            for s in chosen
+        ]
+
+    ant_basket = pick("indivValue")            # 개미가 가장 많이 담은 종목
+    foreign_basket = pick("foreignValue")      # 외인이 가장 많이 담은 종목
+
+    def avg_change(basket):
+        return round(sum(b["change"] for b in basket) / len(basket), 2) if basket else None
+
+    # 개미의 눈물: 많이 담았는데(순매수 상위) 많이 빠진 순
+    tears = sorted(ant_basket, key=lambda b: b["change"])[:5]
+    wins = sorted(ant_basket, key=lambda b: -b["change"])[:5]
+
+    sample = pool[0]["stat60"]
+    return {
+        "window": {"days": sample["days"], "from": sample["from"], "to": sample["to"]},
+        "universe": len(pool),
+        "antBasket": ant_basket,
+        "foreignBasket": foreign_basket,
+        "antAvgChange": avg_change(ant_basket),
+        "foreignAvgChange": avg_change(foreign_basket),
+        "tears": tears,
+        "wins": wins,
+        "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. "
+                "대상은 수집된 시총 상위 종목이며, 등락률은 최근 60거래일 기준입니다.",
+    }
 
 
 # ---------------------------------------------------------------- 글로벌 / 매크로
@@ -880,6 +947,104 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     }
 
 
+# ---------------------------------------------------------------- 유사 국면 매칭
+
+ANALOG_FEATURES = [
+    ("indiv",    "개인 순매수"),
+    ("foreign",  "외국인 순매수"),
+    ("inst",     "기관 순매수"),
+    ("indiv5",   "개인 5일 누적"),
+    ("foreign5", "외국인 5일 누적"),
+    ("ret1",     "당일 등락률"),
+    ("ret5",     "5일 등락률"),
+    ("vol5",     "5일 변동성"),
+]
+
+
+def build_analog(full: dict, closes: dict, code: str = "KOSPI") -> dict:
+    """
+    오늘의 (수급 + 가격 움직임) 조합과 가장 비슷했던 과거의 날들을 찾는다.
+    8개 특징을 z-score 로 정규화한 뒤 유클리드 거리로 비교한다.
+    예측이 아니라 '과거에 비슷한 날은 이후 어땠나'의 기록이다.
+    """
+    px = closes.get(code) or {}
+    rows = [r for r in (full.get(code) or []) if r["date"] in px]
+    n = len(rows)
+    if n < 120:
+        warn(f"유사 국면: {code} 표본 부족({n}일) — 건너뜀")
+        return {}
+
+    C = [px[r["date"]] for r in rows]
+    I = [r["individual"] or 0.0 for r in rows]
+    F = [r["foreign"] or 0.0 for r in rows]
+    O = [r["institution"] or 0.0 for r in rows]
+    ret1 = [0.0] + [(C[i] / C[i - 1] - 1) * 100 for i in range(1, n)]
+    ret5 = [0.0] * 5 + [(C[i] / C[i - 5] - 1) * 100 for i in range(5, n)]
+    i5 = [sum(I[max(0, i - 4): i + 1]) for i in range(n)]
+    f5 = [sum(F[max(0, i - 4): i + 1]) for i in range(n)]
+    vol5 = []
+    for i in range(n):
+        w = ret1[max(0, i - 4): i + 1]
+        m = sum(w) / len(w)
+        vol5.append((sum((x - m) ** 2 for x in w) / len(w)) ** 0.5)
+
+    feats = [I, F, O, i5, f5, ret1, ret5, vol5]
+
+    def zscore(v):
+        m = sum(v) / len(v)
+        s = (sum((x - m) ** 2 for x in v) / len(v)) ** 0.5 or 1.0
+        return [(x - m) / s for x in v]
+
+    Z = [zscore(v) for v in feats]
+    today = n - 1
+
+    # 후보: 5일 워밍업 이후 ~ 결과(20일)를 아는 날까지, 최근 10일은 제외(자기 자신과의 중복 방지)
+    cands = []
+    for i in range(5, n - 20):
+        if i >= n - 10:
+            continue
+        d = sum((Z[k][i] - Z[k][today]) ** 2 for k in range(len(Z))) ** 0.5
+        cands.append((d, i))
+    cands.sort()
+
+    picked: list[tuple[float, int]] = []
+    for d, i in cands:
+        if any(abs(i - j) < 5 for _, j in picked):   # 붙어 있는 날짜는 하나로
+            continue
+        picked.append((d, i))
+        if len(picked) == 5:
+            break
+
+    matches = [
+        {
+            "date": rows[i]["date"],
+            "distance": round(d, 3),
+            "close": round(C[i], 2),
+            "ret1": round(ret1[i], 2),
+            "individual": I[i],
+            "foreign": F[i],
+            "ret20": round((C[i + 20] / C[i] - 1) * 100, 2),
+        }
+        for d, i in picked
+    ]
+    if not matches:
+        return {}
+
+    fwd20 = [(C[i + 20] / C[i] - 1) * 100 for i in range(n - 20)]
+    return {
+        "market": code,
+        "today": {
+            "date": rows[today]["date"], "close": round(C[today], 2),
+            "individual": I[today], "foreign": F[today], "institution": O[today],
+            "ret1": round(ret1[today], 2), "ret5": round(ret5[today], 2),
+        },
+        "matches": matches,
+        "avgRet20": round(sum(m["ret20"] for m in matches) / len(matches), 2),
+        "baseline20": round(sum(fwd20) / len(fwd20), 2),
+        "sample": {"days": n, "from": rows[0]["date"], "to": rows[-1]["date"]},
+    }
+
+
 # ---------------------------------------------------------------- 해석 레이어
 
 def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
@@ -994,6 +1159,114 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
     return tips
 
 
+# ---------------------------------------------------------------- OG 공유 카드
+
+def find_korean_font() -> tuple[str | None, str | None]:
+    """(굵은 폰트, 보통 폰트) 경로. 윈도우/리눅스(Actions) 겸용."""
+    candidates = [
+        ("C:/Windows/Fonts/malgunbd.ttf", "C:/Windows/Fonts/malgun.ttf"),
+        ("/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
+         "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"),
+        ("/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
+         "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"),
+    ]
+    for bold, regular in candidates:
+        if Path(bold).exists() and Path(regular).exists():
+            return bold, regular
+    return None, None
+
+
+def build_og_card(flows: dict, market: dict, ant: dict) -> None:
+    """카톡/트위터 공유 미리보기용 1200×630 PNG. 실패해도 치명적이지 않다."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        warn("Pillow 미설치 — OG 카드 생략 (pip install pillow)")
+        return
+    bold_path, reg_path = find_korean_font()
+    if not bold_path:
+        warn("한글 폰트를 찾지 못해 OG 카드 생략")
+        return
+
+    W, H = 1200, 630
+    BG, CARD, LINE = (11, 14, 20), (21, 27, 43), (37, 45, 66)
+    TEXT, DIM = (232, 236, 245), (139, 150, 173)
+    UP, DOWN = (255, 77, 77), (77, 148, 255)
+    COLORS = {"individual": (255, 176, 46), "foreign": (79, 195, 247), "institution": (179, 136, 255)}
+    NAMES = {"individual": "개인", "foreign": "외국인", "institution": "기관"}
+
+    def font(size, b=True):
+        return ImageFont.truetype(bold_path if b else reg_path, size)
+
+    img = Image.new("RGB", (W, H), BG)
+    dr = ImageDraw.Draw(img)
+
+    ks = flows.get("markets", {}).get("KOSPI", {})
+    latest = ks.get("latest") or {}
+    idx = market.get("indices", {}).get("KOSPI", {})
+
+    # 헤더
+    dr.text((60, 48), "개미들을 위한 투자정보", font=font(46), fill=(255, 208, 138))
+    date_txt = latest.get("date", "")
+    dr.text((60, 112), f"{date_txt} · 오늘 한국 증시에서 누가 사고 누가 팔았나",
+            font=font(24, b=False), fill=DIM)
+
+    # 코스피
+    price = idx.get("price")
+    rate = idx.get("changeRate")
+    if price is not None:
+        col = UP if (rate or 0) > 0 else DOWN if (rate or 0) < 0 else DIM
+        dr.text((60, 180), "코스피", font=font(26, b=False), fill=DIM)
+        dr.text((60, 214), f"{price:,.2f}", font=font(64), fill=TEXT)
+        if rate is not None:
+            arrow = "▲" if rate > 0 else ("▼" if rate < 0 else "─")
+            dr.text((60, 292), f"{arrow} {abs(idx.get('change') or 0):,.2f} ({rate:+.2f}%)",
+                    font=font(30), fill=col)
+
+    # 3주체 가로 막대
+    vals = {k: latest.get(k) or 0 for k in ("individual", "foreign", "institution")}
+    vmax = max(abs(v) for v in vals.values()) or 1
+    bx, bw_half = 640, 220     # 중앙축 x=640+220=860, 트랙 860±220
+    cx = bx + bw_half
+    y = 190
+    dr.text((bx, 140), "오늘의 수급 (억원)", font=font(24, b=False), fill=DIM)
+    for k in ("individual", "foreign", "institution"):
+        v = vals[k]
+        half = abs(v) / vmax * bw_half
+        dr.text((bx - 115, y + 6), NAMES[k], font=font(26), fill=COLORS[k])
+        dr.rectangle([cx - bw_half, y, cx + bw_half, y + 40], fill=(13, 18, 32), outline=LINE)
+        if v >= 0:
+            dr.rectangle([cx, y + 4, cx + max(half, 3), y + 36], fill=COLORS[k])
+        else:
+            dr.rectangle([cx - max(half, 3), y + 4, cx, y + 36], fill=COLORS[k])
+        amt = f"{v/10000:+.2f}조" if abs(v) >= 10000 else f"{v:+,.0f}억"
+        dr.text((cx + bw_half + 16, y + 6), amt, font=font(24), fill=TEXT)
+        dr.line([cx, y, cx, y + 40], fill=(74, 85, 112), width=2)
+        y += 62
+
+    # 개미 온도계
+    if ant and ant.get("actors"):
+        p = ant["actors"]["individual"]["todayPercentile"]
+        ty = 430
+        dr.text((60, ty), f"개미 온도계 — 최근 {ant['sample']['days']}거래일 중 {p:.0f}번째 백분위",
+                font=font(26), fill=TEXT)
+        track_y = ty + 52
+        dr.rounded_rectangle([60, track_y, 1140, track_y + 22], radius=11, fill=(13, 18, 32), outline=LINE)
+        dr.rounded_rectangle([60, track_y, 60 + 216, track_y + 22], radius=11, fill=(58, 96, 156))
+        dr.rounded_rectangle([1140 - 216, track_y, 1140, track_y + 22], radius=11, fill=(156, 62, 62))
+        ax = 60 + (1140 - 60) * p / 100
+        dr.ellipse([ax - 18, track_y - 8, ax + 18, track_y + 30], fill=(255, 176, 46))
+        dr.text((60, track_y + 40), "패닉 매도", font=font(20, b=False), fill=DOWN)
+        dr.text((1040, track_y + 40), "영끌 매수", font=font(20, b=False), fill=UP)
+
+    dr.text((60, H - 46), "coodo225.github.io/ant-mirror · 투자 조언이 아닙니다",
+            font=font(20, b=False), fill=(93, 103, 128))
+
+    out = ROOT / "docs" / "og.png"
+    img.save(out, "PNG", optimize=True)
+    print(f"  -> {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)")
+
+
 # ---------------------------------------------------------------- main
 
 def market_phase(now: datetime) -> str:
@@ -1032,11 +1305,20 @@ def main() -> int:
     attach_futures_divergence(futures, flows)
     print("[5/8] 신용융자·증시자금 (KOFIA)")
     credit = build_credit()
-    print("[6/8] 종목·업종")
+    print("[6/9] 유사 국면 매칭")
+    analog = build_analog(full, closes, "KOSPI")
+    if analog:
+        print(f"  매칭 {len(analog['matches'])}건 · 평균 20일 뒤 {analog['avgRet20']:+.2f}% "
+              f"(기준 {analog['baseline20']:+.2f}%)")
+    print("[7/9] 종목·업종 + 장바구니")
     stocks = build_stocks()
-    print("[7/8] 글로벌 지표")
+    antstocks = build_ant_stocks(stocks)
+    if antstocks:
+        print(f"  장바구니 비교: 개미 {antstocks['antAvgChange']:+.2f}% vs "
+              f"외인 {antstocks['foreignAvgChange']:+.2f}% (60일)")
+    print("[8/9] 글로벌 지표")
     glob = build_global()
-    print("[8/8] 이벤트 일정 / 매크로")
+    print("[9/9] 이벤트 일정 / 매크로")
     events, macro = build_events()
     glob["macro"] = macro
 
@@ -1044,6 +1326,8 @@ def main() -> int:
 
     write("flows.json", flows)
     write("ant.json", ant)
+    write("analog.json", analog)
+    write("antstocks.json", antstocks)
     write("futures.json", futures)
     write("credit.json", credit)
     write("market.json", market)
@@ -1051,6 +1335,7 @@ def main() -> int:
     write("global.json", glob)
     write("events.json", events)
     write("insights.json", {"items": insights})
+    build_og_card(flows, market, ant)
     write("meta.json", {
         "generatedAt": now.isoformat(),
         "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),

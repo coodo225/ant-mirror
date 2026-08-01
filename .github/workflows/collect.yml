@@ -35,6 +35,9 @@ jobs:
       - name: 의존성 설치
         run: pip install -r collector/requirements.txt
 
+      - name: 한글 폰트 설치 (OG 공유 카드용)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
       - name: 데이터 수집
         env:
           # 선택사항. 없으면 미국 CPI/고용/PCE 일정과 매크로 실측치만 빠집니다.
@@ -46,7 +49,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data
+          git add docs/data docs/og.png
           if git diff --staged --quiet; then
             echo "변경 없음 — 커밋 생략"
             exit 0
