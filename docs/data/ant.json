@@ -50,8 +50,8 @@
  },
  "correlation": {
   "individual_foreign": -0.841,
-  "individual_institution": -0.576,
-  "foreign_institution": 0.048
+  "individual_institution": -0.577,
+  "foreign_institution": 0.05
  },
  "oppositeRate": {
   "vsForeign": 79.2,
@@ -72,8 +72,8 @@
    },
    "excess20": 0.25,
    "grade": "C",
-   "todayValue": 40945.0,
-   "todayPercentile": 97.3
+   "todayValue": 46523.0,
+   "todayPercentile": 97.9
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.39,
    "grade": "B",
-   "todayValue": -26105.0,
-   "todayPercentile": 4.7
+   "todayValue": -28220.0,
+   "todayPercentile": 4.1
   },
   "institution": {
    "timing": {
@@ -106,8 +106,8 @@
    },
    "excess20": 1.0,
    "grade": "B",
-   "todayValue": -15845.0,
-   "todayPercentile": 2.2
+   "todayValue": -19516.0,
+   "todayPercentile": 1.7
   }
  },
  "contrarianRead": {
