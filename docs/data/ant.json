@@ -32,9 +32,9 @@
    "year": "2026",
    "days": 144,
    "corrIF": -0.846,
-   "baseline20": 6.96,
+   "baseline20": 6.98,
    "indivHeavyR20": -1.04,
-   "excess": -8.01,
+   "excess": -8.02,
    "grade": "F"
   }
  ],
@@ -46,7 +46,7 @@
  "baseline": {
   "r1": 0.14,
   "r5": 0.67,
-  "r20": 3.02
+  "r20": 3.03
  },
  "correlation": {
   "individual_foreign": -0.841,
@@ -60,25 +60,25 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.066,
-    "corr5": -0.078,
-    "corr20": -0.122
+    "corr1": -0.061,
+    "corr5": -0.075,
+    "corr20": -0.121
    },
    "heavyBuy": {
-    "r1": -0.1,
-    "r5": 0.7,
-    "r20": 3.11,
+    "r1": -0.08,
+    "r5": 0.72,
+    "r20": 3.13,
     "n": 150
    },
-   "excess20": 0.09,
+   "excess20": 0.1,
    "grade": "C",
-   "todayValue": 8771.0,
-   "todayPercentile": 86.9
+   "todayValue": 8186.0,
+   "todayPercentile": 85.8
   },
   "foreign": {
    "timing": {
-    "corr1": 0.105,
-    "corr5": 0.098,
+    "corr1": 0.101,
+    "corr5": 0.094,
     "corr20": 0.124
    },
    "heavyBuy": {
@@ -87,16 +87,16 @@
     "r20": 4.45,
     "n": 150
    },
-   "excess20": 1.43,
+   "excess20": 1.42,
    "grade": "B",
-   "todayValue": -2360.0,
-   "todayPercentile": 33.4
+   "todayValue": -3706.0,
+   "todayPercentile": 24.6
   },
   "institution": {
    "timing": {
-    "corr1": -0.047,
-    "corr5": -0.026,
-    "corr20": -0.001
+    "corr1": -0.051,
+    "corr5": -0.025,
+    "corr20": -0.002
    },
    "heavyBuy": {
     "r1": 0.24,
@@ -104,19 +104,19 @@
     "r20": 4.06,
     "n": 150
    },
-   "excess20": 1.04,
+   "excess20": 1.03,
    "grade": "B",
-   "todayValue": -7184.0,
-   "todayPercentile": 7.1
+   "todayValue": -5395.0,
+   "todayPercentile": 10.6
   }
  },
  "contrarianRead": {
   "label": "개미가 지금처럼 강하게 사들였던 날(상위 20%)",
   "side": "buy",
   "n": 142,
-  "r20": 3.11,
-  "baseline20": 3.02,
-  "excess": 0.09
+  "r20": 3.13,
+  "baseline20": 3.03,
+  "excess": 0.1
  },
  "hallOfFame": [
   {
@@ -157,7 +157,7 @@
  ],
  "caveats": [
   "표본은 2023-07-05~2026-08-04 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
-  "이 기간 지수의 20거래일 평균 수익률은 +3.02% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+  "이 기간 지수의 20거래일 평균 수익률은 +3.03% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
  ]
