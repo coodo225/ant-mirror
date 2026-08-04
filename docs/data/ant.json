@@ -3,12 +3,12 @@
  "yearly": [
   {
    "year": "2023",
-   "days": 121,
+   "days": 120,
    "corrIF": -0.682,
-   "baseline20": -0.38,
-   "indivHeavyR20": -1.35,
-   "excess": -0.97,
-   "grade": "C"
+   "baseline20": -0.41,
+   "indivHeavyR20": -1.57,
+   "excess": -1.16,
+   "grade": "D"
   },
   {
    "year": "2024",
@@ -30,23 +30,23 @@
   },
   {
    "year": "2026",
-   "days": 143,
+   "days": 144,
    "corrIF": -0.846,
-   "baseline20": 7.21,
+   "baseline20": 6.96,
    "indivHeavyR20": -1.04,
-   "excess": -8.25,
+   "excess": -8.01,
    "grade": "F"
   }
  ],
  "sample": {
   "days": 750,
-  "from": "2023-07-04",
-  "to": "2026-08-03"
+  "from": "2023-07-05",
+  "to": "2026-08-04"
  },
  "baseline": {
   "r1": 0.14,
-  "r5": 0.66,
-  "r20": 3.06
+  "r5": 0.67,
+  "r20": 3.02
  },
  "correlation": {
   "individual_foreign": -0.841,
@@ -54,32 +54,32 @@
   "foreign_institution": 0.05
  },
  "oppositeRate": {
-  "vsForeign": 79.2,
+  "vsForeign": 79.1,
   "vsInstitution": 74.4
  },
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.064,
-    "corr5": -0.08,
-    "corr20": -0.115
+    "corr1": -0.067,
+    "corr5": -0.078,
+    "corr20": -0.122
    },
    "heavyBuy": {
-    "r1": -0.09,
-    "r5": 0.68,
-    "r20": 3.31,
+    "r1": -0.1,
+    "r5": 0.7,
+    "r20": 3.12,
     "n": 150
    },
-   "excess20": 0.25,
+   "excess20": 0.1,
    "grade": "C",
-   "todayValue": 46523.0,
-   "todayPercentile": 97.9
+   "todayValue": 3401.0,
+   "todayPercentile": 70.1
   },
   "foreign": {
    "timing": {
-    "corr1": 0.103,
-    "corr5": 0.101,
-    "corr20": 0.121
+    "corr1": 0.105,
+    "corr5": 0.098,
+    "corr20": 0.124
    },
    "heavyBuy": {
     "r1": 0.3,
@@ -87,16 +87,16 @@
     "r20": 4.45,
     "n": 150
    },
-   "excess20": 1.39,
+   "excess20": 1.43,
    "grade": "B",
-   "todayValue": -28220.0,
-   "todayPercentile": 4.1
+   "todayValue": 1066.0,
+   "todayPercentile": 62.9
   },
   "institution": {
    "timing": {
-    "corr1": -0.049,
-    "corr5": -0.025,
-    "corr20": -0.01
+    "corr1": -0.046,
+    "corr5": -0.026,
+    "corr20": -0.001
    },
    "heavyBuy": {
     "r1": 0.24,
@@ -104,20 +104,13 @@
     "r20": 4.06,
     "n": 150
    },
-   "excess20": 1.0,
+   "excess20": 1.04,
    "grade": "B",
-   "todayValue": -19516.0,
-   "todayPercentile": 1.7
+   "todayValue": -5137.0,
+   "todayPercentile": 10.8
   }
  },
- "contrarianRead": {
-  "label": "개미가 지금처럼 강하게 사들였던 날(상위 20%)",
-  "side": "buy",
-  "n": 142,
-  "r20": 3.31,
-  "baseline20": 3.06,
-  "excess": 0.25
- },
+ "contrarianRead": null,
  "hallOfFame": [
   {
    "date": "2026-06-23",
@@ -156,8 +149,8 @@
   }
  ],
  "caveats": [
-  "표본은 2023-07-04~2026-08-03 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
-  "이 기간 지수의 20거래일 평균 수익률은 +3.06% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+  "표본은 2023-07-05~2026-08-04 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+  "이 기간 지수의 20거래일 평균 수익률은 +3.02% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
  ]
