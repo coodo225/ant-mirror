@@ -60,7 +60,7 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.057,
+    "corr1": -0.056,
     "corr5": -0.085,
     "corr20": -0.126
    },
@@ -72,12 +72,12 @@
    },
    "excess20": 0.08,
    "grade": "C",
-   "todayValue": 27978.0,
-   "todayPercentile": 95.9
+   "todayValue": 33388.0,
+   "todayPercentile": 96.6
   },
   "foreign": {
    "timing": {
-    "corr1": 0.097,
+    "corr1": 0.096,
     "corr5": 0.093,
     "corr20": 0.128
    },
@@ -89,8 +89,8 @@
    },
    "excess20": 1.5,
    "grade": "B",
-   "todayValue": -28389.0,
-   "todayPercentile": 3.9
+   "todayValue": -33273.0,
+   "todayPercentile": 3.0
   },
   "institution": {
    "timing": {
@@ -106,8 +106,8 @@
    },
    "excess20": 1.08,
    "grade": "B",
-   "todayValue": -652.0,
-   "todayPercentile": 36.6
+   "todayValue": -1214.0,
+   "todayPercentile": 31.1
   }
  },
  "contrarianRead": {
