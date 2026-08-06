@@ -12,7 +12,7 @@
  "matches": [
   {
    "date": "2026-06-15",
-   "distance": 3.962,
+   "distance": 3.959,
    "close": 8545.98,
    "ret1": 5.2,
    "individual": -15124.0,
@@ -21,7 +21,7 @@
   },
   {
    "date": "2026-04-07",
-   "distance": 4.071,
+   "distance": 4.068,
    "close": 5494.78,
    "ret1": 0.82,
    "individual": -3429.0,
@@ -30,7 +30,7 @@
   },
   {
    "date": "2026-04-14",
-   "distance": 4.712,
+   "distance": 4.708,
    "close": 5967.75,
    "ret1": 2.74,
    "individual": -23919.0,
@@ -39,7 +39,7 @@
   },
   {
    "date": "2026-05-06",
-   "distance": 5.036,
+   "distance": 5.033,
    "close": 7384.56,
    "ret1": 6.45,
    "individual": -5715.0,
@@ -48,7 +48,7 @@
   },
   {
    "date": "2023-11-06",
-   "distance": 5.071,
+   "distance": 5.067,
    "close": 2502.37,
    "ret1": 5.66,
    "individual": -9360.0,
@@ -57,10 +57,10 @@
   }
  ],
  "avgRet20": 12.14,
- "baseline20": 3.0,
+ "baseline20": 3.01,
  "sample": {
-  "days": 750,
-  "from": "2023-07-06",
+  "days": 749,
+  "from": "2023-07-07",
   "to": "2026-08-05"
  }
 }
