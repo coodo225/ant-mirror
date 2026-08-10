@@ -2,19 +2,6 @@
  "unit": "계약",
  "daily": [
   {
-   "date": "2026-05-13",
-   "individual": 1352.0,
-   "foreign": -6850.0,
-   "institution": 5140.0,
-   "inst_fin_inv": 1335.0,
-   "inst_insurance": 229.0,
-   "inst_trust": 3474.0,
-   "inst_bank": 59.0,
-   "inst_other_fin": 3.0,
-   "inst_pension": 40.0,
-   "other_corp": 358.0
-  },
-  {
    "date": "2026-05-14",
    "individual": 832.0,
    "foreign": -5156.0,
@@ -780,42 +767,55 @@
    "inst_other_fin": -23.0,
    "inst_pension": 128.0,
    "other_corp": -209.0
+  },
+  {
+   "date": "2026-08-10",
+   "individual": -219.0,
+   "foreign": 946.0,
+   "institution": -532.0,
+   "inst_fin_inv": -433.0,
+   "inst_insurance": 0.0,
+   "inst_trust": 91.0,
+   "inst_bank": 6.0,
+   "inst_other_fin": 5.0,
+   "inst_pension": -201.0,
+   "other_corp": -195.0
   }
  ],
  "latest": {
-  "date": "2026-08-07",
-  "individual": -589.0,
-  "foreign": 3913.0,
-  "institution": -3115.0,
-  "inst_fin_inv": -2710.0,
-  "inst_insurance": -150.0,
-  "inst_trust": -351.0,
-  "inst_bank": -9.0,
-  "inst_other_fin": -23.0,
-  "inst_pension": 128.0,
-  "other_corp": -209.0
+  "date": "2026-08-10",
+  "individual": -219.0,
+  "foreign": 946.0,
+  "institution": -532.0,
+  "inst_fin_inv": -433.0,
+  "inst_insurance": 0.0,
+  "inst_trust": 91.0,
+  "inst_bank": 6.0,
+  "inst_other_fin": 5.0,
+  "inst_pension": -201.0,
+  "other_corp": -195.0
  },
  "streaks": {
   "individual": {
-   "days": 1,
+   "days": 2,
    "side": "sell",
-   "total": -589.0
+   "total": -808.0
   },
   "foreign": {
-   "days": 2,
+   "days": 3,
    "side": "buy",
-   "total": 5574.0
+   "total": 6520.0
   },
   "institution": {
-   "days": 2,
+   "days": 3,
    "side": "sell",
-   "total": -4808.0
+   "total": -5340.0
   }
  },
  "divergence": {
   "window": 5,
-  "spotForeign": -59016.0,
-  "futuresForeign": -15207,
-  "aligned": true
+  "spotForeign": -34812.0,
+  "futuresForeign": 560,
+  "aligned": false
  }
 }
