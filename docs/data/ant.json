@@ -34,7 +34,7 @@
    "corrIF": -0.847,
    "baseline20": 6.32,
    "indivHeavyR20": -1.58,
-   "excess": -7.9,
+   "excess": -7.89,
    "grade": "F"
   }
  ],
@@ -65,15 +65,15 @@
     "corr20": -0.12
    },
    "heavyBuy": {
-    "r1": -0.06,
-    "r5": 0.7,
-    "r20": 3.01,
+    "r1": -0.07,
+    "r5": 0.69,
+    "r20": 3.06,
     "n": 150
    },
-   "excess20": 0.07,
+   "excess20": 0.12,
    "grade": "C",
-   "todayValue": 3976.0,
-   "todayPercentile": 73.7
+   "todayValue": 7852.0,
+   "todayPercentile": 84.7
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.54,
    "grade": "B",
-   "todayValue": -8172.0,
-   "todayPercentile": 14.7
+   "todayValue": -12437.0,
+   "todayPercentile": 10.6
   },
   "institution": {
    "timing": {
@@ -106,11 +106,18 @@
    },
    "excess20": 0.89,
    "grade": "C",
-   "todayValue": 3951.0,
-   "todayPercentile": 78.2
+   "todayValue": 4398.0,
+   "todayPercentile": 79.8
   }
  },
- "contrarianRead": null,
+ "contrarianRead": {
+  "label": "개미가 지금처럼 강하게 사들였던 날(상위 20%)",
+  "side": "buy",
+  "n": 141,
+  "r20": 3.06,
+  "baseline20": 2.94,
+  "excess": 0.12
+ },
  "hallOfFame": [
   {
    "date": "2026-06-23",
