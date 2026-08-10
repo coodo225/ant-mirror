@@ -209,9 +209,9 @@
    "symbol": "ES=F",
    "name": "S&P500 선물",
    "category": "futures",
-   "price": 7793.0,
-   "change": 13.25,
-   "changeRate": 0.17,
+   "price": 7791.75,
+   "change": 12.0,
+   "changeRate": 0.15,
    "asOf": "2026-08-10",
    "spark": [
     7500.25,
@@ -243,16 +243,16 @@
     7749.5,
     7734.75,
     7779.75,
-    7793.0
+    7791.75
    ]
   },
   {
    "symbol": "NQ=F",
    "name": "나스닥100 선물",
    "category": "futures",
-   "price": 29974.5,
-   "change": 139.75,
-   "changeRate": 0.47,
+   "price": 29958.25,
+   "change": 123.5,
+   "changeRate": 0.41,
    "asOf": "2026-08-10",
    "spark": [
     30052.75,
@@ -284,7 +284,7 @@
     29615.0,
     29488.25,
     29834.75,
-    29974.5
+    29958.25
    ]
   },
   {
@@ -332,8 +332,8 @@
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1417.97,
-   "change": -4.3301,
+   "price": 1418.0601,
+   "change": -4.24,
    "changeRate": -0.3,
    "asOf": "2026-08-10",
    "spark": [
@@ -366,16 +366,16 @@
     1428.4301,
     1421.16,
     1422.3,
-    1417.97
+    1418.0601
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 99.65,
-   "change": 0.05,
-   "changeRate": 0.05,
+   "price": 99.628,
+   "change": 0.028,
+   "changeRate": 0.03,
    "asOf": "2026-08-10",
    "spark": [
     101.11,
@@ -407,16 +407,16 @@
     99.69,
     99.97,
     99.6,
-    99.65
+    99.628
    ]
   },
   {
    "symbol": "CL=F",
    "name": "WTI 유가",
    "category": "commodity",
-   "price": 78.22,
-   "change": 0.04,
-   "changeRate": 0.05,
+   "price": 78.27,
+   "change": 0.09,
+   "changeRate": 0.12,
    "asOf": "2026-08-10",
    "spark": [
     70.75,
@@ -448,16 +448,16 @@
     75.22,
     77.29,
     78.18,
-    78.22
+    78.27
    ]
   },
   {
    "symbol": "GC=F",
    "name": "금",
    "category": "commodity",
-   "price": 4414.7002,
-   "change": 74.0,
-   "changeRate": 1.7,
+   "price": 4412.7998,
+   "change": 72.0996,
+   "changeRate": 1.66,
    "asOf": "2026-08-10",
    "spark": [
     4022.3,
@@ -489,7 +489,7 @@
     4245.7998,
     4242.0,
     4340.7002,
-    4414.7002
+    4412.7998
    ]
   }
  ],
