@@ -34,7 +34,7 @@
    "corrIF": -0.847,
    "baseline20": 6.32,
    "indivHeavyR20": -1.58,
-   "excess": -7.89,
+   "excess": -7.9,
    "grade": "F"
   }
  ],
@@ -49,8 +49,8 @@
   "r20": 2.94
  },
  "correlation": {
-  "individual_foreign": -0.842,
-  "individual_institution": -0.574,
+  "individual_foreign": -0.843,
+  "individual_institution": -0.575,
   "foreign_institution": 0.049
  },
  "oppositeRate": {
@@ -72,8 +72,8 @@
    },
    "excess20": 0.12,
    "grade": "C",
-   "todayValue": 7173.0,
-   "todayPercentile": 83.2
+   "todayValue": 9003.0,
+   "todayPercentile": 87.1
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.54,
    "grade": "B",
-   "todayValue": -15034.0,
-   "todayPercentile": 9.0
+   "todayValue": -14886.0,
+   "todayPercentile": 9.1
   },
   "institution": {
    "timing": {
@@ -106,8 +106,8 @@
    },
    "excess20": 0.75,
    "grade": "C",
-   "todayValue": 7684.0,
-   "todayPercentile": 88.9
+   "todayValue": 5669.0,
+   "todayPercentile": 84.1
   }
  },
  "contrarianRead": {
