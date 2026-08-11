@@ -3,16 +3,16 @@
  "today": {
   "date": "2026-08-11",
   "close": 6387.46,
-  "individual": -2484.0,
-  "foreign": 1347.0,
-  "institution": 1241.0,
+  "individual": -3138.0,
+  "foreign": 817.0,
+  "institution": 2411.0,
   "ret1": 1.39,
   "ret5": 0.45
  },
  "matches": [
   {
    "date": "2025-11-11",
-   "distance": 0.623,
+   "distance": 0.605,
    "close": 4106.39,
    "ret1": 0.81,
    "individual": -2830.0,
@@ -21,7 +21,7 @@
   },
   {
    "date": "2025-11-27",
-   "distance": 1.212,
+   "distance": 1.155,
    "close": 3986.91,
    "ret1": 0.66,
    "individual": -6152.0,
@@ -29,17 +29,8 @@
    "ret20": 3.58
   },
   {
-   "date": "2025-02-05",
-   "distance": 1.238,
-   "close": 2509.27,
-   "ret1": 1.11,
-   "individual": -1929.0,
-   "foreign": 645.0,
-   "ret20": 2.67
-  },
-  {
    "date": "2025-03-06",
-   "distance": 1.245,
+   "distance": 1.251,
    "close": 2576.16,
    "ret1": 0.7,
    "individual": -3693.0,
@@ -48,12 +39,21 @@
   },
   {
    "date": "2024-06-03",
-   "distance": 1.262,
+   "distance": 1.253,
    "close": 2682.52,
    "ret1": 1.74,
    "individual": -4230.0,
    "foreign": 1828.0,
    "ret20": 3.67
+  },
+  {
+   "date": "2025-02-05",
+   "distance": 1.262,
+   "close": 2509.27,
+   "ret1": 1.11,
+   "individual": -1929.0,
+   "foreign": 645.0,
+   "ret20": 2.67
   }
  ],
  "avgRet20": 1.47,
