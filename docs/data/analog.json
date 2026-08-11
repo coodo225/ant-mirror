@@ -2,17 +2,17 @@
  "market": "KOSPI",
  "today": {
   "date": "2026-08-11",
-  "close": 6340.67,
-  "individual": -724.0,
-  "foreign": 446.0,
-  "institution": 319.0,
-  "ret1": 0.65,
-  "ret5": -0.29
+  "close": 6345.53,
+  "individual": -707.0,
+  "foreign": 443.0,
+  "institution": 305.0,
+  "ret1": 0.73,
+  "ret5": -0.21
  },
  "matches": [
   {
    "date": "2025-11-11",
-   "distance": 0.564,
+   "distance": 0.565,
    "close": 4106.39,
    "ret1": 0.81,
    "individual": -2830.0,
@@ -21,7 +21,7 @@
   },
   {
    "date": "2025-11-25",
-   "distance": 0.994,
+   "distance": 1.011,
    "close": 3857.78,
    "ret1": 0.3,
    "individual": -276.0,
@@ -30,7 +30,7 @@
   },
   {
    "date": "2025-03-06",
-   "distance": 1.13,
+   "distance": 1.14,
    "close": 2576.16,
    "ret1": 0.7,
    "individual": -3693.0,
@@ -39,7 +39,7 @@
   },
   {
    "date": "2025-02-05",
-   "distance": 1.23,
+   "distance": 1.226,
    "close": 2509.27,
    "ret1": 1.11,
    "individual": -1929.0,
