@@ -32,7 +32,7 @@
    "year": "2026",
    "days": 150,
    "corrIF": -0.849,
-   "baseline20": 6.15,
+   "baseline20": 6.14,
    "indivHeavyR20": -1.78,
    "excess": -7.93,
    "grade": "F"
@@ -50,8 +50,8 @@
  },
  "correlation": {
   "individual_foreign": -0.843,
-  "individual_institution": -0.575,
-  "foreign_institution": 0.051
+  "individual_institution": -0.576,
+  "foreign_institution": 0.052
  },
  "oppositeRate": {
   "vsForeign": 79.3,
@@ -61,7 +61,7 @@
   "individual": {
    "timing": {
     "corr1": -0.057,
-    "corr5": -0.073,
+    "corr5": -0.072,
     "corr20": -0.12
    },
    "heavyBuy": {
@@ -72,8 +72,8 @@
    },
    "excess20": 0.07,
    "grade": "C",
-   "todayValue": -27041.0,
-   "todayPercentile": 1.7
+   "todayValue": -31720.0,
+   "todayPercentile": 1.3
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.53,
    "grade": "B",
-   "todayValue": 20538.0,
-   "todayPercentile": 98.5
+   "todayValue": 23217.0,
+   "todayPercentile": 99.1
   },
   "institution": {
    "timing": {
@@ -101,13 +101,13 @@
    "heavyBuy": {
     "r1": 0.24,
     "r5": 1.07,
-    "r20": 3.71,
+    "r20": 3.7,
     "n": 150
    },
-   "excess20": 0.79,
+   "excess20": 0.78,
    "grade": "C",
-   "todayValue": 8406.0,
-   "todayPercentile": 90.9
+   "todayValue": 10438.0,
+   "todayPercentile": 92.6
   }
  },
  "contrarianRead": {
