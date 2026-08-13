@@ -3,11 +3,11 @@
   "KOSPI": {
    "code": "KOSPI",
    "name": "코스피",
-   "price": 6788.13,
-   "change": 209.09,
-   "changeRate": 3.18,
-   "marketStatus": "OPEN",
-   "tradedAt": "2026-08-13T14:38:00+09:00",
+   "price": 6813.34,
+   "change": 234.3,
+   "changeRate": 3.56,
+   "marketStatus": "CLOSE",
+   "tradedAt": "2026-08-13T16:02:00+09:00",
    "history": [
     {
      "date": "2026-02-19",
@@ -1082,23 +1082,23 @@
     },
     {
      "date": "2026-08-13",
-     "close": 6833.0,
+     "close": 6813.34,
      "open": 6773.92,
      "high": 6895.63,
-     "low": 6773.92,
-     "volume": 311106719,
-     "value": 22303536933685
+     "low": 6748.13,
+     "volume": 416002747,
+     "value": 34453441504931
     }
    ]
   },
   "KOSDAQ": {
    "code": "KOSDAQ",
    "name": "코스닥",
-   "price": 861.45,
-   "change": 2.54,
-   "changeRate": 0.3,
-   "marketStatus": "OPEN",
-   "tradedAt": "2026-08-13T14:39:00+09:00",
+   "price": 861.37,
+   "change": 2.46,
+   "changeRate": 0.29,
+   "marketStatus": "CLOSE",
+   "tradedAt": "2026-08-13T16:03:00+09:00",
    "history": [
     {
      "date": "2026-02-19",
@@ -2173,12 +2173,12 @@
     },
     {
      "date": "2026-08-13",
-     "close": 865.71,
+     "close": 861.37,
      "open": 863.15,
      "high": 870.96,
      "low": 853.09,
-     "volume": 530759948,
-     "value": 5862898608576
+     "volume": 676477207,
+     "value": 7527326761446
     }
    ]
   }
