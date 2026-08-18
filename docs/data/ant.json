@@ -32,9 +32,9 @@
    "year": "2026",
    "days": 153,
    "corrIF": -0.85,
-   "baseline20": 6.03,
+   "baseline20": 6.02,
    "indivHeavyR20": -2.34,
-   "excess": -8.38,
+   "excess": -8.36,
    "grade": "F"
   }
  ],
@@ -44,14 +44,14 @@
   "to": "2026-08-18"
  },
  "baseline": {
-  "r1": 0.16,
+  "r1": 0.15,
   "r5": 0.73,
   "r20": 2.93
  },
  "correlation": {
   "individual_foreign": -0.844,
   "individual_institution": -0.569,
-  "foreign_institution": 0.046
+  "foreign_institution": 0.045
  },
  "oppositeRate": {
   "vsForeign": 79.3,
@@ -60,64 +60,57 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.065,
-    "corr5": -0.064,
+    "corr1": -0.063,
+    "corr5": -0.065,
     "corr20": -0.117
    },
    "heavyBuy": {
     "r1": -0.06,
-    "r5": 0.81,
+    "r5": 0.8,
     "r20": 2.99,
     "n": 150
    },
    "excess20": 0.06,
    "grade": "C",
-   "todayValue": -8047.0,
-   "todayPercentile": 15.0
+   "todayValue": -2426.0,
+   "todayPercentile": 37.1
   },
   "foreign": {
    "timing": {
-    "corr1": 0.105,
-    "corr5": 0.066,
+    "corr1": 0.102,
+    "corr5": 0.067,
     "corr20": 0.125
    },
    "heavyBuy": {
-    "r1": 0.31,
+    "r1": 0.3,
     "r5": 1.23,
-    "r20": 4.37,
+    "r20": 4.36,
     "n": 150
    },
-   "excess20": 1.44,
+   "excess20": 1.43,
    "grade": "B",
-   "todayValue": 10727.0,
-   "todayPercentile": 95.1
+   "todayValue": 7738.0,
+   "todayPercentile": 91.7
   },
   "institution": {
    "timing": {
-    "corr1": -0.051,
+    "corr1": -0.049,
     "corr5": -0.002,
-    "corr20": -0.008
+    "corr20": -0.007
    },
    "heavyBuy": {
     "r1": 0.27,
-    "r5": 1.24,
+    "r5": 1.22,
     "r20": 3.7,
     "n": 150
    },
    "excess20": 0.77,
    "grade": "C",
-   "todayValue": -2199.0,
-   "todayPercentile": 25.3
+   "todayValue": -4735.0,
+   "todayPercentile": 11.7
   }
  },
- "contrarianRead": {
-  "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
-  "side": "sell",
-  "n": 140,
-  "r20": 4.69,
-  "baseline20": 2.93,
-  "excess": 1.77
- },
+ "contrarianRead": null,
  "hallOfFame": [
   {
    "date": "2026-06-23",
