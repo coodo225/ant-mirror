@@ -31,10 +31,10 @@
   {
    "year": "2026",
    "days": 153,
-   "corrIF": -0.851,
-   "baseline20": 6.04,
+   "corrIF": -0.85,
+   "baseline20": 6.03,
    "indivHeavyR20": -2.34,
-   "excess": -8.39,
+   "excess": -8.38,
    "grade": "F"
   }
  ],
@@ -55,59 +55,59 @@
  },
  "oppositeRate": {
   "vsForeign": 79.3,
-  "vsInstitution": 73.9
+  "vsInstitution": 73.7
  },
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.066,
+    "corr1": -0.065,
     "corr5": -0.064,
     "corr20": -0.117
    },
    "heavyBuy": {
     "r1": -0.06,
-    "r5": 0.82,
+    "r5": 0.81,
     "r20": 2.99,
     "n": 150
    },
    "excess20": 0.06,
    "grade": "C",
-   "todayValue": -11326.0,
-   "todayPercentile": 10.2
+   "todayValue": -8047.0,
+   "todayPercentile": 15.0
   },
   "foreign": {
    "timing": {
-    "corr1": 0.107,
+    "corr1": 0.105,
     "corr5": 0.066,
     "corr20": 0.125
    },
    "heavyBuy": {
-    "r1": 0.32,
+    "r1": 0.31,
     "r5": 1.23,
-    "r20": 4.38,
+    "r20": 4.37,
     "n": 150
    },
-   "excess20": 1.45,
+   "excess20": 1.44,
    "grade": "B",
-   "todayValue": 10662.0,
+   "todayValue": 10727.0,
    "todayPercentile": 95.1
   },
   "institution": {
    "timing": {
-    "corr1": -0.052,
-    "corr5": -0.001,
+    "corr1": -0.051,
+    "corr5": -0.002,
     "corr20": -0.008
    },
    "heavyBuy": {
     "r1": 0.27,
-    "r5": 1.25,
+    "r5": 1.24,
     "r20": 3.7,
     "n": 150
    },
    "excess20": 0.77,
    "grade": "C",
-   "todayValue": 1032.0,
-   "todayPercentile": 57.4
+   "todayValue": -2199.0,
+   "todayPercentile": 25.3
   }
  },
  "contrarianRead": {
@@ -116,7 +116,7 @@
   "n": 140,
   "r20": 4.69,
   "baseline20": 2.93,
-  "excess": 1.76
+  "excess": 1.77
  },
  "hallOfFame": [
   {
