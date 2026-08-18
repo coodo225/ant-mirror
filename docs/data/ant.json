@@ -66,14 +66,14 @@
    },
    "heavyBuy": {
     "r1": -0.06,
-    "r5": 0.8,
+    "r5": 0.79,
     "r20": 2.99,
     "n": 150
    },
    "excess20": 0.06,
    "grade": "C",
-   "todayValue": 901.0,
-   "todayPercentile": 56.7
+   "todayValue": 3709.0,
+   "todayPercentile": 72.2
   },
   "foreign": {
    "timing": {
@@ -83,14 +83,14 @@
    },
    "heavyBuy": {
     "r1": 0.3,
-    "r5": 1.23,
-    "r20": 4.36,
+    "r5": 1.26,
+    "r20": 4.37,
     "n": 150
    },
-   "excess20": 1.43,
+   "excess20": 1.44,
    "grade": "B",
-   "todayValue": 5657.0,
-   "todayPercentile": 87.4
+   "todayValue": 3604.0,
+   "todayPercentile": 78.9
   },
   "institution": {
    "timing": {
@@ -106,8 +106,8 @@
    },
    "excess20": 0.77,
    "grade": "C",
-   "todayValue": -5909.0,
-   "todayPercentile": 9.7
+   "todayValue": -6723.0,
+   "todayPercentile": 8.2
   }
  },
  "contrarianRead": null,
