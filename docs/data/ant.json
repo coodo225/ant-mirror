@@ -46,11 +46,11 @@
  "baseline": {
   "r1": 0.15,
   "r5": 0.73,
-  "r20": 2.93
+  "r20": 2.92
  },
  "correlation": {
   "individual_foreign": -0.844,
-  "individual_institution": -0.569,
+  "individual_institution": -0.57,
   "foreign_institution": 0.046
  },
  "oppositeRate": {
@@ -70,10 +70,10 @@
     "r20": 2.99,
     "n": 150
    },
-   "excess20": 0.06,
+   "excess20": 0.07,
    "grade": "C",
-   "todayValue": 3709.0,
-   "todayPercentile": 72.2
+   "todayValue": 4464.0,
+   "todayPercentile": 75.5
   },
   "foreign": {
    "timing": {
@@ -87,10 +87,10 @@
     "r20": 4.37,
     "n": 150
    },
-   "excess20": 1.44,
+   "excess20": 1.45,
    "grade": "B",
-   "todayValue": 3604.0,
-   "todayPercentile": 78.9
+   "todayValue": 2938.0,
+   "todayPercentile": 75.3
   },
   "institution": {
    "timing": {
@@ -104,9 +104,9 @@
     "r20": 3.7,
     "n": 150
    },
-   "excess20": 0.77,
+   "excess20": 0.78,
    "grade": "C",
-   "todayValue": -6723.0,
+   "todayValue": -6735.0,
    "todayPercentile": 8.2
   }
  },
@@ -150,7 +150,7 @@
  ],
  "caveats": [
   "표본은 2023-07-18~2026-08-18 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
-  "이 기간 지수의 20거래일 평균 수익률은 +2.93% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+  "이 기간 지수의 20거래일 평균 수익률은 +2.92% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
  ]
