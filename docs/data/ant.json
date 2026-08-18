@@ -32,7 +32,7 @@
    "year": "2026",
    "days": 153,
    "corrIF": -0.85,
-   "baseline20": 6.0,
+   "baseline20": 6.01,
    "indivHeavyR20": -2.34,
    "excess": -8.35,
    "grade": "F"
@@ -60,25 +60,25 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.061,
+    "corr1": -0.062,
     "corr5": -0.065,
     "corr20": -0.117
    },
    "heavyBuy": {
     "r1": -0.05,
-    "r5": 0.79,
+    "r5": 0.8,
     "r20": 2.97,
     "n": 150
    },
    "excess20": 0.05,
    "grade": "C",
-   "todayValue": 7415.0,
+   "todayValue": 7420.0,
    "todayPercentile": 83.7
   },
   "foreign": {
    "timing": {
-    "corr1": 0.099,
-    "corr5": 0.068,
+    "corr1": 0.101,
+    "corr5": 0.067,
     "corr20": 0.125
    },
    "heavyBuy": {
@@ -94,13 +94,13 @@
   },
   "institution": {
    "timing": {
-    "corr1": -0.047,
+    "corr1": -0.048,
     "corr5": -0.002,
     "corr20": -0.007
    },
    "heavyBuy": {
     "r1": 0.27,
-    "r5": 1.21,
+    "r5": 1.22,
     "r20": 3.7,
     "n": 150
    },
