@@ -31,7 +31,7 @@
   {
    "year": "2026",
    "days": 154,
-   "corrIF": -0.85,
+   "corrIF": -0.851,
    "baseline20": 5.94,
    "indivHeavyR20": -1.63,
    "excess": -7.56,
@@ -51,7 +51,7 @@
  "correlation": {
   "individual_foreign": -0.845,
   "individual_institution": -0.572,
-  "foreign_institution": 0.051
+  "foreign_institution": 0.052
  },
  "oppositeRate": {
   "vsForeign": 79.2,
@@ -72,8 +72,8 @@
    },
    "excess20": 0.09,
    "grade": "C",
-   "todayValue": 40018.0,
-   "todayPercentile": 97.1
+   "todayValue": 45280.0,
+   "todayPercentile": 97.4
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.44,
    "grade": "B",
-   "todayValue": -28840.0,
-   "todayPercentile": 3.9
+   "todayValue": -33373.0,
+   "todayPercentile": 3.0
   },
   "institution": {
    "timing": {
@@ -106,7 +106,7 @@
    },
    "excess20": 0.73,
    "grade": "C",
-   "todayValue": -12866.0,
+   "todayValue": -13674.0,
    "todayPercentile": 3.4
   }
  },
