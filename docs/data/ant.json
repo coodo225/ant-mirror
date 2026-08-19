@@ -32,7 +32,7 @@
    "year": "2026",
    "days": 154,
    "corrIF": -0.851,
-   "baseline20": 5.94,
+   "baseline20": 5.93,
    "indivHeavyR20": -1.63,
    "excess": -7.56,
    "grade": "F"
@@ -44,12 +44,12 @@
   "to": "2026-08-19"
  },
  "baseline": {
-  "r1": 0.15,
+  "r1": 0.14,
   "r5": 0.73,
   "r20": 2.92
  },
  "correlation": {
-  "individual_foreign": -0.845,
+  "individual_foreign": -0.846,
   "individual_institution": -0.572,
   "foreign_institution": 0.052
  },
@@ -72,8 +72,8 @@
    },
    "excess20": 0.09,
    "grade": "C",
-   "todayValue": 45280.0,
-   "todayPercentile": 97.4
+   "todayValue": 46357.0,
+   "todayPercentile": 97.8
   },
   "foreign": {
    "timing": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.44,
    "grade": "B",
-   "todayValue": -33373.0,
-   "todayPercentile": 3.0
+   "todayValue": -34884.0,
+   "todayPercentile": 2.9
   },
   "institution": {
    "timing": {
@@ -101,12 +101,12 @@
    "heavyBuy": {
     "r1": 0.27,
     "r5": 1.22,
-    "r20": 3.65,
+    "r20": 3.64,
     "n": 150
    },
-   "excess20": 0.73,
+   "excess20": 0.72,
    "grade": "C",
-   "todayValue": -13674.0,
+   "todayValue": -13232.0,
    "todayPercentile": 3.4
   }
  },
