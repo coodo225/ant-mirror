@@ -34,7 +34,7 @@
    "corrIF": -0.852,
    "baseline20": 5.9,
    "indivHeavyR20": -1.63,
-   "excess": -7.53,
+   "excess": -7.52,
    "grade": "F"
   }
  ],
@@ -51,7 +51,7 @@
  "correlation": {
   "individual_foreign": -0.846,
   "individual_institution": -0.572,
-  "foreign_institution": 0.053
+  "foreign_institution": 0.052
  },
  "oppositeRate": {
   "vsForeign": 79.2,
@@ -60,8 +60,8 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.051,
-    "corr5": -0.068,
+    "corr1": -0.052,
+    "corr5": -0.067,
     "corr20": -0.115
    },
    "heavyBuy": {
@@ -72,12 +72,12 @@
    },
    "excess20": 0.08,
    "grade": "C",
-   "todayValue": -24615.0,
-   "todayPercentile": 2.6
+   "todayValue": -24044.0,
+   "todayPercentile": 2.7
   },
   "foreign": {
    "timing": {
-    "corr1": 0.088,
+    "corr1": 0.089,
     "corr5": 0.07,
     "corr20": 0.123
    },
@@ -89,14 +89,14 @@
    },
    "excess20": 1.4,
    "grade": "B",
-   "todayValue": 11823.0,
+   "todayValue": 12007.0,
    "todayPercentile": 95.7
   },
   "institution": {
    "timing": {
-    "corr1": -0.051,
+    "corr1": -0.05,
     "corr5": -0.002,
-    "corr20": -0.01
+    "corr20": -0.009
    },
    "heavyBuy": {
     "r1": 0.27,
@@ -106,15 +106,15 @@
    },
    "excess20": 0.71,
    "grade": "C",
-   "todayValue": 4370.0,
-   "todayPercentile": 79.4
+   "todayValue": 2709.0,
+   "todayPercentile": 71.7
   }
  },
  "contrarianRead": {
   "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
   "side": "sell",
   "n": 142,
-  "r20": 4.61,
+  "r20": 4.6,
   "baseline20": 2.93,
   "excess": 1.68
  },
