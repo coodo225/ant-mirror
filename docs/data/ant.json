@@ -31,10 +31,10 @@
   {
    "year": "2026",
    "days": 155,
-   "corrIF": -0.851,
+   "corrIF": -0.852,
    "baseline20": 5.9,
    "indivHeavyR20": -1.63,
-   "excess": -7.52,
+   "excess": -7.53,
    "grade": "F"
   }
  ],
@@ -60,24 +60,24 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.052,
-    "corr5": -0.067,
+    "corr1": -0.051,
+    "corr5": -0.068,
     "corr20": -0.115
    },
    "heavyBuy": {
-    "r1": -0.05,
+    "r1": -0.04,
     "r5": 0.81,
     "r20": 3.01,
     "n": 150
    },
    "excess20": 0.08,
    "grade": "C",
-   "todayValue": -22417.0,
-   "todayPercentile": 3.4
+   "todayValue": -24615.0,
+   "todayPercentile": 2.6
   },
   "foreign": {
    "timing": {
-    "corr1": 0.089,
+    "corr1": 0.088,
     "corr5": 0.07,
     "corr20": 0.123
    },
@@ -89,34 +89,34 @@
    },
    "excess20": 1.4,
    "grade": "B",
-   "todayValue": 9727.0,
-   "todayPercentile": 93.7
+   "todayValue": 11823.0,
+   "todayPercentile": 95.7
   },
   "institution": {
    "timing": {
-    "corr1": -0.05,
+    "corr1": -0.051,
     "corr5": -0.002,
-    "corr20": -0.009
+    "corr20": -0.01
    },
    "heavyBuy": {
-    "r1": 0.28,
-    "r5": 1.23,
-    "r20": 3.7,
+    "r1": 0.27,
+    "r5": 1.24,
+    "r20": 3.64,
     "n": 150
    },
-   "excess20": 0.77,
+   "excess20": 0.71,
    "grade": "C",
-   "todayValue": 5544.0,
-   "todayPercentile": 83.7
+   "todayValue": 4370.0,
+   "todayPercentile": 79.4
   }
  },
  "contrarianRead": {
   "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
   "side": "sell",
   "n": 142,
-  "r20": 4.6,
+  "r20": 4.61,
   "baseline20": 2.93,
-  "excess": 1.67
+  "excess": 1.68
  },
  "hallOfFame": [
   {
