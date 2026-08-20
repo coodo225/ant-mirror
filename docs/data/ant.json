@@ -50,7 +50,7 @@
  },
  "correlation": {
   "individual_foreign": -0.846,
-  "individual_institution": -0.572,
+  "individual_institution": -0.571,
   "foreign_institution": 0.052
  },
  "oppositeRate": {
@@ -72,7 +72,7 @@
    },
    "excess20": 0.08,
    "grade": "C",
-   "todayValue": -24044.0,
+   "todayValue": -24133.0,
    "todayPercentile": 2.7
   },
   "foreign": {
@@ -89,8 +89,8 @@
    },
    "excess20": 1.4,
    "grade": "B",
-   "todayValue": 12007.0,
-   "todayPercentile": 95.7
+   "todayValue": 12703.0,
+   "todayPercentile": 96.1
   },
   "institution": {
    "timing": {
@@ -100,14 +100,14 @@
    },
    "heavyBuy": {
     "r1": 0.27,
-    "r5": 1.24,
+    "r5": 1.23,
     "r20": 3.64,
     "n": 150
    },
    "excess20": 0.71,
    "grade": "C",
-   "todayValue": 2709.0,
-   "todayPercentile": 71.7
+   "todayValue": 1079.0,
+   "todayPercentile": 57.5
   }
  },
  "contrarianRead": {
@@ -116,7 +116,7 @@
   "n": 142,
   "r20": 4.6,
   "baseline20": 2.93,
-  "excess": 1.68
+  "excess": 1.67
  },
  "hallOfFame": [
   {
