@@ -5,28 +5,28 @@
    "date": "2026-08-26",
    "title": "미국 GDP",
    "impact": "mid",
-   "dday": 5
+   "dday": 2
   },
   {
    "type": "PCE",
    "date": "2026-08-26",
    "title": "미국 PCE 물가",
    "impact": "high",
-   "dday": 5
+   "dday": 2
   },
   {
    "type": "고용",
    "date": "2026-09-04",
    "title": "미국 고용보고서",
    "impact": "high",
-   "dday": 14
+   "dday": 11
   },
   {
    "type": "CPI",
    "date": "2026-09-11",
    "title": "미국 CPI 발표",
    "impact": "high",
-   "dday": 21
+   "dday": 18
   },
   {
    "type": "FOMC",
@@ -34,28 +34,28 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": 26
+   "dday": 23
   },
   {
    "type": "GDP",
    "date": "2026-09-30",
    "title": "미국 GDP",
    "impact": "mid",
-   "dday": 40
+   "dday": 37
   },
   {
    "type": "PCE",
    "date": "2026-09-30",
    "title": "미국 PCE 물가",
    "impact": "high",
-   "dday": 40
+   "dday": 37
   },
   {
    "type": "고용",
    "date": "2026-10-02",
    "title": "미국 고용보고서",
    "impact": "high",
-   "dday": 42
+   "dday": 39
   }
  ],
  "recent": [
@@ -65,7 +65,7 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -156
+   "dday": -159
   },
   {
    "type": "FOMC",
@@ -73,7 +73,7 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -114
+   "dday": -117
   },
   {
    "type": "FOMC",
@@ -81,7 +81,7 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -65
+   "dday": -68
   },
   {
    "type": "FOMC",
@@ -89,8 +89,8 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -23
+   "dday": -26
   }
  ],
- "today": "2026-08-21"
+ "today": "2026-08-24"
 }
