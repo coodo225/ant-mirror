@@ -3,16 +3,16 @@
  "today": {
   "date": "2026-08-24",
   "close": 6707.48,
-  "individual": 29758.0,
-  "foreign": -32882.0,
-  "institution": -11190.0,
+  "individual": 31177.0,
+  "foreign": -36382.0,
+  "institution": -11136.0,
   "ret1": -2.97,
   "ret5": -3.88
  },
  "matches": [
   {
    "date": "2026-03-13",
-   "distance": 1.794,
+   "distance": 2.032,
    "close": 5487.24,
    "ret1": -1.72,
    "individual": 24512.0,
@@ -21,7 +21,7 @@
   },
   {
    "date": "2025-11-05",
-   "distance": 2.193,
+   "distance": 2.347,
    "close": 4004.42,
    "ret1": -2.85,
    "individual": 25538.0,
@@ -29,17 +29,8 @@
    "ret20": 0.8
   },
   {
-   "date": "2025-11-14",
-   "distance": 2.303,
-   "close": 4011.57,
-   "ret1": -3.81,
-   "individual": 32346.0,
-   "foreign": -23575.0,
-   "ret20": 3.88
-  },
-  {
    "date": "2026-03-26",
-   "distance": 2.446,
+   "distance": 2.424,
    "close": 5460.46,
    "ret1": -3.22,
    "individual": 30598.0,
@@ -47,8 +38,17 @@
    "ret20": 18.59
   },
   {
+   "date": "2025-11-14",
+   "distance": 2.443,
+   "close": 4011.57,
+   "ret1": -3.81,
+   "individual": 32346.0,
+   "foreign": -23575.0,
+   "ret20": 3.88
+  },
+  {
    "date": "2025-11-21",
-   "distance": 2.561,
+   "distance": 2.654,
    "close": 3853.26,
    "ret1": -3.79,
    "individual": 22695.0,
