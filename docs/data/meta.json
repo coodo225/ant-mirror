@@ -1,8 +1,10 @@
 {
- "generatedAt": "2026-08-24T07:47:05.695457+09:00",
- "generatedAtText": "2026-08-24 07:47:05 KST",
- "phase": "장전",
- "warnings": [],
+ "generatedAt": "2026-08-24T10:03:24.319153+09:00",
+ "generatedAtText": "2026-08-24 10:03:24 KST",
+ "phase": "장중",
+ "warnings": [
+  "금(GC=F) 데이터 부족"
+ ],
  "sources": [
   {
    "name": "네이버 금융",
