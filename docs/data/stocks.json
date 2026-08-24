@@ -4,12 +4,12 @@
    "code": "005930",
    "name": "삼성전자",
    "market": "KOSPI",
-   "price": 257000.0,
-   "change": -24500.0,
-   "changeRate": -8.7,
-   "marketCap": 15024936.0,
-   "tradingValue": 5269451.0,
-   "marketCapText": "1,502조 4,936억원",
+   "price": 256250.0,
+   "change": -25250.0,
+   "changeRate": -8.97,
+   "marketCap": 14981089.0,
+   "tradingValue": 6120633.0,
+   "marketCapText": "1,498조 1,089억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -62,12 +62,12 @@
    "code": "000660",
    "name": "SK하이닉스",
    "market": "KOSPI",
-   "price": 1679000.0,
-   "change": -51000.0,
-   "changeRate": -2.95,
-   "marketCap": 12264967.0,
-   "tradingValue": 4431688.0,
-   "marketCapText": "1,226조 4,967억원",
+   "price": 1693000.0,
+   "change": -37000.0,
+   "changeRate": -2.14,
+   "marketCap": 12367236.0,
+   "tradingValue": 4982110.0,
+   "marketCapText": "1,236조 7,236억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -120,12 +120,12 @@
    "code": "005935",
    "name": "삼성전자우",
    "market": "KOSPI",
-   "price": 190600.0,
-   "change": -16400.0,
-   "changeRate": -7.92,
-   "marketCap": 1529320.0,
-   "tradingValue": 887111.0,
-   "marketCapText": "152조 9,320억원",
+   "price": 190700.0,
+   "change": -16300.0,
+   "changeRate": -7.87,
+   "marketCap": 1530122.0,
+   "tradingValue": 972301.0,
+   "marketCapText": "153조 122억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -178,12 +178,12 @@
    "code": "402340",
    "name": "SK스퀘어",
    "market": "KOSPI",
-   "price": 1067000.0,
-   "change": -56000.0,
-   "changeRate": -4.99,
-   "marketCap": 1407629.0,
-   "tradingValue": 331342.0,
-   "marketCapText": "140조 7,629억원",
+   "price": 1080000.0,
+   "change": -43000.0,
+   "changeRate": -3.83,
+   "marketCap": 1424779.0,
+   "tradingValue": 364040.0,
+   "marketCapText": "142조 4,779억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -236,12 +236,12 @@
    "code": "009150",
    "name": "삼성전기",
    "market": "KOSPI",
-   "price": 1302000.0,
-   "change": -14000.0,
-   "changeRate": -1.06,
-   "marketCap": 972512.0,
-   "tradingValue": 443394.0,
-   "marketCapText": "97조 2,512억원",
+   "price": 1314000.0,
+   "change": -2000.0,
+   "changeRate": -0.15,
+   "marketCap": 981475.0,
+   "tradingValue": 485344.0,
+   "marketCapText": "98조 1,475억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -291,64 +291,6 @@
    "foreignHoldRatio": 37.41
   },
   {
-   "code": "005380",
-   "name": "현대차",
-   "market": "KOSPI",
-   "price": 409500.0,
-   "change": -5500.0,
-   "changeRate": -1.33,
-   "marketCap": 838483.0,
-   "tradingValue": 82532.0,
-   "marketCapText": "83조 8,483억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": 25398.7,
-    "foreignValue": -16572.5,
-    "instValue": -8667.6,
-    "change": -39.06
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": -164889.0,
-     "foreign": 94285.0,
-     "institution": 60614.0,
-     "foreignHoldRatio": 25.1
-    },
-    {
-     "date": "20260818",
-     "individual": 178687.0,
-     "foreign": -182749.0,
-     "institution": 3843.0,
-     "foreignHoldRatio": 24.96
-    },
-    {
-     "date": "20260819",
-     "individual": 107895.0,
-     "foreign": -54475.0,
-     "institution": -55825.0,
-     "foreignHoldRatio": 24.91
-    },
-    {
-     "date": "20260820",
-     "individual": 63475.0,
-     "foreign": 64885.0,
-     "institution": -111758.0,
-     "foreignHoldRatio": 24.94
-    },
-    {
-     "date": "20260821",
-     "individual": -28955.0,
-     "foreign": 8059.0,
-     "institution": 23640.0,
-     "foreignHoldRatio": 24.94
-    }
-   ],
-   "foreignHoldRatio": 24.94
-  },
-  {
    "code": "373220",
    "name": "LG에너지솔루션",
    "market": "KOSPI",
@@ -356,7 +298,7 @@
    "change": 15500.0,
    "changeRate": 4.51,
    "marketCap": 840060.0,
-   "tradingValue": 71150.0,
+   "tradingValue": 79580.0,
    "marketCapText": "84조 60억원",
    "stat60": {
     "days": 60,
@@ -407,15 +349,73 @@
    "foreignHoldRatio": 5.54
   },
   {
+   "code": "005380",
+   "name": "현대차",
+   "market": "KOSPI",
+   "price": 410000.0,
+   "change": -5000.0,
+   "changeRate": -1.2,
+   "marketCap": 839507.0,
+   "tradingValue": 93199.0,
+   "marketCapText": "83조 9,507억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": 25398.7,
+    "foreignValue": -16572.5,
+    "instValue": -8667.6,
+    "change": -39.06
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": -164889.0,
+     "foreign": 94285.0,
+     "institution": 60614.0,
+     "foreignHoldRatio": 25.1
+    },
+    {
+     "date": "20260818",
+     "individual": 178687.0,
+     "foreign": -182749.0,
+     "institution": 3843.0,
+     "foreignHoldRatio": 24.96
+    },
+    {
+     "date": "20260819",
+     "individual": 107895.0,
+     "foreign": -54475.0,
+     "institution": -55825.0,
+     "foreignHoldRatio": 24.91
+    },
+    {
+     "date": "20260820",
+     "individual": 63475.0,
+     "foreign": 64885.0,
+     "institution": -111758.0,
+     "foreignHoldRatio": 24.94
+    },
+    {
+     "date": "20260821",
+     "individual": -28955.0,
+     "foreign": 8059.0,
+     "institution": 23640.0,
+     "foreignHoldRatio": 24.94
+    }
+   ],
+   "foreignHoldRatio": 24.94
+  },
+  {
    "code": "207940",
    "name": "삼성바이오로직스",
    "market": "KOSPI",
-   "price": 1562000.0,
-   "change": 11000.0,
-   "changeRate": 0.71,
-   "marketCap": 723065.0,
-   "tradingValue": 25972.0,
-   "marketCapText": "72조 3,065억원",
+   "price": 1568000.0,
+   "change": 17000.0,
+   "changeRate": 1.1,
+   "marketCap": 725842.0,
+   "tradingValue": 29872.0,
+   "marketCapText": "72조 5,842억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -468,12 +468,12 @@
    "code": "028260",
    "name": "삼성물산",
    "market": "KOSPI",
-   "price": 360000.0,
-   "change": -35500.0,
-   "changeRate": -8.98,
-   "marketCap": 583803.0,
-   "tradingValue": 102593.0,
-   "marketCapText": "58조 3,803억원",
+   "price": 363000.0,
+   "change": -32500.0,
+   "changeRate": -8.22,
+   "marketCap": 588668.0,
+   "tradingValue": 120176.0,
+   "marketCapText": "58조 8,668억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -526,12 +526,12 @@
    "code": "032830",
    "name": "삼성생명",
    "market": "KOSPI",
-   "price": 291000.0,
-   "change": -37500.0,
-   "changeRate": -11.42,
-   "marketCap": 582000.0,
-   "tradingValue": 116608.0,
-   "marketCapText": "58조 2,000억원",
+   "price": 292500.0,
+   "change": -36000.0,
+   "changeRate": -10.96,
+   "marketCap": 585000.0,
+   "tradingValue": 129409.0,
+   "marketCapText": "58조 5,000억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -581,73 +581,15 @@
    "foreignHoldRatio": 23.27
   },
   {
-   "code": "012450",
-   "name": "한화에어로스페이스",
-   "market": "KOSPI",
-   "price": 1116000.0,
-   "change": 31000.0,
-   "changeRate": 2.86,
-   "marketCap": 575448.0,
-   "tradingValue": 53801.0,
-   "marketCapText": "57조 5,448억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": -2456.0,
-    "foreignValue": 2071.1,
-    "instValue": 408.8,
-    "change": -12.78
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": -461.0,
-     "foreign": 32308.0,
-     "institution": -31159.0,
-     "foreignHoldRatio": 45.61
-    },
-    {
-     "date": "20260818",
-     "individual": -4592.0,
-     "foreign": 10361.0,
-     "institution": -5549.0,
-     "foreignHoldRatio": 45.64
-    },
-    {
-     "date": "20260819",
-     "individual": 33214.0,
-     "foreign": -81578.0,
-     "institution": 48001.0,
-     "foreignHoldRatio": 45.49
-    },
-    {
-     "date": "20260820",
-     "individual": -18896.0,
-     "foreign": 13645.0,
-     "institution": 5898.0,
-     "foreignHoldRatio": 45.51
-    },
-    {
-     "date": "20260821",
-     "individual": 10045.0,
-     "foreign": 24474.0,
-     "institution": -35049.0,
-     "foreignHoldRatio": 45.54
-    }
-   ],
-   "foreignHoldRatio": 45.54
-  },
-  {
    "code": "105560",
    "name": "KB금융",
    "market": "KOSPI",
-   "price": 162000.0,
-   "change": -2300.0,
-   "changeRate": -1.4,
-   "marketCap": 574594.0,
-   "tradingValue": 55043.0,
-   "marketCapText": "57조 4,594억원",
+   "price": 161800.0,
+   "change": -2500.0,
+   "changeRate": -1.52,
+   "marketCap": 573885.0,
+   "tradingValue": 61344.0,
+   "marketCapText": "57조 3,885억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -697,15 +639,73 @@
    "foreignHoldRatio": 79.27
   },
   {
+   "code": "012450",
+   "name": "한화에어로스페이스",
+   "market": "KOSPI",
+   "price": 1108000.0,
+   "change": 23000.0,
+   "changeRate": 2.12,
+   "marketCap": 571322.0,
+   "tradingValue": 62301.0,
+   "marketCapText": "57조 1,322억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": -2456.0,
+    "foreignValue": 2071.1,
+    "instValue": 408.8,
+    "change": -12.78
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": -461.0,
+     "foreign": 32308.0,
+     "institution": -31159.0,
+     "foreignHoldRatio": 45.61
+    },
+    {
+     "date": "20260818",
+     "individual": -4592.0,
+     "foreign": 10361.0,
+     "institution": -5549.0,
+     "foreignHoldRatio": 45.64
+    },
+    {
+     "date": "20260819",
+     "individual": 33214.0,
+     "foreign": -81578.0,
+     "institution": 48001.0,
+     "foreignHoldRatio": 45.49
+    },
+    {
+     "date": "20260820",
+     "individual": -18896.0,
+     "foreign": 13645.0,
+     "institution": 5898.0,
+     "foreignHoldRatio": 45.51
+    },
+    {
+     "date": "20260821",
+     "individual": 10045.0,
+     "foreign": 24474.0,
+     "institution": -35049.0,
+     "foreignHoldRatio": 45.54
+    }
+   ],
+   "foreignHoldRatio": 45.54
+  },
+  {
    "code": "000270",
    "name": "기아",
    "market": "KOSPI",
-   "price": 130100.0,
-   "change": -800.0,
-   "changeRate": -0.61,
-   "marketCap": 507927.0,
-   "tradingValue": 35233.0,
-   "marketCapText": "50조 7,927억원",
+   "price": 130000.0,
+   "change": -900.0,
+   "changeRate": -0.69,
+   "marketCap": 507537.0,
+   "tradingValue": 40648.0,
+   "marketCapText": "50조 7,537억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -758,12 +758,12 @@
    "code": "055550",
    "name": "신한지주",
    "market": "KOSPI",
-   "price": 103100.0,
-   "change": -1000.0,
-   "changeRate": -0.96,
-   "marketCap": 484003.0,
-   "tradingValue": 39354.0,
-   "marketCapText": "48조 4,003억원",
+   "price": 102900.0,
+   "change": -1200.0,
+   "changeRate": -1.15,
+   "marketCap": 483064.0,
+   "tradingValue": 44006.0,
+   "marketCapText": "48조 3,064억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -816,12 +816,12 @@
    "code": "329180",
    "name": "HD현대중공업",
    "market": "KOSPI",
-   "price": 457500.0,
-   "change": 4500.0,
-   "changeRate": 0.99,
-   "marketCap": 480198.0,
-   "tradingValue": 32016.0,
-   "marketCapText": "48조 198억원",
+   "price": 454000.0,
+   "change": 1000.0,
+   "changeRate": 0.22,
+   "marketCap": 476524.0,
+   "tradingValue": 38453.0,
+   "marketCapText": "47조 6,524억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -874,12 +874,12 @@
    "code": "034020",
    "name": "두산에너빌리티",
    "market": "KOSPI",
-   "price": 72100.0,
-   "change": -1200.0,
-   "changeRate": -1.64,
-   "marketCap": 461845.0,
-   "tradingValue": 55234.0,
-   "marketCapText": "46조 1,845억원",
+   "price": 72200.0,
+   "change": -1100.0,
+   "changeRate": -1.5,
+   "marketCap": 462485.0,
+   "tradingValue": 64257.0,
+   "marketCapText": "46조 2,485억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -932,12 +932,12 @@
    "code": "068270",
    "name": "셀트리온",
    "market": "KOSPI",
-   "price": 193500.0,
-   "change": 1200.0,
-   "changeRate": 0.62,
-   "marketCap": 450114.0,
-   "tradingValue": 33320.0,
-   "marketCapText": "45조 114억원",
+   "price": 193100.0,
+   "change": 800.0,
+   "changeRate": 0.42,
+   "marketCap": 449184.0,
+   "tradingValue": 37423.0,
+   "marketCapText": "44조 9,184억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -994,7 +994,7 @@
    "change": -1500.0,
    "changeRate": -0.3,
    "marketCap": 448673.0,
-   "tradingValue": 59672.0,
+   "tradingValue": 65367.0,
    "marketCapText": "44조 8,673억원",
    "stat60": {
     "days": 60,
@@ -1052,7 +1052,7 @@
    "change": 34000.0,
    "changeRate": 7.11,
    "marketCap": 412598.0,
-   "tradingValue": 239862.0,
+   "tradingValue": 258824.0,
    "marketCapText": "41조 2,598억원",
    "stat60": {
     "days": 60,
@@ -1106,12 +1106,12 @@
    "code": "034730",
    "name": "SK",
    "market": "KOSPI",
-   "price": 549000.0,
-   "change": -37000.0,
-   "changeRate": -6.31,
-   "marketCap": 398040.0,
-   "tradingValue": 56505.0,
-   "marketCapText": "39조 8,040억원",
+   "price": 552000.0,
+   "change": -34000.0,
+   "changeRate": -5.8,
+   "marketCap": 400215.0,
+   "tradingValue": 62059.0,
+   "marketCapText": "40조 215억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1164,12 +1164,12 @@
    "code": "086790",
    "name": "하나금융지주",
    "market": "KOSPI",
-   "price": 127800.0,
-   "change": -1000.0,
-   "changeRate": -0.78,
-   "marketCap": 350642.0,
-   "tradingValue": 30209.0,
-   "marketCapText": "35조 642억원",
+   "price": 127500.0,
+   "change": -1300.0,
+   "changeRate": -1.01,
+   "marketCap": 349819.0,
+   "tradingValue": 34287.0,
+   "marketCapText": "34조 9,819억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1222,12 +1222,12 @@
    "code": "035420",
    "name": "NAVER",
    "market": "KOSPI",
-   "price": 222000.0,
-   "change": 0.0,
-   "changeRate": 0.0,
-   "marketCap": 337610.0,
-   "tradingValue": 279773.0,
-   "marketCapText": "33조 7,610억원",
+   "price": 223000.0,
+   "change": 1000.0,
+   "changeRate": 0.45,
+   "marketCap": 339131.0,
+   "tradingValue": 297684.0,
+   "marketCapText": "33조 9,131억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1280,12 +1280,12 @@
    "code": "066570",
    "name": "LG전자",
    "market": "KOSPI",
-   "price": 196800.0,
-   "change": 2300.0,
-   "changeRate": 1.18,
-   "marketCap": 320557.0,
-   "tradingValue": 84149.0,
-   "marketCapText": "32조 557억원",
+   "price": 198200.0,
+   "change": 3700.0,
+   "changeRate": 1.9,
+   "marketCap": 322837.0,
+   "tradingValue": 92356.0,
+   "marketCapText": "32조 2,837억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1338,12 +1338,12 @@
    "code": "010120",
    "name": "LS ELECTRIC",
    "market": "KOSPI",
-   "price": 188700.0,
-   "change": 1700.0,
-   "changeRate": 0.91,
-   "marketCap": 283050.0,
-   "tradingValue": 70492.0,
-   "marketCapText": "28조 3,050억원",
+   "price": 190400.0,
+   "change": 3400.0,
+   "changeRate": 1.82,
+   "marketCap": 285600.0,
+   "tradingValue": 77581.0,
+   "marketCapText": "28조 5,600억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1400,7 +1400,7 @@
    "change": -32000.0,
    "changeRate": -4.84,
    "marketCap": 280833.0,
-   "tradingValue": 30004.0,
+   "tradingValue": 32866.0,
    "marketCapText": "28조 833억원",
    "stat60": {
     "days": 60,
@@ -1454,12 +1454,12 @@
    "code": "010130",
    "name": "고려아연",
    "market": "KOSPI",
-   "price": 1331000.0,
-   "change": 94000.0,
-   "changeRate": 7.6,
-   "marketCap": 277819.0,
-   "tradingValue": 53997.0,
-   "marketCapText": "27조 7,819억원",
+   "price": 1320000.0,
+   "change": 83000.0,
+   "changeRate": 6.71,
+   "marketCap": 275523.0,
+   "tradingValue": 59784.0,
+   "marketCapText": "27조 5,523억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1512,12 +1512,12 @@
    "code": "005490",
    "name": "POSCO홀딩스",
    "market": "KOSPI",
-   "price": 326250.0,
-   "change": 16250.0,
-   "changeRate": 5.24,
-   "marketCap": 258525.0,
-   "tradingValue": 89145.0,
-   "marketCapText": "25조 8,525억원",
+   "price": 326000.0,
+   "change": 16000.0,
+   "changeRate": 5.16,
+   "marketCap": 258327.0,
+   "tradingValue": 95144.0,
+   "marketCapText": "25조 8,327억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1570,12 +1570,12 @@
    "code": "298040",
    "name": "효성중공업",
    "market": "KOSPI",
-   "price": 2758000.0,
-   "change": 37000.0,
-   "changeRate": 1.36,
-   "marketCap": 257171.0,
-   "tradingValue": 50579.0,
-   "marketCapText": "25조 7,171억원",
+   "price": 2767000.0,
+   "change": 46000.0,
+   "changeRate": 1.69,
+   "marketCap": 258010.0,
+   "tradingValue": 57544.0,
+   "marketCapText": "25조 8,010억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1628,12 +1628,12 @@
    "code": "267260",
    "name": "HD현대일렉트릭",
    "market": "KOSPI",
-   "price": 711000.0,
-   "change": -7000.0,
-   "changeRate": -0.97,
-   "marketCap": 256295.0,
-   "tradingValue": 27449.0,
-   "marketCapText": "25조 6,295억원",
+   "price": 713000.0,
+   "change": -5000.0,
+   "changeRate": -0.7,
+   "marketCap": 257016.0,
+   "tradingValue": 31737.0,
+   "marketCapText": "25조 7,016억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1686,12 +1686,12 @@
    "code": "042660",
    "name": "한화오션",
    "market": "KOSPI",
-   "price": 83200.0,
-   "change": -1000.0,
-   "changeRate": -1.19,
-   "marketCap": 254936.0,
-   "tradingValue": 35137.0,
-   "marketCapText": "25조 4,936억원",
+   "price": 83000.0,
+   "change": -1200.0,
+   "changeRate": -1.43,
+   "marketCap": 254323.0,
+   "tradingValue": 45514.0,
+   "marketCapText": "25조 4,323억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1741,73 +1741,15 @@
    "foreignHoldRatio": 10.25
   },
   {
-   "code": "009540",
-   "name": "HD한국조선해양",
-   "market": "KOSPI",
-   "price": 352500.0,
-   "change": 4000.0,
-   "changeRate": 1.15,
-   "marketCap": 249475.0,
-   "tradingValue": 17453.0,
-   "marketCapText": "24조 9,475억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": -913.2,
-    "foreignValue": -1154.4,
-    "instValue": 2064.6,
-    "change": -20.89
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": -38748.0,
-     "foreign": 70148.0,
-     "institution": -33033.0,
-     "foreignHoldRatio": 33.24
-    },
-    {
-     "date": "20260818",
-     "individual": 4039.0,
-     "foreign": -3105.0,
-     "institution": -2988.0,
-     "foreignHoldRatio": 33.23
-    },
-    {
-     "date": "20260819",
-     "individual": -1056.0,
-     "foreign": 9674.0,
-     "institution": -8734.0,
-     "foreignHoldRatio": 33.24
-    },
-    {
-     "date": "20260820",
-     "individual": 23800.0,
-     "foreign": 12210.0,
-     "institution": -34925.0,
-     "foreignHoldRatio": 33.24
-    },
-    {
-     "date": "20260821",
-     "individual": 2438.0,
-     "foreign": 11711.0,
-     "institution": -15211.0,
-     "foreignHoldRatio": 33.24
-    }
-   ],
-   "foreignHoldRatio": 33.24
-  },
-  {
    "code": "069500",
    "name": "KODEX 200",
    "market": "KOSPI",
-   "price": 105650.0,
-   "change": -4330.0,
-   "changeRate": -3.94,
-   "marketCap": 248647.0,
-   "tradingValue": 1065475.0,
-   "marketCapText": "24조 8,647억원",
+   "price": 105885.0,
+   "change": -4095.0,
+   "changeRate": -3.72,
+   "marketCap": 249200.0,
+   "tradingValue": 1207507.0,
+   "marketCapText": "24조 9,200억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1857,6 +1799,64 @@
    "foreignHoldRatio": 21.85
   },
   {
+   "code": "009540",
+   "name": "HD한국조선해양",
+   "market": "KOSPI",
+   "price": 351500.0,
+   "change": 3000.0,
+   "changeRate": 0.86,
+   "marketCap": 248768.0,
+   "tradingValue": 20279.0,
+   "marketCapText": "24조 8,768억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": -913.2,
+    "foreignValue": -1154.4,
+    "instValue": 2064.6,
+    "change": -20.89
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": -38748.0,
+     "foreign": 70148.0,
+     "institution": -33033.0,
+     "foreignHoldRatio": 33.24
+    },
+    {
+     "date": "20260818",
+     "individual": 4039.0,
+     "foreign": -3105.0,
+     "institution": -2988.0,
+     "foreignHoldRatio": 33.23
+    },
+    {
+     "date": "20260819",
+     "individual": -1056.0,
+     "foreign": 9674.0,
+     "institution": -8734.0,
+     "foreignHoldRatio": 33.24
+    },
+    {
+     "date": "20260820",
+     "individual": 23800.0,
+     "foreign": 12210.0,
+     "institution": -34925.0,
+     "foreignHoldRatio": 33.24
+    },
+    {
+     "date": "20260821",
+     "individual": 2438.0,
+     "foreign": 11711.0,
+     "institution": -15211.0,
+     "foreignHoldRatio": 33.24
+    }
+   ],
+   "foreignHoldRatio": 33.24
+  },
+  {
    "code": "316140",
    "name": "우리금융지주",
    "market": "KOSPI",
@@ -1864,7 +1864,7 @@
    "change": 150.0,
    "changeRate": 0.47,
    "marketCap": 232261.0,
-   "tradingValue": 25020.0,
+   "tradingValue": 28268.0,
    "marketCapText": "23조 2,261억원",
    "stat60": {
     "days": 60,
@@ -1918,12 +1918,12 @@
    "code": "017670",
    "name": "SK텔레콤",
    "market": "KOSPI",
-   "price": 103500.0,
-   "change": 1300.0,
-   "changeRate": 1.27,
-   "marketCap": 222308.0,
-   "tradingValue": 106970.0,
-   "marketCapText": "22조 2,308억원",
+   "price": 104800.0,
+   "change": 2600.0,
+   "changeRate": 2.54,
+   "marketCap": 225100.0,
+   "tradingValue": 126668.0,
+   "marketCapText": "22조 5,100억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -1976,12 +1976,12 @@
    "code": "096770",
    "name": "SK이노베이션",
    "market": "KOSPI",
-   "price": 129000.0,
-   "change": 4200.0,
-   "changeRate": 3.37,
-   "marketCap": 218078.0,
-   "tradingValue": 70003.0,
-   "marketCapText": "21조 8,078억원",
+   "price": 128800.0,
+   "change": 4000.0,
+   "changeRate": 3.21,
+   "marketCap": 217740.0,
+   "tradingValue": 76735.0,
+   "marketCapText": "21조 7,740억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2034,12 +2034,12 @@
    "code": "011200",
    "name": "HMM",
    "market": "KOSPI",
-   "price": 22600.0,
-   "change": 1000.0,
-   "changeRate": 4.63,
-   "marketCap": 213172.0,
-   "tradingValue": 46419.0,
-   "marketCapText": "21조 3,172억원",
+   "price": 22650.0,
+   "change": 1050.0,
+   "changeRate": 4.86,
+   "marketCap": 213643.0,
+   "tradingValue": 50547.0,
+   "marketCapText": "21조 3,643억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2092,12 +2092,12 @@
    "code": "360750",
    "name": "TIGER 미국S&P500",
    "market": "KOSPI",
-   "price": 26250.0,
-   "change": -45.0,
-   "changeRate": -0.17,
-   "marketCap": 202532.0,
-   "tradingValue": 575175.0,
-   "marketCapText": "20조 2,532억원",
+   "price": 26260.0,
+   "change": -35.0,
+   "changeRate": -0.13,
+   "marketCap": 202609.0,
+   "tradingValue": 665519.0,
+   "marketCapText": "20조 2,609억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2150,12 +2150,12 @@
    "code": "015760",
    "name": "한국전력",
    "market": "KOSPI",
-   "price": 31300.0,
-   "change": -450.0,
-   "changeRate": -1.42,
-   "marketCap": 200935.0,
-   "tradingValue": 20832.0,
-   "marketCapText": "20조 935억원",
+   "price": 31400.0,
+   "change": -350.0,
+   "changeRate": -1.1,
+   "marketCap": 201577.0,
+   "tradingValue": 23647.0,
+   "marketCapText": "20조 1,577억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2208,12 +2208,12 @@
    "code": "042700",
    "name": "한미반도체",
    "market": "KOSPI",
-   "price": 206500.0,
-   "change": -7000.0,
-   "changeRate": -3.28,
-   "marketCap": 196820.0,
-   "tradingValue": 50650.0,
-   "marketCapText": "19조 6,820억원",
+   "price": 208500.0,
+   "change": -5000.0,
+   "changeRate": -2.34,
+   "marketCap": 198726.0,
+   "tradingValue": 63145.0,
+   "marketCapText": "19조 8,726억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2270,7 +2270,7 @@
    "change": -100.0,
    "changeRate": -0.29,
    "marketCap": 192491.0,
-   "tradingValue": 14888.0,
+   "tradingValue": 17580.0,
    "marketCapText": "19조 2,491억원",
    "stat60": {
     "days": 60,
@@ -2324,12 +2324,12 @@
    "code": "138040",
    "name": "메리츠금융지주",
    "market": "KOSPI",
-   "price": 114500.0,
-   "change": -900.0,
-   "changeRate": -0.78,
-   "marketCap": 191613.0,
-   "tradingValue": 11932.0,
-   "marketCapText": "19조 1,613억원",
+   "price": 114200.0,
+   "change": -1200.0,
+   "changeRate": -1.04,
+   "marketCap": 191111.0,
+   "tradingValue": 14133.0,
+   "marketCapText": "19조 1,111억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2382,12 +2382,12 @@
    "code": "051910",
    "name": "LG화학",
    "market": "KOSPI",
-   "price": 270000.0,
-   "change": 17500.0,
-   "changeRate": 6.93,
-   "marketCap": 190599.0,
-   "tradingValue": 33010.0,
-   "marketCapText": "19조 599억원",
+   "price": 269000.0,
+   "change": 16500.0,
+   "changeRate": 6.53,
+   "marketCap": 189893.0,
+   "tradingValue": 36619.0,
+   "marketCapText": "18조 9,893억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2440,12 +2440,12 @@
    "code": "033780",
    "name": "KT&G",
    "market": "KOSPI",
-   "price": 172500.0,
-   "change": 200.0,
-   "changeRate": 0.12,
-   "marketCap": 179073.0,
-   "tradingValue": 8786.0,
-   "marketCapText": "17조 9,073억원",
+   "price": 172400.0,
+   "change": 100.0,
+   "changeRate": 0.06,
+   "marketCap": 178969.0,
+   "tradingValue": 10040.0,
+   "marketCapText": "17조 8,969억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2498,12 +2498,12 @@
    "code": "010140",
    "name": "삼성중공업",
    "market": "KOSPI",
-   "price": 20100.0,
-   "change": -100.0,
-   "changeRate": -0.5,
-   "marketCap": 176880.0,
-   "tradingValue": 20126.0,
-   "marketCapText": "17조 6,880억원",
+   "price": 20050.0,
+   "change": -150.0,
+   "changeRate": -0.74,
+   "marketCap": 176440.0,
+   "tradingValue": 24192.0,
+   "marketCapText": "17조 6,440억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2556,12 +2556,12 @@
    "code": "000150",
    "name": "두산",
    "market": "KOSPI",
-   "price": 1081000.0,
-   "change": 3000.0,
-   "changeRate": 0.28,
-   "marketCap": 175055.0,
-   "tradingValue": 33852.0,
-   "marketCapText": "17조 5,055억원",
+   "price": 1079000.0,
+   "change": 1000.0,
+   "changeRate": 0.09,
+   "marketCap": 174731.0,
+   "tradingValue": 39479.0,
+   "marketCapText": "17조 4,731억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2614,12 +2614,12 @@
    "code": "018260",
    "name": "삼성에스디에스",
    "market": "KOSPI",
-   "price": 223250.0,
-   "change": -4750.0,
-   "changeRate": -2.08,
-   "marketCap": 172746.0,
-   "tradingValue": 19931.0,
-   "marketCapText": "17조 2,746억원",
+   "price": 225000.0,
+   "change": -3000.0,
+   "changeRate": -1.32,
+   "marketCap": 174100.0,
+   "tradingValue": 23029.0,
+   "marketCapText": "17조 4,100억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2672,12 +2672,12 @@
    "code": "003550",
    "name": "LG",
    "market": "KOSPI",
-   "price": 111400.0,
-   "change": 3700.0,
-   "changeRate": 3.44,
-   "marketCap": 168428.0,
-   "tradingValue": 13249.0,
-   "marketCapText": "16조 8,428억원",
+   "price": 111700.0,
+   "change": 4000.0,
+   "changeRate": 3.71,
+   "marketCap": 168881.0,
+   "tradingValue": 14978.0,
+   "marketCapText": "16조 8,881억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2730,12 +2730,12 @@
    "code": "267250",
    "name": "HD현대",
    "market": "KOSPI",
-   "price": 211500.0,
-   "change": -1500.0,
-   "changeRate": -0.7,
-   "marketCap": 167070.0,
-   "tradingValue": 14248.0,
-   "marketCapText": "16조 7,070억원",
+   "price": 211000.0,
+   "change": -2000.0,
+   "changeRate": -0.94,
+   "marketCap": 166675.0,
+   "tradingValue": 15796.0,
+   "marketCapText": "16조 6,675억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2792,7 +2792,7 @@
    "change": 100.0,
    "changeRate": 0.5,
    "marketCap": 160283.0,
-   "tradingValue": 10847.0,
+   "tradingValue": 12316.0,
    "marketCapText": "16조 283억원",
    "stat60": {
     "days": 60,
@@ -2843,73 +2843,15 @@
    "foreignHoldRatio": 13.55
   },
   {
-   "code": "035720",
-   "name": "카카오",
-   "market": "KOSPI",
-   "price": 35900.0,
-   "change": 100.0,
-   "changeRate": 0.28,
-   "marketCap": 159030.0,
-   "tradingValue": 96275.0,
-   "marketCapText": "15조 9,030억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": 931.2,
-    "foreignValue": 81.0,
-    "instValue": -928.0,
-    "change": -11.6
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": 85604.0,
-     "foreign": 209936.0,
-     "institution": -302897.0,
-     "foreignHoldRatio": 29.12
-    },
-    {
-     "date": "20260818",
-     "individual": 813132.0,
-     "foreign": -530290.0,
-     "institution": -240039.0,
-     "foreignHoldRatio": 28.97
-    },
-    {
-     "date": "20260819",
-     "individual": 61156.0,
-     "foreign": 149583.0,
-     "institution": -199990.0,
-     "foreignHoldRatio": 28.98
-    },
-    {
-     "date": "20260820",
-     "individual": -459827.0,
-     "foreign": 610374.0,
-     "institution": -151431.0,
-     "foreignHoldRatio": 29.11
-    },
-    {
-     "date": "20260821",
-     "individual": 2789870.0,
-     "foreign": -1490636.0,
-     "institution": -1300761.0,
-     "foreignHoldRatio": 28.77
-    }
-   ],
-   "foreignHoldRatio": 28.77
-  },
-  {
    "code": "010950",
    "name": "S-Oil",
    "market": "KOSPI",
-   "price": 140500.0,
-   "change": -600.0,
-   "changeRate": -0.43,
-   "marketCap": 158179.0,
-   "tradingValue": 15815.0,
-   "marketCapText": "15조 8,179억원",
+   "price": 140400.0,
+   "change": -700.0,
+   "changeRate": -0.5,
+   "marketCap": 158066.0,
+   "tradingValue": 16940.0,
+   "marketCapText": "15조 8,066억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -2959,15 +2901,73 @@
    "foreignHoldRatio": 79.2
   },
   {
+   "code": "035720",
+   "name": "카카오",
+   "market": "KOSPI",
+   "price": 35700.0,
+   "change": -100.0,
+   "changeRate": -0.28,
+   "marketCap": 158144.0,
+   "tradingValue": 105732.0,
+   "marketCapText": "15조 8,144억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": 931.2,
+    "foreignValue": 81.0,
+    "instValue": -928.0,
+    "change": -11.6
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": 85604.0,
+     "foreign": 209936.0,
+     "institution": -302897.0,
+     "foreignHoldRatio": 29.12
+    },
+    {
+     "date": "20260818",
+     "individual": 813132.0,
+     "foreign": -530290.0,
+     "institution": -240039.0,
+     "foreignHoldRatio": 28.97
+    },
+    {
+     "date": "20260819",
+     "individual": 61156.0,
+     "foreign": 149583.0,
+     "institution": -199990.0,
+     "foreignHoldRatio": 28.98
+    },
+    {
+     "date": "20260820",
+     "individual": -459827.0,
+     "foreign": 610374.0,
+     "institution": -151431.0,
+     "foreignHoldRatio": 29.11
+    },
+    {
+     "date": "20260821",
+     "individual": 2789870.0,
+     "foreign": -1490636.0,
+     "institution": -1300761.0,
+     "foreignHoldRatio": 28.77
+    }
+   ],
+   "foreignHoldRatio": 28.77
+  },
+  {
    "code": "079550",
    "name": "LIG디펜스앤에어로스페이스",
    "market": "KOSPI",
-   "price": 712000.0,
-   "change": 17000.0,
-   "changeRate": 2.45,
-   "marketCap": 156640.0,
-   "tradingValue": 50361.0,
-   "marketCapText": "15조 6,640억원",
+   "price": 710000.0,
+   "change": 15000.0,
+   "changeRate": 2.16,
+   "marketCap": 156200.0,
+   "tradingValue": 57531.0,
+   "marketCapText": "15조 6,200억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3020,12 +3020,12 @@
    "code": "278470",
    "name": "에이피알",
    "market": "KOSPI",
-   "price": 409500.0,
-   "change": 24500.0,
-   "changeRate": 6.36,
-   "marketCap": 153309.0,
-   "tradingValue": 104189.0,
-   "marketCapText": "15조 3,309억원",
+   "price": 408000.0,
+   "change": 23000.0,
+   "changeRate": 5.97,
+   "marketCap": 152748.0,
+   "tradingValue": 114106.0,
+   "marketCapText": "15조 2,748억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3078,12 +3078,12 @@
    "code": "003670",
    "name": "포스코퓨처엠",
    "market": "KOSPI",
-   "price": 168700.0,
-   "change": 13800.0,
-   "changeRate": 8.91,
-   "marketCap": 150052.0,
-   "tradingValue": 71283.0,
-   "marketCapText": "15조 52억원",
+   "price": 169000.0,
+   "change": 14100.0,
+   "changeRate": 9.1,
+   "marketCap": 150319.0,
+   "tradingValue": 76628.0,
+   "marketCapText": "15조 319억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3136,12 +3136,12 @@
    "code": "086280",
    "name": "현대글로비스",
    "market": "KOSPI",
-   "price": 198400.0,
-   "change": 1700.0,
-   "changeRate": 0.86,
-   "marketCap": 148800.0,
-   "tradingValue": 9597.0,
-   "marketCapText": "14조 8,800억원",
+   "price": 198600.0,
+   "change": 1900.0,
+   "changeRate": 0.97,
+   "marketCap": 148950.0,
+   "tradingValue": 10964.0,
+   "marketCapText": "14조 8,950억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3194,12 +3194,12 @@
    "code": "064350",
    "name": "현대로템",
    "market": "KOSPI",
-   "price": 133500.0,
-   "change": 3400.0,
-   "changeRate": 2.61,
-   "marketCap": 145705.0,
-   "tradingValue": 23578.0,
-   "marketCapText": "14조 5,705억원",
+   "price": 132800.0,
+   "change": 2700.0,
+   "changeRate": 2.08,
+   "marketCap": 144941.0,
+   "tradingValue": 26958.0,
+   "marketCapText": "14조 4,941억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3252,12 +3252,12 @@
    "code": "011070",
    "name": "LG이노텍",
    "market": "KOSPI",
-   "price": 567000.0,
-   "change": 17000.0,
-   "changeRate": 3.09,
-   "marketCap": 134192.0,
-   "tradingValue": 59661.0,
-   "marketCapText": "13조 4,192억원",
+   "price": 569000.0,
+   "change": 19000.0,
+   "changeRate": 3.45,
+   "marketCap": 134666.0,
+   "tradingValue": 66706.0,
+   "marketCapText": "13조 4,666억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3310,12 +3310,12 @@
    "code": "030200",
    "name": "KT",
    "market": "KOSPI",
-   "price": 52200.0,
-   "change": -200.0,
-   "changeRate": -0.38,
-   "marketCap": 131555.0,
-   "tradingValue": 6145.0,
-   "marketCapText": "13조 1,555억원",
+   "price": 52500.0,
+   "change": 100.0,
+   "changeRate": 0.19,
+   "marketCap": 132311.0,
+   "tradingValue": 7058.0,
+   "marketCapText": "13조 2,311억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3368,12 +3368,12 @@
    "code": "272210",
    "name": "한화시스템",
    "market": "KOSPI",
-   "price": 69600.0,
-   "change": -700.0,
-   "changeRate": -1.0,
-   "marketCap": 131488.0,
-   "tradingValue": 12262.0,
-   "marketCapText": "13조 1,488억원",
+   "price": 69400.0,
+   "change": -900.0,
+   "changeRate": -1.28,
+   "marketCap": 131110.0,
+   "tradingValue": 14463.0,
+   "marketCapText": "13조 1,110억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3426,12 +3426,12 @@
    "code": "047810",
    "name": "한국항공우주",
    "market": "KOSPI",
-   "price": 129000.0,
-   "change": -1000.0,
-   "changeRate": -0.77,
-   "marketCap": 125743.0,
-   "tradingValue": 15674.0,
-   "marketCapText": "12조 5,743억원",
+   "price": 129500.0,
+   "change": -500.0,
+   "changeRate": -0.38,
+   "marketCap": 126230.0,
+   "tradingValue": 18180.0,
+   "marketCapText": "12조 6,230억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3484,12 +3484,12 @@
    "code": "196170",
    "name": "알테오젠",
    "market": "KOSDAQ",
-   "price": 317500.0,
-   "change": -2500.0,
-   "changeRate": -0.78,
-   "marketCap": 170137.0,
-   "tradingValue": 68625.0,
-   "marketCapText": "17조 137억원",
+   "price": 322500.0,
+   "change": 2500.0,
+   "changeRate": 0.78,
+   "marketCap": 172816.0,
+   "tradingValue": 82244.0,
+   "marketCapText": "17조 2,816억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3542,12 +3542,12 @@
    "code": "086520",
    "name": "에코프로",
    "market": "KOSDAQ",
-   "price": 86200.0,
-   "change": 4500.0,
-   "changeRate": 5.51,
-   "marketCap": 117039.0,
-   "tradingValue": 76080.0,
-   "marketCapText": "11조 7,039억원",
+   "price": 86300.0,
+   "change": 4600.0,
+   "changeRate": 5.63,
+   "marketCap": 117175.0,
+   "tradingValue": 82030.0,
+   "marketCapText": "11조 7,175억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3600,12 +3600,12 @@
    "code": "247540",
    "name": "에코프로비엠",
    "market": "KOSDAQ",
-   "price": 114300.0,
-   "change": 8700.0,
-   "changeRate": 8.24,
-   "marketCap": 111820.0,
-   "tradingValue": 44381.0,
-   "marketCapText": "11조 1,820억원",
+   "price": 114800.0,
+   "change": 9200.0,
+   "changeRate": 8.71,
+   "marketCap": 112309.0,
+   "tradingValue": 48521.0,
+   "marketCapText": "11조 2,309억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3658,12 +3658,12 @@
    "code": "277810",
    "name": "레인보우로보틱스",
    "market": "KOSDAQ",
-   "price": 443000.0,
-   "change": -11000.0,
-   "changeRate": -2.42,
-   "marketCap": 85941.0,
-   "tradingValue": 13764.0,
-   "marketCapText": "8조 5,941억원",
+   "price": 444500.0,
+   "change": -9500.0,
+   "changeRate": -2.09,
+   "marketCap": 86232.0,
+   "tradingValue": 14990.0,
+   "marketCapText": "8조 6,232억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3716,12 +3716,12 @@
    "code": "036930",
    "name": "주성엔지니어링",
    "market": "KOSDAQ",
-   "price": 168700.0,
-   "change": 100.0,
-   "changeRate": 0.06,
-   "marketCap": 78414.0,
-   "tradingValue": 78592.0,
-   "marketCapText": "7조 8,414억원",
+   "price": 168900.0,
+   "change": 300.0,
+   "changeRate": 0.18,
+   "marketCap": 78507.0,
+   "tradingValue": 84366.0,
+   "marketCapText": "7조 8,507억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3774,12 +3774,12 @@
    "code": "240810",
    "name": "원익IPS",
    "market": "KOSDAQ",
-   "price": 107100.0,
-   "change": -800.0,
-   "changeRate": -0.74,
-   "marketCap": 52569.0,
-   "tradingValue": 34530.0,
-   "marketCapText": "5조 2,569억원",
+   "price": 107000.0,
+   "change": -900.0,
+   "changeRate": -0.83,
+   "marketCap": 52520.0,
+   "tradingValue": 37536.0,
+   "marketCapText": "5조 2,520억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3832,12 +3832,12 @@
    "code": "028300",
    "name": "HLB",
    "market": "KOSDAQ",
-   "price": 38300.0,
-   "change": -350.0,
-   "changeRate": -0.91,
-   "marketCap": 51015.0,
-   "tradingValue": 11946.0,
-   "marketCapText": "5조 1,015억원",
+   "price": 38350.0,
+   "change": -300.0,
+   "changeRate": -0.78,
+   "marketCap": 51082.0,
+   "tradingValue": 13665.0,
+   "marketCapText": "5조 1,082억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3890,12 +3890,12 @@
    "code": "058470",
    "name": "리노공업",
    "market": "KOSDAQ",
-   "price": 64800.0,
-   "change": -900.0,
-   "changeRate": -1.37,
-   "marketCap": 49385.0,
-   "tradingValue": 14024.0,
-   "marketCapText": "4조 9,385억원",
+   "price": 64900.0,
+   "change": -800.0,
+   "changeRate": -1.22,
+   "marketCap": 49461.0,
+   "tradingValue": 15800.0,
+   "marketCapText": "4조 9,461억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -3948,12 +3948,12 @@
    "code": "039030",
    "name": "이오테크닉스",
    "market": "KOSDAQ",
-   "price": 396500.0,
-   "change": -8000.0,
-   "changeRate": -1.98,
-   "marketCap": 48847.0,
-   "tradingValue": 16058.0,
-   "marketCapText": "4조 8,847억원",
+   "price": 393500.0,
+   "change": -11000.0,
+   "changeRate": -2.72,
+   "marketCap": 48477.0,
+   "tradingValue": 19231.0,
+   "marketCapText": "4조 8,477억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4006,12 +4006,12 @@
    "code": "214450",
    "name": "파마리서치",
    "market": "KOSDAQ",
-   "price": 413500.0,
-   "change": 13000.0,
-   "changeRate": 3.25,
-   "marketCap": 42961.0,
-   "tradingValue": 24471.0,
-   "marketCapText": "4조 2,961억원",
+   "price": 414500.0,
+   "change": 14000.0,
+   "changeRate": 3.5,
+   "marketCap": 43065.0,
+   "tradingValue": 27199.0,
+   "marketCapText": "4조 3,065억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4064,12 +4064,12 @@
    "code": "087010",
    "name": "펩트론",
    "market": "KOSDAQ",
-   "price": 182500.0,
-   "change": 3900.0,
-   "changeRate": 2.18,
-   "marketCap": 42554.0,
-   "tradingValue": 13072.0,
-   "marketCapText": "4조 2,554억원",
+   "price": 183200.0,
+   "change": 4600.0,
+   "changeRate": 2.58,
+   "marketCap": 42717.0,
+   "tradingValue": 14799.0,
+   "marketCapText": "4조 2,717억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4122,12 +4122,12 @@
    "code": "298380",
    "name": "에이비엘바이오",
    "market": "KOSDAQ",
-   "price": 75900.0,
-   "change": 700.0,
-   "changeRate": 0.93,
-   "marketCap": 42494.0,
-   "tradingValue": 10240.0,
-   "marketCapText": "4조 2,494억원",
+   "price": 76100.0,
+   "change": 900.0,
+   "changeRate": 1.2,
+   "marketCap": 42606.0,
+   "tradingValue": 11672.0,
+   "marketCapText": "4조 2,606억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4180,12 +4180,12 @@
    "code": "000250",
    "name": "삼천당제약",
    "market": "KOSDAQ",
-   "price": 169500.0,
-   "change": 800.0,
-   "changeRate": 0.47,
-   "marketCap": 39760.0,
-   "tradingValue": 12803.0,
-   "marketCapText": "3조 9,760억원",
+   "price": 170400.0,
+   "change": 1700.0,
+   "changeRate": 1.01,
+   "marketCap": 39972.0,
+   "tradingValue": 14130.0,
+   "marketCapText": "3조 9,972억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4238,12 +4238,12 @@
    "code": "222800",
    "name": "심텍",
    "market": "KOSDAQ",
-   "price": 105500.0,
-   "change": 5800.0,
-   "changeRate": 5.82,
-   "marketCap": 39524.0,
-   "tradingValue": 58356.0,
-   "marketCapText": "3조 9,524억원",
+   "price": 105600.0,
+   "change": 5900.0,
+   "changeRate": 5.92,
+   "marketCap": 39562.0,
+   "tradingValue": 62051.0,
+   "marketCapText": "3조 9,562억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4296,12 +4296,12 @@
    "code": "141080",
    "name": "리가켐바이오",
    "market": "KOSDAQ",
-   "price": 103400.0,
-   "change": 3400.0,
-   "changeRate": 3.4,
-   "marketCap": 38278.0,
-   "tradingValue": 11352.0,
-   "marketCapText": "3조 8,278억원",
+   "price": 103800.0,
+   "change": 3800.0,
+   "changeRate": 3.8,
+   "marketCap": 38426.0,
+   "tradingValue": 13543.0,
+   "marketCapText": "3조 8,426억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4351,73 +4351,15 @@
    "foreignHoldRatio": 11.8
   },
   {
-   "code": "403870",
-   "name": "HPSP",
-   "market": "KOSDAQ",
-   "price": 44450.0,
-   "change": -450.0,
-   "changeRate": -1.0,
-   "marketCap": 36582.0,
-   "tradingValue": 46020.0,
-   "marketCapText": "3조 6,582억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": 1644.8,
-    "foreignValue": -525.7,
-    "instValue": -1117.6,
-    "change": -18.66
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": 349517.0,
-     "foreign": -172480.0,
-     "institution": -179378.0,
-     "foreignHoldRatio": 31.87
-    },
-    {
-     "date": "20260818",
-     "individual": -642249.0,
-     "foreign": 887699.0,
-     "institution": -229157.0,
-     "foreignHoldRatio": 32.96
-    },
-    {
-     "date": "20260819",
-     "individual": -1088582.0,
-     "foreign": 297670.0,
-     "institution": 785818.0,
-     "foreignHoldRatio": 33.13
-    },
-    {
-     "date": "20260820",
-     "individual": -524753.0,
-     "foreign": 95042.0,
-     "institution": 434440.0,
-     "foreignHoldRatio": 33.11
-    },
-    {
-     "date": "20260821",
-     "individual": 463026.0,
-     "foreign": -392521.0,
-     "institution": -83552.0,
-     "foreignHoldRatio": 32.5
-    }
-   ],
-   "foreignHoldRatio": 32.5
-  },
-  {
    "code": "108490",
    "name": "로보티즈",
    "market": "KOSDAQ",
-   "price": 249000.0,
-   "change": -5000.0,
-   "changeRate": -1.97,
-   "marketCap": 36506.0,
-   "tradingValue": 19980.0,
-   "marketCapText": "3조 6,506억원",
+   "price": 249500.0,
+   "change": -4500.0,
+   "changeRate": -1.77,
+   "marketCap": 36579.0,
+   "tradingValue": 22318.0,
+   "marketCapText": "3조 6,579억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4467,6 +4409,64 @@
    "foreignHoldRatio": 4.83
   },
   {
+   "code": "403870",
+   "name": "HPSP",
+   "market": "KOSDAQ",
+   "price": 44300.0,
+   "change": -600.0,
+   "changeRate": -1.34,
+   "marketCap": 36459.0,
+   "tradingValue": 49631.0,
+   "marketCapText": "3조 6,459억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": 1644.8,
+    "foreignValue": -525.7,
+    "instValue": -1117.6,
+    "change": -18.66
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": 349517.0,
+     "foreign": -172480.0,
+     "institution": -179378.0,
+     "foreignHoldRatio": 31.87
+    },
+    {
+     "date": "20260818",
+     "individual": -642249.0,
+     "foreign": 887699.0,
+     "institution": -229157.0,
+     "foreignHoldRatio": 32.96
+    },
+    {
+     "date": "20260819",
+     "individual": -1088582.0,
+     "foreign": 297670.0,
+     "institution": 785818.0,
+     "foreignHoldRatio": 33.13
+    },
+    {
+     "date": "20260820",
+     "individual": -524753.0,
+     "foreign": 95042.0,
+     "institution": 434440.0,
+     "foreignHoldRatio": 33.11
+    },
+    {
+     "date": "20260821",
+     "individual": 463026.0,
+     "foreign": -392521.0,
+     "institution": -83552.0,
+     "foreignHoldRatio": 32.5
+    }
+   ],
+   "foreignHoldRatio": 32.5
+  },
+  {
    "code": "319660",
    "name": "피에스케이",
    "market": "KOSDAQ",
@@ -4474,7 +4474,7 @@
    "change": 2600.0,
    "changeRate": 2.13,
    "marketCap": 36150.0,
-   "tradingValue": 20325.0,
+   "tradingValue": 22489.0,
    "marketCapText": "3조 6,150억원",
    "stat60": {
     "days": 60,
@@ -4528,12 +4528,12 @@
    "code": "095340",
    "name": "ISC",
    "market": "KOSDAQ",
-   "price": 154100.0,
-   "change": -200.0,
-   "changeRate": -0.13,
-   "marketCap": 32665.0,
-   "tradingValue": 15361.0,
-   "marketCapText": "3조 2,665억원",
+   "price": 154300.0,
+   "change": 0.0,
+   "changeRate": 0.0,
+   "marketCap": 32707.0,
+   "tradingValue": 16598.0,
+   "marketCapText": "3조 2,707억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4586,12 +4586,12 @@
    "code": "257720",
    "name": "실리콘투",
    "market": "KOSDAQ",
-   "price": 49050.0,
-   "change": 1400.0,
-   "changeRate": 2.94,
-   "marketCap": 32165.0,
-   "tradingValue": 60368.0,
-   "marketCapText": "3조 2,165억원",
+   "price": 49500.0,
+   "change": 1850.0,
+   "changeRate": 3.88,
+   "marketCap": 32460.0,
+   "tradingValue": 67380.0,
+   "marketCapText": "3조 2,460억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4641,64 +4641,6 @@
    "foreignHoldRatio": 6.57
   },
   {
-   "code": "440110",
-   "name": "파두",
-   "market": "KOSDAQ",
-   "price": 63000.0,
-   "change": 1100.0,
-   "changeRate": 1.78,
-   "marketCap": 31570.0,
-   "tradingValue": 9572.0,
-   "marketCapText": "3조 1,570억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": -2119.1,
-    "foreignValue": 4512.7,
-    "instValue": -2379.2,
-    "change": -47.05
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": -254502.0,
-     "foreign": 245278.0,
-     "institution": 1902.0,
-     "foreignHoldRatio": 26.77
-    },
-    {
-     "date": "20260818",
-     "individual": -118738.0,
-     "foreign": 51564.0,
-     "institution": 81741.0,
-     "foreignHoldRatio": 26.76
-    },
-    {
-     "date": "20260819",
-     "individual": 5639.0,
-     "foreign": -28794.0,
-     "institution": 23009.0,
-     "foreignHoldRatio": 26.67
-    },
-    {
-     "date": "20260820",
-     "individual": 19201.0,
-     "foreign": -52971.0,
-     "institution": 28992.0,
-     "foreignHoldRatio": 26.55
-    },
-    {
-     "date": "20260821",
-     "individual": 12664.0,
-     "foreign": 158277.0,
-     "institution": -164589.0,
-     "foreignHoldRatio": 26.82
-    }
-   ],
-   "foreignHoldRatio": 26.82
-  },
-  {
    "code": "145020",
    "name": "휴젤",
    "market": "KOSDAQ",
@@ -4706,7 +4648,7 @@
    "change": 7500.0,
    "changeRate": 3.06,
    "marketCap": 31601.0,
-   "tradingValue": 6803.0,
+   "tradingValue": 7253.0,
    "marketCapText": "3조 1,601억원",
    "stat60": {
     "days": 60,
@@ -4757,73 +4699,73 @@
    "foreignHoldRatio": 56.69
   },
   {
-   "code": "084370",
-   "name": "유진테크",
+   "code": "440110",
+   "name": "파두",
    "market": "KOSDAQ",
-   "price": 136400.0,
-   "change": 7900.0,
-   "changeRate": 6.15,
-   "marketCap": 31257.0,
-   "tradingValue": 15520.0,
-   "marketCapText": "3조 1,257억원",
+   "price": 62500.0,
+   "change": 600.0,
+   "changeRate": 0.97,
+   "marketCap": 31319.0,
+   "tradingValue": 11643.0,
+   "marketCapText": "3조 1,319억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
     "to": "20260821",
-    "indivValue": -571.1,
-    "foreignValue": 163.8,
-    "instValue": 371.6,
-    "change": -2.43
+    "indivValue": -2119.1,
+    "foreignValue": 4512.7,
+    "instValue": -2379.2,
+    "change": -47.05
    },
    "flow": [
     {
      "date": "20260814",
-     "individual": 24063.0,
-     "foreign": 8735.0,
-     "institution": -32895.0,
-     "foreignHoldRatio": 36.6
+     "individual": -254502.0,
+     "foreign": 245278.0,
+     "institution": 1902.0,
+     "foreignHoldRatio": 26.77
     },
     {
      "date": "20260818",
-     "individual": -27227.0,
-     "foreign": 58880.0,
-     "institution": -31626.0,
-     "foreignHoldRatio": 36.99
+     "individual": -118738.0,
+     "foreign": 51564.0,
+     "institution": 81741.0,
+     "foreignHoldRatio": 26.76
     },
     {
      "date": "20260819",
-     "individual": -6972.0,
-     "foreign": 2616.0,
-     "institution": 3945.0,
-     "foreignHoldRatio": 37.01
+     "individual": 5639.0,
+     "foreign": -28794.0,
+     "institution": 23009.0,
+     "foreignHoldRatio": 26.67
     },
     {
      "date": "20260820",
-     "individual": -20225.0,
-     "foreign": 23596.0,
-     "institution": -1446.0,
-     "foreignHoldRatio": 37.14
+     "individual": 19201.0,
+     "foreign": -52971.0,
+     "institution": 28992.0,
+     "foreignHoldRatio": 26.55
     },
     {
      "date": "20260821",
-     "individual": 15405.0,
-     "foreign": 4398.0,
-     "institution": -18978.0,
-     "foreignHoldRatio": 37.14
+     "individual": 12664.0,
+     "foreign": 158277.0,
+     "institution": -164589.0,
+     "foreignHoldRatio": 26.82
     }
    ],
-   "foreignHoldRatio": 37.14
+   "foreignHoldRatio": 26.82
   },
   {
    "code": "310210",
    "name": "보로노이",
    "market": "KOSDAQ",
-   "price": 168300.0,
-   "change": 16200.0,
-   "changeRate": 10.65,
-   "marketCap": 31040.0,
-   "tradingValue": 7969.0,
-   "marketCapText": "3조 1,040억원",
+   "price": 170600.0,
+   "change": 18500.0,
+   "changeRate": 12.16,
+   "marketCap": 31464.0,
+   "tradingValue": 10120.0,
+   "marketCapText": "3조 1,464억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4873,15 +4815,73 @@
    "foreignHoldRatio": 6.77
   },
   {
+   "code": "084370",
+   "name": "유진테크",
+   "market": "KOSDAQ",
+   "price": 137000.0,
+   "change": 8500.0,
+   "changeRate": 6.61,
+   "marketCap": 31395.0,
+   "tradingValue": 17707.0,
+   "marketCapText": "3조 1,395억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": -571.1,
+    "foreignValue": 163.8,
+    "instValue": 371.6,
+    "change": -2.43
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": 24063.0,
+     "foreign": 8735.0,
+     "institution": -32895.0,
+     "foreignHoldRatio": 36.6
+    },
+    {
+     "date": "20260818",
+     "individual": -27227.0,
+     "foreign": 58880.0,
+     "institution": -31626.0,
+     "foreignHoldRatio": 36.99
+    },
+    {
+     "date": "20260819",
+     "individual": -6972.0,
+     "foreign": 2616.0,
+     "institution": 3945.0,
+     "foreignHoldRatio": 37.01
+    },
+    {
+     "date": "20260820",
+     "individual": -20225.0,
+     "foreign": 23596.0,
+     "institution": -1446.0,
+     "foreignHoldRatio": 37.14
+    },
+    {
+     "date": "20260821",
+     "individual": 15405.0,
+     "foreign": 4398.0,
+     "institution": -18978.0,
+     "foreignHoldRatio": 37.14
+    }
+   ],
+   "foreignHoldRatio": 37.14
+  },
+  {
    "code": "214370",
    "name": "케어젠",
    "market": "KOSDAQ",
-   "price": 54700.0,
-   "change": 2800.0,
-   "changeRate": 5.39,
-   "marketCap": 29382.0,
-   "tradingValue": 3160.0,
-   "marketCapText": "2조 9,382억원",
+   "price": 55000.0,
+   "change": 3100.0,
+   "changeRate": 5.97,
+   "marketCap": 29543.0,
+   "tradingValue": 3481.0,
+   "marketCapText": "2조 9,543억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4934,12 +4934,12 @@
    "code": "131290",
    "name": "티에스이",
    "market": "KOSDAQ",
-   "price": 244500.0,
-   "change": 22500.0,
-   "changeRate": 10.14,
-   "marketCap": 27045.0,
-   "tradingValue": 24945.0,
-   "marketCapText": "2조 7,045억원",
+   "price": 246500.0,
+   "change": 24500.0,
+   "changeRate": 11.04,
+   "marketCap": 27266.0,
+   "tradingValue": 27133.0,
+   "marketCapText": "2조 7,266억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -4989,73 +4989,15 @@
    "foreignHoldRatio": 10.82
   },
   {
-   "code": "095610",
-   "name": "테스",
-   "market": "KOSDAQ",
-   "price": 134100.0,
-   "change": 1200.0,
-   "changeRate": 0.9,
-   "marketCap": 25962.0,
-   "tradingValue": 19799.0,
-   "marketCapText": "2조 5,962억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": -92.1,
-    "foreignValue": -1437.6,
-    "instValue": 1497.6,
-    "change": 11.68
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": 22698.0,
-     "foreign": -9318.0,
-     "institution": -12998.0,
-     "foreignHoldRatio": 6.27
-    },
-    {
-     "date": "20260818",
-     "individual": -29542.0,
-     "foreign": 83278.0,
-     "institution": -47675.0,
-     "foreignHoldRatio": 6.74
-    },
-    {
-     "date": "20260819",
-     "individual": -24304.0,
-     "foreign": 64669.0,
-     "institution": -42002.0,
-     "foreignHoldRatio": 7.11
-    },
-    {
-     "date": "20260820",
-     "individual": 95399.0,
-     "foreign": -26195.0,
-     "institution": -69979.0,
-     "foreignHoldRatio": 6.83
-    },
-    {
-     "date": "20260821",
-     "individual": 50301.0,
-     "foreign": 38286.0,
-     "institution": -89003.0,
-     "foreignHoldRatio": 7.07
-    }
-   ],
-   "foreignHoldRatio": 7.07
-  },
-  {
    "code": "347850",
    "name": "디앤디파마텍",
    "market": "KOSDAQ",
-   "price": 56700.0,
-   "change": 3400.0,
-   "changeRate": 6.38,
-   "marketCap": 25990.0,
-   "tradingValue": 35631.0,
-   "marketCapText": "2조 5,990억원",
+   "price": 56800.0,
+   "change": 3500.0,
+   "changeRate": 6.57,
+   "marketCap": 26036.0,
+   "tradingValue": 43561.0,
+   "marketCapText": "2조 6,036억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5108,12 +5050,12 @@
    "code": "064760",
    "name": "티씨케이",
    "market": "KOSDAQ",
-   "price": 231000.0,
-   "change": 5500.0,
-   "changeRate": 2.44,
-   "marketCap": 25824.0,
-   "tradingValue": 9125.0,
-   "marketCapText": "2조 5,824억원",
+   "price": 232000.0,
+   "change": 6500.0,
+   "changeRate": 2.88,
+   "marketCap": 25936.0,
+   "tradingValue": 10432.0,
+   "marketCapText": "2조 5,936억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5163,15 +5105,73 @@
    "foreignHoldRatio": 67.09
   },
   {
+   "code": "095610",
+   "name": "테스",
+   "market": "KOSDAQ",
+   "price": 134000.0,
+   "change": 1100.0,
+   "changeRate": 0.83,
+   "marketCap": 25942.0,
+   "tradingValue": 21401.0,
+   "marketCapText": "2조 5,942억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": -92.1,
+    "foreignValue": -1437.6,
+    "instValue": 1497.6,
+    "change": 11.68
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": 22698.0,
+     "foreign": -9318.0,
+     "institution": -12998.0,
+     "foreignHoldRatio": 6.27
+    },
+    {
+     "date": "20260818",
+     "individual": -29542.0,
+     "foreign": 83278.0,
+     "institution": -47675.0,
+     "foreignHoldRatio": 6.74
+    },
+    {
+     "date": "20260819",
+     "individual": -24304.0,
+     "foreign": 64669.0,
+     "institution": -42002.0,
+     "foreignHoldRatio": 7.11
+    },
+    {
+     "date": "20260820",
+     "individual": 95399.0,
+     "foreign": -26195.0,
+     "institution": -69979.0,
+     "foreignHoldRatio": 6.83
+    },
+    {
+     "date": "20260821",
+     "individual": 50301.0,
+     "foreign": 38286.0,
+     "institution": -89003.0,
+     "foreignHoldRatio": 7.07
+    }
+   ],
+   "foreignHoldRatio": 7.07
+  },
+  {
    "code": "357780",
    "name": "솔브레인",
    "market": "KOSDAQ",
-   "price": 328500.0,
-   "change": 2500.0,
-   "changeRate": 0.77,
-   "marketCap": 25553.0,
-   "tradingValue": 4209.0,
-   "marketCapText": "2조 5,553억원",
+   "price": 329500.0,
+   "change": 3500.0,
+   "changeRate": 1.07,
+   "marketCap": 25630.0,
+   "tradingValue": 4569.0,
+   "marketCapText": "2조 5,630억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5224,12 +5224,12 @@
    "code": "319400",
    "name": "현대무벡스",
    "market": "KOSDAQ",
-   "price": 22850.0,
-   "change": 0.0,
-   "changeRate": 0.0,
-   "marketCap": 25449.0,
-   "tradingValue": 7991.0,
-   "marketCapText": "2조 5,449억원",
+   "price": 22950.0,
+   "change": 100.0,
+   "changeRate": 0.44,
+   "marketCap": 25561.0,
+   "tradingValue": 8769.0,
+   "marketCapText": "2조 5,561억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5282,12 +5282,12 @@
    "code": "080220",
    "name": "제주반도체",
    "market": "KOSDAQ",
-   "price": 73500.0,
-   "change": 0.0,
-   "changeRate": 0.0,
-   "marketCap": 25315.0,
-   "tradingValue": 46822.0,
-   "marketCapText": "2조 5,315억원",
+   "price": 73400.0,
+   "change": -100.0,
+   "changeRate": -0.14,
+   "marketCap": 25281.0,
+   "tradingValue": 50854.0,
+   "marketCapText": "2조 5,281억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5340,12 +5340,12 @@
    "code": "178320",
    "name": "서진시스템",
    "market": "KOSDAQ",
-   "price": 37750.0,
-   "change": 1500.0,
-   "changeRate": 4.14,
-   "marketCap": 24028.0,
-   "tradingValue": 22149.0,
-   "marketCapText": "2조 4,028억원",
+   "price": 37400.0,
+   "change": 1150.0,
+   "changeRate": 3.17,
+   "marketCap": 23805.0,
+   "tradingValue": 24053.0,
+   "marketCapText": "2조 3,805억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5398,12 +5398,12 @@
    "code": "031980",
    "name": "피에스케이홀딩스",
    "market": "KOSDAQ",
-   "price": 109400.0,
-   "change": 1900.0,
-   "changeRate": 1.77,
-   "marketCap": 23589.0,
-   "tradingValue": 5088.0,
-   "marketCapText": "2조 3,589억원",
+   "price": 109300.0,
+   "change": 1800.0,
+   "changeRate": 1.67,
+   "marketCap": 23568.0,
+   "tradingValue": 5550.0,
+   "marketCapText": "2조 3,568억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5456,12 +5456,12 @@
    "code": "067310",
    "name": "하나마이크론",
    "market": "KOSDAQ",
-   "price": 34800.0,
-   "change": -200.0,
-   "changeRate": -0.57,
-   "marketCap": 23139.0,
-   "tradingValue": 27050.0,
-   "marketCapText": "2조 3,139억원",
+   "price": 34750.0,
+   "change": -250.0,
+   "changeRate": -0.71,
+   "marketCap": 23106.0,
+   "tradingValue": 29084.0,
+   "marketCapText": "2조 3,106억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5514,12 +5514,12 @@
    "code": "237690",
    "name": "에스티팜",
    "market": "KOSDAQ",
-   "price": 106900.0,
-   "change": 7200.0,
-   "changeRate": 7.22,
-   "marketCap": 22317.0,
-   "tradingValue": 18902.0,
-   "marketCapText": "2조 2,317억원",
+   "price": 108100.0,
+   "change": 8400.0,
+   "changeRate": 8.43,
+   "marketCap": 22568.0,
+   "tradingValue": 22536.0,
+   "marketCapText": "2조 2,568억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5569,73 +5569,15 @@
    "foreignHoldRatio": 11.48
   },
   {
-   "code": "005290",
-   "name": "동진쎄미켐",
-   "market": "KOSDAQ",
-   "price": 42000.0,
-   "change": 900.0,
-   "changeRate": 2.19,
-   "marketCap": 21407.0,
-   "tradingValue": 10857.0,
-   "marketCapText": "2조 1,407억원",
-   "stat60": {
-    "days": 60,
-    "from": "20260527",
-    "to": "20260821",
-    "indivValue": 520.6,
-    "foreignValue": -693.0,
-    "instValue": 175.4,
-    "change": -32.29
-   },
-   "flow": [
-    {
-     "date": "20260814",
-     "individual": 117820.0,
-     "foreign": -28825.0,
-     "institution": -88774.0,
-     "foreignHoldRatio": 12.76
-    },
-    {
-     "date": "20260818",
-     "individual": 230551.0,
-     "foreign": -110382.0,
-     "institution": -119245.0,
-     "foreignHoldRatio": 12.51
-    },
-    {
-     "date": "20260819",
-     "individual": 22253.0,
-     "foreign": 3051.0,
-     "institution": -24845.0,
-     "foreignHoldRatio": 12.69
-    },
-    {
-     "date": "20260820",
-     "individual": 47740.0,
-     "foreign": -53324.0,
-     "institution": 5530.0,
-     "foreignHoldRatio": 12.59
-    },
-    {
-     "date": "20260821",
-     "individual": 96815.0,
-     "foreign": -5473.0,
-     "institution": -94066.0,
-     "foreignHoldRatio": 12.57
-    }
-   ],
-   "foreignHoldRatio": 12.57
-  },
-  {
    "code": "214150",
    "name": "클래시스",
    "market": "KOSDAQ",
-   "price": 32600.0,
-   "change": 450.0,
-   "changeRate": 1.4,
-   "marketCap": 21267.0,
-   "tradingValue": 6573.0,
-   "marketCapText": "2조 1,267억원",
+   "price": 32950.0,
+   "change": 800.0,
+   "changeRate": 2.49,
+   "marketCap": 21495.0,
+   "tradingValue": 7488.0,
+   "marketCapText": "2조 1,495억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5688,12 +5630,12 @@
    "code": "226950",
    "name": "올릭스",
    "market": "KOSDAQ",
-   "price": 100000.0,
-   "change": 1900.0,
-   "changeRate": 1.94,
-   "marketCap": 21063.0,
-   "tradingValue": 10465.0,
-   "marketCapText": "2조 1,063억원",
+   "price": 101900.0,
+   "change": 3800.0,
+   "changeRate": 3.87,
+   "marketCap": 21463.0,
+   "tradingValue": 12607.0,
+   "marketCapText": "2조 1,463억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5743,15 +5685,73 @@
    "foreignHoldRatio": 6.46
   },
   {
+   "code": "005290",
+   "name": "동진쎄미켐",
+   "market": "KOSDAQ",
+   "price": 41800.0,
+   "change": 700.0,
+   "changeRate": 1.7,
+   "marketCap": 21306.0,
+   "tradingValue": 11816.0,
+   "marketCapText": "2조 1,306억원",
+   "stat60": {
+    "days": 60,
+    "from": "20260527",
+    "to": "20260821",
+    "indivValue": 520.6,
+    "foreignValue": -693.0,
+    "instValue": 175.4,
+    "change": -32.29
+   },
+   "flow": [
+    {
+     "date": "20260814",
+     "individual": 117820.0,
+     "foreign": -28825.0,
+     "institution": -88774.0,
+     "foreignHoldRatio": 12.76
+    },
+    {
+     "date": "20260818",
+     "individual": 230551.0,
+     "foreign": -110382.0,
+     "institution": -119245.0,
+     "foreignHoldRatio": 12.51
+    },
+    {
+     "date": "20260819",
+     "individual": 22253.0,
+     "foreign": 3051.0,
+     "institution": -24845.0,
+     "foreignHoldRatio": 12.69
+    },
+    {
+     "date": "20260820",
+     "individual": 47740.0,
+     "foreign": -53324.0,
+     "institution": 5530.0,
+     "foreignHoldRatio": 12.59
+    },
+    {
+     "date": "20260821",
+     "individual": 96815.0,
+     "foreign": -5473.0,
+     "institution": -94066.0,
+     "foreignHoldRatio": 12.57
+    }
+   ],
+   "foreignHoldRatio": 12.57
+  },
+  {
    "code": "058610",
    "name": "에스피지",
    "market": "KOSDAQ",
-   "price": 94400.0,
-   "change": -1100.0,
-   "changeRate": -1.15,
-   "marketCap": 20935.0,
-   "tradingValue": 14955.0,
-   "marketCapText": "2조 935억원",
+   "price": 94100.0,
+   "change": -1400.0,
+   "changeRate": -1.47,
+   "marketCap": 20869.0,
+   "tradingValue": 17676.0,
+   "marketCapText": "2조 869억원",
    "stat60": {
     "days": 60,
     "from": "20260527",
@@ -5804,556 +5804,556 @@
  "industries": [
   {
    "name": "생명보험",
-   "changeRate": -9.84,
+   "changeRate": -9.38,
    "count": 4,
    "rise": 1,
    "fall": 2
   },
   {
    "name": "반도체와반도체장비",
-   "changeRate": -5.85,
+   "changeRate": -5.66,
    "count": 171,
-   "rise": 65,
-   "fall": 98
+   "rise": 71,
+   "fall": 89
   },
   {
    "name": "복합기업",
-   "changeRate": -3.94,
+   "changeRate": -3.46,
    "count": 22,
-   "rise": 12,
+   "rise": 13,
    "fall": 7
   },
   {
    "name": "문구류",
-   "changeRate": -2.81,
+   "changeRate": -3.03,
    "count": 1,
    "rise": 0,
    "fall": 1
   },
   {
    "name": "손해보험",
-   "changeRate": -2.74,
+   "changeRate": -2.73,
    "count": 12,
-   "rise": 4,
-   "fall": 7
+   "rise": 5,
+   "fall": 6
   },
   {
    "name": "석유와가스",
-   "changeRate": -2.19,
+   "changeRate": -2.04,
    "count": 19,
-   "rise": 6,
-   "fall": 12
+   "rise": 4,
+   "fall": 14
   },
   {
    "name": "건축자재",
-   "changeRate": -1.95,
+   "changeRate": -1.74,
    "count": 51,
-   "rise": 22,
-   "fall": 24
+   "rise": 23,
+   "fall": 25
   },
   {
    "name": "기타",
-   "changeRate": -1.55,
+   "changeRate": -1.41,
    "count": 1536,
-   "rise": 612,
-   "fall": 788
-  },
-  {
-   "name": "전기유틸리티",
-   "changeRate": -1.47,
-   "count": 5,
-   "rise": 0,
-   "fall": 4
+   "rise": 601,
+   "fall": 807
   },
   {
    "name": "증권",
-   "changeRate": -1.45,
+   "changeRate": -1.36,
    "count": 39,
    "rise": 4,
-   "fall": 32
+   "fall": 31
   },
   {
    "name": "건축제품",
-   "changeRate": -1.19,
+   "changeRate": -1.22,
    "count": 11,
    "rise": 1,
    "fall": 9
   },
   {
+   "name": "전기유틸리티",
+   "changeRate": -1.17,
+   "count": 5,
+   "rise": 0,
+   "fall": 4
+  },
+  {
    "name": "자동차",
-   "changeRate": -1.0,
+   "changeRate": -0.98,
    "count": 12,
    "rise": 6,
    "fall": 6
   },
   {
    "name": "건설",
-   "changeRate": -0.88,
+   "changeRate": -0.85,
    "count": 78,
-   "rise": 29,
-   "fall": 34
+   "rise": 27,
+   "fall": 35
+  },
+  {
+   "name": "다각화된소비자서비스",
+   "changeRate": -0.78,
+   "count": 1,
+   "rise": 0,
+   "fall": 1
+  },
+  {
+   "name": "은행",
+   "changeRate": -0.76,
+   "count": 11,
+   "rise": 5,
+   "fall": 6
   },
   {
    "name": "복합유틸리티",
-   "changeRate": -0.69,
+   "changeRate": -0.55,
    "count": 1,
    "rise": 0,
    "fall": 1
   },
   {
    "name": "레저용장비와제품",
-   "changeRate": -0.67,
+   "changeRate": -0.53,
    "count": 13,
-   "rise": 7,
-   "fall": 5
-  },
-  {
-   "name": "은행",
-   "changeRate": -0.61,
-   "count": 11,
-   "rise": 5,
-   "fall": 6
-  },
-  {
-   "name": "기계",
-   "changeRate": -0.57,
-   "count": 104,
-   "rise": 43,
-   "fall": 51
-  },
-  {
-   "name": "도로와철도운송",
-   "changeRate": -0.35,
-   "count": 8,
-   "rise": 4,
-   "fall": 3
-  },
-  {
-   "name": "다각화된통신서비스",
-   "changeRate": -0.35,
-   "count": 3,
-   "rise": 2,
-   "fall": 1
-  },
-  {
-   "name": "음료",
-   "changeRate": -0.28,
-   "count": 16,
-   "rise": 2,
-   "fall": 10
-  },
-  {
-   "name": "백화점과일반상점",
-   "changeRate": -0.27,
-   "count": 14,
-   "rise": 5,
-   "fall": 8
-  },
-  {
-   "name": "소프트웨어",
-   "changeRate": -0.23,
-   "count": 73,
-   "rise": 28,
-   "fall": 37
-  },
-  {
-   "name": "호텔,레스토랑,레저",
-   "changeRate": -0.23,
-   "count": 19,
-   "rise": 12,
-   "fall": 7
+   "rise": 8,
+   "fall": 4
   },
   {
    "name": "가정용품",
-   "changeRate": -0.19,
+   "changeRate": -0.37,
    "count": 11,
    "rise": 4,
    "fall": 6
   },
   {
-   "name": "통신장비",
-   "changeRate": -0.16,
-   "count": 55,
-   "rise": 16,
-   "fall": 30
-  },
-  {
-   "name": "전자장비와기기",
-   "changeRate": -0.09,
-   "count": 106,
-   "rise": 45,
-   "fall": 54
-  },
-  {
    "name": "출판",
-   "changeRate": -0.09,
+   "changeRate": -0.34,
    "count": 8,
-   "rise": 2,
-   "fall": 6
+   "rise": 1,
+   "fall": 5
   },
   {
-   "name": "핸드셋",
-   "changeRate": -0.06,
-   "count": 57,
-   "rise": 22,
-   "fall": 30
+   "name": "기계",
+   "changeRate": -0.2,
+   "count": 104,
+   "rise": 47,
+   "fall": 51
   },
   {
-   "name": "광고",
-   "changeRate": -0.05,
-   "count": 19,
-   "rise": 7,
+   "name": "음료",
+   "changeRate": -0.14,
+   "count": 16,
+   "rise": 4,
    "fall": 10
   },
   {
-   "name": "사무용전자제품",
-   "changeRate": 0.0,
-   "count": 1,
-   "rise": 0,
-   "fall": 0
-  },
-  {
    "name": "카드",
-   "changeRate": 0.0,
+   "changeRate": -0.11,
    "count": 1,
    "rise": 0,
-   "fall": 0
-  },
-  {
-   "name": "게임엔터테인먼트",
-   "changeRate": 0.04,
-   "count": 34,
-   "rise": 13,
-   "fall": 16
-  },
-  {
-   "name": "디스플레이장비및부품",
-   "changeRate": 0.1,
-   "count": 72,
-   "rise": 24,
-   "fall": 39
-  },
-  {
-   "name": "전기장비",
-   "changeRate": 0.1,
-   "count": 35,
-   "rise": 15,
-   "fall": 17
-  },
-  {
-   "name": "건강관리기술",
-   "changeRate": 0.1,
-   "count": 12,
-   "rise": 9,
-   "fall": 3
+   "fall": 1
   },
   {
    "name": "컴퓨터와주변기기",
-   "changeRate": 0.11,
+   "changeRate": -0.09,
    "count": 21,
    "rise": 9,
    "fall": 11
   },
   {
-   "name": "담배",
-   "changeRate": 0.12,
-   "count": 1,
-   "rise": 1,
-   "fall": 0
-  },
-  {
-   "name": "자동차부품",
-   "changeRate": 0.24,
-   "count": 155,
-   "rise": 51,
-   "fall": 84
-  },
-  {
-   "name": "부동산",
-   "changeRate": 0.24,
-   "count": 31,
-   "rise": 15,
-   "fall": 11
-  },
-  {
-   "name": "에너지장비및서비스",
-   "changeRate": 0.25,
-   "count": 34,
-   "rise": 13,
-   "fall": 16
-  },
-  {
-   "name": "다각화된소비자서비스",
-   "changeRate": 0.26,
-   "count": 1,
-   "rise": 1,
-   "fall": 0
-  },
-  {
-   "name": "양방향미디어와서비스",
-   "changeRate": 0.27,
-   "count": 16,
-   "rise": 12,
-   "fall": 2
-  },
-  {
-   "name": "기타금융",
-   "changeRate": 0.33,
-   "count": 6,
-   "rise": 3,
-   "fall": 2
-  },
-  {
-   "name": "종이와목재",
-   "changeRate": 0.37,
-   "count": 14,
-   "rise": 6,
-   "fall": 5
+   "name": "호텔,레스토랑,레저",
+   "changeRate": -0.09,
+   "count": 19,
+   "rise": 11,
+   "fall": 8
   },
   {
    "name": "전문소매",
-   "changeRate": 0.37,
+   "changeRate": -0.03,
    "count": 5,
    "rise": 3,
-   "fall": 1
+   "fall": 2
   },
   {
-   "name": "섬유,의류,신발,호화품",
-   "changeRate": 0.43,
-   "count": 82,
-   "rise": 34,
-   "fall": 42
+   "name": "조선",
+   "changeRate": 0.02,
+   "count": 30,
+   "rise": 13,
+   "fall": 15
+  },
+  {
+   "name": "다각화된통신서비스",
+   "changeRate": 0.05,
+   "count": 3,
+   "rise": 2,
+   "fall": 0
+  },
+  {
+   "name": "담배",
+   "changeRate": 0.06,
+   "count": 1,
+   "rise": 1,
+   "fall": 0
+  },
+  {
+   "name": "광고",
+   "changeRate": 0.17,
+   "count": 19,
+   "rise": 6,
+   "fall": 11
+  },
+  {
+   "name": "백화점과일반상점",
+   "changeRate": 0.18,
+   "count": 14,
+   "rise": 5,
+   "fall": 9
+  },
+  {
+   "name": "소프트웨어",
+   "changeRate": 0.19,
+   "count": 73,
+   "rise": 27,
+   "fall": 38
+  },
+  {
+   "name": "도로와철도운송",
+   "changeRate": 0.19,
+   "count": 8,
+   "rise": 5,
+   "fall": 3
+  },
+  {
+   "name": "핸드셋",
+   "changeRate": 0.23,
+   "count": 57,
+   "rise": 24,
+   "fall": 31
+  },
+  {
+   "name": "통신장비",
+   "changeRate": 0.23,
+   "count": 55,
+   "rise": 19,
+   "fall": 28
+  },
+  {
+   "name": "부동산",
+   "changeRate": 0.23,
+   "count": 31,
+   "rise": 13,
+   "fall": 11
+  },
+  {
+   "name": "자동차부품",
+   "changeRate": 0.25,
+   "count": 155,
+   "rise": 49,
+   "fall": 88
+  },
+  {
+   "name": "양방향미디어와서비스",
+   "changeRate": 0.25,
+   "count": 16,
+   "rise": 11,
+   "fall": 4
+  },
+  {
+   "name": "사무용전자제품",
+   "changeRate": 0.25,
+   "count": 1,
+   "rise": 1,
+   "fall": 0
+  },
+  {
+   "name": "판매업체",
+   "changeRate": 0.3,
+   "count": 13,
+   "rise": 3,
+   "fall": 8
+  },
+  {
+   "name": "게임엔터테인먼트",
+   "changeRate": 0.31,
+   "count": 34,
+   "rise": 14,
+   "fall": 17
+  },
+  {
+   "name": "교육서비스",
+   "changeRate": 0.41,
+   "count": 24,
+   "rise": 8,
+   "fall": 12
+  },
+  {
+   "name": "종이와목재",
+   "changeRate": 0.41,
+   "count": 14,
+   "rise": 7,
+   "fall": 4
+  },
+  {
+   "name": "디스플레이장비및부품",
+   "changeRate": 0.42,
+   "count": 72,
+   "rise": 28,
+   "fall": 36
   },
   {
    "name": "가스유틸리티",
-   "changeRate": 0.43,
+   "changeRate": 0.45,
    "count": 12,
    "rise": 6,
    "fall": 6
   },
   {
-   "name": "조선",
-   "changeRate": 0.44,
-   "count": 30,
-   "rise": 15,
+   "name": "에너지장비및서비스",
+   "changeRate": 0.5,
+   "count": 34,
+   "rise": 14,
    "fall": 12
   },
   {
-   "name": "IT서비스",
-   "changeRate": 0.53,
-   "count": 118,
-   "rise": 54,
-   "fall": 57
-  },
-  {
-   "name": "교육서비스",
-   "changeRate": 0.56,
-   "count": 24,
-   "rise": 9,
-   "fall": 11
-  },
-  {
    "name": "항공화물운송과물류",
-   "changeRate": 0.69,
+   "changeRate": 0.53,
    "count": 13,
-   "rise": 8,
-   "fall": 5
+   "rise": 6,
+   "fall": 6
   },
   {
-   "name": "판매업체",
-   "changeRate": 0.77,
-   "count": 13,
+   "name": "전자장비와기기",
+   "changeRate": 0.56,
+   "count": 106,
+   "rise": 45,
+   "fall": 55
+  },
+  {
+   "name": "전기장비",
+   "changeRate": 0.6,
+   "count": 35,
+   "rise": 16,
+   "fall": 16
+  },
+  {
+   "name": "섬유,의류,신발,호화품",
+   "changeRate": 0.61,
+   "count": 82,
+   "rise": 31,
+   "fall": 46
+  },
+  {
+   "name": "기타금융",
+   "changeRate": 0.63,
+   "count": 6,
    "rise": 3,
-   "fall": 8
+   "fall": 2
+  },
+  {
+   "name": "건강관리기술",
+   "changeRate": 0.71,
+   "count": 12,
+   "rise": 10,
+   "fall": 2
+  },
+  {
+   "name": "IT서비스",
+   "changeRate": 0.82,
+   "count": 118,
+   "rise": 58,
+   "fall": 55
+  },
+  {
+   "name": "디스플레이패널",
+   "changeRate": 0.85,
+   "count": 6,
+   "rise": 2,
+   "fall": 2
   },
   {
    "name": "식품과기본식료품소매",
-   "changeRate": 0.83,
+   "changeRate": 0.94,
    "count": 7,
    "rise": 3,
    "fall": 4
   },
   {
-   "name": "디스플레이패널",
-   "changeRate": 0.84,
-   "count": 6,
-   "rise": 2,
-   "fall": 2
-  },
-  {
    "name": "가구",
-   "changeRate": 0.97,
+   "changeRate": 1.0,
    "count": 11,
    "rise": 5,
-   "fall": 5
-  },
-  {
-   "name": "무선통신서비스",
-   "changeRate": 0.99,
-   "count": 4,
-   "rise": 1,
-   "fall": 1
-  },
-  {
-   "name": "생물공학",
-   "changeRate": 1.15,
-   "count": 59,
-   "rise": 34,
-   "fall": 19
-  },
-  {
-   "name": "전자제품",
-   "changeRate": 1.15,
-   "count": 16,
-   "rise": 6,
-   "fall": 8
-  },
-  {
-   "name": "방송과엔터테인먼트",
-   "changeRate": 1.35,
-   "count": 57,
-   "rise": 24,
-   "fall": 26
-  },
-  {
-   "name": "포장재",
-   "changeRate": 1.4,
-   "count": 27,
-   "rise": 13,
-   "fall": 11
-  },
-  {
-   "name": "식품",
-   "changeRate": 1.41,
-   "count": 92,
-   "rise": 47,
-   "fall": 32
-  },
-  {
-   "name": "운송인프라",
-   "changeRate": 1.44,
-   "count": 8,
-   "rise": 3,
-   "fall": 5
-  },
-  {
-   "name": "항공사",
-   "changeRate": 1.46,
-   "count": 9,
-   "rise": 7,
-   "fall": 1
-  },
-  {
-   "name": "건강관리장비와용품",
-   "changeRate": 1.52,
-   "count": 105,
-   "rise": 50,
-   "fall": 37
-  },
-  {
-   "name": "무역회사와판매업체",
-   "changeRate": 1.52,
-   "count": 8,
-   "rise": 2,
    "fall": 4
   },
   {
-   "name": "상업서비스와공급품",
-   "changeRate": 1.57,
-   "count": 31,
-   "rise": 17,
-   "fall": 7
+   "name": "항공사",
+   "changeRate": 1.07,
+   "count": 9,
+   "rise": 7,
+   "fall": 0
   },
   {
-   "name": "가정용기기와용품",
-   "changeRate": 1.69,
-   "count": 20,
-   "rise": 10,
-   "fall": 9
+   "name": "운송인프라",
+   "changeRate": 1.2,
+   "count": 8,
+   "rise": 4,
+   "fall": 4
   },
   {
    "name": "우주항공과국방",
-   "changeRate": 1.73,
+   "changeRate": 1.3,
    "count": 34,
-   "rise": 13,
-   "fall": 16
+   "rise": 15,
+   "fall": 18
   },
   {
-   "name": "인터넷과카탈로그소매",
-   "changeRate": 2.48,
-   "count": 6,
-   "rise": 3,
-   "fall": 2
-  },
-  {
-   "name": "건강관리업체및서비스",
-   "changeRate": 2.52,
-   "count": 30,
-   "rise": 20,
-   "fall": 8
-  },
-  {
-   "name": "제약",
-   "changeRate": 3.0,
-   "count": 175,
-   "rise": 113,
-   "fall": 42
-  },
-  {
-   "name": "화장품",
-   "changeRate": 3.34,
-   "count": 65,
-   "rise": 39,
-   "fall": 16
-  },
-  {
-   "name": "철강",
-   "changeRate": 4.01,
-   "count": 55,
-   "rise": 26,
+   "name": "방송과엔터테인먼트",
+   "changeRate": 1.53,
+   "count": 57,
+   "rise": 23,
    "fall": 27
   },
   {
+   "name": "식품",
+   "changeRate": 1.73,
+   "count": 92,
+   "rise": 42,
+   "fall": 37
+  },
+  {
+   "name": "건강관리장비와용품",
+   "changeRate": 1.83,
+   "count": 105,
+   "rise": 51,
+   "fall": 33
+  },
+  {
+   "name": "상업서비스와공급품",
+   "changeRate": 1.84,
+   "count": 31,
+   "rise": 16,
+   "fall": 10
+  },
+  {
+   "name": "가정용기기와용품",
+   "changeRate": 1.84,
+   "count": 20,
+   "rise": 11,
+   "fall": 7
+  },
+  {
+   "name": "전자제품",
+   "changeRate": 1.85,
+   "count": 16,
+   "rise": 4,
+   "fall": 9
+  },
+  {
+   "name": "생물공학",
+   "changeRate": 1.91,
+   "count": 59,
+   "rise": 37,
+   "fall": 16
+  },
+  {
+   "name": "포장재",
+   "changeRate": 1.91,
+   "count": 27,
+   "rise": 16,
+   "fall": 10
+  },
+  {
+   "name": "무선통신서비스",
+   "changeRate": 1.96,
+   "count": 4,
+   "rise": 1,
+   "fall": 2
+  },
+  {
+   "name": "무역회사와판매업체",
+   "changeRate": 2.19,
+   "count": 8,
+   "rise": 3,
+   "fall": 4
+  },
+  {
+   "name": "건강관리업체및서비스",
+   "changeRate": 2.79,
+   "count": 30,
+   "rise": 20,
+   "fall": 10
+  },
+  {
+   "name": "화장품",
+   "changeRate": 3.14,
+   "count": 65,
+   "rise": 40,
+   "fall": 18
+  },
+  {
+   "name": "제약",
+   "changeRate": 3.26,
+   "count": 175,
+   "rise": 116,
+   "fall": 39
+  },
+  {
+   "name": "인터넷과카탈로그소매",
+   "changeRate": 3.26,
+   "count": 6,
+   "rise": 4,
+   "fall": 2
+  },
+  {
+   "name": "철강",
+   "changeRate": 3.85,
+   "count": 55,
+   "rise": 23,
+   "fall": 28
+  },
+  {
    "name": "창업투자",
-   "changeRate": 4.08,
+   "changeRate": 3.99,
    "count": 90,
-   "rise": 33,
-   "fall": 25
+   "rise": 32,
+   "fall": 30
   },
   {
    "name": "화학",
-   "changeRate": 4.17,
+   "changeRate": 4.08,
    "count": 123,
    "rise": 67,
    "fall": 44
   },
   {
    "name": "해운사",
-   "changeRate": 4.59,
+   "changeRate": 4.88,
    "count": 11,
-   "rise": 9,
+   "rise": 8,
    "fall": 2
   },
   {
+   "name": "전기제품",
+   "changeRate": 5.58,
+   "count": 70,
+   "rise": 44,
+   "fall": 20
+  },
+  {
    "name": "생명과학도구및서비스",
-   "changeRate": 5.18,
+   "changeRate": 6.02,
    "count": 41,
    "rise": 26,
    "fall": 10
   },
   {
-   "name": "전기제품",
-   "changeRate": 5.56,
-   "count": 70,
-   "rise": 43,
-   "fall": 20
-  },
-  {
    "name": "비철금속",
-   "changeRate": 7.03,
+   "changeRate": 6.09,
    "count": 40,
-   "rise": 26,
-   "fall": 9
+   "rise": 23,
+   "fall": 14
   }
  ]
 }
