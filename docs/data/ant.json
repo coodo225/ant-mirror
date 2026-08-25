@@ -60,7 +60,7 @@
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.051,
+    "corr1": -0.05,
     "corr5": -0.065,
     "corr20": -0.114
    },
@@ -72,12 +72,12 @@
    },
    "excess20": -0.06,
    "grade": "C",
-   "todayValue": 10517.0,
+   "todayValue": 10514.0,
    "todayPercentile": 87.9
   },
   "foreign": {
    "timing": {
-    "corr1": 0.089,
+    "corr1": 0.088,
     "corr5": 0.066,
     "corr20": 0.123
    },
@@ -89,7 +89,7 @@
    },
    "excess20": 1.34,
    "grade": "B",
-   "todayValue": -38145.0,
+   "todayValue": -38142.0,
    "todayPercentile": 2.3
   },
   "institution": {
@@ -101,12 +101,12 @@
    "heavyBuy": {
     "r1": 0.28,
     "r5": 1.23,
-    "r20": 3.67,
+    "r20": 3.68,
     "n": 150
    },
-   "excess20": 0.73,
+   "excess20": 0.74,
    "grade": "C",
-   "todayValue": 11707.0,
+   "todayValue": 11708.0,
    "todayPercentile": 94.2
   }
  },
@@ -116,7 +116,7 @@
   "n": 141,
   "r20": 2.88,
   "baseline20": 2.94,
-  "excess": -0.07
+  "excess": -0.06
  },
  "hallOfFame": [
   {
