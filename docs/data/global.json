@@ -209,8 +209,8 @@
    "symbol": "ES=F",
    "name": "S&P500 선물",
    "category": "futures",
-   "price": 7679.0,
-   "change": 9.25,
+   "price": 7678.75,
+   "change": 9.0,
    "changeRate": 0.12,
    "asOf": "2026-08-25",
    "spark": [
@@ -243,16 +243,16 @@
     7662.5,
     7691.25,
     7669.75,
-    7679.0
+    7678.75
    ]
   },
   {
    "symbol": "NQ=F",
    "name": "나스닥100 선물",
    "category": "futures",
-   "price": 29214.75,
-   "change": 109.0,
-   "changeRate": 0.37,
+   "price": 29215.25,
+   "change": 109.5,
+   "changeRate": 0.38,
    "asOf": "2026-08-25",
    "spark": [
     29693.25,
@@ -284,7 +284,7 @@
     29300.5,
     29387.75,
     29105.75,
-    29214.75
+    29215.25
    ]
   },
   {
@@ -332,9 +332,9 @@
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1384.08,
-   "change": -0.9,
-   "changeRate": -0.06,
+   "price": 1384.38,
+   "change": -0.6,
+   "changeRate": -0.04,
    "asOf": "2026-08-25",
    "spark": [
     1487.88,
@@ -366,16 +366,16 @@
     1389.4,
     1390.79,
     1384.98,
-    1384.08
+    1384.38
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 99.078,
-   "change": 0.078,
-   "changeRate": 0.08,
+   "price": 99.086,
+   "change": 0.086,
+   "changeRate": 0.09,
    "asOf": "2026-08-25",
    "spark": [
     100.5,
@@ -407,16 +407,16 @@
     98.9,
     98.8,
     99.0,
-    99.078
+    99.086
    ]
   },
   {
    "symbol": "CL=F",
    "name": "WTI 유가",
    "category": "commodity",
-   "price": 84.97,
-   "change": -0.04,
-   "changeRate": -0.05,
+   "price": 84.59,
+   "change": -0.42,
+   "changeRate": -0.49,
    "asOf": "2026-08-25",
    "spark": [
     79.6,
@@ -448,16 +448,16 @@
     87.83,
     87.06,
     85.01,
-    84.97
+    84.59
    ]
   },
   {
    "symbol": "GC=F",
    "name": "금",
    "category": "commodity",
-   "price": 4701.5,
-   "change": 60.7002,
-   "changeRate": 1.31,
+   "price": 4693.7998,
+   "change": 53.0,
+   "changeRate": 1.14,
    "asOf": "2026-08-25",
    "spark": [
     4044.0,
@@ -489,7 +489,7 @@
     4516.2998,
     4624.1001,
     4640.7998,
-    4701.5
+    4693.7998
    ]
   }
  ],
