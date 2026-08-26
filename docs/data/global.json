@@ -209,9 +209,9 @@
    "symbol": "ES=F",
    "name": "S&P500 선물",
    "category": "futures",
-   "price": 7676.0,
-   "change": 6.25,
-   "changeRate": 0.08,
+   "price": 7680.0,
+   "change": 10.25,
+   "changeRate": 0.13,
    "asOf": "2026-08-25",
    "spark": [
     7614.75,
@@ -243,16 +243,16 @@
     7662.5,
     7691.25,
     7669.75,
-    7676.0
+    7680.0
    ]
   },
   {
    "symbol": "NQ=F",
    "name": "나스닥100 선물",
    "category": "futures",
-   "price": 29126.0,
-   "change": 20.25,
-   "changeRate": 0.07,
+   "price": 29178.25,
+   "change": 72.5,
+   "changeRate": 0.25,
    "asOf": "2026-08-25",
    "spark": [
     29693.25,
@@ -284,7 +284,7 @@
     29300.5,
     29387.75,
     29105.75,
-    29126.0
+    29178.25
    ]
   },
   {
@@ -332,9 +332,9 @@
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1383.48,
-   "change": 2.72,
-   "changeRate": 0.2,
+   "price": 1385.51,
+   "change": 4.75,
+   "changeRate": 0.34,
    "asOf": "2026-08-26",
    "spark": [
     1486.2,
@@ -366,16 +366,16 @@
     1390.79,
     1384.98,
     1380.76,
-    1383.48
+    1385.51
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 98.908,
-   "change": -0.092,
-   "changeRate": -0.09,
+   "price": 98.934,
+   "change": -0.066,
+   "changeRate": -0.07,
    "asOf": "2026-08-25",
    "spark": [
     100.5,
@@ -407,16 +407,16 @@
     98.9,
     98.8,
     99.0,
-    98.908
+    98.934
    ]
   },
   {
    "symbol": "CL=F",
    "name": "WTI 유가",
    "category": "commodity",
-   "price": 80.62,
-   "change": -4.39,
-   "changeRate": -5.16,
+   "price": 80.35,
+   "change": -4.66,
+   "changeRate": -5.48,
    "asOf": "2026-08-25",
    "spark": [
     79.6,
@@ -448,16 +448,16 @@
     87.83,
     87.06,
     85.01,
-    80.62
+    80.35
    ]
   },
   {
    "symbol": "GC=F",
    "name": "금",
    "category": "commodity",
-   "price": 4694.1001,
-   "change": 53.3003,
-   "changeRate": 1.15,
+   "price": 4718.3999,
+   "change": 77.6001,
+   "changeRate": 1.67,
    "asOf": "2026-08-25",
    "spark": [
     4044.0,
@@ -489,7 +489,7 @@
     4516.2998,
     4624.1001,
     4640.7998,
-    4694.1001
+    4718.3999
    ]
   }
  ],
