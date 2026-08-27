@@ -1,32 +1,18 @@
 {
  "upcoming": [
   {
-   "type": "GDP",
-   "date": "2026-08-26",
-   "title": "미국 GDP",
-   "impact": "mid",
-   "dday": 0
-  },
-  {
-   "type": "PCE",
-   "date": "2026-08-26",
-   "title": "미국 PCE 물가",
-   "impact": "high",
-   "dday": 0
-  },
-  {
    "type": "고용",
    "date": "2026-09-04",
    "title": "미국 고용보고서",
    "impact": "high",
-   "dday": 9
+   "dday": 8
   },
   {
    "type": "CPI",
    "date": "2026-09-11",
    "title": "미국 CPI 발표",
    "impact": "high",
-   "dday": 16
+   "dday": 15
   },
   {
    "type": "FOMC",
@@ -34,28 +20,43 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": 21
+   "dday": 20
   },
   {
    "type": "GDP",
    "date": "2026-09-30",
    "title": "미국 GDP",
    "impact": "mid",
-   "dday": 35
+   "dday": 34
   },
   {
    "type": "PCE",
    "date": "2026-09-30",
    "title": "미국 PCE 물가",
    "impact": "high",
-   "dday": 35
+   "dday": 34
   },
   {
    "type": "고용",
    "date": "2026-10-02",
    "title": "미국 고용보고서",
    "impact": "high",
-   "dday": 37
+   "dday": 36
+  },
+  {
+   "type": "CPI",
+   "date": "2026-10-14",
+   "title": "미국 CPI 발표",
+   "impact": "high",
+   "dday": 48
+  },
+  {
+   "type": "FOMC",
+   "date": "2026-10-28",
+   "title": "FOMC 금리 결정",
+   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
+   "impact": "high",
+   "dday": 62
   }
  ],
  "recent": [
@@ -65,7 +66,7 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -161
+   "dday": -162
   },
   {
    "type": "FOMC",
@@ -73,7 +74,7 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -119
+   "dday": -120
   },
   {
    "type": "FOMC",
@@ -81,7 +82,7 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -70
+   "dday": -71
   },
   {
    "type": "FOMC",
@@ -89,8 +90,8 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -28
+   "dday": -29
   }
  ],
- "today": "2026-08-26"
+ "today": "2026-08-27"
 }
