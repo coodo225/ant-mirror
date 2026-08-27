@@ -1,45 +1,27 @@
 {
  "market": "KOSPI",
  "today": {
-  "date": "2026-08-26",
-  "close": 6808.21,
-  "individual": -22461.0,
-  "foreign": -1148.0,
-  "institution": 7615.0,
-  "ret1": 0.97,
-  "ret5": 5.21
+  "date": "2026-08-27",
+  "close": 6879.87,
+  "individual": -19120.0,
+  "foreign": 1354.0,
+  "institution": 1814.0,
+  "ret1": 1.05,
+  "ret5": 0.4
  },
  "matches": [
   {
-   "date": "2025-11-26",
-   "distance": 1.815,
-   "close": 3960.87,
-   "ret1": 2.67,
-   "individual": -18048.0,
-   "foreign": 5158.0,
-   "ret20": 3.73
-  },
-  {
-   "date": "2025-11-12",
-   "distance": 1.818,
-   "close": 4150.39,
-   "ret1": 1.07,
-   "individual": -4423.0,
-   "foreign": -4265.0,
-   "ret20": -0.37
-  },
-  {
-   "date": "2026-04-06",
-   "distance": 1.826,
-   "close": 5450.33,
-   "ret1": 1.36,
-   "individual": -10502.0,
-   "foreign": -1596.0,
-   "ret20": 35.49
+   "date": "2025-11-27",
+   "distance": 1.495,
+   "close": 3986.91,
+   "ret1": 0.66,
+   "individual": -6152.0,
+   "foreign": 1546.0,
+   "ret20": 3.58
   },
   {
    "date": "2026-02-11",
-   "distance": 1.877,
+   "distance": 1.513,
    "close": 5354.49,
    "ret1": 1.0,
    "individual": -17149.0,
@@ -47,20 +29,38 @@
    "ret20": 5.34
   },
   {
-   "date": "2025-04-15",
-   "distance": 1.933,
-   "close": 2477.41,
-   "ret1": 0.88,
-   "individual": -1468.0,
-   "foreign": -1177.0,
-   "ret20": 6.03
+   "date": "2025-11-11",
+   "distance": 1.642,
+   "close": 4106.39,
+   "ret1": 0.81,
+   "individual": -2830.0,
+   "foreign": 770.0,
+   "ret20": 0.9
+  },
+  {
+   "date": "2025-03-17",
+   "distance": 1.726,
+   "close": 2610.69,
+   "ret1": 1.73,
+   "individual": -11804.0,
+   "foreign": 6152.0,
+   "ret20": -5.93
+  },
+  {
+   "date": "2025-02-06",
+   "distance": 1.738,
+   "close": 2536.75,
+   "ret1": 1.1,
+   "individual": -6060.0,
+   "foreign": 3516.0,
+   "ret20": 1.05
   }
  ],
- "avgRet20": 10.04,
- "baseline20": 2.97,
+ "avgRet20": 0.99,
+ "baseline20": 3.0,
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-07-27",
-  "to": "2026-08-26"
+  "to": "2026-08-27"
  }
 }
