@@ -3,11 +3,11 @@
  "yearly": [
   {
    "year": "2023",
-   "days": 103,
-   "corrIF": -0.625,
-   "baseline20": -0.27,
-   "indivHeavyR20": -0.31,
-   "excess": -0.04,
+   "days": 102,
+   "corrIF": -0.63,
+   "baseline20": -0.25,
+   "indivHeavyR20": -0.17,
+   "excess": 0.08,
    "grade": "C"
   },
   {
@@ -39,28 +39,28 @@
   }
  ],
  "sample": {
-  "days": 750,
-  "from": "2023-07-28",
+  "days": 749,
+  "from": "2023-07-31",
   "to": "2026-08-28"
  },
  "baseline": {
   "r1": 0.15,
   "r5": 0.73,
-  "r20": 3.03
+  "r20": 3.04
  },
  "correlation": {
-  "individual_foreign": -0.842,
+  "individual_foreign": -0.843,
   "individual_institution": -0.569,
   "foreign_institution": 0.052
  },
  "oppositeRate": {
-  "vsForeign": 79.1,
+  "vsForeign": 79.2,
   "vsInstitution": 73.7
  },
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.048,
+    "corr1": -0.049,
     "corr5": -0.06,
     "corr20": -0.114
    },
@@ -70,10 +70,10 @@
     "r20": 3.13,
     "n": 150
    },
-   "excess20": 0.1,
+   "excess20": 0.09,
    "grade": "C",
    "todayValue": 4194.0,
-   "todayPercentile": 74.9
+   "todayPercentile": 74.8
   },
   "foreign": {
    "timing": {
@@ -87,7 +87,7 @@
     "r20": 4.4,
     "n": 150
    },
-   "excess20": 1.37,
+   "excess20": 1.36,
    "grade": "B",
    "todayValue": -8525.0,
    "todayPercentile": 14.5
@@ -96,7 +96,7 @@
    "timing": {
     "corr1": -0.05,
     "corr5": -0.001,
-    "corr20": 0.002
+    "corr20": 0.001
    },
    "heavyBuy": {
     "r1": 0.28,
@@ -104,7 +104,7 @@
     "r20": 3.97,
     "n": 150
    },
-   "excess20": 0.94,
+   "excess20": 0.93,
    "grade": "C",
    "todayValue": -11876.0,
    "todayPercentile": 4.1
@@ -149,8 +149,8 @@
   }
  ],
  "caveats": [
-  "표본은 2023-07-28~2026-08-28 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
-  "이 기간 지수의 20거래일 평균 수익률은 +3.03% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+  "표본은 2023-07-31~2026-08-28 749거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+  "이 기간 지수의 20거래일 평균 수익률은 +3.04% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
  ]
