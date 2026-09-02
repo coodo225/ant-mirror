@@ -32,7 +32,7 @@
    "year": "2026",
    "days": 164,
    "corrIF": -0.849,
-   "baseline20": 6.02,
+   "baseline20": 6.01,
    "indivHeavyR20": -1.36,
    "excess": -7.38,
    "grade": "F"
@@ -49,9 +49,9 @@
   "r20": 3.07
  },
  "correlation": {
-  "individual_foreign": -0.842,
-  "individual_institution": -0.568,
-  "foreign_institution": 0.054
+  "individual_foreign": -0.843,
+  "individual_institution": -0.569,
+  "foreign_institution": 0.057
  },
  "oppositeRate": {
   "vsForeign": 78.9,
@@ -61,23 +61,23 @@
   "individual": {
    "timing": {
     "corr1": -0.048,
-    "corr5": -0.058,
+    "corr5": -0.057,
     "corr20": -0.109
    },
    "heavyBuy": {
     "r1": -0.02,
     "r5": 0.86,
-    "r20": 3.19,
+    "r20": 3.18,
     "n": 150
    },
-   "excess20": 0.12,
+   "excess20": 0.11,
    "grade": "C",
-   "todayValue": 15544.0,
-   "todayPercentile": 91.0
+   "todayValue": 23029.0,
+   "todayPercentile": 94.6
   },
   "foreign": {
    "timing": {
-    "corr1": 0.085,
+    "corr1": 0.086,
     "corr5": 0.06,
     "corr20": 0.111
    },
@@ -89,32 +89,32 @@
    },
    "excess20": 1.32,
    "grade": "B",
-   "todayValue": -10768.0,
-   "todayPercentile": 11.5
+   "todayValue": -19096.0,
+   "todayPercentile": 7.9
   },
   "institution": {
    "timing": {
     "corr1": -0.047,
-    "corr5": -0.002,
+    "corr5": -0.003,
     "corr20": -0.001
    },
    "heavyBuy": {
     "r1": 0.28,
-    "r5": 1.17,
+    "r5": 1.16,
     "r20": 3.97,
     "n": 150
    },
    "excess20": 0.9,
    "grade": "C",
-   "todayValue": -12195.0,
-   "todayPercentile": 3.9
+   "todayValue": -20438.0,
+   "todayPercentile": 1.7
   }
  },
  "contrarianRead": {
   "label": "개미가 지금처럼 강하게 사들였던 날(상위 20%)",
   "side": "buy",
   "n": 143,
-  "r20": 3.19,
+  "r20": 3.18,
   "baseline20": 3.07,
   "excess": 0.12
  },
