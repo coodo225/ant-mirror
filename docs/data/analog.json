@@ -4,59 +4,59 @@
   "date": "2026-09-03",
   "close": 6579.48,
   "individual": -9552.0,
-  "foreign": -4232.0,
-  "institution": -2153.0,
+  "foreign": 414.0,
+  "institution": 9143.0,
   "ret1": 0.26,
   "ret5": -4.82
  },
  "matches": [
   {
-   "date": "2025-11-25",
-   "distance": 0.965,
-   "close": 3857.78,
-   "ret1": 0.3,
-   "individual": -276.0,
-   "foreign": 49.0,
-   "ret20": 6.73
+   "date": "2025-12-19",
+   "distance": 1.013,
+   "close": 4020.55,
+   "ret1": 0.65,
+   "individual": -1412.0,
+   "foreign": -7573.0,
+   "ret20": 22.12
   },
   {
-   "date": "2025-03-04",
-   "distance": 1.074,
-   "close": 2528.92,
-   "ret1": -0.15,
-   "individual": 2044.0,
-   "foreign": -1896.0,
-   "ret20": -0.3
+   "date": "2025-11-24",
+   "distance": 1.015,
+   "close": 3846.06,
+   "ret1": -0.19,
+   "individual": -4619.0,
+   "foreign": -7993.0,
+   "ret20": 6.76
   },
   {
-   "date": "2024-11-15",
-   "distance": 1.122,
-   "close": 2416.86,
-   "ret1": -0.08,
-   "individual": 379.0,
-   "foreign": -613.0,
-   "ret20": 3.21
+   "date": "2023-11-01",
+   "distance": 1.145,
+   "close": 2301.56,
+   "ret1": 1.03,
+   "individual": -3784.0,
+   "foreign": -1269.0,
+   "ret20": 9.48
   },
   {
-   "date": "2025-02-04",
-   "distance": 1.154,
-   "close": 2481.69,
-   "ret1": 1.13,
-   "individual": -2932.0,
-   "foreign": 799.0,
-   "ret20": 3.08
+   "date": "2023-10-10",
+   "distance": 1.171,
+   "close": 2402.58,
+   "ret1": -0.26,
+   "individual": -3821.0,
+   "foreign": -2086.0,
+   "ret20": 1.72
   },
   {
-   "date": "2024-01-18",
-   "distance": 1.208,
-   "close": 2440.04,
-   "ret1": 0.17,
-   "individual": 1213.0,
-   "foreign": -1313.0,
-   "ret20": 9.84
+   "date": "2024-11-14",
+   "distance": 1.248,
+   "close": 2418.86,
+   "ret1": 0.07,
+   "individual": -1142.0,
+   "foreign": -2321.0,
+   "ret20": 2.62
   }
  ],
- "avgRet20": 4.51,
+ "avgRet20": 8.54,
  "baseline20": 3.07,
  "sample": {
   "days": 750,
