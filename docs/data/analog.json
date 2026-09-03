@@ -2,17 +2,17 @@
  "market": "KOSPI",
  "today": {
   "date": "2026-09-03",
-  "close": 6625.43,
-  "individual": -4028.0,
-  "foreign": -3468.0,
-  "institution": 365.0,
-  "ret1": 0.96,
-  "ret5": -4.15
+  "close": 6579.48,
+  "individual": -9552.0,
+  "foreign": -4232.0,
+  "institution": -2153.0,
+  "ret1": 0.26,
+  "ret5": -4.82
  },
  "matches": [
   {
    "date": "2025-11-25",
-   "distance": 0.658,
+   "distance": 0.965,
    "close": 3857.78,
    "ret1": 0.3,
    "individual": -276.0,
@@ -20,26 +20,26 @@
    "ret20": 6.73
   },
   {
-   "date": "2025-04-01",
-   "distance": 0.72,
-   "close": 2521.39,
-   "ret1": 1.62,
-   "individual": 866.0,
-   "foreign": -3901.0,
-   "ret20": 1.75
+   "date": "2025-03-04",
+   "distance": 1.074,
+   "close": 2528.92,
+   "ret1": -0.15,
+   "individual": 2044.0,
+   "foreign": -1896.0,
+   "ret20": -0.3
   },
   {
-   "date": "2025-03-05",
-   "distance": 0.724,
-   "close": 2558.13,
-   "ret1": 1.16,
-   "individual": 911.0,
-   "foreign": -2233.0,
-   "ret20": -2.04
+   "date": "2024-11-15",
+   "distance": 1.122,
+   "close": 2416.86,
+   "ret1": -0.08,
+   "individual": 379.0,
+   "foreign": -613.0,
+   "ret20": 3.21
   },
   {
    "date": "2025-02-04",
-   "distance": 0.787,
+   "distance": 1.154,
    "close": 2481.69,
    "ret1": 1.13,
    "individual": -2932.0,
@@ -47,16 +47,16 @@
    "ret20": 3.08
   },
   {
-   "date": "2023-10-27",
-   "distance": 0.964,
-   "close": 2302.81,
-   "ret1": 0.16,
-   "individual": 1014.0,
-   "foreign": -3791.0,
-   "ret20": 8.42
+   "date": "2024-01-18",
+   "distance": 1.208,
+   "close": 2440.04,
+   "ret1": 0.17,
+   "individual": 1213.0,
+   "foreign": -1313.0,
+   "ret20": 9.84
   }
  ],
- "avgRet20": 3.59,
+ "avgRet20": 4.51,
  "baseline20": 3.07,
  "sample": {
   "days": 750,

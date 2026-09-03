@@ -34,7 +34,7 @@
    "corrIF": -0.849,
    "baseline20": 5.97,
    "indivHeavyR20": -1.36,
-   "excess": -7.34,
+   "excess": -7.33,
    "grade": "F"
   }
  ],
@@ -49,18 +49,18 @@
   "r20": 3.07
  },
  "correlation": {
-  "individual_foreign": -0.843,
-  "individual_institution": -0.569,
+  "individual_foreign": -0.842,
+  "individual_institution": -0.568,
   "foreign_institution": 0.057
  },
  "oppositeRate": {
   "vsForeign": 78.8,
-  "vsInstitution": 73.5
+  "vsInstitution": 73.3
  },
  "actors": {
   "individual": {
    "timing": {
-    "corr1": -0.047,
+    "corr1": -0.048,
     "corr5": -0.055,
     "corr20": -0.108
    },
@@ -72,8 +72,8 @@
    },
    "excess20": 0.14,
    "grade": "C",
-   "todayValue": -4028.0,
-   "todayPercentile": 27.5
+   "todayValue": -9552.0,
+   "todayPercentile": 13.5
   },
   "foreign": {
    "timing": {
@@ -89,12 +89,12 @@
    },
    "excess20": 1.29,
    "grade": "B",
-   "todayValue": -3468.0,
-   "todayPercentile": 26.7
+   "todayValue": -4232.0,
+   "todayPercentile": 23.0
   },
   "institution": {
    "timing": {
-    "corr1": -0.048,
+    "corr1": -0.047,
     "corr5": -0.003,
     "corr20": -0.002
    },
@@ -106,11 +106,18 @@
    },
    "excess20": 0.9,
    "grade": "C",
-   "todayValue": 365.0,
-   "todayPercentile": 48.3
+   "todayValue": -2153.0,
+   "todayPercentile": 25.9
   }
  },
- "contrarianRead": null,
+ "contrarianRead": {
+  "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
+  "side": "sell",
+  "n": 143,
+  "r20": 4.8,
+  "baseline20": 3.07,
+  "excess": 1.73
+ },
  "hallOfFame": [
   {
    "date": "2026-06-23",
