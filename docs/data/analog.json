@@ -1,66 +1,66 @@
 {
  "market": "KOSPI",
  "today": {
-  "date": "2026-09-02",
-  "close": 6562.72,
-  "individual": 23029.0,
-  "foreign": -19173.0,
-  "institution": -20361.0,
-  "ret1": -3.99,
-  "ret5": -3.61
+  "date": "2026-09-03",
+  "close": 6625.43,
+  "individual": -4028.0,
+  "foreign": -3468.0,
+  "institution": 365.0,
+  "ret1": 0.96,
+  "ret5": -4.15
  },
  "matches": [
   {
-   "date": "2025-02-28",
-   "distance": 2.054,
-   "close": 2532.78,
-   "ret1": -3.39,
-   "individual": 20324.0,
-   "foreign": -15524.0,
+   "date": "2025-11-25",
+   "distance": 0.658,
+   "close": 3857.78,
+   "ret1": 0.3,
+   "individual": -276.0,
+   "foreign": 49.0,
+   "ret20": 6.73
+  },
+  {
+   "date": "2025-04-01",
+   "distance": 0.72,
+   "close": 2521.39,
+   "ret1": 1.62,
+   "individual": 866.0,
+   "foreign": -3901.0,
+   "ret20": 1.75
+  },
+  {
+   "date": "2025-03-05",
+   "distance": 0.724,
+   "close": 2558.13,
+   "ret1": 1.16,
+   "individual": 911.0,
+   "foreign": -2233.0,
    "ret20": -2.04
   },
   {
-   "date": "2025-11-14",
-   "distance": 2.061,
-   "close": 4011.57,
-   "ret1": -3.81,
-   "individual": 32346.0,
-   "foreign": -23575.0,
-   "ret20": 3.88
+   "date": "2025-02-04",
+   "distance": 0.787,
+   "close": 2481.69,
+   "ret1": 1.13,
+   "individual": -2932.0,
+   "foreign": 799.0,
+   "ret20": 3.08
   },
   {
-   "date": "2025-08-01",
-   "distance": 2.064,
-   "close": 3119.41,
-   "ret1": -3.88,
-   "individual": 16283.0,
-   "foreign": -6524.0,
-   "ret20": 0.75
-  },
-  {
-   "date": "2024-08-02",
-   "distance": 2.105,
-   "close": 2676.19,
-   "ret1": -3.65,
-   "individual": 16214.0,
-   "foreign": -8449.0,
-   "ret20": 0.18
-  },
-  {
-   "date": "2024-09-04",
-   "distance": 2.111,
-   "close": 2580.8,
-   "ret1": -3.15,
-   "individual": 16502.0,
-   "foreign": -9886.0,
-   "ret20": 0.71
+   "date": "2023-10-27",
+   "distance": 0.964,
+   "close": 2302.81,
+   "ret1": 0.16,
+   "individual": 1014.0,
+   "foreign": -3791.0,
+   "ret20": 8.42
   }
  ],
- "avgRet20": 0.7,
+ "avgRet20": 3.59,
  "baseline20": 3.07,
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-08-03",
-  "to": "2026-09-02"
+  "to": "2026-09-03"
  }
 }
