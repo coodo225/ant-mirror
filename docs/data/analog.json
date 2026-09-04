@@ -2,61 +2,61 @@
  "market": "KOSPI",
  "today": {
   "date": "2026-09-04",
-  "close": 6638.79,
-  "individual": -15579.0,
-  "foreign": 1818.0,
-  "institution": 6545.0,
-  "ret1": 0.9,
-  "ret5": -2.21
+  "close": 6687.21,
+  "individual": -37231.0,
+  "foreign": 4798.0,
+  "institution": 16692.0,
+  "ret1": 1.64,
+  "ret5": -1.5
  },
  "matches": [
   {
-   "date": "2025-11-27",
-   "distance": 0.842,
-   "close": 3986.91,
-   "ret1": 0.66,
-   "individual": -6152.0,
-   "foreign": 1546.0,
-   "ret20": 3.58
+   "date": "2025-12-22",
+   "distance": 1.126,
+   "close": 4105.93,
+   "ret1": 2.12,
+   "individual": -26714.0,
+   "foreign": 11017.0,
+   "ret20": 20.62
   },
   {
-   "date": "2024-12-23",
-   "distance": 0.94,
-   "close": 2442.01,
-   "ret1": 1.57,
-   "individual": -6836.0,
-   "foreign": 1449.0,
-   "ret20": 3.01
+   "date": "2025-11-26",
+   "distance": 1.632,
+   "close": 3960.87,
+   "ret1": 2.67,
+   "individual": -18048.0,
+   "foreign": 5158.0,
+   "ret20": 3.73
   },
   {
-   "date": "2023-11-01",
-   "distance": 1.03,
-   "close": 2301.56,
-   "ret1": 1.03,
-   "individual": -3784.0,
-   "foreign": -1269.0,
-   "ret20": 9.48
+   "date": "2024-03-21",
+   "distance": 1.889,
+   "close": 2754.86,
+   "ret1": 2.41,
+   "individual": -29144.0,
+   "foreign": 18706.0,
+   "ret20": -5.92
   },
   {
-   "date": "2024-03-20",
-   "distance": 1.073,
-   "close": 2690.14,
-   "ret1": 1.28,
-   "individual": -14054.0,
-   "foreign": 8516.0,
-   "ret20": -2.06
+   "date": "2024-07-05",
+   "distance": 1.958,
+   "close": 2862.23,
+   "ret1": 1.32,
+   "individual": -25147.0,
+   "foreign": 13086.0,
+   "ret20": -6.5
   },
   {
-   "date": "2024-12-03",
-   "distance": 1.086,
-   "close": 2500.1,
-   "ret1": 1.86,
-   "individual": -8338.0,
-   "foreign": 5645.0,
-   "ret20": -2.33
+   "date": "2025-12-12",
+   "distance": 2.112,
+   "close": 4167.16,
+   "ret1": 1.38,
+   "individual": -14625.0,
+   "foreign": 414.0,
+   "ret20": 13.34
   }
  ],
- "avgRet20": 2.34,
+ "avgRet20": 5.05,
  "baseline20": 3.08,
  "sample": {
   "days": 750,
