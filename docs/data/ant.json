@@ -30,56 +30,56 @@
   },
   {
    "year": "2026",
-   "days": 165,
-   "corrIF": -0.849,
-   "baseline20": 5.97,
-   "indivHeavyR20": -1.36,
-   "excess": -7.33,
+   "days": 166,
+   "corrIF": -0.85,
+   "baseline20": 5.96,
+   "indivHeavyR20": -1.62,
+   "excess": -7.58,
    "grade": "F"
   }
  ],
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-08-04",
-  "to": "2026-09-03"
+  "to": "2026-09-04"
  },
  "baseline": {
   "r1": 0.15,
-  "r5": 0.74,
+  "r5": 0.73,
   "r20": 3.08
  },
  "correlation": {
   "individual_foreign": -0.843,
-  "individual_institution": -0.569,
+  "individual_institution": -0.57,
   "foreign_institution": 0.058
  },
  "oppositeRate": {
   "vsForeign": 78.9,
-  "vsInstitution": 73.4
+  "vsInstitution": 73.5
  },
  "actors": {
   "individual": {
    "timing": {
     "corr1": -0.048,
     "corr5": -0.055,
-    "corr20": -0.108
+    "corr20": -0.106
    },
    "heavyBuy": {
     "r1": -0.02,
     "r5": 0.83,
-    "r20": 3.21,
+    "r20": 3.22,
     "n": 150
    },
-   "excess20": 0.13,
+   "excess20": 0.14,
    "grade": "C",
-   "todayValue": -9552.0,
-   "todayPercentile": 13.6
+   "todayValue": -15579.0,
+   "todayPercentile": 6.6
   },
   "foreign": {
    "timing": {
     "corr1": 0.085,
     "corr5": 0.06,
-    "corr20": 0.11
+    "corr20": 0.109
    },
    "heavyBuy": {
     "r1": 0.29,
@@ -89,25 +89,25 @@
    },
    "excess20": 1.28,
    "grade": "B",
-   "todayValue": 414.0,
-   "todayPercentile": 58.1
+   "todayValue": 1818.0,
+   "todayPercentile": 69.0
   },
   "institution": {
    "timing": {
     "corr1": -0.047,
-    "corr5": -0.004,
+    "corr5": -0.002,
     "corr20": -0.002
    },
    "heavyBuy": {
     "r1": 0.28,
-    "r5": 1.18,
-    "r20": 4.0,
+    "r5": 1.21,
+    "r20": 4.06,
     "n": 150
    },
-   "excess20": 0.92,
+   "excess20": 0.98,
    "grade": "C",
-   "todayValue": 9143.0,
-   "todayPercentile": 91.7
+   "todayValue": 6545.0,
+   "todayPercentile": 85.9
   }
  },
  "contrarianRead": {
@@ -156,7 +156,7 @@
   }
  ],
  "caveats": [
-  "표본은 2023-08-04~2026-09-03 749거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+  "표본은 2023-08-04~2026-09-04 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
   "이 기간 지수의 20거래일 평균 수익률은 +3.08% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."

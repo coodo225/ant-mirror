@@ -1,36 +1,36 @@
 {
  "market": "KOSPI",
  "today": {
-  "date": "2026-09-03",
-  "close": 6579.48,
-  "individual": -9552.0,
-  "foreign": 414.0,
-  "institution": 9143.0,
-  "ret1": 0.26,
-  "ret5": -4.82
+  "date": "2026-09-04",
+  "close": 6638.79,
+  "individual": -15579.0,
+  "foreign": 1818.0,
+  "institution": 6545.0,
+  "ret1": 0.9,
+  "ret5": -2.21
  },
  "matches": [
   {
-   "date": "2025-12-19",
-   "distance": 1.013,
-   "close": 4020.55,
-   "ret1": 0.65,
-   "individual": -1412.0,
-   "foreign": -7573.0,
-   "ret20": 22.12
+   "date": "2025-11-27",
+   "distance": 0.842,
+   "close": 3986.91,
+   "ret1": 0.66,
+   "individual": -6152.0,
+   "foreign": 1546.0,
+   "ret20": 3.58
   },
   {
-   "date": "2025-11-24",
-   "distance": 1.015,
-   "close": 3846.06,
-   "ret1": -0.19,
-   "individual": -4619.0,
-   "foreign": -7993.0,
-   "ret20": 6.76
+   "date": "2024-12-23",
+   "distance": 0.94,
+   "close": 2442.01,
+   "ret1": 1.57,
+   "individual": -6836.0,
+   "foreign": 1449.0,
+   "ret20": 3.01
   },
   {
    "date": "2023-11-01",
-   "distance": 1.145,
+   "distance": 1.03,
    "close": 2301.56,
    "ret1": 1.03,
    "individual": -3784.0,
@@ -38,29 +38,29 @@
    "ret20": 9.48
   },
   {
-   "date": "2023-10-10",
-   "distance": 1.171,
-   "close": 2402.58,
-   "ret1": -0.26,
-   "individual": -3821.0,
-   "foreign": -2086.0,
-   "ret20": 1.72
+   "date": "2024-03-20",
+   "distance": 1.073,
+   "close": 2690.14,
+   "ret1": 1.28,
+   "individual": -14054.0,
+   "foreign": 8516.0,
+   "ret20": -2.06
   },
   {
-   "date": "2024-11-14",
-   "distance": 1.248,
-   "close": 2418.86,
-   "ret1": 0.07,
-   "individual": -1142.0,
-   "foreign": -2321.0,
-   "ret20": 2.62
+   "date": "2024-12-03",
+   "distance": 1.086,
+   "close": 2500.1,
+   "ret1": 1.86,
+   "individual": -8338.0,
+   "foreign": 5645.0,
+   "ret20": -2.33
   }
  ],
- "avgRet20": 8.54,
+ "avgRet20": 2.34,
  "baseline20": 3.08,
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-08-04",
-  "to": "2026-09-03"
+  "to": "2026-09-04"
  }
 }
