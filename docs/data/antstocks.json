@@ -1,8 +1,8 @@
 {
  "window": {
   "days": 60,
-  "from": "20260610",
-  "to": "20260903"
+  "from": "20260611",
+  "to": "20260904"
  },
  "universe": 100,
  "antBasket": [
@@ -10,81 +10,81 @@
    "code": "000660",
    "name": "SK하이닉스",
    "market": "KOSPI",
-   "value": 215955.7,
-   "change": -22.07,
+   "value": 179451.1,
+   "change": -21.61,
    "price": 1647000.0
   },
   {
    "code": "005930",
    "name": "삼성전자",
    "market": "KOSPI",
-   "value": 159009.4,
-   "change": -17.36,
+   "value": 128475.9,
+   "change": -14.55,
    "price": 255500.0
   },
   {
    "code": "402340",
    "name": "SK스퀘어",
    "market": "KOSPI",
-   "value": 29658.0,
-   "change": -17.08,
+   "value": 27376.9,
+   "change": -15.23,
    "price": 1041000.0
-  },
-  {
-   "code": "005380",
-   "name": "현대차",
-   "market": "KOSPI",
-   "value": 19340.6,
-   "change": -36.3,
-   "price": 383500.0
   },
   {
    "code": "360750",
    "name": "TIGER 미국S&P500",
    "market": "KOSPI",
-   "value": 16996.7,
-   "change": -7.3,
+   "value": 16987.1,
+   "change": -6.19,
    "price": 25980.0
+  },
+  {
+   "code": "005380",
+   "name": "현대차",
+   "market": "KOSPI",
+   "value": 16328.0,
+   "change": -35.76,
+   "price": 383500.0
   },
   {
    "code": "005935",
    "name": "삼성전자우",
    "market": "KOSPI",
-   "value": 7843.8,
-   "change": -3.86,
+   "value": 5489.8,
+   "change": -0.98,
    "price": 191600.0
-  },
-  {
-   "code": "009150",
-   "name": "삼성전기",
-   "market": "KOSPI",
-   "value": 6821.5,
-   "change": -25.32,
-   "price": 1401000.0
   },
   {
    "code": "011070",
    "name": "LG이노텍",
    "market": "KOSPI",
-   "value": 2614.9,
-   "change": -48.99,
+   "value": 2843.2,
+   "change": -47.57,
    "price": 562000.0
+  },
+  {
+   "code": "042660",
+   "name": "한화오션",
+   "market": "KOSPI",
+   "value": 2661.6,
+   "change": -16.94,
+   "price": 86800.0
   },
   {
    "code": "080220",
    "name": "제주반도체",
    "market": "KOSDAQ",
-   "value": 2608.2,
-   "change": -26.42,
+   "value": 2345.8,
+   "change": -25.98,
    "price": 71800.0
   },
   {
-   "code": "042700",
-   "name": "한미반도체",
+   "code": "010120",
+   "name": "LS ELECTRIC",
    "market": "KOSPI",
-   "value": 2591.5,
-   "change": -22.04,
-   "price": 230000.0
+   "value": 2292.7,
+   "change": -14.9,
+   "price": 195300.0
   }
  ],
  "foreignBasket": [
@@ -92,125 +92,125 @@
    "code": "009150",
    "name": "삼성전기",
    "market": "KOSPI",
-   "value": 10955.4,
-   "change": -25.32,
+   "value": 15343.5,
+   "change": -22.38,
    "price": 1401000.0
   },
   {
    "code": "058470",
    "name": "리노공업",
    "market": "KOSDAQ",
-   "value": 8787.2,
-   "change": -30.86,
+   "value": 8696.9,
+   "change": -33.27,
    "price": 66600.0
+  },
+  {
+   "code": "042700",
+   "name": "한미반도체",
+   "market": "KOSPI",
+   "value": 7434.7,
+   "change": -20.96,
+   "price": 230000.0
   },
   {
    "code": "011070",
    "name": "LG이노텍",
    "market": "KOSPI",
-   "value": 7575.5,
-   "change": -48.99,
+   "value": 7292.7,
+   "change": -47.57,
    "price": 562000.0
   },
   {
    "code": "069500",
    "name": "KODEX 200",
    "market": "KOSPI",
-   "value": 6678.3,
-   "change": -16.31,
+   "value": 6125.7,
+   "change": -14.64,
    "price": 105720.0
-  },
-  {
-   "code": "042700",
-   "name": "한미반도체",
-   "market": "KOSPI",
-   "value": 6499.6,
-   "change": -22.04,
-   "price": 230000.0
-  },
-  {
-   "code": "316140",
-   "name": "우리금융지주",
-   "market": "KOSPI",
-   "value": 5298.7,
-   "change": 16.28,
-   "price": 33200.0
   },
   {
    "code": "064350",
    "name": "현대로템",
    "market": "KOSPI",
-   "value": 5297.4,
-   "change": -33.26,
+   "value": 5268.9,
+   "change": -32.7,
    "price": 126800.0
+  },
+  {
+   "code": "316140",
+   "name": "우리금융지주",
+   "market": "KOSPI",
+   "value": 4882.5,
+   "change": 10.12,
+   "price": 33200.0
   },
   {
    "code": "006800",
    "name": "미래에셋증권",
    "market": "KOSPI",
-   "value": 4505.5,
-   "change": -35.16,
+   "value": 4425.6,
+   "change": -32.58,
    "price": 34450.0
   },
   {
    "code": "000270",
    "name": "기아",
    "market": "KOSPI",
-   "value": 4267.0,
-   "change": -20.23,
+   "value": 4317.9,
+   "change": -18.91,
    "price": 126500.0
   },
   {
    "code": "207940",
    "name": "삼성바이오로직스",
    "market": "KOSPI",
-   "value": 4107.0,
-   "change": 13.79,
+   "value": 4025.1,
+   "change": 12.52,
    "price": 1447000.0
   }
  ],
- "antAvgChange": -22.67,
- "foreignAvgChange": -20.21,
+ "antAvgChange": -19.97,
+ "foreignAvgChange": -20.04,
  "tears": [
   {
    "code": "011070",
    "name": "LG이노텍",
    "market": "KOSPI",
-   "value": 2614.9,
-   "change": -48.99,
+   "value": 2843.2,
+   "change": -47.57,
    "price": 562000.0
   },
   {
    "code": "005380",
    "name": "현대차",
    "market": "KOSPI",
-   "value": 19340.6,
-   "change": -36.3,
+   "value": 16328.0,
+   "change": -35.76,
    "price": 383500.0
   },
   {
    "code": "080220",
    "name": "제주반도체",
    "market": "KOSDAQ",
-   "value": 2608.2,
-   "change": -26.42,
+   "value": 2345.8,
+   "change": -25.98,
    "price": 71800.0
-  },
-  {
-   "code": "009150",
-   "name": "삼성전기",
-   "market": "KOSPI",
-   "value": 6821.5,
-   "change": -25.32,
-   "price": 1401000.0
   },
   {
    "code": "000660",
    "name": "SK하이닉스",
    "market": "KOSPI",
-   "value": 215955.7,
-   "change": -22.07,
+   "value": 179451.1,
+   "change": -21.61,
    "price": 1647000.0
+  },
+  {
+   "code": "042660",
+   "name": "한화오션",
+   "market": "KOSPI",
+   "value": 2661.6,
+   "change": -16.94,
+   "price": 86800.0
   }
  ],
  "wins": [
@@ -218,41 +218,41 @@
    "code": "005935",
    "name": "삼성전자우",
    "market": "KOSPI",
-   "value": 7843.8,
-   "change": -3.86,
+   "value": 5489.8,
+   "change": -0.98,
    "price": 191600.0
   },
   {
    "code": "360750",
    "name": "TIGER 미국S&P500",
    "market": "KOSPI",
-   "value": 16996.7,
-   "change": -7.3,
+   "value": 16987.1,
+   "change": -6.19,
    "price": 25980.0
-  },
-  {
-   "code": "402340",
-   "name": "SK스퀘어",
-   "market": "KOSPI",
-   "value": 29658.0,
-   "change": -17.08,
-   "price": 1041000.0
   },
   {
    "code": "005930",
    "name": "삼성전자",
    "market": "KOSPI",
-   "value": 159009.4,
-   "change": -17.36,
+   "value": 128475.9,
+   "change": -14.55,
    "price": 255500.0
   },
   {
-   "code": "042700",
-   "name": "한미반도체",
+   "code": "010120",
+   "name": "LS ELECTRIC",
    "market": "KOSPI",
-   "value": 2591.5,
-   "change": -22.04,
-   "price": 230000.0
+   "value": 2292.7,
+   "change": -14.9,
+   "price": 195300.0
+  },
+  {
+   "code": "402340",
+   "name": "SK스퀘어",
+   "market": "KOSPI",
+   "value": 27376.9,
+   "change": -15.23,
+   "price": 1041000.0
   }
  ],
  "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. 대상은 수집된 시총 상위 종목이며, 등락률은 최근 60거래일 기준입니다."
