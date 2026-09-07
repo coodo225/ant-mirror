@@ -168,9 +168,9 @@
    "symbol": "^VIX",
    "name": "VIX 공포지수",
    "category": "risk",
-   "price": 15.03,
-   "change": 0.5,
-   "changeRate": 3.44,
+   "price": 15.23,
+   "change": 0.7,
+   "changeRate": 4.82,
    "asOf": "2026-09-07",
    "spark": [
     18.21,
@@ -202,7 +202,7 @@
     15.2,
     14.32,
     14.53,
-    15.03
+    15.23
    ]
   },
   {
@@ -332,9 +332,9 @@
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1342.67,
-   "change": -12.74,
-   "changeRate": -0.94,
+   "price": 1347.45,
+   "change": -7.9601,
+   "changeRate": -0.59,
    "asOf": "2026-09-07",
    "spark": [
     1464.4399,
@@ -366,16 +366,16 @@
     1372.86,
     1358.39,
     1355.41,
-    1342.67
+    1347.45
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 99.099,
-   "change": -0.061,
-   "changeRate": -0.06,
+   "price": 98.92,
+   "change": -0.24,
+   "changeRate": -0.24,
    "asOf": "2026-09-07",
    "spark": [
     101.38,
@@ -407,7 +407,7 @@
     99.56,
     99.0,
     99.16,
-    99.099
+    98.92
    ]
   },
   {
