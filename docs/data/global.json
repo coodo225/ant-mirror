@@ -168,9 +168,9 @@
    "symbol": "^VIX",
    "name": "VIX 공포지수",
    "category": "risk",
-   "price": 15.75,
-   "change": 0.45,
-   "changeRate": 2.94,
+   "price": 15.4,
+   "change": 0.1,
+   "changeRate": 0.65,
    "asOf": "2026-09-08",
    "spark": [
     20.66,
@@ -202,16 +202,16 @@
     14.32,
     14.53,
     15.3,
-    15.75
+    15.4
    ]
   },
   {
    "symbol": "ES=F",
    "name": "S&P500 선물",
    "category": "futures",
-   "price": 7700.0,
-   "change": -22.0,
-   "changeRate": -0.28,
+   "price": 7714.75,
+   "change": -7.25,
+   "changeRate": -0.09,
    "asOf": "2026-09-08",
    "spark": [
     7465.25,
@@ -243,16 +243,16 @@
     7676.5,
     7754.75,
     7722.0,
-    7700.0
+    7714.75
    ]
   },
   {
    "symbol": "NQ=F",
    "name": "나스닥100 선물",
    "category": "futures",
-   "price": 29569.5,
-   "change": 4.25,
-   "changeRate": 0.01,
+   "price": 29655.5,
+   "change": 90.25,
+   "changeRate": 0.31,
    "asOf": "2026-09-08",
    "spark": [
     27922.0,
@@ -284,19 +284,18 @@
     29186.25,
     29524.75,
     29565.25,
-    29569.5
+    29655.5
    ]
   },
   {
    "symbol": "^TNX",
    "name": "미국 10년물 금리",
    "category": "rates",
-   "price": 4.784,
-   "change": 0.022,
-   "changeRate": 0.46,
-   "asOf": "2026-09-04",
+   "price": 4.762,
+   "change": -0.022,
+   "changeRate": -0.46,
+   "asOf": "2026-09-08",
    "spark": [
-    4.641,
     4.604,
     4.622,
     4.663,
@@ -325,16 +324,17 @@
     4.796,
     4.796,
     4.762,
-    4.784
+    4.784,
+    4.762
    ]
   },
   {
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1341.78,
-   "change": -3.28,
-   "changeRate": -0.24,
+   "price": 1341.24,
+   "change": -3.8201,
+   "changeRate": -0.28,
    "asOf": "2026-09-08",
    "spark": [
     1453.16,
@@ -366,16 +366,16 @@
     1358.39,
     1355.41,
     1345.0601,
-    1341.78
+    1341.24
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 98.95,
-   "change": -0.21,
-   "changeRate": -0.21,
+   "price": 98.821,
+   "change": -0.339,
+   "changeRate": -0.34,
    "asOf": "2026-09-08",
    "spark": [
     101.38,
@@ -407,16 +407,16 @@
     99.56,
     99.0,
     99.16,
-    98.95
+    98.821
    ]
   },
   {
    "symbol": "CL=F",
    "name": "WTI 유가",
    "category": "commodity",
-   "price": 93.93,
-   "change": 2.45,
-   "changeRate": 2.68,
+   "price": 92.52,
+   "change": 1.04,
+   "changeRate": 1.14,
    "asOf": "2026-09-08",
    "spark": [
     79.26,
@@ -448,16 +448,16 @@
     91.01,
     91.3,
     91.48,
-    93.93
+    92.52
    ]
   },
   {
    "symbol": "GC=F",
    "name": "금",
    "category": "commodity",
-   "price": 4449.2998,
-   "change": 19.5,
-   "changeRate": 0.44,
+   "price": 4450.6001,
+   "change": 20.8003,
+   "changeRate": 0.47,
    "asOf": "2026-09-08",
    "spark": [
     4036.3,
@@ -489,7 +489,7 @@
     4366.2998,
     4491.7002,
     4429.7998,
-    4449.2998
+    4450.6001
    ]
   }
  ],
