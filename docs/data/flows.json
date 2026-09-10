@@ -2148,56 +2148,56 @@
     },
     {
      "date": "2026-09-10",
-     "individual": 9733.0,
-     "foreign": -6379.0,
-     "institution": -11236.0,
-     "inst_fin_inv": -11612.0,
-     "inst_insurance": 51.0,
-     "inst_trust": -199.0,
-     "inst_bank": 13.0,
-     "inst_other_fin": 61.0,
-     "inst_pension": 451.0,
-     "other_corp": 7882.0,
+     "individual": 3802.0,
+     "foreign": -24807.0,
+     "institution": 4334.0,
+     "inst_fin_inv": 9358.0,
+     "inst_insurance": 155.0,
+     "inst_trust": -3942.0,
+     "inst_bank": 24.0,
+     "inst_other_fin": 184.0,
+     "inst_pension": -1444.0,
+     "other_corp": 16671.0,
      "cum": {
-      "individual": 761675.0,
-      "foreign": -1338326.0,
-      "institution": 256261.0
+      "individual": 755744.0,
+      "foreign": -1356754.0,
+      "institution": 271831.0
      }
     }
    ],
    "latest": {
     "date": "2026-09-10",
-    "individual": 9733.0,
-    "foreign": -6379.0,
-    "institution": -11236.0,
-    "inst_fin_inv": -11612.0,
-    "inst_insurance": 51.0,
-    "inst_trust": -199.0,
-    "inst_bank": 13.0,
-    "inst_other_fin": 61.0,
-    "inst_pension": 451.0,
-    "other_corp": 7882.0,
+    "individual": 3802.0,
+    "foreign": -24807.0,
+    "institution": 4334.0,
+    "inst_fin_inv": 9358.0,
+    "inst_insurance": 155.0,
+    "inst_trust": -3942.0,
+    "inst_bank": 24.0,
+    "inst_other_fin": 184.0,
+    "inst_pension": -1444.0,
+    "other_corp": 16671.0,
     "cum": {
-     "individual": 761675.0,
-     "foreign": -1338326.0,
-     "institution": 256261.0
+     "individual": 755744.0,
+     "foreign": -1356754.0,
+     "institution": 271831.0
     }
    },
    "streaks": {
     "individual": {
      "days": 1,
      "side": "buy",
-     "total": 9733.0
+     "total": 3802.0
     },
     "foreign": {
      "days": 2,
      "side": "sell",
-     "total": -10727.0
+     "total": -29155.0
     },
     "institution": {
-     "days": 1,
-     "side": "sell",
-     "total": -11236.0
+     "days": 6,
+     "side": "buy",
+     "total": 72511.0
     }
    }
   },
@@ -4347,56 +4347,56 @@
     },
     {
      "date": "2026-09-10",
-     "individual": 2216.0,
-     "foreign": -2738.0,
-     "institution": 503.0,
-     "inst_fin_inv": -91.0,
-     "inst_insurance": -32.0,
-     "inst_trust": 559.0,
-     "inst_bank": -12.0,
-     "inst_other_fin": -25.0,
-     "inst_pension": 105.0,
-     "other_corp": 18.0,
+     "individual": -2698.0,
+     "foreign": -10748.0,
+     "institution": 13491.0,
+     "inst_fin_inv": 1340.0,
+     "inst_insurance": -96.0,
+     "inst_trust": 12218.0,
+     "inst_bank": -21.0,
+     "inst_other_fin": -29.0,
+     "inst_pension": 79.0,
+     "other_corp": -45.0,
      "cum": {
-      "individual": 43883.0,
-      "foreign": 23242.0,
-      "institution": -49508.0
+      "individual": 38969.0,
+      "foreign": 15232.0,
+      "institution": -36520.0
      }
     }
    ],
    "latest": {
     "date": "2026-09-10",
-    "individual": 2216.0,
-    "foreign": -2738.0,
-    "institution": 503.0,
-    "inst_fin_inv": -91.0,
-    "inst_insurance": -32.0,
-    "inst_trust": 559.0,
-    "inst_bank": -12.0,
-    "inst_other_fin": -25.0,
-    "inst_pension": 105.0,
-    "other_corp": 18.0,
+    "individual": -2698.0,
+    "foreign": -10748.0,
+    "institution": 13491.0,
+    "inst_fin_inv": 1340.0,
+    "inst_insurance": -96.0,
+    "inst_trust": 12218.0,
+    "inst_bank": -21.0,
+    "inst_other_fin": -29.0,
+    "inst_pension": 79.0,
+    "other_corp": -45.0,
     "cum": {
-     "individual": 43883.0,
-     "foreign": 23242.0,
-     "institution": -49508.0
+     "individual": 38969.0,
+     "foreign": 15232.0,
+     "institution": -36520.0
     }
    },
    "streaks": {
     "individual": {
-     "days": 1,
-     "side": "buy",
-     "total": 2216.0
+     "days": 2,
+     "side": "sell",
+     "total": -5246.0
     },
     "foreign": {
      "days": 1,
      "side": "sell",
-     "total": -2738.0
+     "total": -10748.0
     },
     "institution": {
      "days": 1,
      "side": "buy",
-     "total": 503.0
+     "total": 13491.0
     }
    }
   }
