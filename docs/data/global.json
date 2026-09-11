@@ -168,9 +168,9 @@
    "symbol": "^VIX",
    "name": "VIX 공포지수",
    "category": "risk",
-   "price": 17.51,
-   "change": -0.33,
-   "changeRate": -1.85,
+   "price": 17.16,
+   "change": -0.68,
+   "changeRate": -3.81,
    "asOf": "2026-09-11",
    "spark": [
     15.86,
@@ -202,16 +202,16 @@
     15.72,
     16.46,
     17.84,
-    17.51
+    17.16
    ]
   },
   {
    "symbol": "ES=F",
    "name": "S&P500 선물",
    "category": "futures",
-   "price": 7629.75,
-   "change": 31.25,
-   "changeRate": 0.41,
+   "price": 7638.5,
+   "change": 40.0,
+   "changeRate": 0.53,
    "asOf": "2026-09-11",
    "spark": [
     7519.25,
@@ -243,16 +243,16 @@
     7680.5,
     7643.75,
     7598.5,
-    7629.75
+    7638.5
    ]
   },
   {
    "symbol": "NQ=F",
    "name": "나스닥100 선물",
    "category": "futures",
-   "price": 29253.5,
-   "change": 118.25,
-   "changeRate": 0.41,
+   "price": 29317.75,
+   "change": 182.5,
+   "changeRate": 0.63,
    "asOf": "2026-09-11",
    "spark": [
     28404.25,
@@ -284,7 +284,7 @@
     29538.75,
     29448.75,
     29135.25,
-    29253.5
+    29317.75
    ]
   },
   {
@@ -332,9 +332,9 @@
    "symbol": "KRW=X",
    "name": "원/달러 환율",
    "category": "fx",
-   "price": 1344.08,
-   "change": 4.9099,
-   "changeRate": 0.37,
+   "price": 1341.8199,
+   "change": 2.6499,
+   "changeRate": 0.2,
    "asOf": "2026-09-11",
    "spark": [
     1435.7,
@@ -366,16 +366,16 @@
     1343.5699,
     1339.21,
     1339.17,
-    1344.08
+    1341.8199
    ]
   },
   {
    "symbol": "DX-Y.NYB",
    "name": "달러인덱스",
    "category": "fx",
-   "price": 99.061,
-   "change": -0.029,
-   "changeRate": -0.03,
+   "price": 99.166,
+   "change": 0.076,
+   "changeRate": 0.08,
    "asOf": "2026-09-11",
    "spark": [
     99.8,
@@ -407,16 +407,16 @@
     98.84,
     98.77,
     99.09,
-    99.061
+    99.166
    ]
   },
   {
    "symbol": "CL=F",
    "name": "WTI 유가",
    "category": "commodity",
-   "price": 100.91,
-   "change": -1.57,
-   "changeRate": -1.53,
+   "price": 99.46,
+   "change": -3.02,
+   "changeRate": -2.95,
    "asOf": "2026-09-11",
    "spark": [
     84.67,
@@ -448,16 +448,16 @@
     93.03,
     96.05,
     102.48,
-    100.91
+    99.46
    ]
   },
   {
    "symbol": "GC=F",
    "name": "금",
    "category": "commodity",
-   "price": 4389.7002,
-   "change": 25.2002,
-   "changeRate": 0.58,
+   "price": 4374.7002,
+   "change": 10.2002,
+   "changeRate": 0.23,
    "asOf": "2026-09-11",
    "spark": [
     4049.1001,
@@ -489,7 +489,7 @@
     4393.8999,
     4416.0,
     4364.5,
-    4389.7002
+    4374.7002
    ]
   }
  ],
