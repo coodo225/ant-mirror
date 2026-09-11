@@ -1176,6 +1176,14 @@
    "kosdaq": 70940.8,
    "shortSale": 319.4,
    "collateral": 253116.8
+  },
+  {
+   "date": "2026-09-10",
+   "total": 323598.9,
+   "kospi": 252161.6,
+   "kosdaq": 71437.3,
+   "shortSale": 349.0,
+   "collateral": 254603.3
   }
  ],
  "money": [
@@ -2207,26 +2215,33 @@
    "receivables": 8697.9,
    "liquidation": 22.6,
    "liqRatio": 0.3
+  },
+  {
+   "date": "2026-09-10",
+   "deposits": 1076572.8,
+   "receivables": 10214.4,
+   "liquidation": 58.4,
+   "liqRatio": 0.7
   }
  ],
  "latest": {
   "loans": {
-   "date": "2026-09-09",
-   "total": 324092.2,
-   "kospi": 253151.5,
-   "kosdaq": 70940.8,
-   "shortSale": 319.4,
-   "collateral": 253116.8,
-   "d5": -10312.2,
-   "d20": 23705.0
+   "date": "2026-09-10",
+   "total": 323598.9,
+   "kospi": 252161.6,
+   "kosdaq": 71437.3,
+   "shortSale": 349.0,
+   "collateral": 254603.3,
+   "d5": -11821.3,
+   "d20": 19411.4
   },
   "money": {
-   "date": "2026-09-09",
-   "deposits": 1028461.7,
-   "receivables": 8697.9,
-   "liquidation": 22.6,
-   "liqRatio": 0.3,
-   "liqAvg20": 119.8
+   "date": "2026-09-10",
+   "deposits": 1076572.8,
+   "receivables": 10214.4,
+   "liquidation": 58.4,
+   "liqRatio": 0.7,
+   "liqAvg20": 111.8
   }
  }
 }
