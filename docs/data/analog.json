@@ -1,27 +1,45 @@
 {
  "market": "KOSPI",
  "today": {
-  "date": "2026-09-11",
-  "close": 6909.91,
-  "individual": 18675.0,
-  "foreign": -22984.0,
-  "institution": -12184.0,
-  "ret1": -1.76,
-  "ret5": 3.33
+  "date": "2026-09-14",
+  "close": 6765.94,
+  "individual": 30048.0,
+  "foreign": -33259.0,
+  "institution": -11660.0,
+  "ret1": -2.08,
+  "ret5": -3.28
  },
  "matches": [
   {
-   "date": "2026-04-17",
-   "distance": 2.561,
-   "close": 6191.92,
-   "ret1": -0.55,
-   "individual": 14464.0,
-   "foreign": -19974.0,
-   "ret20": 17.44
+   "date": "2025-11-14",
+   "distance": 2.278,
+   "close": 4011.57,
+   "ret1": -3.81,
+   "individual": 32346.0,
+   "foreign": -23575.0,
+   "ret20": 3.88
+  },
+  {
+   "date": "2025-02-28",
+   "distance": 2.314,
+   "close": 2532.78,
+   "ret1": -3.39,
+   "individual": 20324.0,
+   "foreign": -15524.0,
+   "ret20": -2.04
+  },
+  {
+   "date": "2025-11-04",
+   "distance": 2.518,
+   "close": 4121.74,
+   "ret1": -2.37,
+   "individual": 27009.0,
+   "foreign": -22282.0,
+   "ret20": -3.08
   },
   {
    "date": "2026-03-19",
-   "distance": 2.756,
+   "distance": 2.568,
    "close": 5763.22,
    "ret1": -2.73,
    "individual": 24116.0,
@@ -29,38 +47,20 @@
    "ret20": 8.03
   },
   {
-   "date": "2025-10-13",
-   "distance": 2.759,
-   "close": 3584.55,
-   "ret1": -0.72,
-   "individual": 11649.0,
-   "foreign": -8220.0,
-   "ret20": 13.63
-  },
-  {
-   "date": "2026-02-13",
-   "distance": 2.819,
-   "close": 5507.01,
-   "ret1": -0.28,
-   "individual": 7141.0,
-   "foreign": -9220.0,
-   "ret20": 4.65
-  },
-  {
-   "date": "2025-10-28",
-   "distance": 2.857,
-   "close": 4010.41,
-   "ret1": -0.8,
-   "individual": 15728.0,
-   "foreign": -16379.0,
-   "ret20": -3.81
+   "date": "2024-09-04",
+   "distance": 2.687,
+   "close": 2580.8,
+   "ret1": -3.15,
+   "individual": 16502.0,
+   "foreign": -9886.0,
+   "ret20": 0.71
   }
  ],
- "avgRet20": 7.99,
- "baseline20": 3.15,
+ "avgRet20": 1.5,
+ "baseline20": 3.14,
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-08-14",
-  "to": "2026-09-11"
+  "to": "2026-09-14"
  }
 }
