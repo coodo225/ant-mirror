@@ -2,30 +2,6 @@
  "unit": "억원",
  "loans": [
   {
-   "date": "2026-02-03",
-   "total": 305397.7,
-   "kospi": 202680.6,
-   "kosdaq": 102717.0,
-   "shortSale": 522.6,
-   "collateral": 264577.2
-  },
-  {
-   "date": "2026-02-04",
-   "total": 309351.8,
-   "kospi": 206238.9,
-   "kosdaq": 103112.9,
-   "shortSale": 460.0,
-   "collateral": 266384.9
-  },
-  {
-   "date": "2026-02-05",
-   "total": 307867.9,
-   "kospi": 204668.0,
-   "kosdaq": 103199.9,
-   "shortSale": 504.6,
-   "collateral": 260383.0
-  },
-  {
    "date": "2026-02-06",
    "total": 310995.0,
    "kospi": 206680.1,
@@ -1187,27 +1163,6 @@
   }
  ],
  "money": [
-  {
-   "date": "2026-02-03",
-   "deposits": 1055844.7,
-   "receivables": 10779.4,
-   "liquidation": 159.4,
-   "liqRatio": 1.5
-  },
-  {
-   "date": "2026-02-04",
-   "deposits": 1008171.6,
-   "receivables": 12600.0,
-   "liquidation": 132.9,
-   "liqRatio": 1.2
-  },
-  {
-   "date": "2026-02-05",
-   "deposits": 1048666.7,
-   "receivables": 10094.1,
-   "liquidation": 127.6,
-   "liqRatio": 1
-  },
   {
    "date": "2026-02-06",
    "deposits": 1090099.3,
