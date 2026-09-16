@@ -30,39 +30,39 @@
   },
   {
    "year": "2026",
-   "days": 173,
-   "corrIF": -0.848,
-   "baseline20": 5.92,
-   "indivHeavyR20": -1.59,
-   "excess": -7.51,
+   "days": 174,
+   "corrIF": -0.845,
+   "baseline20": 5.9,
+   "indivHeavyR20": -1.46,
+   "excess": -7.36,
    "grade": "F"
   }
  ],
  "sample": {
-  "days": 749,
+  "days": 750,
   "from": "2023-08-17",
-  "to": "2026-09-15"
+  "to": "2026-09-16"
  },
  "baseline": {
   "r1": 0.15,
-  "r5": 0.77,
+  "r5": 0.76,
   "r20": 3.14
  },
  "correlation": {
-  "individual_foreign": -0.838,
-  "individual_institution": -0.583,
-  "foreign_institution": 0.077
+  "individual_foreign": -0.835,
+  "individual_institution": -0.584,
+  "foreign_institution": 0.075
  },
  "oppositeRate": {
-  "vsForeign": 78.9,
-  "vsInstitution": 73.4
+  "vsForeign": 78.8,
+  "vsInstitution": 73.5
  },
  "actors": {
   "individual": {
    "timing": {
     "corr1": -0.056,
-    "corr5": -0.042,
-    "corr20": -0.104
+    "corr5": -0.039,
+    "corr20": -0.103
    },
    "heavyBuy": {
     "r1": -0.05,
@@ -72,12 +72,12 @@
    },
    "excess20": 0.04,
    "grade": "C",
-   "todayValue": 8596.0,
-   "todayPercentile": 86.0
+   "todayValue": -11790.0,
+   "todayPercentile": 10.7
   },
   "foreign": {
    "timing": {
-    "corr1": 0.093,
+    "corr1": 0.092,
     "corr5": 0.054,
     "corr20": 0.104
    },
@@ -89,34 +89,34 @@
    },
    "excess20": 1.33,
    "grade": "B",
-   "todayValue": -15458.0,
-   "todayPercentile": 9.7
+   "todayValue": -16861.0,
+   "todayPercentile": 9.0
   },
   "institution": {
    "timing": {
     "corr1": -0.039,
-    "corr5": -0.014,
+    "corr5": -0.016,
     "corr20": -0.0
    },
    "heavyBuy": {
-    "r1": 0.31,
-    "r5": 1.18,
-    "r20": 4.17,
+    "r1": 0.3,
+    "r5": 1.1,
+    "r20": 4.14,
     "n": 150
    },
-   "excess20": 1.03,
+   "excess20": 1.0,
    "grade": "B",
-   "todayValue": -9585.0,
-   "todayPercentile": 5.7
+   "todayValue": 12145.0,
+   "todayPercentile": 94.1
   }
  },
  "contrarianRead": {
-  "label": "개미가 지금처럼 강하게 사들였던 날(상위 20%)",
-  "side": "buy",
-  "n": 143,
-  "r20": 3.18,
+  "label": "개미가 지금처럼 강하게 팔았던 날(하위 20%)",
+  "side": "sell",
+  "n": 141,
+  "r20": 4.88,
   "baseline20": 3.14,
-  "excess": 0.04
+  "excess": 1.74
  },
  "hallOfFame": [
   {
@@ -156,7 +156,7 @@
   }
  ],
  "caveats": [
-  "표본은 2023-08-17~2026-09-15 749거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+  "표본은 2023-08-17~2026-09-16 750거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
   "이 기간 지수의 20거래일 평균 수익률은 +3.14% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다."
