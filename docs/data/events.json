@@ -1,40 +1,32 @@
 {
  "upcoming": [
   {
-   "type": "FOMC",
-   "date": "2026-09-16",
-   "title": "FOMC 금리 결정 + 점도표(SEP)",
-   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
-   "impact": "high",
-   "dday": 0
-  },
-  {
    "type": "GDP",
    "date": "2026-09-30",
    "title": "미국 GDP",
    "impact": "mid",
-   "dday": 14
+   "dday": 13
   },
   {
    "type": "PCE",
    "date": "2026-09-30",
    "title": "미국 PCE 물가",
    "impact": "high",
-   "dday": 14
+   "dday": 13
   },
   {
    "type": "고용",
    "date": "2026-10-02",
    "title": "미국 고용보고서",
    "impact": "high",
-   "dday": 16
+   "dday": 15
   },
   {
    "type": "CPI",
    "date": "2026-10-14",
    "title": "미국 CPI 발표",
    "impact": "high",
-   "dday": 28
+   "dday": 27
   },
   {
    "type": "FOMC",
@@ -42,39 +34,38 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": 42
+   "dday": 41
   },
   {
    "type": "GDP",
    "date": "2026-10-29",
    "title": "미국 GDP",
    "impact": "mid",
-   "dday": 43
+   "dday": 42
   },
   {
    "type": "PCE",
    "date": "2026-10-29",
    "title": "미국 PCE 물가",
    "impact": "high",
-   "dday": 43
+   "dday": 42
+  },
+  {
+   "type": "고용",
+   "date": "2026-11-06",
+   "title": "미국 고용보고서",
+   "impact": "high",
+   "dday": 50
   }
  ],
  "recent": [
-  {
-   "type": "FOMC",
-   "date": "2026-03-18",
-   "title": "FOMC 금리 결정 + 점도표(SEP)",
-   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
-   "impact": "high",
-   "dday": -182
-  },
   {
    "type": "FOMC",
    "date": "2026-04-29",
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -140
+   "dday": -141
   },
   {
    "type": "FOMC",
@@ -82,7 +73,7 @@
    "title": "FOMC 금리 결정 + 점도표(SEP)",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -91
+   "dday": -92
   },
   {
    "type": "FOMC",
@@ -90,8 +81,16 @@
    "title": "FOMC 금리 결정",
    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
    "impact": "high",
-   "dday": -49
+   "dday": -50
+  },
+  {
+   "type": "FOMC",
+   "date": "2026-09-16",
+   "title": "FOMC 금리 결정 + 점도표(SEP)",
+   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
+   "impact": "high",
+   "dday": -1
   }
  ],
- "today": "2026-09-16"
+ "today": "2026-09-17"
 }
