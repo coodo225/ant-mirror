@@ -2,14 +2,6 @@
  "unit": "억원",
  "loans": [
   {
-   "date": "2026-02-09",
-   "total": 316077.0,
-   "kospi": 211829.4,
-   "kosdaq": 104247.6,
-   "shortSale": 472.4,
-   "collateral": 266783.2
-  },
-  {
    "date": "2026-02-10",
    "total": 315607.2,
    "kospi": 211853.9,
@@ -1187,13 +1179,6 @@
   }
  ],
  "money": [
-  {
-   "date": "2026-02-09",
-   "deposits": 985905.2,
-   "receivables": 11238.4,
-   "liquidation": 360.0,
-   "liqRatio": 3.6
-  },
   {
    "date": "2026-02-10",
    "deposits": 952996.0,
