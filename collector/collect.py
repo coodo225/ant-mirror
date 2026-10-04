@@ -23,6 +23,7 @@ from __future__ import annotations
 import io
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -144,13 +145,18 @@ def _last_date(fn):
 
 
 def keep_good(key: str, label: str, new, prev, ok, now_iso: str,
-              stale_keys: set[str] = frozenset(), last=None):
+              stale_keys: set[str] = frozenset(), last=None, worse=None):
     """
     new 가 정상이면 그대로, 비었으면 직전 정상본(prev)을 돌려준다.
     비지 않았어도 멈춘 데이터(stale_keys)라면 '정상 수집'으로 치지 않고,
     직전 정상본이 더 최신이면 그쪽을 내보낸다 (예: 네이버 일봉 실패 → 멈춰 있는 FDR 로 떨어졌을 때).
     """
     since = FRESH_AT.get(key)
+    if ok(new) and worse and prev is not None and ok(prev) and worse(new, prev):
+        # 계산 기준이 직전본보다 나빠졌다(예: 거래대금이 없어 금액 기준으로 떨어짐) — 직전본을 쓴다
+        warn(f"{label}: 이번 계산은 기준이 낮아져 직전 데이터({last(prev) if last else '직전 수집'})를 유지합니다")
+        mark_stale(key, label, asOf=last(prev) if last else None, since=since)
+        return prev
     if ok(new):
         if key not in stale_keys:
             FRESH_AT[key] = now_iso
@@ -172,8 +178,12 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
     """out: {파일명: 이번 수집 결과}. 비었거나 멈춘 섹션만 직전 정상본으로 갈아 끼워 돌려준다."""
     FRESH_AT.update((load_prev("meta.json") or {}).get("freshAt") or {})
 
-    def keep(key, label, new, prev, ok=bool, last=None):
-        return keep_good(key, label, new, prev, ok, now_iso, stale_keys, last)
+    def keep(key, label, new, prev, ok=bool, last=None, worse=None):
+        return keep_good(key, label, new, prev, ok, now_iso, stale_keys, last, worse)
+
+    # 강도 기준(거래대금 대비) 직전본이 있는데 이번엔 금액 기준으로 떨어졌으면 직전본이 낫다
+    def degraded(new, prev):
+        return new.get("basis") == "amount" and prev.get("basis") == "intensity"
 
     rows_last = _last_date(lambda xs: xs[-1]["date"])
 
@@ -190,9 +200,9 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
                                lambda f: bool(f and f.get("daily")),
                                _last_date(lambda f: f["daily"][-1]["date"]))
     out["ant.json"] = keep("ant", "개미 성적표", out["ant.json"], load_prev("ant.json"),
-                           last=_last_date(lambda a: a["sample"]["to"]))
+                           last=_last_date(lambda a: a["sample"]["to"]), worse=degraded)
     out["analog.json"] = keep("analog", "유사 국면", out["analog.json"], load_prev("analog.json"),
-                              last=_last_date(lambda a: a["today"]["date"]))
+                              last=_last_date(lambda a: a["today"]["date"]), worse=degraded)
     out["antstocks.json"] = keep("antstocks", "장바구니 비교", out["antstocks.json"],
                                  load_prev("antstocks.json"), last=_last_date(lambda a: f"{a['window']['to'][:4]}-{a['window']['to'][4:6]}-{a['window']['to'][6:]}"))
 
@@ -311,9 +321,12 @@ def fetch_naver_trend(market: str, days: int) -> list[dict]:
             if not re.fullmatch(r"\d{8}", d) or d in by_date:
                 continue
             amt: dict[str, int] = {}
+            traded = 0                                # 거래대금 = 모든 투자자의 매수금액 합(= 매도금액 합)
             for n in c.get("netAmounts") or []:
                 try:
                     amt[str(n["investorGubun"])] = int(str(n["diffValue"]).replace(",", ""))
+                    if str(n["investorGubun"]) != "9999":
+                        traded += int(str(n.get("buyPrice") or 0).replace(",", ""))
                 except (KeyError, TypeError, ValueError):
                     pass
             if market == "FUT" and amt.keys() & {"3100", "9001"}:
@@ -325,6 +338,9 @@ def fetch_naver_trend(market: str, days: int) -> list[dict]:
             for key, codes in INVESTOR_GROUPS.items():
                 v = sum(amt.get(code, 0) for code in codes)
                 row[key] = float(v) if market == "FUT" else float(round(v / 1e8))
+            if market != "FUT" and traded > 0:
+                # 순매수 강도(거래대금 대비 순매수)의 분모. 시장 규모가 3년 새 2~3배 커져 금액끼리는 비교가 안 된다
+                row["tradingValue"] = float(round(traded / 1e8))
             by_date[d] = row
         if not content or str(j.get("last")).lower() == "true":
             break
@@ -498,43 +514,107 @@ def build_flows() -> tuple[dict, dict]:
 
 # ---------------------------------------------------------------- 선물 (외국인의 선행 포지션)
 
-def build_futures() -> dict:
+FUT_CHART_DAYS = 60    # 화면에 싣는 일수. 통계(갈림 기록)는 STAT_DAYS 전체로 낸다
+
+
+def build_futures() -> tuple[dict, list[dict]]:
     """
-    코스피200 선물 투자자별 순매수 (단위: 계약).
-    외국인은 현물보다 선물을 먼저 움직이는 경우가 많아 선행 지표로 쓴다.
+    코스피200 선물 투자자별 순매수 (단위: 계약). (화면용 futures, 통계용 전체 히스토리) 를 돌려준다.
+    외국인의 현물 매매와 선물 포지션이 같은 방향인지 본다.
     """
     out: dict = {"unit": "계약", "daily": [], "latest": None, "streaks": {}, "divergence": None}
+    rows: list[dict] = []
     try:
-        rows = fetch_flows("FUT", 60, (load_prev("futures.json") or {}).get("daily"))
+        rows = fetch_flows("FUT", STAT_DAYS, (load_prev("futures.json") or {}).get("daily"))
         if not rows:
             warn("선물 수급 데이터가 비어 있음")
-            return out
-        out["daily"] = rows
+            return out, []
+        out["daily"] = rows[-FUT_CHART_DAYS:]
         out["latest"] = rows[-1]
         out["streaks"] = {k: streak(rows, k) for k in ACTOR_KEYS}
         print(f"  선물 수급 {len(rows)}일 (최근 {rows[-1]['date']})")
     except Exception as e:  # noqa: BLE001
         warn(f"선물 수급 수집 실패: {type(e).__name__}: {e}")
-    return out
+    return out, rows
 
 
-def attach_futures_divergence(futures: dict, flows: dict) -> None:
-    """최근 5거래일 기준 외국인의 현물 방향과 선물 방향을 비교한다."""
+DIV_WINDOW = 5
+DIV_TYPICAL_DAYS = 120   # '평소 크기' = 직전 120거래일 5일 합계 절댓값의 중앙값 (3년치로 잡으면 거래 규모 증가에 끌려간다)
+
+
+def attach_futures_divergence(futures: dict, full: dict, fut_full: list[dict], closes: dict) -> None:
+    """
+    외국인의 최근 5거래일 현물 순매수(억원)와 선물 순매수(계약) 방향을 비교한다.
+    - 같은 날짜끼리만 더한다 (현물·선물 표의 마지막 5행이 서로 다른 날일 수 있다)
+    - 부호만 보면 선물 +44계약 같은 잡음도 '갈림'이 된다. 그래서 둘 다 평소 크기
+      (직전 120거래일 5일 합계 절댓값의 중앙값) 이상일 때만 갈림/일치로 보고, 아니면 '뚜렷하지 않음'
+    - '선물이 먼저 돈다'는 주장 대신, 과거 같은 모양으로 갈렸던 날 이후 20거래일 코스피 기록을 붙인다
+    """
     try:
-        spot_rows = flows["markets"]["KOSPI"]["daily"][-5:]
-        fut_rows = futures["daily"][-5:]
-        if len(spot_rows) < 5 or len(fut_rows) < 5:
+        spot = {r["date"]: r.get("foreign") or 0.0 for r in full.get("KOSPI") or []}
+        fut = {r["date"]: r.get("foreign") or 0.0 for r in fut_full}
+        dates = sorted(set(spot) & set(fut))
+        if len(dates) < 60:
             return
-        spot = sum(r.get("foreign") or 0 for r in spot_rows)      # 억원
-        fut = sum(r.get("foreign") or 0 for r in fut_rows)        # 계약
+        w = DIV_WINDOW
+        d5 = dates[w - 1:]
+        s5 = [sum(spot[d] for d in dates[i - w + 1: i + 1]) for i in range(w - 1, len(dates))]
+        f5 = [sum(fut[d] for d in dates[i - w + 1: i + 1]) for i in range(w - 1, len(dates))]
+        def typical(xs, i):
+            """i 번째 날 직전 DIV_TYPICAL_DAYS 일의 5일 합계 절댓값 중앙값. 그날 이후 정보는 쓰지 않는다."""
+            win = sorted(abs(x) for x in xs[max(0, i - DIV_TYPICAL_DAYS): i])
+            return win[len(win) // 2] if len(win) >= DIV_TYPICAL_DAYS // 2 else None
+
+        def state(i):
+            st, ft = typical(s5, i), typical(f5, i)
+            if st is None or ft is None:
+                return None
+            if abs(s5[i]) < st or abs(f5[i]) < ft:
+                return "weak"
+            return "aligned" if (s5[i] >= 0) == (f5[i] >= 0) else "split"
+
+        last = len(d5) - 1
+        s_typ, f_typ = typical(s5, last), typical(f5, last)
+        now = state(last)
+        if now is None:
+            return
+        history = None
+        if now == "split":
+            px = closes.get("KOSPI") or {}
+            pdates = sorted(px)
+            pos = {d: k for k, d in enumerate(pdates)}
+
+            def fwd20(d):
+                k = pos.get(d)
+                return (px[pdates[k + 20]] / px[d] - 1) * 100 if k is not None and k + 20 < len(pdates) else None
+
+            same = [i for i in range(last) if state(i) == "split" and (s5[i] >= 0) == (s5[-1] >= 0)]
+            outs = [(i, fwd20(d5[i])) for i in same]
+            outs = [(i, x) for i, x in outs if x is not None]
+            every = [x for x in (fwd20(d) for d in d5) if x is not None]
+            if outs and every:
+                episodes = 1 + sum(1 for (a, _), (b, _) in zip(outs, outs[1:]) if b - a >= 20)
+                history = {
+                    "n": len(outs),
+                    "episodes": episodes,
+                    "r20": round(sum(x for _, x in outs) / len(outs), 2),
+                    "baseline20": round(sum(every) / len(every), 2),
+                    "from": d5[0],
+                }
         futures["divergence"] = {
-            "window": 5,
-            "spotForeign": round(spot, 1),
-            "futuresForeign": round(fut),
-            "aligned": (spot >= 0) == (fut >= 0),
+            "window": w,
+            "from": dates[-w], "to": dates[-1],
+            "spotForeign": round(s5[-1], 1),
+            "futuresForeign": round(f5[-1]),
+            "spotTypical": round(s_typ, 1),
+            "futuresTypical": round(f_typ),
+            "typicalDays": DIV_TYPICAL_DAYS,
+            "state": now,
+            "aligned": now != "split",
+            "history": history,
         }
     except Exception as e:  # noqa: BLE001
-        warn(f"현·선물 비교 실패: {e}")
+        warn(f"현·선물 비교 실패: {type(e).__name__}: {e}")
 
 
 # ---------------------------------------------------------------- 신용융자 / 증시자금 (KOFIA)
@@ -606,18 +686,31 @@ def build_credit() -> dict:
         warn(f"증시자금(KOFIA 60BO) 실패: {type(e).__name__}: {e}")
 
     # 요약: 최신값과 5/20거래일 변화
+    # 경보 기준을 고정 금액(예: 3,000억)으로 두면 잔고가 커질수록 거의 매일 울린다.
+    # 그래서 최신 변화가 이 기간의 같은 길이 변화들 가운데 어디쯤인지(백분위)를 함께 싣는다.
     if out["loans"]:
+        tot = [r["total"] for r in out["loans"]]
         last = out["loans"][-1]
+
         def delta(n):
-            if len(out["loans"]) > n and out["loans"][-1 - n]["total"]:
-                return round(last["total"] - out["loans"][-1 - n]["total"], 1)
+            if len(tot) > n and tot[-1] is not None and tot[-1 - n] is not None:
+                return round(tot[-1] - tot[-1 - n], 1)
             return None
-        out["latest"]["loans"] = {**last, "d5": delta(5), "d20": delta(20)}
+
+        def delta_pctl(n):
+            ds = [tot[i] - tot[i - n] for i in range(n, len(tot)) if tot[i] is not None and tot[i - n] is not None]
+            return round(_percentile(ds, ds[-1]), 1) if len(ds) >= 20 and delta(n) is not None else None
+
+        out["latest"]["loans"] = {**last, "d5": delta(5), "d20": delta(20),
+                                  "d5Pctl": delta_pctl(5), "d20Pctl": delta_pctl(20), "days": len(tot)}
     if out["money"]:
         lastm = out["money"][-1]
+        liq = [m["liquidation"] for m in out["money"] if m["liquidation"] is not None]
         liq20 = [m["liquidation"] for m in out["money"][-21:-1] if m["liquidation"] is not None]
         avg20 = round(sum(liq20) / len(liq20), 1) if liq20 else None
-        out["latest"]["money"] = {**lastm, "liqAvg20": avg20}
+        pctl = (round(_percentile(liq, lastm["liquidation"]), 1)
+                if len(liq) >= 20 and lastm["liquidation"] is not None else None)
+        out["latest"]["money"] = {**lastm, "liqAvg20": avg20, "liqPctl": pctl, "days": len(liq)}
     return out
 
 
@@ -783,7 +876,7 @@ def check_freshness(flows: dict, market: dict, closes: dict) -> set[str]:
     return stale
 
 
-def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
+def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = None) -> dict:
     out: dict = {"top": [], "industries": []}
     for market, top_n in (("KOSPI", n_kospi), ("KOSDAQ", n_kosdaq)):
         try:
@@ -812,6 +905,7 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
                             "marketCap": num(s.get("marketValue")),          # 백만원
                             "tradingValue": num(s.get("accumulatedTradingValue")),
                             "marketCapText": s.get("marketValueHangeul"),
+                            "type": s.get("stockEndType"),              # stock / etf
                         }
                     )
                     got += 1
@@ -846,6 +940,23 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
             if len(valid) >= 20:
                 def net_value(key):
                     return round(sum((d[key] or 0) * d["close"] for d in valid) / 1e8, 1)
+
+                idx_px = (closes or {}).get(s["market"]) or {}
+                iso = lambda d: f"{d[:4]}-{d[4:6]}-{d[6:]}"
+
+                def since_buy(key, px=None):
+                    """
+                    순매수한 날들의 종가를 순매수 수량으로 가중한 평균 가격 대비 마지막 종가 등락(%).
+                    px 를 주면 같은 날짜·같은 수량 비중으로 '그 시장 지수를 샀다면'의 등락(기준선)을 잰다.
+                    """
+                    price = (lambda d: d["close"]) if px is None else (lambda d: px.get(iso(d["date"])))
+                    days = [d for d in valid if price(d)]
+                    q = [(d[key], price(d)) for d in days if (d[key] or 0) > 0]
+                    qty = sum(x for x, _ in q)
+                    if not qty or not days:
+                        return None
+                    return round((price(days[-1]) / (sum(x * c for x, c in q) / qty) - 1) * 100, 2)
+
                 s["stat60"] = {
                     "days": len(valid),
                     "from": valid[0]["date"], "to": valid[-1]["date"],
@@ -853,6 +964,10 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
                     "foreignValue": net_value("foreign"),
                     "instValue": net_value("institution"),
                     "change": round((valid[-1]["close"] / valid[0]["close"] - 1) * 100, 2),
+                    "indivSinceBuy": since_buy("individual"),
+                    "foreignSinceBuy": since_buy("foreign"),
+                    "indivMarketSinceBuy": since_buy("individual", idx_px) if idx_px else None,
+                    "foreignMarketSinceBuy": since_buy("foreign", idx_px) if idx_px else None,
                 }
 
             s["flow"] = [{k: d[k] for k in ("date", "individual", "foreign", "institution", "foreignHoldRatio")}
@@ -885,50 +1000,75 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
 
 # ---------------------------------------------------------------- 개미 장바구니 vs 외인 장바구니
 
-def build_ant_stocks(stocks: dict) -> dict:
+def build_ant_stocks(stocks: dict, closes: dict | None = None) -> dict:
     """
-    최근 60거래일, 개미와 외국인이 각각 어떤 종목을 담았고 그 종목들이 어떻게 됐는지.
-    순매수 금액은 (일별 순매수 수량 × 그날 종가)의 합 — 근사치임을 화면에 명시한다.
+    최근 60거래일, 개미와 외국인이 각각 어떤 종목을 담았고 그 뒤 어떻게 됐는지.
+    - 순매수 금액은 (일별 순매수 수량 × 그날 종가)의 합 — 근사치
+    - '산 뒤 등락'은 그 주체가 순매수한 날들의 종가를 수량으로 가중한 평균 가격 대비 마지막 종가.
+      60일 전체 등락으로 재면, 떨어진 뒤에 사들인 종목도 '담았는데 빠졌다'가 된다
+    - ETF 는 뺀다(지수를 산 것이지 종목을 고른 게 아니다)
+    - 기준선은 같은 순매수일·같은 수량 비중으로 그 시장 지수를 샀다면의 등락(marketSinceBuy).
+      60일 지수 등락(market)은 60일 종목 등락(change)과만 견준다
     """
-    pool = [s for s in stocks.get("top", []) if s.get("stat60")]
+    pool = [s for s in stocks.get("top", []) if s.get("stat60") and s.get("type") != "etf"]
     if len(pool) < 10:
         warn(f"장바구니 비교: stat60 있는 종목 부족({len(pool)})")
         return {}
 
-    def pick(key, reverse=True, n=10):
-        ranked = sorted(pool, key=lambda s: s["stat60"][key], reverse=reverse)
-        chosen = [s for s in ranked if (s["stat60"][key] > 0 if reverse else s["stat60"][key] < 0)][:n]
+    def pick(key, since_key, n=10):
+        ranked = sorted(pool, key=lambda s: s["stat60"][key], reverse=True)
         return [
             {
                 "code": s["code"], "name": s["name"], "market": s["market"],
                 "value": s["stat60"][key], "change": s["stat60"]["change"],
+                "sinceBuy": s["stat60"].get(since_key),
+                "marketSinceBuy": s["stat60"].get(since_key.replace("SinceBuy", "MarketSinceBuy")),
                 "price": s["price"],
             }
-            for s in chosen
-        ]
+            for s in ranked if s["stat60"][key] > 0
+        ][:n]
 
-    ant_basket = pick("indivValue")            # 개미가 가장 많이 담은 종목
-    foreign_basket = pick("foreignValue")      # 외인이 가장 많이 담은 종목
+    ant_basket = pick("indivValue", "indivSinceBuy")          # 개미가 가장 많이 담은 종목
+    foreign_basket = pick("foreignValue", "foreignSinceBuy")  # 외인이 가장 많이 담은 종목
 
-    def avg_change(basket):
-        return round(sum(b["change"] for b in basket) / len(basket), 2) if basket else None
+    def avg(basket, key):
+        xs = [b[key] for b in basket if b.get(key) is not None]
+        return round(sum(xs) / len(xs), 2) if xs else None
 
-    # 개미의 눈물: 많이 담았는데(순매수 상위) 많이 빠진 순
-    tears = sorted(ant_basket, key=lambda b: b["change"])[:5]
-    wins = sorted(ant_basket, key=lambda b: -b["change"])[:5]
+    # 눈물과 승리는 부호로 가른다 — 순위만으로 고르면 떨어진 종목이 '승리'에 들어간다
+    known = [b for b in ant_basket if b.get("sinceBuy") is not None]
+    tears = sorted((b for b in known if b["sinceBuy"] < 0), key=lambda b: b["sinceBuy"])[:5]
+    wins = sorted((b for b in known if b["sinceBuy"] > 0), key=lambda b: -b["sinceBuy"])[:5]
 
     sample = pool[0]["stat60"]
+    iso = lambda d: f"{d[:4]}-{d[4:6]}-{d[6:]}"
+
+    def index_change(code):
+        px = (closes or {}).get(code) or {}
+        a = [v for d, v in sorted(px.items()) if d >= iso(sample["from"])]
+        b = [v for d, v in sorted(px.items()) if d <= iso(sample["to"])]
+        return round((b[-1] / a[0] - 1) * 100, 2) if a and b else None
+
     return {
         "window": {"days": sample["days"], "from": sample["from"], "to": sample["to"]},
         "universe": len(pool),
         "antBasket": ant_basket,
         "foreignBasket": foreign_basket,
-        "antAvgChange": avg_change(ant_basket),
-        "foreignAvgChange": avg_change(foreign_basket),
+        "antAvgChange": avg(ant_basket, "change"),
+        "foreignAvgChange": avg(foreign_basket, "change"),
+        "antAvgSinceBuy": avg(ant_basket, "sinceBuy"),
+        "foreignAvgSinceBuy": avg(foreign_basket, "sinceBuy"),
+        # 같은 날짜·같은 수량 비중으로 그 종목의 시장 지수를 샀다면 — '산 뒤 등락'과 같은 잣대의 기준선
+        "antAvgMarketSinceBuy": avg(ant_basket, "marketSinceBuy"),
+        "foreignAvgMarketSinceBuy": avg(foreign_basket, "marketSinceBuy"),
+        "market": {"KOSPI": index_change("KOSPI"), "KOSDAQ": index_change("KOSDAQ")},
         "tears": tears,
         "wins": wins,
         "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. "
-                "대상은 수집된 시총 상위 종목이며, 등락률은 최근 60거래일 기준입니다.",
+                "'산 뒤 등락'은 그 주체가 순매수한 날들의 종가를 수량으로 가중한 평균 가격 대비 마지막 종가의 "
+                "등락으로, 판 날은 반영하지 않은 추정치입니다. '지수였다면'은 같은 날짜·같은 비중으로 그 종목의 "
+                "시장 지수를 샀을 때의 같은 계산입니다. 대상은 지금의 시총 상위 종목(ETF 제외)이라, "
+                "그사이 크게 빠져 순위 밖으로 밀린 종목은 빠져 있습니다.",
     }
 
 
@@ -998,6 +1138,14 @@ MONTHS = {
 }
 
 
+def fomc_kst_hour(y: int, m: int, d: int) -> int:
+    """FOMC 결정(미 동부 오후 2시)의 한국 시각. 미국 서머타임(3월 둘째 일요일~11월 첫 일요일)이면 3시, 아니면 4시."""
+    def nth_sunday(month, nth):
+        first = date(y, month, 1)
+        return first + timedelta(days=(6 - first.weekday()) % 7 + 7 * (nth - 1))
+    return 3 if nth_sunday(3, 2) <= date(y, m, d) < nth_sunday(11, 1) else 4
+
+
 def scrape_fomc() -> list[dict]:
     """
     연준 캘린더 페이지에서 FOMC 회의 일정 파싱.
@@ -1032,7 +1180,7 @@ def scrape_fomc() -> list[dict]:
                     "type": "FOMC",
                     "date": f"{end_year}-{end_month:02d}-{days[-1]:02d}",
                     "title": "FOMC 금리 결정" + (" + 점도표(SEP)" if has_sep else ""),
-                    "note": "결과 발표는 한국시간 다음날 새벽 3시경",
+                    "note": f"결과 발표는 한국시간 다음날 새벽 {fomc_kst_hour(end_year, end_month, days[-1])}시경",
                     "impact": "high",
                 }
             )
@@ -1079,7 +1227,7 @@ def fetch_fred_series(api_key: str) -> list[dict]:
     want = [
         ("CPIAUCSL", "미국 CPI(전년비)", "yoy"),
         ("CPILFESL", "미국 근원 CPI(전년비)", "yoy"),
-        ("FEDFUNDS", "미국 기준금리", "level"),
+        ("FEDFUNDS", "미국 실효 연방기금금리(월평균)", "level"),
         ("UNRATE", "미국 실업률", "level"),
     ]
     out = []
@@ -1193,30 +1341,115 @@ def _percentile(values: list[float], v: float) -> float:
     return (below + equal / 2) / len(values) * 100
 
 
-def _grade(excess: float | None) -> str:
-    """시장 평균 대비 초과수익(%p) 을 학점으로."""
+def _grade(excess: float | None, ci: tuple[float, float] | None = None) -> str:
+    """
+    시장 평균 대비 초과수익(%p) 을 학점으로.
+    90% 범위(ci)가 0 을 포함하거나 범위를 구하지 못했으면 시장 평균과 구분되지 않으므로 크기와 상관없이 C.
+    """
     if excess is None:
         return "?"
+    if ci is None or ci[0] <= 0 <= ci[1]:      # 범위를 못 구했으면 구분할 근거도 없다
+        return "C"
     for cut, g in ((3, "A"), (1, "B"), (-1, "C"), (-3, "D")):
         if excess >= cut:
             return g
     return "F"
 
 
+def _excess_ci(fwd: list[float], heavy: list[bool], block: int = 20, reps: int = 600,
+               seed: int = 7) -> tuple[float, float] | None:
+    """
+    '고른 날 이후 평균 − 전체 평균' 의 90% 범위 (이동 블록 부트스트랩).
+    20일 선행수익률은 날마다 19일씩 겹치고 크게 산 날은 몰려서 나오므로, 날을 하나씩 다시 뽑으면
+    표본이 실제보다 훨씬 커 보인다. 연속 block 일을 통째로 다시 뽑아 그 겹침을 보존한다.
+    시드를 고정해 같은 데이터면 같은 범위가 나온다(화면 숫자가 실행마다 흔들리지 않게).
+    """
+    m = len(fwd)
+    if m < block * 3 or not any(heavy):
+        return None
+    rng = random.Random(seed)
+    stats = []
+    for _ in range(reps):
+        idx: list[int] = []
+        while len(idx) < m:
+            st = rng.randrange(0, m - block + 1)
+            idx.extend(range(st, st + block))
+        idx = idx[:m]
+        hv = [fwd[i] for i in idx if heavy[i]]
+        if hv:
+            stats.append(sum(hv) / len(hv) - sum(fwd[i] for i in idx) / m)
+    if len(stats) < reps * 0.9:
+        return None
+    stats.sort()
+    return round(stats[int(len(stats) * 0.05)], 2), round(stats[int(len(stats) * 0.95) - 1], 2)
+
+
+def _significant(ci) -> bool:
+    return bool(ci and not (ci[0] <= 0 <= ci[1]))
+
+
+def _pick_apart(order: list[int], gap: int, k: int) -> list[int]:
+    """order 순서대로 고르되, 이미 고른 날과 gap 거래일 안쪽인 날은 건너뛴다(같은 국면 중복 방지)."""
+    picked: list[int] = []
+    for i in order:
+        if all(abs(i - j) >= gap for j in picked):
+            picked.append(i)
+            if len(picked) == k:
+                break
+    return picked
+
+
+FLOW_MIN_INTENSITY_DAYS = 250
+
+
+def flow_basis(rows: list[dict]) -> tuple[list[dict], str]:
+    """
+    순위·임계값에 쓸 기준. 거래대금이 대부분 있으면 '순매수 강도'(거래대금 대비 %), 강도 기준이면 거래대금이 없는 날은 뺀다.
+    네이버 과거 페이지만 실패하면 다음 금융 행(거래대금 없음)이 앞쪽에 붙는다 — 그때는 거래대금이 있는
+    최근 구간이 FLOW_MIN_INTENSITY_DAYS 이상이면 그 구간만 써서 강도 기준을 유지한다(같은 날 판정이 뒤집히지 않게).
+    그것도 안 되면 금액 기준.
+    """
+    with_tv = [r for r in rows if r.get("tradingValue")]
+    if rows and len(with_tv) >= len(rows) * 0.9:
+        return with_tv, "intensity"
+    tail: list[dict] = []
+    for r in reversed(rows):
+        if not r.get("tradingValue"):
+            break
+        tail.append(r)
+    if len(tail) >= FLOW_MIN_INTENSITY_DAYS:
+        return tail[::-1], "intensity"
+    return rows, "amount"
+
+
+def flow_scale(rows: list[dict], basis: str, key: str) -> list[float]:
+    """순매수를 기준에 맞는 값으로. 강도 기준이면 그날 거래대금 대비 %."""
+    if basis == "intensity":
+        return [(r[key] or 0.0) / r["tradingValue"] * 100 for r in rows]
+    return [r[key] or 0.0 for r in rows]
+
+
 def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     """
     '개미는 정말 반대로 움직이고, 그래서 틀렸는가' 를 실제 데이터로 채점한다.
     상관관계일 뿐 인과가 아니며, 표본 기간의 장세에 크게 좌우된다는 점을 함께 실어 보낸다.
+
+    순위·임계값(온도계 백분위, 크게 산 날, 흑역사)은 금액이 아니라 '순매수 강도'
+    = 그날 거래대금 대비 순매수(%) 로 정한다. 3년 사이 거래대금이 2~3배 커져서, 금액으로 줄을 세우면
+    최근 날짜만 극단으로 뽑힌다. 장중 잠정치도 분자·분모가 함께 부분값이라 비교가 덜 어긋난다.
+    화면에 보이는 금액(억원)은 그대로 둔다.
     """
-    rows = full.get(code) or []
     px = closes.get(code) or {}
-    rows = [r for r in rows if r["date"] in px]
+    rows, basis = flow_basis([r for r in (full.get(code) or []) if r["date"] in px])
+    if basis == "amount" and rows:
+        warn(f"개미 성적표: 거래대금이 없는 날이 많아 금액 기준으로 계산합니다")
     if len(rows) < 60:
         warn(f"개미 성적표: {code} 표본 부족({len(rows)}일) — 건너뜀")
         return {}
 
     C = [px[r["date"]] for r in rows]
-    S = {k: [r[k] or 0.0 for r in rows] for k in ACTOR_KEYS}
+    S = {k: [r[k] or 0.0 for r in rows] for k in ACTOR_KEYS}           # 억원 (표시용)
+    V = {k: flow_scale(rows, basis, k) for k in ACTOR_KEYS}            # 순위·임계값용
     n = len(rows)
 
     # 이후 h거래일 지수 수익률(%)
@@ -1225,7 +1458,7 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
 
     actors: dict = {}
     for k in ACTOR_KEYS:
-        v = S[k]
+        v = V[k]
         timing = {}
         for h in HORIZONS:
             timing[f"corr{h}"] = round(_corr(v[: n - h], fwd[h]) or 0, 3)
@@ -1238,19 +1471,24 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
             ii = [i for i in heavy if i + h < n]
             top[f"r{h}"] = round(sum((C[i + h] / C[i] - 1) * 100 for i in ii) / len(ii), 2) if ii else None
         top["n"] = len(heavy)
+        top["n20"] = sum(1 for i in heavy if i + 20 < n)     # 20일 뒤를 아는 날만 — r20 의 실제 표본
 
         excess = None if top["r20"] is None else round(top["r20"] - baseline[20], 2)
+        ci = _excess_ci(fwd[20], [v[i] >= thr for i in range(n - 20)])
         actors[k] = {
             "timing": timing,
             "heavyBuy": top,
             "excess20": excess,
-            "grade": _grade(excess),
-            "todayValue": v[-1],
+            "excessCI": list(ci) if ci else None,
+            "significant": _significant(ci),
+            "grade": _grade(excess, ci),
+            "todayValue": S[k][-1],
+            "todayIntensity": round(v[-1], 2) if basis == "intensity" else None,
             "todayPercentile": round(_percentile(v, v[-1]), 1),
         }
 
     # 오늘 개인의 매수강도가 극단이면, 과거 같은 구간의 20일 성적을 참고치로 붙인다
-    iv = S["individual"]
+    iv = V["individual"]
     p = actors["individual"]["todayPercentile"]
     srt = sorted(iv)
     bucket, label, idx = None, None, []
@@ -1265,7 +1503,9 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     if idx:
         ii = [i for i in idx if i + 20 < n]
         if ii:
-            r20 = sum((C[i + 20] / C[i] - 1) * 100 for i in ii) / len(ii)
+            chosen = set(ii)
+            r20 = sum(fwd[20][i] for i in ii) / len(ii)
+            ci = _excess_ci(fwd[20], [i in chosen for i in range(n - 20)])
             bucket = {
                 "label": label,
                 "side": "buy" if p >= 80 else "sell",
@@ -1273,19 +1513,21 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
                 "r20": round(r20, 2),
                 "baseline20": round(baseline[20], 2),
                 "excess": round(r20 - baseline[20], 2),
+                "excessCI": list(ci) if ci else None,
+                "significant": _significant(ci),
             }
 
-    # 개인이 가장 크게 사들였던 날들의 그 후 20일
-    ranked = sorted(range(n - 20), key=lambda i: -iv[i])[:5]
+    # 개인이 가장 강하게 사들였던 날들의 그 후 20일 — 같은 국면이 여러 번 뽑히지 않게 20거래일 간격
     hall = [
         {
             "date": rows[i]["date"],
-            "amount": iv[i],
+            "amount": S["individual"][i],
+            "intensity": round(iv[i], 2) if basis == "intensity" else None,
             "close": round(C[i], 2),
             "after20": round(C[i + 20], 2),
-            "return20": round((C[i + 20] / C[i] - 1) * 100, 2),
+            "return20": round(fwd[20][i], 2),
         }
-        for i in ranked
+        for i in _pick_apart(sorted(range(n - 20), key=lambda i: -iv[i]), 20, 5)
     ]
 
     opp = {
@@ -1293,44 +1535,53 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
         "vsInstitution": round(sum(1 for a, b in zip(S["individual"], S["institution"]) if a * b < 0) / n * 100, 1),
     }
 
-    # 연도별 분해 — "F학점이 장세 탓인지"를 검증할 수 있게 한다
+    # 연도별 분해 — 학점이 장세 탓인지 볼 수 있게 한다
     yearly = []
-    years = sorted({r["date"][:4] for r in rows})
-    for y in years:
+    for y in sorted({r["date"][:4] for r in rows}):
         yi = [i for i, r in enumerate(rows) if r["date"].startswith(y)]
         if len(yi) < 60:
             continue
         yv = [iv[i] for i in yi]
-        yf = [S["foreign"][i] for i in yi]
         y_fwd = [i for i in yi if i + 20 < n]
-        if len(y_fwd) < 40:
+        if len(y_fwd) < 60:                       # _excess_ci 가 범위를 낼 수 있는 최소 길이
             continue
-        y_base = sum((C[i + 20] / C[i] - 1) * 100 for i in y_fwd) / len(y_fwd)
+        y_base = sum(fwd[20][i] for i in y_fwd) / len(y_fwd)
         thr_y = sorted(yv)[int(len(yv) * 0.8)]
         hv = [i for i in y_fwd if iv[i] >= thr_y]
         if len(hv) < 8:
             continue
-        y_r20 = sum((C[i + 20] / C[i] - 1) * 100 for i in hv) / len(hv)
+        y_r20 = sum(fwd[20][i] for i in hv) / len(hv)
         excess_y = y_r20 - y_base
+        ci_y = _excess_ci([fwd[20][i] for i in y_fwd], [iv[i] >= thr_y for i in y_fwd])
         yearly.append({
             "year": y,
             "days": len(yi),
-            "corrIF": round(_corr(yv, yf) or 0, 3),
+            "corrIF": round(_corr(yv, [V["foreign"][i] for i in yi]) or 0, 3),
             "baseline20": round(y_base, 2),
             "indivHeavyR20": round(y_r20, 2),
             "excess": round(excess_y, 2),
-            "grade": _grade(excess_y),
+            "excessCI": list(ci_y) if ci_y else None,
+            "significant": _significant(ci_y),
+            "grade": _grade(excess_y, ci_y),
         })
 
+    corr_if = round(_corr(V["individual"], V["foreign"]) or 0, 3)
+    corr_ii = round(_corr(V["individual"], V["institution"]) or 0, 3)
+    basis_note = ("'크게 산 날'과 온도계 백분위는 금액이 아니라 그날 거래대금 대비 순매수 비율로 정했습니다. "
+                  "3년 사이 거래대금이 크게 늘어, 금액으로 줄을 세우면 최근 날짜만 뽑히기 때문입니다."
+                  if basis == "intensity" else
+                  "이번 수집에는 거래대금이 없어 '크게 산 날'과 온도계 백분위를 순매수 금액으로 정했습니다. "
+                  "거래 규모가 커진 최근 날짜가 과대 대표될 수 있습니다.")
     return {
         "market": code,
+        "basis": basis,
         "yearly": yearly,
         "sample": {"days": n, "from": rows[0]["date"], "to": rows[-1]["date"]},
         "baseline": {f"r{h}": round(baseline[h], 2) for h in HORIZONS},
         "correlation": {
-            "individual_foreign": round(_corr(S["individual"], S["foreign"]) or 0, 3),
-            "individual_institution": round(_corr(S["individual"], S["institution"]) or 0, 3),
-            "foreign_institution": round(_corr(S["foreign"], S["institution"]) or 0, 3),
+            "individual_foreign": corr_if,
+            "individual_institution": corr_ii,
+            "foreign_institution": round(_corr(V["foreign"], V["institution"]) or 0, 3),
         },
         "oppositeRate": opp,
         "actors": actors,
@@ -1338,11 +1589,17 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
         "hallOfFame": hall,
         "caveats": [
             f"표본은 {rows[0]['date']}~{rows[-1]['date']} {n}거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+            "성적표는 각 주체의 실제 손익이 아닙니다. 크게 순매수한 날 이후 코스피 지수가 움직인 폭으로 "
+            "'산 시점'만 채점한 것이라, 실제로 산 종목·체결 가격과는 다릅니다.",
+            basis_note,
+            "20거래일 뒤 수익률은 날마다 19일씩 겹쳐서, 실제로 독립적인 표본은 보이는 것보다 훨씬 적습니다. "
+            "학점 옆 90% 범위가 0을 포함하면 시장 평균과 구분되지 않는다는 뜻이고, 그때는 C로 둡니다.",
             f"이 기간 지수의 20거래일 평균 수익률은 {baseline[20]:+.2f}% 였습니다. "
-            f"상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
+            "상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
             "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, "
             "떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
-            "순매수 총합은 0입니다. 개인이 외국인과 반대로 가는 것은 아이러니가 아니라 산수입니다.",
+            "순매수 총합은 개인·외국인·기관·기타법인을 모두 더해야 0이 됩니다. 개인의 상대가 꼭 외국인일 필요는 없으므로 "
+            f"개인↔외국인 상관({corr_if:+.2f})은 산수가 아니라 이 기간에 관찰된 사실입니다(개인↔기관 {corr_ii:+.2f}).",
         ],
     }
 
@@ -1350,102 +1607,133 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
 # ---------------------------------------------------------------- 유사 국면 매칭
 
 ANALOG_FEATURES = [
-    ("indiv",    "개인 순매수"),
-    ("foreign",  "외국인 순매수"),
-    ("inst",     "기관 순매수"),
-    ("indiv5",   "개인 5일 누적"),
-    ("foreign5", "외국인 5일 누적"),
+    ("indiv",    "개인 순매수 강도"),
+    ("foreign",  "외국인 순매수 강도"),
+    ("inst",     "기관 순매수 강도"),
+    ("indiv5",   "개인 5일 누적 강도"),
+    ("foreign5", "외국인 5일 누적 강도"),
     ("ret1",     "당일 등락률"),
     ("ret5",     "5일 등락률"),
     ("vol5",     "5일 변동성"),
 ]
+# 수급 특징 5개와 가격 특징 3개가 거리에서 같은 비중을 갖도록 (5 × 0.6 = 3 × 1.0).
+# 개인과 외국인 순매수는 상관이 −0.8 이라, 그대로 두면 수급이 사실상 두 번 세어진다.
+ANALOG_WEIGHTS = [0.6] * 5 + [1.0] * 3
+ANALOG_GAP = 20      # 매칭일끼리 20거래일 이상 떨어뜨려 '20일 뒤' 결과 구간이 겹치지 않게
 
 
 def build_analog(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     """
     오늘의 (수급 + 가격 움직임) 조합과 가장 비슷했던 과거의 날들을 찾는다.
-    8개 특징을 z-score 로 정규화한 뒤 유클리드 거리로 비교한다.
     예측이 아니라 '과거에 비슷한 날은 이후 어땠나'의 기록이다.
+    - 수급 특징은 순매수 강도(거래대금 대비 %) — 금액이면 거래 규모가 커진 최근 날짜만 닮은 날로 뽑힌다
+    - 특징마다 z-score 로 맞춘 뒤, 수급 묶음과 가격 묶음이 같은 비중이 되게 가중한 유클리드 거리
+    - 오늘의 가장 가까운 거리가 평소(다른 날들의 최근접 거리) 상위 10% 보다 멀면 '닮은 날이 드물다'
+    - 판정은 평균 하나가 아니라 5일 중 몇 번이 시장 평균보다 좋았는지로
     """
     px = closes.get(code) or {}
-    rows = [r for r in (full.get(code) or []) if r["date"] in px]
+    rows, basis = flow_basis([r for r in (full.get(code) or []) if r["date"] in px])
     n = len(rows)
     if n < 120:
         warn(f"유사 국면: {code} 표본 부족({n}일) — 건너뜀")
         return {}
 
     C = [px[r["date"]] for r in rows]
-    I = [r["individual"] or 0.0 for r in rows]
-    F = [r["foreign"] or 0.0 for r in rows]
-    O = [r["institution"] or 0.0 for r in rows]
+    amt = {k: [r[k] or 0.0 for r in rows] for k in ACTOR_KEYS}
+    I, F, O = (flow_scale(rows, basis, k) for k in ACTOR_KEYS)
     ret1 = [0.0] + [(C[i] / C[i - 1] - 1) * 100 for i in range(1, n)]
     ret5 = [0.0] * 5 + [(C[i] / C[i - 5] - 1) * 100 for i in range(5, n)]
-    i5 = [sum(I[max(0, i - 4): i + 1]) for i in range(n)]
-    f5 = [sum(F[max(0, i - 4): i + 1]) for i in range(n)]
+
+    def sum5(v, i):
+        return sum(v[max(0, i - 4): i + 1])
+
+    if basis == "intensity":
+        tv = [r["tradingValue"] for r in rows]
+        i5 = [sum5(amt["individual"], i) / sum5(tv, i) * 100 for i in range(n)]
+        f5 = [sum5(amt["foreign"], i) / sum5(tv, i) * 100 for i in range(n)]
+    else:
+        i5 = [sum5(amt["individual"], i) for i in range(n)]
+        f5 = [sum5(amt["foreign"], i) for i in range(n)]
     vol5 = []
     for i in range(n):
         w = ret1[max(0, i - 4): i + 1]
         m = sum(w) / len(w)
         vol5.append((sum((x - m) ** 2 for x in w) / len(w)) ** 0.5)
 
-    feats = [I, F, O, i5, f5, ret1, ret5, vol5]
-
     def zscore(v):
         m = sum(v) / len(v)
         s = (sum((x - m) ** 2 for x in v) / len(v)) ** 0.5 or 1.0
         return [(x - m) / s for x in v]
 
-    Z = [zscore(v) for v in feats]
+    Z = [zscore(v) for v in (I, F, O, i5, f5, ret1, ret5, vol5)]
+
+    def dist(a, b):
+        return sum(w * (z[a] - z[b]) ** 2 for w, z in zip(ANALOG_WEIGHTS, Z)) ** 0.5
+
     today = n - 1
+    pool = range(5, n - 20)              # 5일 워밍업 이후 ~ 20일 뒤 결과를 아는 날까지
+    cands = sorted((dist(i, today), i) for i in pool)
+    dmap = {i: d for d, i in cands}
+    picked = _pick_apart([i for _, i in cands], ANALOG_GAP, 5)
+    if not picked:
+        return {}
 
-    # 후보: 5일 워밍업 이후 ~ 결과(20일)를 아는 날까지, 최근 10일은 제외(자기 자신과의 중복 방지)
-    cands = []
-    for i in range(5, n - 20):
-        if i >= n - 10:
-            continue
-        d = sum((Z[k][i] - Z[k][today]) ** 2 for k in range(len(Z))) ** 0.5
-        cands.append((d, i))
-    cands.sort()
+    # 평소에 '가장 가까운 날'은 얼마나 가까운가 — 오늘과 같은 조건(20거래일 이상 앞선 날만)으로 구한
+    # 최근접 거리 분포. 후보가 너무 적은 초반 날짜는 거리가 부풀므로 뺀다.
+    nearest_typical = sorted(
+        min(dist(i, j) for i in range(5, j - ANALOG_GAP + 1))
+        for j in range(120, n, 5)
+    ) or [dmap[picked[0]]]
+    p90 = nearest_typical[int(len(nearest_typical) * 0.9)]
+    median = nearest_typical[len(nearest_typical) // 2]
 
-    picked: list[tuple[float, int]] = []
-    for d, i in cands:
-        if any(abs(i - j) < 5 for _, j in picked):   # 붙어 있는 날짜는 하나로
-            continue
-        picked.append((d, i))
-        if len(picked) == 5:
-            break
-
+    fwd20 = [(C[i + 20] / C[i] - 1) * 100 for i in range(n - 20)]
+    baseline20 = sum(fwd20) / len(fwd20)
     matches = [
         {
             "date": rows[i]["date"],
-            "distance": round(d, 3),
+            "distance": round(dmap[i], 3),
             "close": round(C[i], 2),
             "ret1": round(ret1[i], 2),
-            "individual": I[i],
-            "foreign": F[i],
-            "ret20": round((C[i + 20] / C[i] - 1) * 100, 2),
+            "individual": amt["individual"][i],
+            "foreign": amt["foreign"][i],
+            "ret20": round(fwd20[i], 2),
         }
-        for d, i in picked
+        for i in picked
     ]
-    if not matches:
-        return {}
-
-    fwd20 = [(C[i + 20] / C[i] - 1) * 100 for i in range(n - 20)]
+    outs = [m["ret20"] for m in matches]
+    above = sum(1 for x in outs if x > baseline20)
     return {
         "market": code,
+        "basis": basis,
         "today": {
             "date": rows[today]["date"], "close": round(C[today], 2),
-            "individual": I[today], "foreign": F[today], "institution": O[today],
+            "individual": amt["individual"][today], "foreign": amt["foreign"][today],
+            "institution": amt["institution"][today],
             "ret1": round(ret1[today], 2), "ret5": round(ret5[today], 2),
         },
         "matches": matches,
-        "avgRet20": round(sum(m["ret20"] for m in matches) / len(matches), 2),
-        "baseline20": round(sum(fwd20) / len(fwd20), 2),
+        "avgRet20": round(sum(outs) / len(outs), 2),
+        "minRet20": min(outs), "maxRet20": max(outs),
+        "above": above,
+        "verdict": "better" if above >= len(outs) - 1 else "worse" if above <= 1 else "mixed",
+        "similarity": {
+            "nearest": round(dmap[picked[0]], 3),
+            "typical": round(median, 3),
+            "p90": round(p90, 3),
+            "rare": dmap[picked[0]] > p90,
+        },
+        "baseline20": round(baseline20, 2),
         "sample": {"days": n, "from": rows[0]["date"], "to": rows[-1]["date"]},
     }
 
 
 # ---------------------------------------------------------------- 해석 레이어
+
+def rank_text(p: float) -> str:
+    """상·하위 비율(%) 표기. 0.5 미만이 '0%' 로 보이지 않게."""
+    return "1% 미만" if p < 1 else f"{p:.0f}%"
+
 
 def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
                    futures: dict | None = None, credit: dict | None = None) -> list[dict]:
@@ -1478,9 +1766,21 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
         elif f > 0 and i < 0:
             tips.append({"tone": "neutral",
                          "text": f"오늘은 외국인이 사고({cho(f)}원) 개인이 파는 구도입니다."})
-        if i < 0 and f < 0 and o > 0:
-            tips.append({"tone": "neutral",
-                         "text": "개인과 외국인이 동시에 팔고 기관 홀로 받았습니다. 흔치 않은 조합입니다."})
+        if i < 0 and f < 0:
+            # 개인·외국인이 함께 판 물량을 받은 쪽 — 기관만이 아니라 기타법인도 본다(최근엔 기타법인이 더 큰 날이 많다)
+            def takers(r):
+                got = [(nm, r.get(k) or 0) for k, nm in (("institution", "기관"), ("other_corp", "기타법인"))]
+                return tuple(nm for nm, v in sorted(got, key=lambda x: -x[1]) if v > 0)
+
+            who = takers(latest)
+            if who:
+                days = ks.get("daily") or []
+                same = sum(1 for r in days if (r.get("individual") or 0) < 0 and (r.get("foreign") or 0) < 0
+                           and set(takers(r)) == set(who))
+                took = f"{who[0]} 홀로" if len(who) == 1 else f"{who[0]}과 {who[1]}이"   # 기관·기타법인 모두 받침 ㄴ
+                tips.append({"tone": "neutral",
+                             "text": f"개인과 외국인이 동시에 팔고 {took} 받았습니다. "
+                                     f"최근 {len(days)}거래일 중 {same}일 있었던 조합입니다."})
 
         det = {k: latest.get(k) or 0 for k in ("inst_pension", "inst_trust", "inst_fin_inv")}
         top = max(det, key=lambda k: abs(det[k]))
@@ -1504,8 +1804,8 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
                              f"국내 반도체 대형주와 외국인 수급에 직결되는 지표입니다."})
     fx = g.get("원/달러 환율")
     if fx and fx.get("price"):
-        note = "환율이 높을수록 외국인은 환차손 부담으로 순매도 쪽에 서기 쉽습니다." if fx["price"] >= 1400 else ""
-        tips.append({"tone": "neutral", "text": f"원/달러 {fx['price']:,.1f}원. {note}".strip()})
+        chg = f" (전일 대비 {fx['changeRate']:+.2f}%)" if fx.get("changeRate") is not None else ""
+        tips.append({"tone": "neutral", "text": f"원/달러 {fx['price']:,.1f}원{chg}."})
     vix = g.get("VIX 공포지수")
     if vix and vix.get("price"):
         lvl = "공포 구간" if vix["price"] >= 30 else ("경계 구간" if vix["price"] >= 20 else "안정 구간")
@@ -1515,50 +1815,56 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
     if ant:
         ia = ant["actors"]["individual"]
         pctl = ia["todayPercentile"]
+        days = ant["sample"]["days"]
+        how = (f"(거래대금 대비 순매수 {ia['todayIntensity']:+.1f}%)" if ia.get("todayIntensity") is not None else "")
         if pctl >= 80:
-            tips.append({"tone": "sell", "text":
-                f"오늘 개미의 매수 강도는 최근 {ant['sample']['days']}거래일 중 상위 {100 - pctl:.0f}% 수준입니다. "
-                f"개미가 몰릴수록 뒤가 좋지 않았다는 것이 이 표본의 기록입니다."})
+            tips.append({"tone": "neutral", "text":
+                f"오늘 개미의 매수 강도{how}는 최근 {days}거래일 중 상위 {rank_text(100 - pctl)} 수준입니다."})
         elif pctl <= 20:
-            tips.append({"tone": "buy", "text":
-                f"오늘 개미는 최근 {ant['sample']['days']}거래일 중 하위 {pctl:.0f}% 수준으로 팔고 있습니다. "
-                f"개미가 던지는 국면이 어떻게 끝났는지는 아래 성적표에 있습니다."})
+            tips.append({"tone": "neutral", "text":
+                f"오늘 개미의 매도 강도{how}는 최근 {days}거래일 중 상위 {rank_text(pctl)} 수준입니다."})
         cr = ant.get("contrarianRead")
         if cr:
+            judge = ("시장 평균과 통계적으로 구분되지 않는 차이입니다." if not cr.get("significant")
+                     else "날짜가 서로 겹쳐 실제 독립 사례는 이보다 적습니다.")
             tips.append({"tone": "neutral", "text":
                 f"과거 {cr['label']} {cr['n']}번의 20거래일 뒤 지수는 평균 {cr['r20']:+.2f}% "
-                f"(같은 기간 시장 평균 {cr['baseline20']:+.2f}%)였습니다. 예언이 아니라 기록입니다."})
+                f"(같은 기간 시장 평균 {cr['baseline20']:+.2f}%)였습니다. {judge}"})
 
     # 현물 ↔ 선물 다이버전스
     div = (futures or {}).get("divergence")
-    if div and not div["aligned"]:
+    if div and div.get("state") == "split":
         spot_dir = "팔면서" if div["spotForeign"] < 0 else "사면서"
         fut_dir = "사고" if div["futuresForeign"] > 0 else "팔고"
+        h = div.get("history")
+        rec = (f" 과거 같은 모양으로 갈렸던 {h['n']}일({h['episodes']}개 국면)의 20거래일 뒤 코스피는 평균 "
+               f"{h['r20']:+.2f}%(모든 날 평균 {h['baseline20']:+.2f}%)였습니다." if h else "")
         tips.append({"tone": "neutral", "text":
-            f"최근 5거래일 외국인이 현물은 {cho(abs(div['spotForeign']))}원 {spot_dir} "
-            f"선물은 {abs(div['futuresForeign']):,}계약 {fut_dir} 있습니다. "
-            f"현물과 선물의 방향이 갈릴 때는 선물이 먼저 도는 경우가 많았습니다."})
+            f"최근 {div['window']}거래일 외국인이 현물은 {cho(abs(div['spotForeign']))}원 {spot_dir} "
+            f"선물은 {abs(div['futuresForeign']):,}계약 {fut_dir} 있습니다.{rec}"})
 
     # 빚투·반대매매
     cl = (credit or {}).get("latest", {})
     if cl.get("loans"):
         ln = cl["loans"]
-        if ln.get("d5") is not None and abs(ln["d5"]) >= 3000:
-            verb = "늘었습니다" if ln["d5"] > 0 else "줄었습니다"
-            tone = "sell" if ln["d5"] > 0 else "neutral"
-            tips.append({"tone": tone, "text":
-                f"신용융자(빚투) 잔고가 5거래일 만에 {cho(abs(ln['d5']))}원 {verb}. "
-                f"현재 {cho(ln['total'])}원. "
-                + ("빚으로 산 물량은 하락장에서 반대매매로 되돌아옵니다." if ln["d5"] > 0
-                   else "레버리지가 정리되는 중입니다.")})
+        q = ln.get("d5Pctl")
+        if ln.get("d5") is not None and q is not None and ((ln["d5"] > 0 and q >= 90) or (ln["d5"] < 0 and q <= 10)):
+            up = ln["d5"] > 0
+            tips.append({"tone": "neutral", "text":
+                f"신용융자(빚투) 잔고가 5거래일 만에 {cho(abs(ln['d5']))}원 {'늘었습니다' if up else '줄었습니다'}. "
+                f"최근 {ln.get('days')}거래일의 5일 변화 가운데 {'가장 크게 는 쪽' if up else '가장 크게 준 쪽'} "
+                f"{rank_text(100 - q if up else q)}입니다. 현재 {cho(ln['total'])}원. "
+                + ("빚으로 산 물량은 주가가 빠지면 반대매매로 나올 수 있습니다." if up else "레버리지가 정리되는 중입니다.")})
     if cl.get("money"):
         m = cl["money"]
-        if m.get("liquidation") is not None and m.get("liqAvg20"):
-            ratio = m["liquidation"] / m["liqAvg20"] if m["liqAvg20"] else 1
-            if ratio >= 2:
-                tips.append({"tone": "sell", "text":
+        q = m.get("liqPctl")
+        if m.get("liquidation") is not None and m.get("liqAvg20") and q is not None:
+            ratio = m["liquidation"] / m["liqAvg20"]
+            if ratio >= 2 and q >= 80:
+                tips.append({"tone": "neutral", "text":
                     f"반대매매가 {cho(m['liquidation'])}원 — 최근 20일 평균({cho(m['liqAvg20'])}원)의 "
-                    f"{ratio:.1f}배입니다. 빚으로 버티던 계좌들이 강제 청산되고 있다는 신호입니다."})
+                    f"{ratio:.1f}배이고, 최근 {m.get('days')}거래일 중 상위 {rank_text(100 - q)} 규모입니다. "
+                    f"빚으로 산 물량이 강제로 정리되고 있습니다."})
     return tips
 
 
@@ -1651,7 +1957,8 @@ def build_og_card(flows: dict, market: dict, ant: dict) -> None:
     if ant and ant.get("actors"):
         p = ant["actors"]["individual"]["todayPercentile"]
         ty = 430
-        dr.text((60, ty), f"개미 온도계 — 최근 {ant['sample']['days']}거래일 중 {p:.0f}번째 백분위",
+        dr.text((60, ty), f"개미 온도계 — 최근 {ant['sample']['days']}거래일 중 {max(p, 1):.0f}번째 백분위"
+                          f"{' (거래대금 대비)' if ant.get('basis') == 'intensity' else ''}",
                 font=font(26), fill=TEXT)
         track_y = ty + 52
         dr.rounded_rectangle([60, track_y, 1140, track_y + 22], radius=11, fill=(13, 18, 32), outline=LINE)
@@ -1705,8 +2012,8 @@ def main() -> int:
         for k in ACTOR_KEYS:
             print(f"    {k:12} 학점 {a[k]['grade']}  20일 초과수익 {a[k]['excess20']:+.2f}%p")
     print("[4/8] 선물 수급")
-    futures = build_futures()
-    attach_futures_divergence(futures, flows)
+    futures, fut_full = build_futures()
+    attach_futures_divergence(futures, full, fut_full, closes)
     print("[5/8] 신용융자·증시자금 (KOFIA)")
     credit = build_credit()
     print("[6/9] 유사 국면 매칭")
@@ -1715,11 +2022,11 @@ def main() -> int:
         print(f"  매칭 {len(analog['matches'])}건 · 평균 20일 뒤 {analog['avgRet20']:+.2f}% "
               f"(기준 {analog['baseline20']:+.2f}%)")
     print("[7/9] 종목·업종 + 장바구니")
-    stocks = build_stocks()
-    antstocks = build_ant_stocks(stocks)
+    stocks = build_stocks(closes=closes)
+    antstocks = build_ant_stocks(stocks, closes)
     if antstocks:
-        print(f"  장바구니 비교: 개미 {antstocks['antAvgChange']:+.2f}% vs "
-              f"외인 {antstocks['foreignAvgChange']:+.2f}% (60일)")
+        print(f"  장바구니 비교(산 뒤 등락): 개미 {antstocks['antAvgSinceBuy']}% vs "
+              f"외인 {antstocks['foreignAvgSinceBuy']}%")
     print("[8/9] 글로벌 지표")
     glob = build_global()
     print("[9/9] 이벤트 일정 / 매크로")

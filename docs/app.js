@@ -54,6 +54,11 @@ const nfmt = (v, d = 2) => v == null || isNaN(v) ? '—'
   : v.toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d });
 const dirCls = v => v == null ? 'flat' : v > 0 ? 'up' : v < 0 ? 'down' : 'flat';
 const mdy = iso => iso ? `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}` : '';
+const sgn = (v, d = 2) => v == null || isNaN(v) ? '—' : `${v >= 0 ? '+' : ''}${(+v).toFixed(d)}`;
+/** 상·하위 비율. 0.5 미만이 '0%' 로 보이지 않게 */
+const rankTxt = p => p < 1 ? '1% 미만' : `${p.toFixed(0)}%`;
+/** 블록 부트스트랩 90% 범위 */
+const ciTxt = ci => ci ? `90% 범위 ${sgn(ci[0])} ~ ${sgn(ci[1])}%p` : '';
 
 /** 종목 수급은 '주' 단위 */
 function shares(v) {
@@ -281,13 +286,19 @@ function renderHero() {
     growIn(() => { $('.lane-bar', lane).style.width = `${Math.max(half, 0.6)}%`; }, 60 + i * 90);
   });
 
-  renderBalance(vals);
+  renderBalance(vals, last);
 }
 
-/** 파는 진영 vs 사는 진영 구성 막대 */
-function renderBalance(vals) {
-  const sellers = vals.filter(x => x.v < 0).sort((a, b) => a.v - b.v);
-  const buyers  = vals.filter(x => x.v > 0).sort((a, b) => b.v - a.v);
+/** 파는 진영 vs 사는 진영 구성 막대.
+ *  개인·외국인·기관만 더하면 양쪽이 맞지 않는다 — 기타법인까지 넣어야 순매수 합이 0 이 된다. */
+const GAUGE_EXTRA = { other_corp: { name: '기타법인', raw: '#7a869e' } };
+
+function renderBalance(vals, last) {
+  const hasCorp = last && last.other_corp != null;
+  const all = hasCorp ? vals.concat([{ key: 'other_corp', v: last.other_corp }]) : vals;
+  const who = k => ACTORS[k] || GAUGE_EXTRA[k];
+  const sellers = all.filter(x => x.v < 0).sort((a, b) => a.v - b.v);
+  const buyers  = all.filter(x => x.v > 0).sort((a, b) => b.v - a.v);
   const sellSum = sellers.reduce((s, x) => s + Math.abs(x.v), 0);
   const buySum  = buyers.reduce((s, x) => s + x.v, 0);
   const total   = sellSum + buySum || 1;
@@ -303,11 +314,11 @@ function renderBalance(vals) {
     Object.assign(seg.style, {
       position: 'absolute', top: '0', bottom: '0',
       left: `${cursor}%`, width: '0%',
-      background: ACTORS[key].raw,
+      background: who(key).raw,
       opacity: isSell ? '.85' : '1',
       transition: 'width .9s cubic-bezier(.22,1,.36,1)',
     });
-    seg.title = `${ACTORS[key].name} ${eok(v)}`;
+    seg.title = `${who(key).name} ${eok(v)}`;
     track.appendChild(seg);
     growIn(() => { seg.style.width = `${wpc}%`; }, 80);
     cursor += wpc;
@@ -319,11 +330,13 @@ function renderBalance(vals) {
   knot.style.left = `${sellSum / total * 100}%`;
   wrap.appendChild(knot);
 
-  const names = a => a.map(x => ACTORS[x.key].name).join(' · ') || '없음';
+  const names = a => a.map(x => who(x.key).name).join(' · ') || '없음';
   $('#balance-caption').innerHTML =
     `파는 쪽 <b>${names(sellers)}</b> ${eok(-sellSum)} &nbsp;·&nbsp; ` +
     `사는 쪽 <b>${names(buyers)}</b> ${eok(buySum)}` +
-    `<br><span class="dim small">순매수와 순매도는 서로의 거울입니다. 누군가 판 물량은 반드시 누군가 받습니다.</span>`;
+    `<br><span class="dim small">${hasCorp
+      ? '개인·외국인·기관에 기타법인까지 더하면 순매수 합은 0입니다. 누군가 판 물량은 누군가 받습니다.'
+      : '순매수와 순매도는 서로의 거울입니다. 누군가 판 물량은 누군가 받습니다.'}</span>`;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -331,6 +344,9 @@ function renderBalance(vals) {
    ══════════════════════════════════════════════════════ */
 
 const hasAnt = () => D.ant && D.ant.actors;
+/** 순위·임계값의 기준. 예비 소스로 금액 기준이 됐거나 예전 형식 데이터면 'amount' */
+const basisOf = x => (x && x.basis) || 'amount';
+const setText = (sel, text) => { const n = $(sel); if (n) n.textContent = text; };
 
 /** 헤더 아래 한 줄. 무작위 농담이 아니라 오늘 데이터에서 나온 문장이어야 한다. */
 function renderMirror() {
@@ -342,32 +358,37 @@ function renderMirror() {
   const a = D.ant.actors.individual;
   const p = a.todayPercentile;
   const opp = D.ant.oppositeRate.vsForeign;
+  const days = D.ant.sample.days;
+  const cr = D.ant.contrarianRead;
+  // 과거 같은 구간의 기록 — 좋았으면 좋았다고, 구분이 안 되면 구분이 안 된다고
+  const zone = cr && cr.side === 'buy' ? '매수 강도 상위 20%' : '매도 강도 상위 20%';
+  const record = !cr ? '' :
+    ` 과거 ${zone}였던 날 ${cr.n}번, 20거래일 뒤 지수는 시장 평균보다 <b class="${dirCls(cr.excess)}">${sgn(cr.excess)}%p</b>` +
+    (cr.significant === false ? '로, 시장 평균과 구분되지 않는 차이였습니다.' : '였습니다.');
 
   let head, tail;
   if (p >= 80) {
     head = '오늘도 개미는 담고 있습니다.';
-    tail = `최근 ${D.ant.sample.days}거래일 중 <b>상위 ${(100 - p).toFixed(0)}%</b>의 매수 강도. ` +
-           '지난 1년, 이런 날의 뒤끝이 문제였습니다.';
+    tail = `최근 ${days}거래일 중 <b>상위 ${rankTxt(100 - p)}</b>의 매수 강도.${record}`;
   } else if (p <= 20) {
     head = '오늘 개미는 던지고 있습니다.';
-    tail = `최근 ${D.ant.sample.days}거래일 중 <b>하위 ${p.toFixed(0)}%</b>. ` +
-           '그런데 지난 1년, 개미가 던진 뒤는 나쁘지 않았습니다. 아래에서 확인하세요.';
+    tail = `최근 ${days}거래일 중 매도 강도 <b>상위 ${rankTxt(p)}</b>.${record}`;
   } else {
     head = '오늘 개미는 어중간합니다.';
-    tail = `최근 ${D.ant.sample.days}거래일 중 <b>${p.toFixed(0)}번째 백분위</b>. ` +
-           '방향이 뚜렷하지 않은 날입니다.';
+    tail = `최근 ${days}거래일 중 <b>${Math.max(1, Math.round(p))}번째 백분위</b>. 방향이 뚜렷하지 않은 날입니다.`;
   }
   line.textContent = head;
   sub.innerHTML = `${tail} 참고로 개미는 이 기간 <b>${opp}%</b>의 날에 외국인과 정반대로 움직였습니다.`;
 }
 
-/** 오늘의 매수 강도를 1년 분포 안에 놓아 본다 */
+/** 오늘의 매수 강도(거래대금 대비 순매수)를 표본 기간 분포 안에 놓아 본다 */
 function renderThermo() {
   if (!hasAnt()) { $('#thermo-card').hidden = true; return; }
   const a = D.ant.actors.individual;
   const p = a.todayPercentile;
 
   $('#thermo-sample').textContent = D.ant.sample.days;
+  setText('#thermo-basis', basisOf(D.ant) === 'intensity' ? '(거래대금 대비 순매수)' : '(순매수 금액 기준)');
   growIn(() => { $('#thermo-ant').style.left = `${p}%`; }, 120);
 
   const mood = p >= 80 ? { t: '영끌 매수 구간', c: 'up' }
@@ -378,10 +399,12 @@ function renderThermo() {
 
   $('#thermo-nums').innerHTML = `
     <div>
-      <span class="thermo-big ${mood.c}">${p.toFixed(0)}<small style="font-size:14px">번째 백분위</small></span>
+      <span class="thermo-big ${mood.c}">${Math.max(1, Math.round(p))}<small style="font-size:14px">번째 백분위</small></span>
       <span class="thermo-desc" style="margin-left:10px">${mood.t}</span>
     </div>
-    <div class="thermo-desc">오늘 개인 순매수 <b class="${dirCls(a.todayValue)}">${eok(a.todayValue)}</b></div>`;
+    <div class="thermo-desc">오늘 개인 순매수 <b class="${dirCls(a.todayValue)}">${eok(a.todayValue)}</b>` +
+    (a.todayIntensity != null ? ` · 거래대금의 <b class="${dirCls(a.todayIntensity)}">${sgn(a.todayIntensity, 1)}%</b>` : '') +
+    `</div>`;
 
   const cr = D.ant.contrarianRead;
   const box = $('#contrarian');
@@ -392,12 +415,15 @@ function renderThermo() {
     return;
   }
   const better = cr.excess >= 0;
+  const sigNote = !cr.excessCI ? '' : cr.significant
+    ? ` ${ciTxt(cr.excessCI)} — 0을 포함하지 않는 차이입니다.`
+    : ` ${ciTxt(cr.excessCI)} — 0을 포함해 시장 평균과 구분되지 않습니다.`;
   box.innerHTML = `
     <div class="c-head">🐜 ${cr.label} — 과거 ${cr.n}번</div>
-    그 <b>20거래일 뒤</b> 지수는 평균 <b class="${better ? 'up' : 'down'}">${cr.r20 >= 0 ? '+' : ''}${cr.r20}%</b>,
-    같은 기간 시장 평균은 <b>${cr.baseline20 >= 0 ? '+' : ''}${cr.baseline20}%</b>였습니다.
-    시장 평균 대비 <b class="${better ? 'up' : 'down'}">${cr.excess >= 0 ? '+' : ''}${cr.excess}%p</b>.
-    <div class="c-note">과거 기록이지 예측이 아닙니다. 표본 ${cr.n}개는 결론을 내리기엔 적은 수입니다.</div>`;
+    그 <b>20거래일 뒤</b> 지수는 평균 <b class="${better ? 'up' : 'down'}">${sgn(cr.r20)}%</b>,
+    같은 기간 시장 평균은 <b>${sgn(cr.baseline20)}%</b>였습니다.
+    시장 평균 대비 <b class="${better ? 'up' : 'down'}">${sgn(cr.excess)}%p</b>.
+    <div class="c-note">과거 기록이지 예측이 아닙니다. 날짜가 서로 겹쳐 독립 사례는 ${cr.n}번보다 훨씬 적습니다.${sigNote}</div>`;
 }
 
 /* ── 지금과 비슷했던 날들 ────────────────────────────── */
@@ -410,6 +436,11 @@ function renderAnalog() {
 
   $('#analog-sample').textContent =
     `${a.sample.from} ~ ${a.sample.to} · ${a.sample.days}거래일에서 검색`;
+  const fresh = a.above !== undefined;
+  setText('#analog-intro',
+    `오늘의 수급(${basisOf(a) === 'intensity' ? '거래대금 대비 순매수 강도' : '순매수 금액'}) + 가격 움직임 조합과 가장 비슷했던 과거의 날을` +
+    (fresh ? ' 서로 20거래일 이상 떨어진 날로' : '') + ' 골라, 그 날들로부터 20거래일 뒤 지수가 어떻게 됐는지 보여줍니다.' +
+    (fresh ? ' 수급과 가격은 같은 비중으로 비교합니다.' : '') + ' 예측이 아니라 기록입니다.');
 
   const t = a.today;
   $('#analog-today').innerHTML =
@@ -432,12 +463,27 @@ function renderAnalog() {
     list.appendChild(row);
   });
 
-  const better = a.avgRet20 >= a.baseline20;
+  const n = a.matches.length;
+  if (a.above == null) {          // 예전 형식 데이터
+    const better = a.avgRet20 >= a.baseline20;
+    $('#analog-verdict').innerHTML =
+      `이 ${n}일의 20거래일 뒤 평균은 <b class="${dirCls(a.avgRet20)}">${sgn(a.avgRet20)}%</b> ` +
+      `(전체 기간 평균 <b>${sgn(a.baseline20)}%</b>) — ` +
+      (better ? '비슷한 날들의 뒤가 평균보다 좋았습니다.' : '비슷한 날들의 뒤가 평균보다 나빴습니다.') +
+      `<br><span class="dim small">표본 ${n}개는 통계가 아니라 일화입니다. 그날과 지금은 다른 시장입니다.</span>`;
+    return;
+  }
+  const head = a.verdict === 'better' ? '비슷한 날들의 뒤는 대체로 시장 평균보다 좋았습니다.'
+             : a.verdict === 'worse'  ? '비슷한 날들의 뒤는 대체로 시장 평균보다 나빴습니다.'
+             :                          '비슷한 날들의 뒤는 엇갈렸습니다.';
+  const sim = a.similarity || {};
+  const simNote = sim.rare ? '오늘과 닮은 날이 드뭅니다. 위 날들은 "그나마 가까운" 날입니다. '
+                : sim.nearest > sim.typical ? '평소보다 닮은 정도가 약한 날들입니다. ' : '';
   $('#analog-verdict').innerHTML =
-    `이 ${a.matches.length}일의 20거래일 뒤 평균은 <b class="${dirCls(a.avgRet20)}">${a.avgRet20 >= 0 ? '+' : ''}${a.avgRet20}%</b> ` +
-    `(전체 기간 평균 <b>${a.baseline20 >= 0 ? '+' : ''}${a.baseline20}%</b>) — ` +
-    (better ? '비슷한 날들의 뒤가 평균보다 좋았습니다.' : '비슷한 날들의 뒤가 평균보다 나빴습니다.') +
-    `<br><span class="dim small">표본 ${a.matches.length}개는 통계가 아니라 일화입니다. 그날과 지금은 다른 시장입니다.</span>`;
+    `이 ${n}일 중 <b>${a.above}번</b>이 20거래일 뒤 시장 평균(<b>${sgn(a.baseline20)}%</b>)보다 좋았습니다 ` +
+    `(평균 ${sgn(a.avgRet20)}%, 범위 ${sgn(a.minRet20)} ~ ${sgn(a.maxRet20)}%) — ${head}` +
+    `<br><span class="dim small">${simNote}표본 ${n}개는 통계가 아니라 일화입니다. ` +
+    `매칭일끼리는 20거래일 이상 떨어뜨려 결과 구간이 겹치지 않게 했습니다.</span>`;
 }
 
 /* ── 개미 장바구니 vs 외인 장바구니 ──────────────────── */
@@ -452,20 +498,27 @@ function renderBaskets() {
     `최근 ${b.window.days}거래일 (${b.window.from.slice(4,6)}/${b.window.from.slice(6,8)} ~ ` +
     `${b.window.to.slice(4,6)}/${b.window.to.slice(6,8)}) · 시총상위 ${b.universe}종목 대상`;
 
-  const antWin = (b.antAvgChange ?? -999) >= (b.foreignAvgChange ?? -999);
+  const since = b.antAvgSinceBuy !== undefined;
+  const antV = since ? b.antAvgSinceBuy : b.antAvgChange;
+  const forV = since ? b.foreignAvgSinceBuy : b.foreignAvgChange;
+  // 같은 잣대의 기준선: 같은 날짜·같은 수량 비중으로 그 시장 지수를 샀다면
+  const vsIdx = m => since && m != null ? `<br>같은 날 지수를 샀다면 ${sgn(m)}%` : '';
+  const label = since ? '산 뒤 평균 등락(추정)' : '평균 등락률';
+  const antWin = (antV ?? -999) >= (forV ?? -999);
   $('#basket-headline').innerHTML = `
     <div class="bh-side ${antWin ? 'winner' : ''}">
-      <div class="bh-who">🐜 개미가 담은 10종목</div>
-      <div class="bh-chg ${dirCls(b.antAvgChange)}">${b.antAvgChange >= 0 ? '+' : ''}${b.antAvgChange}%</div>
-      <div class="bh-sub">평균 등락률</div>
+      <div class="bh-who">🐜 개미가 담은 ${b.antBasket.length}종목</div>
+      <div class="bh-chg ${dirCls(antV)}">${sgn(antV)}%</div>
+      <div class="bh-sub">${label}${vsIdx(b.antAvgMarketSinceBuy)}</div>
     </div>
     <div class="bh-vs">VS</div>
     <div class="bh-side ${antWin ? '' : 'winner'}">
-      <div class="bh-who">🦅 외인이 담은 10종목</div>
-      <div class="bh-chg ${dirCls(b.foreignAvgChange)}">${b.foreignAvgChange >= 0 ? '+' : ''}${b.foreignAvgChange}%</div>
-      <div class="bh-sub">평균 등락률</div>
+      <div class="bh-who">🦅 외인이 담은 ${b.foreignBasket.length}종목</div>
+      <div class="bh-chg ${dirCls(forV)}">${sgn(forV)}%</div>
+      <div class="bh-sub">${label}${vsIdx(b.foreignAvgMarketSinceBuy)}</div>
     </div>`;
 
+  const ret = x => since ? x.sinceBuy : x.change;
   const col = (title, items) => `
     <div class="basket-col">
       <h3>${title}</h3>
@@ -473,17 +526,19 @@ function renderBaskets() {
         <div class="basket-item">
           <span class="bi-name">${x.name}<small>${x.market === 'KOSDAQ' ? '코스닥' : ''}</small></span>
           <span class="bi-val">${eok(x.value)}</span>
-          <span class="bi-chg ${dirCls(x.change)}">${x.change >= 0 ? '+' : ''}${x.change}%</span>
+          <span class="bi-chg ${dirCls(ret(x))}">${sgn(ret(x))}%</span>
         </div>`).join('')}
     </div>`;
   $('#basket-grid').innerHTML =
-    col('🐜 개미 순매수 TOP 10', b.antBasket) + col('🦅 외인 순매수 TOP 10', b.foreignBasket);
+    col(`🐜 개미 순매수 TOP ${b.antBasket.length}`, b.antBasket) +
+    col(`🦅 외인 순매수 TOP ${b.foreignBasket.length}`, b.foreignBasket);
 
   const exRow = x => `<div class="row"><span>${x.name}</span>
-    <b class="${dirCls(x.change)}">${x.change >= 0 ? '+' : ''}${x.change}%</b></div>`;
+    <b class="${dirCls(ret(x))}">${sgn(ret(x))}%</b></div>`;
+  const rowsOr = arr => arr.length ? arr.map(exRow).join('') : '<div class="row dim">해당 종목 없음</div>';
   $('#basket-extremes').innerHTML = `
-    <div class="extreme tears"><h3>💧 개미의 눈물 — 담았는데 빠진 종목</h3>${b.tears.map(exRow).join('')}</div>
-    <div class="extreme wins"><h3>🏆 개미의 승리 — 담았고 올랐던 종목</h3>${b.wins.map(exRow).join('')}</div>`;
+    <div class="extreme tears"><h3>💧 개미의 눈물 — 담은 뒤 빠진 종목</h3>${rowsOr(b.tears)}</div>
+    <div class="extreme wins"><h3>🏆 개미의 승리 — 담은 뒤 오른 종목</h3>${rowsOr(b.wins)}</div>`;
 
   $('#basket-note').textContent = b.note;
 }
@@ -498,22 +553,38 @@ function renderFutures() {
   const div = f.divergence;
   const box = $('#fut-divergence');
   if (div) {
-    const spotDir = div.spotForeign >= 0 ? '사고' : '팔고';
-    const futDir = div.futuresForeign >= 0 ? '사는' : '파는';
-    if (!div.aligned) {
+    const state = div.state || (div.aligned ? 'aligned' : 'split');
+    const period = div.from ? `${mdy(div.from)}~${mdy(div.to)}` : `최근 ${div.window}거래일`;
+    const both = `외국인 현물 <b>${eok(div.spotForeign)}</b>, 선물 <b>${sgn(div.futuresForeign, 0)}계약</b>`;
+    const typ = `최근 ${div.typicalDays || 120}거래일 5일 합계의 중앙값`;
+    if (!div.state) {               // 예전 형식: 부호만 비교한 결과라 크기를 말할 근거가 없다
+      box.className = div.aligned ? 'divergence' : 'divergence split';
+      box.innerHTML = `
+        <div class="div-head">${div.aligned ? '현물과 선물이 같은 방향입니다' : '현물과 선물의 방향이 다릅니다'}</div>
+        ${period} ${both}.`;
+    } else if (state === 'split') {
+      const h = div.history;
       box.className = 'divergence split';
       box.innerHTML = `
         <div class="div-head">⚠️ 현물과 선물이 갈립니다</div>
-        최근 ${div.window}거래일, 외국인이 현물은 <b>${eok(div.spotForeign)}</b> ${spotDir}
-        선물은 <b>${div.futuresForeign >= 0 ? '+' : ''}${div.futuresForeign.toLocaleString()}계약</b> ${futDir} 중.
-        선물이 먼저 도는 경우가 많았습니다 — 보이는 매도가 전부가 아닐 수 있습니다.`;
+        ${period} ${both}. 둘 다 평소(${typ})보다 큰 움직임입니다.` +
+        (h ? `<br>과거 같은 모양으로 갈렸던 ${h.n}일(${h.episodes}개 국면)의 20거래일 뒤 코스피는 평균
+              <b class="${dirCls(h.r20)}">${sgn(h.r20)}%</b>, 모든 날 평균은 ${sgn(h.baseline20)}%였습니다.
+              <span class="dim">예측이 아니라 기록입니다.</span>` : '');
+    } else if (state === 'weak') {
+      const small = [];
+      if (div.spotTypical != null && Math.abs(div.spotForeign) < div.spotTypical) small.push(`현물(평소 ${eok(div.spotTypical, { sign: false })})`);
+      if (div.futuresTypical != null && Math.abs(div.futuresForeign) < div.futuresTypical) small.push(`선물(평소 ${div.futuresTypical.toLocaleString()}계약)`);
+      const names = small.map(x => x.split('(')[0]).join('·') || '한쪽';
+      box.className = 'divergence';
+      box.innerHTML = `
+        <div class="div-head">${names} 쪽 움직임이 평소보다 작습니다</div>
+        ${period} ${both}. ${small.join('·') || '한쪽'} — 평소(${typ})에 못 미쳐 갈림·일치를 판단하지 않습니다.`;
     } else {
       box.className = 'divergence';
       box.innerHTML = `
         <div class="div-head">현물과 선물이 같은 방향입니다</div>
-        최근 ${div.window}거래일, 외국인은 현물 <b>${eok(div.spotForeign)}</b>,
-        선물 <b>${div.futuresForeign >= 0 ? '+' : ''}${div.futuresForeign.toLocaleString()}계약</b>.
-        엇갈린 신호는 없습니다.`;
+        ${period} ${both}. 엇갈린 신호는 없습니다.`;
     }
   }
 
@@ -566,7 +637,9 @@ function renderCredit() {
 
   const ln = c.latest.loans || {};
   const mo = c.latest.money || {};
-  const liqHot = mo.liquidation != null && mo.liqAvg20 && mo.liquidation >= mo.liqAvg20 * 2;
+  // 20일 평균의 2배여도 절대 규모가 작으면 경보가 아니다 — 이 기간 반대매매 중 상위 20% 일 때만
+  const liqHot = mo.liquidation != null && mo.liqAvg20 && mo.liquidation >= mo.liqAvg20 * 2 &&
+                 (mo.liqPctl == null || mo.liqPctl >= 80);
 
   $('#credit-stats').innerHTML = `
     <div class="cstat">
@@ -577,7 +650,8 @@ function renderCredit() {
     <div class="cstat ${liqHot ? 'alert' : ''}">
       <div class="cstat-label">반대매매 ${liqHot ? '🔥' : ''}</div>
       <div class="cstat-val ${liqHot ? 'up' : ''}">${eok(mo.liquidation, { sign: false })}</div>
-      <div class="cstat-sub">20일 평균 ${eok(mo.liqAvg20, { sign: false })} · 미수금 대비 ${mo.liqRatio ?? '—'}%</div>
+      <div class="cstat-sub">20일 평균 ${eok(mo.liqAvg20, { sign: false })} · 미수금 대비 ${mo.liqRatio ?? '—'}%` +
+      (mo.liqPctl != null ? ` · ${mo.days}일 중 상위 ${rankTxt(100 - mo.liqPctl)}` : '') + `</div>
     </div>
     <div class="cstat">
       <div class="cstat-label">투자자 예탁금 (대기 자금)</div>
@@ -636,14 +710,28 @@ function renderCredit() {
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   svg.innerHTML = g;
 
-  const trend = ln.d20 == null ? '' : ln.d20 > 0
-    ? `최근 20거래일 새 ${eok(ln.d20)} 늘었습니다. 빚으로 산 물량은 하락장에서 반대매매로 되돌아옵니다.`
-    : `최근 20거래일 새 ${eok(ln.d20)} — 레버리지가 정리되는 중입니다.`;
+  // 순위는 극단일 때만 말한다. 증가·감소를 섞은 백분위를 '증가 쪽 상위 60%'처럼 쓰면 가장 작은 증가도 두드러져 보인다
+  const q = ln.d20Pctl;
+  const fast = q != null && ln.d20 != null && ((ln.d20 > 0 && q >= 90) || (ln.d20 < 0 && q <= 10));
+  const trend = ln.d20 == null ? '' :
+    `최근 20거래일 ${eok(ln.d20)}` +
+    (fast ? ` — 이 기간 20일 변화 가운데 ${ln.d20 > 0 ? '가장 크게 는 쪽' : '가장 크게 준 쪽'} ` +
+            `${rankTxt(ln.d20 > 0 ? 100 - q : q)}.` : '.') +
+    (fast && ln.d20 > 0 ? ' 빚으로 산 물량은 주가가 빠지면 반대매매로 나올 수 있습니다.' : '');
   $('#credit-note').innerHTML =
     `<span style="color:#ffb02e">━</span> 신용융자 잔고 · <span style="opacity:.5">┄</span> 코스피. ${trend}`;
 }
 
-function quip(k, grade) {
+function quip(k, grade, significant) {
+  // 시장 평균과 구분되지 않거나 차이가 작으면 풍자도 하지 않는다 — 숫자가 말하지 않는 걸 말하지 않기
+  if (significant === false) {
+    return '이 표본에서는 시장 평균과 구분되지 않습니다. 잘했다고도, 못했다고도 말하기 어렵습니다.';
+  }
+  if (grade === 'C') {
+    return significant
+      ? '시장 평균과 차이는 있지만 1%p 안쪽으로 작습니다.'
+      : '시장 평균과 거의 같았습니다.';
+  }
   const good = grade === 'A' || grade === 'B';
   if (k === 'individual') {
     return good
@@ -665,8 +753,16 @@ function renderReportCard() {
   const ant = D.ant, base = ant.baseline;
   $('#report-sample').textContent =
     `${ant.sample.from} ~ ${ant.sample.to} · ${ant.sample.days}거래일 · 코스피 기준`;
+  const hasCI = ACTOR_KEYS.some(k => ant.actors[k].excessCI !== undefined);
+  const rule = basisOf(ant) === 'intensity' ? '그날 거래대금 대비 순매수 상위 20%' : '순매수 금액 상위 20%';
+  setText('#report-intro',
+    `각 주체가 크게 사들인 날(${rule})로부터 20거래일 뒤, 코스피 지수가 얼마나 움직였는지를 시장 평균과 비교했습니다. ` +
+    `실제 손익이 아니라 '산 시점'의 채점입니다.` +
+    (hasCI ? ' 차이가 표본의 잡음 범위(90% 범위가 0을 포함) 안이면 C로 둡니다.' : ''));
 
-  const excesses = ACTOR_KEYS.map(k => ant.actors[k].excess20 ?? 0);
+  // 최고·최저 강조는 시장 평균과 구분되는 주체에만 — 잡음끼리 순위를 매기지 않는다
+  const marked = ACTOR_KEYS.filter(k => ant.actors[k].significant !== false);
+  const excesses = marked.map(k => ant.actors[k].excess20 ?? 0);
   const worst = Math.min(...excesses), best = Math.max(...excesses);
 
   const box = $('#grades');
@@ -674,28 +770,29 @@ function renderReportCard() {
   ACTOR_KEYS.forEach(k => {
     const a = ant.actors[k], A = ACTORS[k];
     const ex = a.excess20;
-    const cls = ex === worst ? ' worst' : ex === best ? ' best' : '';
+    const cls = !marked.includes(k) || marked.length < 2 ? '' : ex === worst ? ' worst' : ex === best ? ' best' : '';
     box.appendChild(el('div', `grade-card${cls}`, `
       <div class="grade-top">
         <span class="grade-face">${A.face}</span>
-        <span class="grade-who">${A.name}<small>크게 산 날 ${a.heavyBuy.n}일 기준</small></span>
+        <span class="grade-who">${A.name}<small>크게 산 날 ${a.heavyBuy.n20 ?? a.heavyBuy.n}일 기준</small></span>
         <span class="grade-letter g-${a.grade}">${a.grade}</span>
       </div>
       <div class="grade-rows">
         ${[1, 5, 20].map(h => `
           <div class="grade-row">
             <span>${h}거래일 뒤</span>
-            <b class="${dirCls(a.heavyBuy['r' + h])}">${a.heavyBuy['r' + h] >= 0 ? '+' : ''}${a.heavyBuy['r' + h]}%</b>
+            <b class="${dirCls(a.heavyBuy['r' + h])}">${sgn(a.heavyBuy['r' + h])}%</b>
           </div>`).join('')}
         <div class="grade-row">
-          <span>시장 평균(20일)</span><b class="dim">${base.r20 >= 0 ? '+' : ''}${base.r20}%</b>
+          <span>시장 평균(20일)</span><b class="dim">${sgn(base.r20)}%</b>
         </div>
       </div>
       <div class="grade-excess">
         <span>시장 대비</span>
-        <b class="${dirCls(ex)}">${ex >= 0 ? '+' : ''}${ex}%p</b>
+        <b class="${dirCls(ex)}">${sgn(ex)}%p</b>
       </div>
-      <p class="grade-quip">${quip(k, a.grade)}</p>`));
+      ${a.excessCI ? `<div class="grade-ci">${ciTxt(a.excessCI)}${a.significant ? '' : ' · 0을 포함 → 구분 안 됨'}</div>` : ''}
+      <p class="grade-quip">${quip(k, a.grade, a.significant)}</p>`));
   });
 
   renderTimingChart();
@@ -757,13 +854,18 @@ function renderTimingChart() {
   renderYearly();
 }
 
-/** 연도별 분해 — F학점이 장세 탓인지 실력 탓인지 보여준다 */
+/** 연도별 분해 — 학점이 장세 탓인지 볼 수 있게 한다. 결론 문장도 표의 숫자에서 만든다. */
 function renderYearly() {
   const box = $('#yearly');
   const rows = D.ant.yearly || [];
   if (rows.length < 2) { box.innerHTML = ''; return; }
 
   const gc = { A: '#4dd4ac', B: '#4dd4ac', C: '#7a869e', D: '#ffb02e', F: '#ff4d4d' };
+  const worst = rows.reduce((a, b) => b.excess < a.excess ? b : a);
+  const best = rows.reduce((a, b) => b.excess > a.excess ? b : a);
+  const corrs = rows.map(y => y.corrIF);
+  const hasCI = rows.some(y => y.excessCI);
+  const sig = rows.filter(y => y.significant);
   box.innerHTML = `
     <table>
       <thead><tr>
@@ -774,17 +876,21 @@ function renderYearly() {
         <tr>
           <td>${y.year}</td>
           <td>${y.corrIF.toFixed(3)}</td>
-          <td class="${dirCls(y.indivHeavyR20)}">${y.indivHeavyR20 >= 0 ? '+' : ''}${y.indivHeavyR20}%</td>
-          <td class="dim">${y.baseline20 >= 0 ? '+' : ''}${y.baseline20}%</td>
-          <td class="${dirCls(y.excess)}">${y.excess >= 0 ? '+' : ''}${y.excess}%p</td>
+          <td class="${dirCls(y.indivHeavyR20)}">${sgn(y.indivHeavyR20)}%</td>
+          <td class="dim">${sgn(y.baseline20)}%</td>
+          <td class="${dirCls(y.excess)}" title="${ciTxt(y.excessCI)}">${sgn(y.excess)}%p</td>
           <td class="yg" style="color:${gc[y.grade] || '#7a869e'}">${y.grade}</td>
         </tr>`).join('')}
       </tbody>
     </table>
     <p class="yearly-note">
       연도별로 쪼개 보면 개미의 성적은 해마다 다릅니다.
-      "개미는 늘 틀린다"보다 정확한 문장은 "개미는 <b>급락하는 해에</b> 유독 크게 틀린다"입니다.
-      반대로 가는 습관(상관계수)은 매년 그대로인데, 그 습관의 값이 해마다 다르게 청구되는 셈입니다.
+      격차가 가장 나빴던 해는 <b>${worst.year}년</b>(${sgn(worst.excess)}%p, 그해 시장 평균 ${sgn(worst.baseline20)}%),
+      가장 좋았던 해는 <b>${best.year}년</b>(${sgn(best.excess)}%p, 그해 시장 평균 ${sgn(best.baseline20)}%)입니다.
+      ${hasCI ? (sig.length
+        ? `시장 평균과 통계적으로 구분되는 해는 ${sig.map(y => y.year).join('·')}년입니다.`
+        : '다만 어느 해도 시장 평균과 통계적으로 구분되지는 않습니다.') : ''}
+      반대로 가는 습관(상관계수 ${Math.min(...corrs).toFixed(2)} ~ ${Math.max(...corrs).toFixed(2)})은 해마다 비슷합니다.
     </p>`;
 }
 
@@ -828,6 +934,9 @@ function renderHall() {
   }
   const rows = ant.hallOfFame;
   const max = Math.max(...rows.map(r => Math.abs(r.return20)), 1);
+  setText('#hall-sub', rows[0].intensity != null
+    ? '거래대금 대비 순매수 기준 · 서로 다른 국면 · 20거래일 뒤 벌어진 일'
+    : '순매수 금액 기준 · 그리고 20거래일 뒤 벌어진 일');
 
   box.innerHTML = '';
   rows.forEach((r, i) => {
@@ -839,24 +948,27 @@ function renderHall() {
         <div class="hall-bar" style="background:${bad ? '#4d94ff' : '#ff4d4d'};
              ${bad ? `left:${50 - half}%` : 'left:50%'}"></div>
       </div>
-      <div class="hall-amt">개미 ${eok(r.amount)} 매수</div>
-      <div class="hall-ret ${dirCls(r.return20)}">${r.return20 >= 0 ? '+' : ''}${r.return20}%</div>`);
+      <div class="hall-amt">개미 ${eok(r.amount)} 매수${r.intensity != null ? ` · 거래대금의 ${r.intensity.toFixed(1)}%` : ''}</div>
+      <div class="hall-ret ${dirCls(r.return20)}">${sgn(r.return20)}%</div>`);
     box.appendChild(node);
     growIn(() => { $('.hall-bar', node).style.width = `${Math.max(half, 0.6)}%`; }, 70 + i * 65);
   });
 
-  const losses = rows.filter(r => r.return20 < 0).length;
-  const wins = rows.length - losses;
-  const avg = rows.reduce((s, r) => s + r.return20, 0) / rows.length;
+  // 오르기만 해도 '맞았다'고 세면 상승장에서는 누구나 맞는다 — 시장 평균과 견준다
+  const n = rows.length;
+  const base = ant.baseline.r20;
+  const up = rows.filter(r => r.return20 > 0).length;
+  const beat = rows.filter(r => r.return20 > base).length;
+  const avg = rows.reduce((s, r) => s + r.return20, 0) / n;
+  const apart = rows[0].intensity !== undefined ? '(서로 다른 국면)' : '';
+  const punch = beat <= 1 ? '크게 지른 날의 뒤끝은 대체로 평균만 못했습니다.'
+              : beat >= n - 1 ? '"개미는 항상 틀린다"는 말이 항상 맞지는 않습니다.'
+              : '맞은 날도, 틀린 날도 있었습니다.';
   $('#hall-verdict').hidden = false;
-  $('#hall-verdict').innerHTML = losses > wins
-    ? `개미가 가장 크게 질렀던 ${rows.length}번 중 <b>${losses}번이 손실</b>로 끝났습니다.
-       평균 ${avg >= 0 ? '+' : ''}${avg.toFixed(2)}%.
-       다만 ${wins}번은 잘 맞았다는 뜻이기도 합니다. 늘 틀리는 건 아닙니다, 자주 틀릴 뿐입니다.`
-    : `의외로 ${rows.length}번 중 <b>${wins}번은 맞았습니다.</b>
-       평균 ${avg >= 0 ? '+' : ''}${avg.toFixed(2)}%.
-       "개미는 항상 틀린다"는 말이 항상 맞지는 않습니다.
-       크게 지른 날 ${losses}번은 아팠지만, 나머지는 버텨냈습니다.`;
+  $('#hall-verdict').innerHTML =
+    `개미가 가장 강하게 질렀던 ${n}번${apart}, 20거래일 뒤 지수가 오른 건 ${up}번,
+     시장 평균(${sgn(base)}%)보다 좋았던 건 <b>${beat}번</b>입니다. 평균 ${sgn(avg)}%.
+     ${punch} 다만 ${n}번은 통계가 아니라 일화입니다.`;
 }
 
 function renderCaveats() {
@@ -1326,7 +1438,10 @@ function renderGlobals() {
 
 function renderEvents() {
   const box = $('#events');
-  const list = D.events.upcoming || [];
+  const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);   // KST
+  const dday = e => Math.round((Date.parse(e.date) - Date.parse(today)) / 864e5);
+  const list = (D.events.upcoming || []).map(e => ({ ...e, dday: e.date ? dday(e) : e.dday }))
+                                        .filter(e => e.dday == null || e.dday >= 0);
   box.innerHTML = '';
   if (!list.length) { box.innerHTML = '<p class="dim">예정된 이벤트가 없습니다.</p>'; return; }
 
