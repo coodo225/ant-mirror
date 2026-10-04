@@ -814,8 +814,15 @@
  },
  "divergence": {
   "window": 5,
+  "from": "2026-09-28",
+  "to": "2026-10-02",
   "spotForeign": -89888.0,
   "futuresForeign": -2911,
-  "aligned": true
+  "spotTypical": 50314.0,
+  "futuresTypical": 6474,
+  "typicalDays": 120,
+  "state": "weak",
+  "aligned": true,
+  "history": null
  }
 }

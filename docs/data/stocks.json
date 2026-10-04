@@ -10,6 +10,7 @@
    "marketCap": 16135729.0,
    "tradingValue": 3141812.0,
    "marketCapText": "1,613조 5,729억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -17,7 +18,11 @@
     "indivValue": -60544.7,
     "foreignValue": -83038.1,
     "instValue": -1173.1,
-    "change": -6.76
+    "change": -6.76,
+    "indivSinceBuy": 9.25,
+    "foreignSinceBuy": 3.91,
+    "indivMarketSinceBuy": 5.01,
+    "foreignMarketSinceBuy": 2.8
    },
    "flow": [
     {
@@ -68,6 +73,7 @@
    "marketCap": 13455669.0,
    "tradingValue": 3707834.0,
    "marketCapText": "1,345조 5,669억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -75,7 +81,11 @@
     "indivValue": -73240.3,
     "foreignValue": -218693.3,
     "instValue": -35803.3,
-    "change": -16.31
+    "change": -16.31,
+    "indivSinceBuy": 8.56,
+    "foreignSinceBuy": 6.3,
+    "indivMarketSinceBuy": 5.85,
+    "foreignMarketSinceBuy": 3.63
    },
    "flow": [
     {
@@ -126,6 +136,7 @@
    "marketCap": 1616778.0,
    "tradingValue": 509257.0,
    "marketCapText": "161조 6,778억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -133,7 +144,11 @@
     "indivValue": 10563.5,
     "foreignValue": -19106.1,
     "instValue": 7030.6,
-    "change": 1.1
+    "change": 1.1,
+    "indivSinceBuy": 6.57,
+    "foreignSinceBuy": 6.39,
+    "indivMarketSinceBuy": 3.56,
+    "foreignMarketSinceBuy": 4.11
    },
    "flow": [
     {
@@ -184,6 +199,7 @@
    "marketCap": 1525041.0,
    "tradingValue": 399905.0,
    "marketCapText": "152조 5,041억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -191,7 +207,11 @@
     "indivValue": -4285.0,
     "foreignValue": 22090.7,
     "instValue": -17815.9,
-    "change": -14.75
+    "change": -14.75,
+    "indivSinceBuy": 9.54,
+    "foreignSinceBuy": 8.03,
+    "indivMarketSinceBuy": 5.25,
+    "foreignMarketSinceBuy": 5.26
    },
    "flow": [
     {
@@ -242,6 +262,7 @@
    "marketCap": 1177920.0,
    "tradingValue": 750887.0,
    "marketCapText": "117조 7,920억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -249,7 +270,11 @@
     "indivValue": 9731.3,
     "foreignValue": -11167.3,
     "instValue": 946.2,
-    "change": -4.31
+    "change": -4.31,
+    "indivSinceBuy": 18.32,
+    "foreignSinceBuy": 11.42,
+    "indivMarketSinceBuy": 4.98,
+    "foreignMarketSinceBuy": 1.22
    },
    "flow": [
     {
@@ -300,6 +325,7 @@
    "marketCap": 863460.0,
    "tradingValue": 77081.0,
    "marketCapText": "86조 3,460억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -307,7 +333,11 @@
     "indivValue": -1465.9,
     "foreignValue": -463.4,
     "instValue": 3840.2,
-    "change": 11.14
+    "change": 11.14,
+    "indivSinceBuy": 7.66,
+    "foreignSinceBuy": 5.44,
+    "indivMarketSinceBuy": 0.68,
+    "foreignMarketSinceBuy": 3.17
    },
    "flow": [
     {
@@ -358,6 +388,7 @@
    "marketCap": 706029.0,
    "tradingValue": 155942.0,
    "marketCapText": "70조 6,029억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -365,7 +396,11 @@
     "indivValue": 10454.2,
     "foreignValue": -2339.5,
     "instValue": -7885.0,
-    "change": -27.63
+    "change": -27.63,
+    "indivSinceBuy": -10.76,
+    "foreignSinceBuy": -15.32,
+    "indivMarketSinceBuy": 3.14,
+    "foreignMarketSinceBuy": 4.15
    },
    "flow": [
     {
@@ -416,6 +451,7 @@
    "marketCap": 632334.0,
    "tradingValue": 70455.0,
    "marketCapText": "63조 2,334억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -423,7 +459,11 @@
     "indivValue": -3596.9,
     "foreignValue": 2436.7,
     "instValue": 1302.5,
-    "change": -3.94
+    "change": -3.94,
+    "indivSinceBuy": -4.53,
+    "foreignSinceBuy": -8.58,
+    "indivMarketSinceBuy": 2.72,
+    "foreignMarketSinceBuy": 3.66
    },
    "flow": [
     {
@@ -474,6 +514,7 @@
    "marketCap": 597294.0,
    "tradingValue": 94449.0,
    "marketCapText": "59조 7,294억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -481,7 +522,11 @@
     "indivValue": -589.7,
     "foreignValue": -5709.9,
     "instValue": 6572.4,
-    "change": -2.77
+    "change": -2.77,
+    "indivSinceBuy": 0.21,
+    "foreignSinceBuy": -2.92,
+    "indivMarketSinceBuy": 5.32,
+    "foreignMarketSinceBuy": 1.4
    },
    "flow": [
     {
@@ -532,6 +577,7 @@
    "marketCap": 576000.0,
    "tradingValue": 52261.0,
    "marketCapText": "57조 6,000억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -539,7 +585,11 @@
     "indivValue": 552.5,
     "foreignValue": 543.7,
     "instValue": -1127.8,
-    "change": -23.2
+    "change": -23.2,
+    "indivSinceBuy": 0.1,
+    "foreignSinceBuy": -7.49,
+    "indivMarketSinceBuy": 4.92,
+    "foreignMarketSinceBuy": 3.66
    },
    "flow": [
     {
@@ -590,6 +640,7 @@
    "marketCap": 562722.0,
    "tradingValue": 76746.0,
    "marketCapText": "56조 2,722억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -597,7 +648,11 @@
     "indivValue": -1450.6,
     "foreignValue": 816.1,
     "instValue": 674.0,
-    "change": -18.26
+    "change": -18.26,
+    "indivSinceBuy": -2.35,
+    "foreignSinceBuy": -1.27,
+    "indivMarketSinceBuy": 3.25,
+    "foreignMarketSinceBuy": 4.15
    },
    "flow": [
     {
@@ -648,6 +703,7 @@
    "marketCap": 551213.0,
    "tradingValue": 111119.0,
    "marketCapText": "55조 1,213억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -655,7 +711,11 @@
     "indivValue": 23.0,
     "foreignValue": -197.8,
     "instValue": 152.4,
-    "change": -4.72
+    "change": -4.72,
+    "indivSinceBuy": 3.08,
+    "foreignSinceBuy": 2.31,
+    "indivMarketSinceBuy": 2.22,
+    "foreignMarketSinceBuy": 1.87
    },
    "flow": [
     {
@@ -706,6 +766,7 @@
    "marketCap": 521417.0,
    "tradingValue": 146445.0,
    "marketCapText": "52조 1,417억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -713,7 +774,11 @@
     "indivValue": 5645.9,
     "foreignValue": -8505.9,
     "instValue": 2831.9,
-    "change": -0.25
+    "change": -0.25,
+    "indivSinceBuy": 0.76,
+    "foreignSinceBuy": 12.27,
+    "indivMarketSinceBuy": 2.18,
+    "foreignMarketSinceBuy": 3.67
    },
    "flow": [
     {
@@ -764,6 +829,7 @@
    "marketCap": 497148.0,
    "tradingValue": 75394.0,
    "marketCapText": "49조 7,148억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -771,7 +837,11 @@
     "indivValue": -1167.1,
     "foreignValue": -3667.7,
     "instValue": 5701.7,
-    "change": -2.49
+    "change": -2.49,
+    "indivSinceBuy": -0.1,
+    "foreignSinceBuy": 0.39,
+    "indivMarketSinceBuy": 3.91,
+    "foreignMarketSinceBuy": 1.69
    },
    "flow": [
     {
@@ -822,6 +892,7 @@
    "marketCap": 447135.0,
    "tradingValue": 90496.0,
    "marketCapText": "44조 7,135억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -829,7 +900,11 @@
     "indivValue": 1375.6,
     "foreignValue": 901.5,
     "instValue": -2210.1,
-    "change": -22.83
+    "change": -22.83,
+    "indivSinceBuy": -7.94,
+    "foreignSinceBuy": -10.72,
+    "indivMarketSinceBuy": 2.32,
+    "foreignMarketSinceBuy": 1.96
    },
    "flow": [
     {
@@ -880,6 +955,7 @@
    "marketCap": 441948.0,
    "tradingValue": 87568.0,
    "marketCapText": "44조 1,948억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -887,7 +963,11 @@
     "indivValue": 1520.9,
     "foreignValue": 2083.0,
     "instValue": -3303.0,
-    "change": -26.35
+    "change": -26.35,
+    "indivSinceBuy": -10.06,
+    "foreignSinceBuy": -16.06,
+    "indivMarketSinceBuy": 2.65,
+    "foreignMarketSinceBuy": 4.17
    },
    "flow": [
     {
@@ -938,6 +1018,7 @@
    "marketCap": 426297.0,
    "tradingValue": 123515.0,
    "marketCapText": "42조 6,297억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -945,7 +1026,11 @@
     "indivValue": -1934.0,
     "foreignValue": -2432.7,
     "instValue": 4263.9,
-    "change": 18.88
+    "change": 18.88,
+    "indivSinceBuy": 8.09,
+    "foreignSinceBuy": 10.96,
+    "indivMarketSinceBuy": 4.25,
+    "foreignMarketSinceBuy": 1.99
    },
    "flow": [
     {
@@ -996,6 +1081,7 @@
    "marketCap": 424759.0,
    "tradingValue": 55278.0,
    "marketCapText": "42조 4,759억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1003,7 +1089,11 @@
     "indivValue": -5147.9,
     "foreignValue": 2122.0,
     "instValue": 1475.2,
-    "change": 2.47
+    "change": 2.47,
+    "indivSinceBuy": -1.94,
+    "foreignSinceBuy": -3.53,
+    "indivMarketSinceBuy": 3.36,
+    "foreignMarketSinceBuy": 4.34
    },
    "flow": [
     {
@@ -1054,6 +1144,7 @@
    "marketCap": 419066.0,
    "tradingValue": 51764.0,
    "marketCapText": "41조 9,066억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1061,7 +1152,11 @@
     "indivValue": -2519.1,
     "foreignValue": 2827.4,
     "instValue": -362.0,
-    "change": -7.67
+    "change": -7.67,
+    "indivSinceBuy": 2.18,
+    "foreignSinceBuy": 2.06,
+    "indivMarketSinceBuy": 4.39,
+    "foreignMarketSinceBuy": 4.32
    },
    "flow": [
     {
@@ -1112,6 +1207,7 @@
    "marketCap": 351177.0,
    "tradingValue": 51018.0,
    "marketCapText": "35조 1,177억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1119,7 +1215,11 @@
     "indivValue": -1121.2,
     "foreignValue": -1923.2,
     "instValue": 3130.9,
-    "change": 2.13
+    "change": 2.13,
+    "indivSinceBuy": -0.28,
+    "foreignSinceBuy": -2.43,
+    "indivMarketSinceBuy": 3.96,
+    "foreignMarketSinceBuy": 2.38
    },
    "flow": [
     {
@@ -1170,6 +1270,7 @@
    "marketCap": 351016.0,
    "tradingValue": 84473.0,
    "marketCapText": "35조 1,016억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1177,7 +1278,11 @@
     "indivValue": -8091.6,
     "foreignValue": 3452.1,
     "instValue": 3873.0,
-    "change": 13.96
+    "change": 13.96,
+    "indivSinceBuy": 14.77,
+    "foreignSinceBuy": 9.99,
+    "indivMarketSinceBuy": 3.02,
+    "foreignMarketSinceBuy": 3.44
    },
    "flow": [
     {
@@ -1228,6 +1333,7 @@
    "marketCap": 346258.0,
    "tradingValue": 62055.0,
    "marketCapText": "34조 6,258억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1235,7 +1341,11 @@
     "indivValue": 1365.0,
     "foreignValue": 3789.6,
     "instValue": -5614.5,
-    "change": -22.12
+    "change": -22.12,
+    "indivSinceBuy": -12.44,
+    "foreignSinceBuy": -16.29,
+    "indivMarketSinceBuy": 2.95,
+    "foreignMarketSinceBuy": 3.63
    },
    "flow": [
     {
@@ -1286,6 +1396,7 @@
    "marketCap": 313500.0,
    "tradingValue": 60402.0,
    "marketCapText": "31조 3,500억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1293,7 +1404,11 @@
     "indivValue": -1896.2,
     "foreignValue": 3472.7,
     "instValue": -1460.1,
-    "change": 1.46
+    "change": 1.46,
+    "indivSinceBuy": 7.06,
+    "foreignSinceBuy": 4.52,
+    "indivMarketSinceBuy": 4.3,
+    "foreignMarketSinceBuy": 3.52
    },
    "flow": [
     {
@@ -1344,6 +1459,7 @@
    "marketCap": 292325.0,
    "tradingValue": 83707.0,
    "marketCapText": "29조 2,325억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1351,7 +1467,11 @@
     "indivValue": -49.2,
     "foreignValue": -581.3,
     "instValue": 816.3,
-    "change": -2.54
+    "change": -2.54,
+    "indivSinceBuy": -5.77,
+    "foreignSinceBuy": -6.46,
+    "indivMarketSinceBuy": 2.72,
+    "foreignMarketSinceBuy": 2.85
    },
    "flow": [
     {
@@ -1402,6 +1522,7 @@
    "marketCap": 280833.0,
    "tradingValue": 25975.0,
    "marketCapText": "28조 833억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1409,7 +1530,11 @@
     "indivValue": -206.2,
     "foreignValue": -2027.6,
     "instValue": 2228.5,
-    "change": -7.77
+    "change": -7.77,
+    "indivSinceBuy": -0.79,
+    "foreignSinceBuy": -0.9,
+    "indivMarketSinceBuy": 2.71,
+    "foreignMarketSinceBuy": 4.21
    },
    "flow": [
     {
@@ -1460,6 +1585,7 @@
    "marketCap": 260155.0,
    "tradingValue": 68266.0,
    "marketCapText": "26조 155억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1467,7 +1593,11 @@
     "indivValue": 708.0,
     "foreignValue": 1720.8,
     "instValue": -2367.7,
-    "change": -3.86
+    "change": -3.86,
+    "indivSinceBuy": 1.28,
+    "foreignSinceBuy": 4.08,
+    "indivMarketSinceBuy": 4.39,
+    "foreignMarketSinceBuy": 4.96
    },
    "flow": [
     {
@@ -1518,6 +1648,7 @@
    "marketCap": 259249.0,
    "tradingValue": 180895.0,
    "marketCapText": "25조 9,249억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1525,7 +1656,11 @@
     "indivValue": -5958.2,
     "foreignValue": 1788.8,
     "instValue": 4206.0,
-    "change": 29.22
+    "change": 29.22,
+    "indivSinceBuy": 24.0,
+    "foreignSinceBuy": 20.3,
+    "indivMarketSinceBuy": 3.42,
+    "foreignMarketSinceBuy": 3.35
    },
    "flow": [
     {
@@ -1576,6 +1711,7 @@
    "marketCap": 258859.0,
    "tradingValue": 2744610.0,
    "marketCapText": "25조 8,859억원",
+   "type": "etf",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1583,7 +1719,11 @@
     "indivValue": -2865.3,
     "foreignValue": 5607.1,
     "instValue": -3177.1,
-    "change": -9.42
+    "change": -9.42,
+    "indivSinceBuy": 7.87,
+    "foreignSinceBuy": 5.19,
+    "indivMarketSinceBuy": 7.08,
+    "foreignMarketSinceBuy": 4.58
    },
    "flow": [
     {
@@ -1634,6 +1774,7 @@
    "marketCap": 255777.0,
    "tradingValue": 179137.0,
    "marketCapText": "25조 5,777억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1641,7 +1782,11 @@
     "indivValue": -9480.3,
     "foreignValue": 4564.7,
     "instValue": 6402.0,
-    "change": 45.76
+    "change": 45.76,
+    "indivSinceBuy": 28.12,
+    "foreignSinceBuy": 12.64,
+    "indivMarketSinceBuy": 3.34,
+    "foreignMarketSinceBuy": 2.15
    },
    "flow": [
     {
@@ -1692,6 +1837,7 @@
    "marketCap": 248665.0,
    "tradingValue": 98181.0,
    "marketCapText": "24조 8,665억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1699,7 +1845,11 @@
     "indivValue": -2630.8,
     "foreignValue": 11255.0,
     "instValue": 2972.2,
-    "change": 6.97
+    "change": 6.97,
+    "indivSinceBuy": 1.5,
+    "foreignSinceBuy": -0.77,
+    "indivMarketSinceBuy": 2.84,
+    "foreignMarketSinceBuy": 2.76
    },
    "flow": [
     {
@@ -1750,6 +1900,7 @@
    "marketCap": 246837.0,
    "tradingValue": 51991.0,
    "marketCapText": "24조 6,837억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1757,7 +1908,11 @@
     "indivValue": -347.3,
     "foreignValue": 557.4,
     "instValue": -115.9,
-    "change": -1.27
+    "change": -1.27,
+    "indivSinceBuy": -1.81,
+    "foreignSinceBuy": -1.5,
+    "indivMarketSinceBuy": 3.45,
+    "foreignMarketSinceBuy": 2.1
    },
    "flow": [
     {
@@ -1808,6 +1963,7 @@
    "marketCap": 244400.0,
    "tradingValue": 70314.0,
    "marketCapText": "24조 4,400억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1815,7 +1971,11 @@
     "indivValue": 1279.7,
     "foreignValue": 127.3,
     "instValue": -1396.1,
-    "change": -24.58
+    "change": -24.58,
+    "indivSinceBuy": -5.37,
+    "foreignSinceBuy": -9.02,
+    "indivMarketSinceBuy": 5.28,
+    "foreignMarketSinceBuy": 4.01
    },
    "flow": [
     {
@@ -1866,6 +2026,7 @@
    "marketCap": 241147.0,
    "tradingValue": 41917.0,
    "marketCapText": "24조 1,147억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1873,7 +2034,11 @@
     "indivValue": 1736.6,
     "foreignValue": -118.1,
     "instValue": -1696.4,
-    "change": -12.36
+    "change": -12.36,
+    "indivSinceBuy": -7.22,
+    "foreignSinceBuy": -8.66,
+    "indivMarketSinceBuy": 1.05,
+    "foreignMarketSinceBuy": 6.46
    },
    "flow": [
     {
@@ -1924,6 +2089,7 @@
    "marketCap": 231074.0,
    "tradingValue": 31391.0,
    "marketCapText": "23조 1,074억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1931,7 +2097,11 @@
     "indivValue": -508.4,
     "foreignValue": -243.6,
     "instValue": 747.2,
-    "change": -9.43
+    "change": -9.43,
+    "indivSinceBuy": -7.22,
+    "foreignSinceBuy": -9.4,
+    "indivMarketSinceBuy": 4.32,
+    "foreignMarketSinceBuy": 0.97
    },
    "flow": [
     {
@@ -1982,6 +2152,7 @@
    "marketCap": 226054.0,
    "tradingValue": 10389.0,
    "marketCapText": "22조 6,054억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -1989,7 +2160,11 @@
     "indivValue": 146.2,
     "foreignValue": -1469.7,
     "instValue": 1283.1,
-    "change": -1.01
+    "change": -1.01,
+    "indivSinceBuy": -7.07,
+    "foreignSinceBuy": -4.84,
+    "indivMarketSinceBuy": 4.11,
+    "foreignMarketSinceBuy": 1.84
    },
    "flow": [
     {
@@ -2040,6 +2215,7 @@
    "marketCap": 216674.0,
    "tradingValue": 201210.0,
    "marketCapText": "21조 6,674억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2047,7 +2223,11 @@
     "indivValue": 2872.7,
     "foreignValue": -4562.5,
     "instValue": 1599.4,
-    "change": 1.36
+    "change": 1.36,
+    "indivSinceBuy": 3.21,
+    "foreignSinceBuy": 10.84,
+    "indivMarketSinceBuy": 2.57,
+    "foreignMarketSinceBuy": 2.65
    },
    "flow": [
     {
@@ -2098,6 +2278,7 @@
    "marketCap": 215543.0,
    "tradingValue": 12068.0,
    "marketCapText": "21조 5,543억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2105,7 +2286,11 @@
     "indivValue": -2671.7,
     "foreignValue": -366.1,
     "instValue": 3116.1,
-    "change": 12.59
+    "change": 12.59,
+    "indivSinceBuy": 6.48,
+    "foreignSinceBuy": 7.68,
+    "indivMarketSinceBuy": 3.65,
+    "foreignMarketSinceBuy": 1.56
    },
    "flow": [
     {
@@ -2156,6 +2341,7 @@
    "marketCap": 208251.0,
    "tradingValue": 924967.0,
    "marketCapText": "20조 8,251억원",
+   "type": "etf",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2163,7 +2349,11 @@
     "indivValue": 16529.7,
     "foreignValue": 289.2,
     "instValue": -17032.3,
-    "change": -9.62
+    "change": -9.62,
+    "indivSinceBuy": -3.53,
+    "foreignSinceBuy": -2.88,
+    "indivMarketSinceBuy": 3.19,
+    "foreignMarketSinceBuy": 4.5
    },
    "flow": [
     {
@@ -2214,6 +2404,7 @@
    "marketCap": 201853.0,
    "tradingValue": 16762.0,
    "marketCapText": "20조 1,853억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2221,7 +2412,11 @@
     "indivValue": -3005.9,
     "foreignValue": 1823.0,
     "instValue": 1198.6,
-    "change": 9.18
+    "change": 9.18,
+    "indivSinceBuy": 1.68,
+    "foreignSinceBuy": 1.06,
+    "indivMarketSinceBuy": 3.23,
+    "foreignMarketSinceBuy": 4.75
    },
    "flow": [
     {
@@ -2272,6 +2467,7 @@
    "marketCap": 193231.0,
    "tradingValue": 19383.0,
    "marketCapText": "19조 3,231억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2279,7 +2475,11 @@
     "indivValue": 2559.8,
     "foreignValue": -330.0,
     "instValue": -2421.5,
-    "change": -21.2
+    "change": -21.2,
+    "indivSinceBuy": -6.68,
+    "foreignSinceBuy": -11.58,
+    "indivMarketSinceBuy": 2.75,
+    "foreignMarketSinceBuy": 4.39
    },
    "flow": [
     {
@@ -2330,6 +2530,7 @@
    "marketCap": 190304.0,
    "tradingValue": 50835.0,
    "marketCapText": "19조 304억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2337,7 +2538,11 @@
     "indivValue": 1754.7,
     "foreignValue": -5946.1,
     "instValue": 4125.4,
-    "change": 3.99
+    "change": 3.99,
+    "indivSinceBuy": -4.27,
+    "foreignSinceBuy": 1.08,
+    "indivMarketSinceBuy": 5.02,
+    "foreignMarketSinceBuy": 0.77
    },
    "flow": [
     {
@@ -2388,6 +2593,7 @@
    "marketCap": 185649.0,
    "tradingValue": 75789.0,
    "marketCapText": "18조 5,649억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2395,7 +2601,11 @@
     "indivValue": -4254.4,
     "foreignValue": 249.6,
     "instValue": 3918.0,
-    "change": 29.43
+    "change": 29.43,
+    "indivSinceBuy": 16.72,
+    "foreignSinceBuy": 13.0,
+    "indivMarketSinceBuy": 3.1,
+    "foreignMarketSinceBuy": 1.83
    },
    "flow": [
     {
@@ -2446,6 +2656,7 @@
    "marketCap": 184952.0,
    "tradingValue": 33542.0,
    "marketCapText": "18조 4,952억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2453,7 +2664,11 @@
     "indivValue": -9.2,
     "foreignValue": -813.8,
     "instValue": 831.3,
-    "change": -1.32
+    "change": -1.32,
+    "indivSinceBuy": 0.5,
+    "foreignSinceBuy": 1.54,
+    "indivMarketSinceBuy": 2.88,
+    "foreignMarketSinceBuy": 4.59
    },
    "flow": [
     {
@@ -2504,6 +2719,7 @@
    "marketCap": 183537.0,
    "tradingValue": 25739.0,
    "marketCapText": "18조 3,537억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2511,7 +2727,11 @@
     "indivValue": 31.2,
     "foreignValue": 118.5,
     "instValue": -651.0,
-    "change": -3.6
+    "change": -3.6,
+    "indivSinceBuy": 1.38,
+    "foreignSinceBuy": 1.61,
+    "indivMarketSinceBuy": 3.42,
+    "foreignMarketSinceBuy": 1.57
    },
    "flow": [
     {
@@ -2562,6 +2782,7 @@
    "marketCap": 175296.0,
    "tradingValue": 38119.0,
    "marketCapText": "17조 5,296억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2569,7 +2790,11 @@
     "indivValue": 1213.0,
     "foreignValue": -806.4,
     "instValue": -456.2,
-    "change": -11.27
+    "change": -11.27,
+    "indivSinceBuy": -3.85,
+    "foreignSinceBuy": -5.77,
+    "indivMarketSinceBuy": 3.29,
+    "foreignMarketSinceBuy": 4.38
    },
    "flow": [
     {
@@ -2620,6 +2845,7 @@
    "marketCap": 171595.0,
    "tradingValue": 20249.0,
    "marketCapText": "17조 1,595억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2627,7 +2853,11 @@
     "indivValue": -1405.5,
     "foreignValue": 3922.9,
     "instValue": -2511.7,
-    "change": -25.82
+    "change": -25.82,
+    "indivSinceBuy": -8.4,
+    "foreignSinceBuy": -11.65,
+    "indivMarketSinceBuy": 4.53,
+    "foreignMarketSinceBuy": 4.66
    },
    "flow": [
     {
@@ -2678,6 +2908,7 @@
    "marketCap": 169457.0,
    "tradingValue": 24356.0,
    "marketCapText": "16조 9,457억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2685,7 +2916,11 @@
     "indivValue": -2862.3,
     "foreignValue": 1390.8,
     "instValue": 1530.3,
-    "change": 6.83
+    "change": 6.83,
+    "indivSinceBuy": 0.5,
+    "foreignSinceBuy": -0.7,
+    "indivMarketSinceBuy": 2.84,
+    "foreignMarketSinceBuy": 1.88
    },
    "flow": [
     {
@@ -2736,6 +2971,7 @@
    "marketCap": 168428.0,
    "tradingValue": 11372.0,
    "marketCapText": "16조 8,428억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2743,7 +2979,11 @@
     "indivValue": -1496.8,
     "foreignValue": 60.3,
     "instValue": 531.1,
-    "change": 8.9
+    "change": 8.9,
+    "indivSinceBuy": 2.69,
+    "foreignSinceBuy": 6.68,
+    "indivMarketSinceBuy": 1.26,
+    "foreignMarketSinceBuy": 5.58
    },
    "flow": [
     {
@@ -2794,6 +3034,7 @@
    "marketCap": 166980.0,
    "tradingValue": 70823.0,
    "marketCapText": "16조 6,980억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2801,7 +3042,11 @@
     "indivValue": -1605.3,
     "foreignValue": 2579.3,
     "instValue": -948.1,
-    "change": -5.01
+    "change": -5.01,
+    "indivSinceBuy": 8.67,
+    "foreignSinceBuy": 2.74,
+    "indivMarketSinceBuy": 2.77,
+    "foreignMarketSinceBuy": 3.29
    },
    "flow": [
     {
@@ -2852,6 +3097,7 @@
    "marketCap": 166152.0,
    "tradingValue": 42448.0,
    "marketCapText": "16조 6,152억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2859,7 +3105,11 @@
     "indivValue": -306.4,
     "foreignValue": -750.9,
     "instValue": 1059.4,
-    "change": 18.08
+    "change": 18.08,
+    "indivSinceBuy": 11.45,
+    "foreignSinceBuy": 14.14,
+    "indivMarketSinceBuy": 5.05,
+    "foreignMarketSinceBuy": 2.95
    },
    "flow": [
     {
@@ -2910,6 +3160,7 @@
    "marketCap": 161877.0,
    "tradingValue": 11838.0,
    "marketCapText": "16조 1,877억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2917,7 +3168,11 @@
     "indivValue": 86.0,
     "foreignValue": -226.5,
     "instValue": 159.6,
-    "change": -4.92
+    "change": -4.92,
+    "indivSinceBuy": 0.27,
+    "foreignSinceBuy": -2.12,
+    "indivMarketSinceBuy": 4.51,
+    "foreignMarketSinceBuy": 1.77
    },
    "flow": [
     {
@@ -2968,6 +3223,7 @@
    "marketCap": 158381.0,
    "tradingValue": 29590.0,
    "marketCapText": "15조 8,381억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -2975,7 +3231,11 @@
     "indivValue": -35.0,
     "foreignValue": -1004.3,
     "instValue": 997.8,
-    "change": -4.75
+    "change": -4.75,
+    "indivSinceBuy": -5.41,
+    "foreignSinceBuy": -4.05,
+    "indivMarketSinceBuy": 2.59,
+    "foreignMarketSinceBuy": -1.31
    },
    "flow": [
     {
@@ -3026,6 +3286,7 @@
    "marketCap": 154914.0,
    "tradingValue": 76195.0,
    "marketCapText": "15조 4,914억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3033,7 +3294,11 @@
     "indivValue": -923.1,
     "foreignValue": 266.5,
     "instValue": 650.4,
-    "change": 16.48
+    "change": 16.48,
+    "indivSinceBuy": 16.23,
+    "foreignSinceBuy": 21.38,
+    "indivMarketSinceBuy": 2.38,
+    "foreignMarketSinceBuy": 4.4
    },
    "flow": [
     {
@@ -3084,6 +3349,7 @@
    "marketCap": 150750.0,
    "tradingValue": 18029.0,
    "marketCapText": "15조 750억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3091,7 +3357,11 @@
     "indivValue": -1341.0,
     "foreignValue": 1217.4,
     "instValue": 171.3,
-    "change": 2.5
+    "change": 2.5,
+    "indivSinceBuy": 0.66,
+    "foreignSinceBuy": 0.97,
+    "indivMarketSinceBuy": 3.69,
+    "foreignMarketSinceBuy": 1.65
    },
    "flow": [
     {
@@ -3142,6 +3412,7 @@
    "marketCap": 147962.0,
    "tradingValue": 38708.0,
    "marketCapText": "14조 7,962억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3149,7 +3420,11 @@
     "indivValue": -485.6,
     "foreignValue": 1096.1,
     "instValue": -557.1,
-    "change": -5.65
+    "change": -5.65,
+    "indivSinceBuy": -6.93,
+    "foreignSinceBuy": -9.14,
+    "indivMarketSinceBuy": 2.43,
+    "foreignMarketSinceBuy": 4.55
    },
    "flow": [
     {
@@ -3200,6 +3475,7 @@
    "marketCap": 137398.0,
    "tradingValue": 64579.0,
    "marketCapText": "13조 7,398억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3207,7 +3483,11 @@
     "indivValue": 252.5,
     "foreignValue": 1561.8,
     "instValue": -1884.4,
-    "change": -10.49
+    "change": -10.49,
+    "indivSinceBuy": -0.73,
+    "foreignSinceBuy": -3.82,
+    "indivMarketSinceBuy": 1.76,
+    "foreignMarketSinceBuy": 2.68
    },
    "flow": [
     {
@@ -3258,6 +3538,7 @@
    "marketCap": 135849.0,
    "tradingValue": 89319.0,
    "marketCapText": "13조 5,849억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3265,7 +3546,11 @@
     "indivValue": 2225.6,
     "foreignValue": 6304.7,
     "instValue": -8573.7,
-    "change": -29.48
+    "change": -29.48,
+    "indivSinceBuy": -1.56,
+    "foreignSinceBuy": -10.21,
+    "indivMarketSinceBuy": 2.85,
+    "foreignMarketSinceBuy": 1.58
    },
    "flow": [
     {
@@ -3316,6 +3601,7 @@
    "marketCap": 131051.0,
    "tradingValue": 8104.0,
    "marketCapText": "13조 1,051억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3323,7 +3609,11 @@
     "indivValue": -339.3,
     "foreignValue": -90.6,
     "instValue": 473.8,
-    "change": -6.31
+    "change": -6.31,
+    "indivSinceBuy": -1.13,
+    "foreignSinceBuy": -1.38,
+    "indivMarketSinceBuy": 2.07,
+    "foreignMarketSinceBuy": 3.29
    },
    "flow": [
     {
@@ -3374,6 +3664,7 @@
    "marketCap": 129934.0,
    "tradingValue": 33823.0,
    "marketCapText": "12조 9,934억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3381,7 +3672,11 @@
     "indivValue": 134.1,
     "foreignValue": -2092.8,
     "instValue": 841.6,
-    "change": -16.79
+    "change": -16.79,
+    "indivSinceBuy": 0.51,
+    "foreignSinceBuy": 1.65,
+    "indivMarketSinceBuy": 4.9,
+    "foreignMarketSinceBuy": 7.14
    },
    "flow": [
     {
@@ -3432,6 +3727,7 @@
    "marketCap": 127725.0,
    "tradingValue": 80658.0,
    "marketCapText": "12조 7,725억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3439,7 +3735,11 @@
     "indivValue": -277.3,
     "foreignValue": -2031.9,
     "instValue": 2278.1,
-    "change": 4.75
+    "change": 4.75,
+    "indivSinceBuy": -3.67,
+    "foreignSinceBuy": 8.51,
+    "indivMarketSinceBuy": 1.42,
+    "foreignMarketSinceBuy": 1.73
    },
    "flow": [
     {
@@ -3490,6 +3790,7 @@
    "marketCap": 180755.0,
    "tradingValue": 61124.0,
    "marketCapText": "18조 755억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3497,7 +3798,11 @@
     "indivValue": 1976.3,
     "foreignValue": 948.6,
     "instValue": -2828.9,
-    "change": -23.11
+    "change": -23.11,
+    "indivSinceBuy": -11.23,
+    "foreignSinceBuy": -13.13,
+    "indivMarketSinceBuy": 9.61,
+    "foreignMarketSinceBuy": 9.64
    },
    "flow": [
     {
@@ -3548,6 +3853,7 @@
    "marketCap": 120977.0,
    "tradingValue": 97401.0,
    "marketCapText": "12조 977억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3555,7 +3861,11 @@
     "indivValue": -91.3,
     "foreignValue": -286.0,
     "instValue": 397.6,
-    "change": 5.57
+    "change": 5.57,
+    "indivSinceBuy": 7.84,
+    "foreignSinceBuy": 5.97,
+    "indivMarketSinceBuy": 10.56,
+    "foreignMarketSinceBuy": 10.51
    },
    "flow": [
     {
@@ -3606,6 +3916,7 @@
    "marketCap": 113092.0,
    "tradingValue": 38584.0,
    "marketCapText": "11조 3,092억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3613,7 +3924,11 @@
     "indivValue": 535.8,
     "foreignValue": -18.8,
     "instValue": -518.5,
-    "change": -3.83
+    "change": -3.83,
+    "indivSinceBuy": 7.22,
+    "foreignSinceBuy": 5.06,
+    "indivMarketSinceBuy": 10.04,
+    "foreignMarketSinceBuy": 9.77
    },
    "flow": [
     {
@@ -3664,6 +3979,7 @@
    "marketCap": 111322.0,
    "tradingValue": 332381.0,
    "marketCapText": "11조 1,322억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3671,7 +3987,11 @@
     "indivValue": -3709.5,
     "foreignValue": 1479.6,
     "instValue": 2212.2,
-    "change": 36.39
+    "change": 36.39,
+    "indivSinceBuy": 37.3,
+    "foreignSinceBuy": 38.85,
+    "indivMarketSinceBuy": 11.5,
+    "foreignMarketSinceBuy": 12.31
    },
    "flow": [
     {
@@ -3722,6 +4042,7 @@
    "marketCap": 87008.0,
    "tradingValue": 28794.0,
    "marketCapText": "8조 7,008억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3729,7 +4050,11 @@
     "indivValue": 938.1,
     "foreignValue": -508.1,
     "instValue": -422.8,
-    "change": -2.39
+    "change": -2.39,
+    "indivSinceBuy": 3.22,
+    "foreignSinceBuy": -0.66,
+    "indivMarketSinceBuy": 16.09,
+    "foreignMarketSinceBuy": 9.91
    },
    "flow": [
     {
@@ -3780,6 +4105,7 @@
    "marketCap": 68423.0,
    "tradingValue": 184789.0,
    "marketCapText": "6조 8,423억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3787,7 +4113,11 @@
     "indivValue": -429.3,
     "foreignValue": -2703.4,
     "instValue": 3148.6,
-    "change": 23.69
+    "change": 23.69,
+    "indivSinceBuy": 22.04,
+    "foreignSinceBuy": 32.73,
+    "indivMarketSinceBuy": 10.5,
+    "foreignMarketSinceBuy": 13.54
    },
    "flow": [
     {
@@ -3838,6 +4168,7 @@
    "marketCap": 66156.0,
    "tradingValue": 58413.0,
    "marketCapText": "6조 6,156억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3845,7 +4176,11 @@
     "indivValue": -502.7,
     "foreignValue": -2301.4,
     "instValue": 2771.8,
-    "change": 45.14
+    "change": 45.14,
+    "indivSinceBuy": 34.31,
+    "foreignSinceBuy": 49.68,
+    "indivMarketSinceBuy": 8.14,
+    "foreignMarketSinceBuy": 14.34
    },
    "flow": [
     {
@@ -3896,6 +4231,7 @@
    "marketCap": 65501.0,
    "tradingValue": 183660.0,
    "marketCapText": "6조 5,501억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3903,7 +4239,11 @@
     "indivValue": -797.4,
     "foreignValue": 950.5,
     "instValue": -220.6,
-    "change": 57.01
+    "change": 57.01,
+    "indivSinceBuy": 51.94,
+    "foreignSinceBuy": 47.54,
+    "indivMarketSinceBuy": 9.31,
+    "foreignMarketSinceBuy": 10.64
    },
    "flow": [
     {
@@ -3954,6 +4294,7 @@
    "marketCap": 64856.0,
    "tradingValue": 192595.0,
    "marketCapText": "6조 4,856억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -3961,7 +4302,11 @@
     "indivValue": 341.9,
     "foreignValue": -2107.6,
     "instValue": 1745.3,
-    "change": 18.36
+    "change": 18.36,
+    "indivSinceBuy": 21.42,
+    "foreignSinceBuy": 26.55,
+    "indivMarketSinceBuy": 7.56,
+    "foreignMarketSinceBuy": 15.86
    },
    "flow": [
     {
@@ -4012,6 +4357,7 @@
    "marketCap": 54483.0,
    "tradingValue": 239178.0,
    "marketCapText": "5조 4,483억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4019,7 +4365,11 @@
     "indivValue": -4020.6,
     "foreignValue": 489.0,
     "instValue": 3539.7,
-    "change": 59.52
+    "change": 59.52,
+    "indivSinceBuy": 54.45,
+    "foreignSinceBuy": 37.95,
+    "indivMarketSinceBuy": 11.38,
+    "foreignMarketSinceBuy": 8.67
    },
    "flow": [
     {
@@ -4070,6 +4420,7 @@
    "marketCap": 54145.0,
    "tradingValue": 28316.0,
    "marketCapText": "5조 4,145억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4077,7 +4428,11 @@
     "indivValue": 2514.6,
     "foreignValue": -1953.8,
     "instValue": -523.5,
-    "change": -21.37
+    "change": -21.37,
+    "indivSinceBuy": 17.74,
+    "foreignSinceBuy": 3.51,
+    "indivMarketSinceBuy": 8.99,
+    "foreignMarketSinceBuy": 10.68
    },
    "flow": [
     {
@@ -4128,6 +4483,7 @@
    "marketCap": 49261.0,
    "tradingValue": 61305.0,
    "marketCapText": "4조 9,261억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4135,7 +4491,11 @@
     "indivValue": 1220.1,
     "foreignValue": -1379.4,
     "instValue": 93.0,
-    "change": 4.48
+    "change": 4.48,
+    "indivSinceBuy": 22.07,
+    "foreignSinceBuy": 27.88,
+    "indivMarketSinceBuy": 13.03,
+    "foreignMarketSinceBuy": 14.11
    },
    "flow": [
     {
@@ -4186,6 +4546,7 @@
    "marketCap": 45761.0,
    "tradingValue": 88181.0,
    "marketCapText": "4조 5,761억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4193,7 +4554,11 @@
     "indivValue": -1218.8,
     "foreignValue": 563.6,
     "instValue": 604.4,
-    "change": 47.17
+    "change": 47.17,
+    "indivSinceBuy": 23.88,
+    "foreignSinceBuy": 14.79,
+    "indivMarketSinceBuy": 10.33,
+    "foreignMarketSinceBuy": 9.97
    },
    "flow": [
     {
@@ -4244,6 +4609,7 @@
    "marketCap": 44514.0,
    "tradingValue": 48214.0,
    "marketCapText": "4조 4,514억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4251,7 +4617,11 @@
     "indivValue": -453.7,
     "foreignValue": -899.5,
     "instValue": 1351.9,
-    "change": 39.91
+    "change": 39.91,
+    "indivSinceBuy": 20.96,
+    "foreignSinceBuy": 42.82,
+    "indivMarketSinceBuy": 7.26,
+    "foreignMarketSinceBuy": 11.99
    },
    "flow": [
     {
@@ -4302,6 +4672,7 @@
    "marketCap": 44029.0,
    "tradingValue": 71684.0,
    "marketCapText": "4조 4,029억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4309,7 +4680,11 @@
     "indivValue": 167.3,
     "foreignValue": -1684.8,
     "instValue": 1536.6,
-    "change": -6.06
+    "change": -6.06,
+    "indivSinceBuy": 4.11,
+    "foreignSinceBuy": 18.47,
+    "indivMarketSinceBuy": 7.93,
+    "foreignMarketSinceBuy": 16.37
    },
    "flow": [
     {
@@ -4360,6 +4735,7 @@
    "marketCap": 43546.0,
    "tradingValue": 56802.0,
    "marketCapText": "4조 3,546억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4367,7 +4743,11 @@
     "indivValue": -1012.9,
     "foreignValue": -1231.9,
     "instValue": 2230.9,
-    "change": 24.14
+    "change": 24.14,
+    "indivSinceBuy": 30.6,
+    "foreignSinceBuy": 40.03,
+    "indivMarketSinceBuy": 10.07,
+    "foreignMarketSinceBuy": 14.55
    },
    "flow": [
     {
@@ -4418,6 +4798,7 @@
    "marketCap": 41745.0,
    "tradingValue": 38543.0,
    "marketCapText": "4조 1,745억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4425,7 +4806,11 @@
     "indivValue": -223.4,
     "foreignValue": 81.6,
     "instValue": 118.5,
-    "change": 51.72
+    "change": 51.72,
+    "indivSinceBuy": 49.22,
+    "foreignSinceBuy": 47.97,
+    "indivMarketSinceBuy": 9.1,
+    "foreignMarketSinceBuy": 12.55
    },
    "flow": [
     {
@@ -4476,6 +4861,7 @@
    "marketCap": 41111.0,
    "tradingValue": 32515.0,
    "marketCapText": "4조 1,111억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4483,7 +4869,11 @@
     "indivValue": -128.2,
     "foreignValue": -716.0,
     "instValue": 862.3,
-    "change": 22.79
+    "change": 22.79,
+    "indivSinceBuy": 30.9,
+    "foreignSinceBuy": 35.77,
+    "indivMarketSinceBuy": 10.48,
+    "foreignMarketSinceBuy": 11.17
    },
    "flow": [
     {
@@ -4534,6 +4924,7 @@
    "marketCap": 34708.0,
    "tradingValue": 115226.0,
    "marketCapText": "3조 4,708억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4541,7 +4932,11 @@
     "indivValue": -393.2,
     "foreignValue": 18.2,
     "instValue": 280.6,
-    "change": 40.13
+    "change": 40.13,
+    "indivSinceBuy": 43.85,
+    "foreignSinceBuy": 38.15,
+    "indivMarketSinceBuy": 9.2,
+    "foreignMarketSinceBuy": 10.92
    },
    "flow": [
     {
@@ -4592,6 +4987,7 @@
    "marketCap": 34538.0,
    "tradingValue": 42099.0,
    "marketCapText": "3조 4,538억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4599,7 +4995,11 @@
     "indivValue": -364.2,
     "foreignValue": -1463.5,
     "instValue": 1817.0,
-    "change": 23.03
+    "change": 23.03,
+    "indivSinceBuy": 19.5,
+    "foreignSinceBuy": 27.72,
+    "indivMarketSinceBuy": 11.06,
+    "foreignMarketSinceBuy": 12.89
    },
    "flow": [
     {
@@ -4650,6 +5050,7 @@
    "marketCap": 33315.0,
    "tradingValue": 20787.0,
    "marketCapText": "3조 3,315억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4657,7 +5058,11 @@
     "indivValue": -115.3,
     "foreignValue": -814.0,
     "instValue": 929.4,
-    "change": 29.28
+    "change": 29.28,
+    "indivSinceBuy": 28.09,
+    "foreignSinceBuy": 47.89,
+    "indivMarketSinceBuy": 7.36,
+    "foreignMarketSinceBuy": 16.37
    },
    "flow": [
     {
@@ -4708,6 +5113,7 @@
    "marketCap": 33176.0,
    "tradingValue": 12828.0,
    "marketCapText": "3조 3,176억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4715,7 +5121,11 @@
     "indivValue": -564.5,
     "foreignValue": 93.1,
     "instValue": 471.8,
-    "change": 39.15
+    "change": 39.15,
+    "indivSinceBuy": 40.69,
+    "foreignSinceBuy": 39.32,
+    "indivMarketSinceBuy": 10.84,
+    "foreignMarketSinceBuy": 12.55
    },
    "flow": [
     {
@@ -4766,6 +5176,7 @@
    "marketCap": 32355.0,
    "tradingValue": 34712.0,
    "marketCapText": "3조 2,355억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4773,7 +5184,11 @@
     "indivValue": -454.7,
     "foreignValue": -512.0,
     "instValue": 944.7,
-    "change": 25.27
+    "change": 25.27,
+    "indivSinceBuy": 21.49,
+    "foreignSinceBuy": 31.59,
+    "indivMarketSinceBuy": 11.03,
+    "foreignMarketSinceBuy": 14.8
    },
    "flow": [
     {
@@ -4824,6 +5239,7 @@
    "marketCap": 31963.0,
    "tradingValue": 402884.0,
    "marketCapText": "3조 1,963억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4831,7 +5247,11 @@
     "indivValue": -517.0,
     "foreignValue": -196.7,
     "instValue": 666.2,
-    "change": 12.76
+    "change": 12.76,
+    "indivSinceBuy": 20.31,
+    "foreignSinceBuy": 27.55,
+    "indivMarketSinceBuy": 10.65,
+    "foreignMarketSinceBuy": 13.37
    },
    "flow": [
     {
@@ -4882,6 +5302,7 @@
    "marketCap": 31896.0,
    "tradingValue": 39828.0,
    "marketCapText": "3조 1,896억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4889,7 +5310,11 @@
     "indivValue": -2546.7,
     "foreignValue": 2231.6,
     "instValue": 394.9,
-    "change": -9.84
+    "change": -9.84,
+    "indivSinceBuy": -14.83,
+    "foreignSinceBuy": -18.76,
+    "indivMarketSinceBuy": 8.8,
+    "foreignMarketSinceBuy": 8.32
    },
    "flow": [
     {
@@ -4940,6 +5365,7 @@
    "marketCap": 30726.0,
    "tradingValue": 17729.0,
    "marketCapText": "3조 726억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -4947,7 +5373,11 @@
     "indivValue": -106.7,
     "foreignValue": 1735.7,
     "instValue": -1598.4,
-    "change": -39.06
+    "change": -39.06,
+    "indivSinceBuy": -14.41,
+    "foreignSinceBuy": -14.45,
+    "indivMarketSinceBuy": 7.86,
+    "foreignMarketSinceBuy": 13.88
    },
    "flow": [
     {
@@ -4998,6 +5428,7 @@
    "marketCap": 30452.0,
    "tradingValue": 28256.0,
    "marketCapText": "3조 452억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5005,7 +5436,11 @@
     "indivValue": 949.1,
     "foreignValue": -0.3,
     "instValue": -920.6,
-    "change": -27.92
+    "change": -27.92,
+    "indivSinceBuy": -9.86,
+    "foreignSinceBuy": -8.65,
+    "indivMarketSinceBuy": 9.91,
+    "foreignMarketSinceBuy": 9.52
    },
    "flow": [
     {
@@ -5056,6 +5491,7 @@
    "marketCap": 29002.0,
    "tradingValue": 13820.0,
    "marketCapText": "2조 9,002억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5063,7 +5499,11 @@
     "indivValue": 96.5,
     "foreignValue": 682.5,
     "instValue": -729.6,
-    "change": -44.83
+    "change": -44.83,
+    "indivSinceBuy": -28.44,
+    "foreignSinceBuy": -22.87,
+    "indivMarketSinceBuy": 7.68,
+    "foreignMarketSinceBuy": 11.38
    },
    "flow": [
     {
@@ -5114,6 +5554,7 @@
    "marketCap": 27770.0,
    "tradingValue": 269306.0,
    "marketCapText": "2조 7,770억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5121,7 +5562,11 @@
     "indivValue": -51.6,
     "foreignValue": -238.3,
     "instValue": 244.6,
-    "change": 62.96
+    "change": 62.96,
+    "indivSinceBuy": 30.55,
+    "foreignSinceBuy": 25.85,
+    "indivMarketSinceBuy": 9.32,
+    "foreignMarketSinceBuy": 10.99
    },
    "flow": [
     {
@@ -5172,6 +5617,7 @@
    "marketCap": 26975.0,
    "tradingValue": 7935.0,
    "marketCapText": "2조 6,975억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5179,7 +5625,11 @@
     "indivValue": 306.6,
     "foreignValue": -263.0,
     "instValue": -49.4,
-    "change": -17.58
+    "change": -17.58,
+    "indivSinceBuy": -4.23,
+    "foreignSinceBuy": 5.57,
+    "indivMarketSinceBuy": 8.72,
+    "foreignMarketSinceBuy": 14.54
    },
    "flow": [
     {
@@ -5230,6 +5680,7 @@
    "marketCap": 26759.0,
    "tradingValue": 32046.0,
    "marketCapText": "2조 6,759억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5237,7 +5688,11 @@
     "indivValue": 74.9,
     "foreignValue": -593.4,
     "instValue": 510.5,
-    "change": 13.76
+    "change": 13.76,
+    "indivSinceBuy": 24.15,
+    "foreignSinceBuy": 25.46,
+    "indivMarketSinceBuy": 9.17,
+    "foreignMarketSinceBuy": 12.43
    },
    "flow": [
     {
@@ -5288,6 +5743,7 @@
    "marketCap": 26668.0,
    "tradingValue": 84589.0,
    "marketCapText": "2조 6,668억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5295,7 +5751,11 @@
     "indivValue": 415.0,
     "foreignValue": -875.4,
     "instValue": 321.1,
-    "change": -8.52
+    "change": -8.52,
+    "indivSinceBuy": 12.59,
+    "foreignSinceBuy": 10.44,
+    "indivMarketSinceBuy": 9.29,
+    "foreignMarketSinceBuy": 12.74
    },
    "flow": [
     {
@@ -5346,6 +5806,7 @@
    "marketCap": 26573.0,
    "tradingValue": 21099.0,
    "marketCapText": "2조 6,573억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5353,7 +5814,11 @@
     "indivValue": 362.8,
     "foreignValue": -129.5,
     "instValue": -248.5,
-    "change": -13.29
+    "change": -13.29,
+    "indivSinceBuy": 7.09,
+    "foreignSinceBuy": 12.5,
+    "indivMarketSinceBuy": 9.58,
+    "foreignMarketSinceBuy": 13.0
    },
    "flow": [
     {
@@ -5404,6 +5869,7 @@
    "marketCap": 24394.0,
    "tradingValue": 29323.0,
    "marketCapText": "2조 4,394억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5411,7 +5877,11 @@
     "indivValue": -236.6,
     "foreignValue": 1839.0,
     "instValue": -1576.4,
-    "change": -3.38
+    "change": -3.38,
+    "indivSinceBuy": -10.1,
+    "foreignSinceBuy": -19.85,
+    "indivMarketSinceBuy": 6.83,
+    "foreignMarketSinceBuy": 8.01
    },
    "flow": [
     {
@@ -5462,6 +5932,7 @@
    "marketCap": 23692.0,
    "tradingValue": 294464.0,
    "marketCapText": "2조 3,692억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5469,7 +5940,11 @@
     "indivValue": 220.6,
     "foreignValue": -192.5,
     "instValue": -17.9,
-    "change": 61.86
+    "change": 61.86,
+    "indivSinceBuy": 65.75,
+    "foreignSinceBuy": 54.54,
+    "indivMarketSinceBuy": 8.8,
+    "foreignMarketSinceBuy": 10.21
    },
    "flow": [
     {
@@ -5520,6 +5995,7 @@
    "marketCap": 23496.0,
    "tradingValue": 54776.0,
    "marketCapText": "2조 3,496억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5527,7 +6003,11 @@
     "indivValue": -822.1,
     "foreignValue": 1614.6,
     "instValue": -762.9,
-    "change": 27.12
+    "change": 27.12,
+    "indivSinceBuy": 27.62,
+    "foreignSinceBuy": 17.67,
+    "indivMarketSinceBuy": 13.08,
+    "foreignMarketSinceBuy": 8.5
    },
    "flow": [
     {
@@ -5578,6 +6058,7 @@
    "marketCap": 23278.0,
    "tradingValue": 14866.0,
    "marketCapText": "2조 3,278억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5585,7 +6066,11 @@
     "indivValue": 351.1,
     "foreignValue": 519.2,
     "instValue": 2.0,
-    "change": -7.93
+    "change": -7.93,
+    "indivSinceBuy": -3.76,
+    "foreignSinceBuy": -5.5,
+    "indivMarketSinceBuy": 11.7,
+    "foreignMarketSinceBuy": 10.75
    },
    "flow": [
     {
@@ -5636,6 +6121,7 @@
    "marketCap": 22931.0,
    "tradingValue": 26428.0,
    "marketCapText": "2조 2,931억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5643,7 +6129,11 @@
     "indivValue": 351.7,
     "foreignValue": -710.2,
     "instValue": 362.5,
-    "change": 44.41
+    "change": 44.41,
+    "indivSinceBuy": 14.71,
+    "foreignSinceBuy": 6.41,
+    "indivMarketSinceBuy": 14.28,
+    "foreignMarketSinceBuy": 10.09
    },
    "flow": [
     {
@@ -5694,6 +6184,7 @@
    "marketCap": 22829.0,
    "tradingValue": 2218.0,
    "marketCapText": "2조 2,829억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5701,7 +6192,11 @@
     "indivValue": -96.7,
     "foreignValue": 246.4,
     "instValue": -134.2,
-    "change": -37.68
+    "change": -37.68,
+    "indivSinceBuy": -21.4,
+    "foreignSinceBuy": -20.84,
+    "indivMarketSinceBuy": 8.19,
+    "foreignMarketSinceBuy": 12.13
    },
    "flow": [
     {
@@ -5752,6 +6247,7 @@
    "marketCap": 22669.0,
    "tradingValue": 52017.0,
    "marketCapText": "2조 2,669억원",
+   "type": "stock",
    "stat60": {
     "days": 60,
     "from": "20260707",
@@ -5759,7 +6255,11 @@
     "indivValue": 83.9,
     "foreignValue": -192.2,
     "instValue": 99.6,
-    "change": 64.15
+    "change": 64.15,
+    "indivSinceBuy": 44.75,
+    "foreignSinceBuy": 38.09,
+    "indivMarketSinceBuy": 9.53,
+    "foreignMarketSinceBuy": 10.05
    },
    "flow": [
     {

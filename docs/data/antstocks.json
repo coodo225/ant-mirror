@@ -4,22 +4,16 @@
   "from": "20260707",
   "to": "20261002"
  },
- "universe": 100,
+ "universe": 98,
  "antBasket": [
-  {
-   "code": "360750",
-   "name": "TIGER 미국S&P500",
-   "market": "KOSPI",
-   "value": 16529.7,
-   "change": -9.62,
-   "price": 25780.0
-  },
   {
    "code": "005935",
    "name": "삼성전자우",
    "market": "KOSPI",
    "value": 10563.5,
    "change": 1.1,
+   "sinceBuy": 6.57,
+   "marketSinceBuy": 3.56,
    "price": 201500.0
   },
   {
@@ -28,6 +22,8 @@
    "market": "KOSPI",
    "value": 10454.2,
    "change": -27.63,
+   "sinceBuy": -10.76,
+   "marketSinceBuy": 3.14,
    "price": 347000.0
   },
   {
@@ -36,6 +32,8 @@
    "market": "KOSPI",
    "value": 9731.3,
    "change": -4.31,
+   "sinceBuy": 18.32,
+   "marketSinceBuy": 4.98,
    "price": 1577000.0
   },
   {
@@ -44,6 +42,8 @@
    "market": "KOSPI",
    "value": 5645.9,
    "change": -0.25,
+   "sinceBuy": 0.76,
+   "marketSinceBuy": 2.18,
    "price": 81400.0
   },
   {
@@ -52,6 +52,8 @@
    "market": "KOSPI",
    "value": 2872.7,
    "change": 1.36,
+   "sinceBuy": 3.21,
+   "marketSinceBuy": 2.57,
    "price": 1338000.0
   },
   {
@@ -60,6 +62,8 @@
    "market": "KOSPI",
    "value": 2559.8,
    "change": -21.2,
+   "sinceBuy": -6.68,
+   "marketSinceBuy": 2.75,
    "price": 30100.0
   },
   {
@@ -68,6 +72,8 @@
    "market": "KOSDAQ",
    "value": 2514.6,
    "change": -21.37,
+   "sinceBuy": 17.74,
+   "marketSinceBuy": 8.99,
    "price": 40650.0
   },
   {
@@ -76,6 +82,8 @@
    "market": "KOSPI",
    "value": 2225.6,
    "change": -29.48,
+   "sinceBuy": -1.56,
+   "marketSinceBuy": 2.85,
    "price": 574000.0
   },
   {
@@ -84,7 +92,19 @@
    "market": "KOSDAQ",
    "value": 1976.3,
    "change": -23.11,
+   "sinceBuy": -11.23,
+   "marketSinceBuy": 9.61,
    "price": 259500.0
+  },
+  {
+   "code": "017670",
+   "name": "SK텔레콤",
+   "market": "KOSPI",
+   "value": 1754.7,
+   "change": 3.99,
+   "sinceBuy": -4.27,
+   "marketSinceBuy": 5.02,
+   "price": 88600.0
   }
  ],
  "foreignBasket": [
@@ -94,6 +114,8 @@
    "market": "KOSPI",
    "value": 22090.7,
    "change": -14.75,
+   "sinceBuy": 8.03,
+   "marketSinceBuy": 5.26,
    "price": 1156000.0
   },
   {
@@ -102,6 +124,8 @@
    "market": "KOSPI",
    "value": 11255.0,
    "change": 6.97,
+   "sinceBuy": -0.77,
+   "marketSinceBuy": 2.76,
    "price": 33750.0
   },
   {
@@ -110,15 +134,9 @@
    "market": "KOSPI",
    "value": 6304.7,
    "change": -29.48,
+   "sinceBuy": -10.21,
+   "marketSinceBuy": 1.58,
    "price": 574000.0
-  },
-  {
-   "code": "069500",
-   "name": "KODEX 200",
-   "market": "KOSPI",
-   "value": 5607.1,
-   "change": -9.42,
-   "price": 112060.0
   },
   {
    "code": "096770",
@@ -126,6 +144,8 @@
    "market": "KOSPI",
    "value": 4564.7,
    "change": 45.76,
+   "sinceBuy": 12.64,
+   "marketSinceBuy": 2.15,
    "price": 151300.0
   },
   {
@@ -134,6 +154,8 @@
    "market": "KOSPI",
    "value": 3922.9,
    "change": -25.82,
+   "sinceBuy": -11.65,
+   "marketSinceBuy": 4.66,
    "price": 31600.0
   },
   {
@@ -142,6 +164,8 @@
    "market": "KOSPI",
    "value": 3789.6,
    "change": -22.12,
+   "sinceBuy": -16.29,
+   "marketSinceBuy": 3.63,
    "price": 385500.0
   },
   {
@@ -150,6 +174,8 @@
    "market": "KOSPI",
    "value": 3472.7,
    "change": 1.46,
+   "sinceBuy": 4.52,
+   "marketSinceBuy": 3.52,
    "price": 209000.0
   },
   {
@@ -158,6 +184,8 @@
    "market": "KOSPI",
    "value": 3452.1,
    "change": 13.96,
+   "sinceBuy": 9.99,
+   "marketSinceBuy": 3.44,
    "price": 215500.0
   },
   {
@@ -166,19 +194,41 @@
    "market": "KOSPI",
    "value": 2827.4,
    "change": -7.67,
+   "sinceBuy": 2.06,
+   "marketSinceBuy": 4.32,
    "price": 578000.0
+  },
+  {
+   "code": "079550",
+   "name": "LIG디펜스앤에어로스페이스",
+   "market": "KOSPI",
+   "value": 2579.3,
+   "change": -5.01,
+   "sinceBuy": 2.74,
+   "marketSinceBuy": 3.29,
+   "price": 759000.0
   }
  ],
- "antAvgChange": -13.45,
- "foreignAvgChange": -4.11,
+ "antAvgChange": -12.09,
+ "foreignAvgChange": -3.67,
+ "antAvgSinceBuy": 1.21,
+ "foreignAvgSinceBuy": 0.11,
+ "antAvgMarketSinceBuy": 4.57,
+ "foreignAvgMarketSinceBuy": 3.46,
+ "market": {
+  "KOSPI": -8.52,
+  "KOSDAQ": 7.47
+ },
  "tears": [
   {
-   "code": "011070",
-   "name": "LG이노텍",
-   "market": "KOSPI",
-   "value": 2225.6,
-   "change": -29.48,
-   "price": 574000.0
+   "code": "196170",
+   "name": "알테오젠",
+   "market": "KOSDAQ",
+   "value": 1976.3,
+   "change": -23.11,
+   "sinceBuy": -11.23,
+   "marketSinceBuy": 9.61,
+   "price": 259500.0
   },
   {
    "code": "005380",
@@ -186,23 +236,9 @@
    "market": "KOSPI",
    "value": 10454.2,
    "change": -27.63,
+   "sinceBuy": -10.76,
+   "marketSinceBuy": 3.14,
    "price": 347000.0
-  },
-  {
-   "code": "196170",
-   "name": "알테오젠",
-   "market": "KOSDAQ",
-   "value": 1976.3,
-   "change": -23.11,
-   "price": 259500.0
-  },
-  {
-   "code": "028300",
-   "name": "HLB",
-   "market": "KOSDAQ",
-   "value": 2514.6,
-   "change": -21.37,
-   "price": 40650.0
   },
   {
    "code": "015760",
@@ -210,17 +246,51 @@
    "market": "KOSPI",
    "value": 2559.8,
    "change": -21.2,
+   "sinceBuy": -6.68,
+   "marketSinceBuy": 2.75,
    "price": 30100.0
+  },
+  {
+   "code": "017670",
+   "name": "SK텔레콤",
+   "market": "KOSPI",
+   "value": 1754.7,
+   "change": 3.99,
+   "sinceBuy": -4.27,
+   "marketSinceBuy": 5.02,
+   "price": 88600.0
+  },
+  {
+   "code": "011070",
+   "name": "LG이노텍",
+   "market": "KOSPI",
+   "value": 2225.6,
+   "change": -29.48,
+   "sinceBuy": -1.56,
+   "marketSinceBuy": 2.85,
+   "price": 574000.0
   }
  ],
  "wins": [
   {
-   "code": "000150",
-   "name": "두산",
+   "code": "009150",
+   "name": "삼성전기",
    "market": "KOSPI",
-   "value": 2872.7,
-   "change": 1.36,
-   "price": 1338000.0
+   "value": 9731.3,
+   "change": -4.31,
+   "sinceBuy": 18.32,
+   "marketSinceBuy": 4.98,
+   "price": 1577000.0
+  },
+  {
+   "code": "028300",
+   "name": "HLB",
+   "market": "KOSDAQ",
+   "value": 2514.6,
+   "change": -21.37,
+   "sinceBuy": 17.74,
+   "marketSinceBuy": 8.99,
+   "price": 40650.0
   },
   {
    "code": "005935",
@@ -228,7 +298,19 @@
    "market": "KOSPI",
    "value": 10563.5,
    "change": 1.1,
+   "sinceBuy": 6.57,
+   "marketSinceBuy": 3.56,
    "price": 201500.0
+  },
+  {
+   "code": "000150",
+   "name": "두산",
+   "market": "KOSPI",
+   "value": 2872.7,
+   "change": 1.36,
+   "sinceBuy": 3.21,
+   "marketSinceBuy": 2.57,
+   "price": 1338000.0
   },
   {
    "code": "034020",
@@ -236,24 +318,10 @@
    "market": "KOSPI",
    "value": 5645.9,
    "change": -0.25,
+   "sinceBuy": 0.76,
+   "marketSinceBuy": 2.18,
    "price": 81400.0
-  },
-  {
-   "code": "009150",
-   "name": "삼성전기",
-   "market": "KOSPI",
-   "value": 9731.3,
-   "change": -4.31,
-   "price": 1577000.0
-  },
-  {
-   "code": "360750",
-   "name": "TIGER 미국S&P500",
-   "market": "KOSPI",
-   "value": 16529.7,
-   "change": -9.62,
-   "price": 25780.0
   }
  ],
- "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. 대상은 수집된 시총 상위 종목이며, 등락률은 최근 60거래일 기준입니다."
+ "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. '산 뒤 등락'은 그 주체가 순매수한 날들의 종가를 수량으로 가중한 평균 가격 대비 마지막 종가의 등락으로, 판 날은 반영하지 않은 추정치입니다. '지수였다면'은 같은 날짜·같은 비중으로 그 종목의 시장 지수를 샀을 때의 같은 계산입니다. 대상은 지금의 시총 상위 종목(ETF 제외)이라, 그사이 크게 빠져 순위 밖으로 밀린 종목은 빠져 있습니다."
 }
