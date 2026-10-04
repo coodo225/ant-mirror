@@ -39,11 +39,19 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
 
       - name: 데이터 수집
+        id: collect
         env:
           # 선택사항. 없으면 미국 CPI/고용/PCE 일정과 매크로 실측치만 빠집니다.
           # 무료 발급: https://fred.stlouisfed.org/docs/api/api_key.html
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        run: python collector/collect.py
+        # exit 3 = 핵심 데이터(코스피 수급·일봉)가 갱신되지 않아 직전 정상본을 유지함.
+        # 나머지 데이터는 커밋해야 하므로 여기서는 멈추지 않고, 마지막 단계에서 실패로 표시한다.
+        run: |
+          set +e
+          python collector/collect.py
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" -ne 0 ] && [ "$code" -ne 3 ]; then exit "$code"; fi
 
       - name: 변경분 커밋
         run: |
@@ -61,4 +69,10 @@ jobs:
             echo "push 재시도 $i"
             sleep 5
           done
+          exit 1
+
+      - name: 핵심 데이터 갱신 실패 알림
+        if: steps.collect.outputs.code == '3'
+        run: |
+          echo "::error::핵심 데이터(코스피 수급 또는 일봉)가 갱신되지 않았습니다. 화면은 직전 정상본을 보여 주는 중입니다 (meta.json 의 stale/warnings 참고)."
           exit 1

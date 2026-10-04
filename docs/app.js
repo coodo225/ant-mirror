@@ -210,12 +210,28 @@ function renderMeta() {
   $('#sources').textContent = (m.sources || []).map(s => s.name).join(' · ');
   $('#caveat').textContent = m.caveat || '';
 
+  // 경고에는 외부 응답 문구가 섞일 수 있으니 HTML 이 아니라 텍스트로 넣는다
   const w = $('#warnings');
   const lines = [...(m.warnings || [])];
   if (lines.length) {
     w.hidden = false;
-    w.innerHTML = '<b>수집 경고</b>' + lines.map(x => `<div>· ${x}</div>`).join('');
+    w.innerHTML = '<b>수집 경고</b>';
+    lines.forEach(x => { const d = el('div'); d.textContent = `· ${x}`; w.append(d); });
   } else w.hidden = true;
+
+  // 소스가 실패하거나 멈춰 갱신되지 않은 섹션 — 지난 숫자를 오늘 것처럼 보이지 않게 맨 위에 알린다
+  const stale = m.stale || [];
+  const st = $('#stale');
+  if (st) {
+    st.hidden = !stale.length;
+    if (stale.length) {
+      const items = stale.map(s =>
+        s.label + (s.asOf ? ` (${s.asOf}까지)`
+                 : s.since ? ` (${s.since.slice(0, 16).replace('T', ' ')} 수집분)` : ''));
+      st.innerHTML = '<strong>지난 데이터</strong>';
+      st.append(`갱신되지 않아 마지막으로 받은 데이터를 보여 주는 항목: ${items.join(' · ')}`);
+    }
+  }
 }
 
 /** 렌더 중 터진 섹션이 있으면 조용히 넘어가지 않고 화면에 적는다 */

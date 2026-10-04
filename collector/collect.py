@@ -7,10 +7,15 @@
 프론트엔드는 같은 오리진의 정적 JSON만 읽는다.
 
 소스
-  - 네이버 금융      : 개인/외국인/기관 수급, 지수 시세, 시총상위, 업종별 등락
-  - FinanceDataReader: 코스피/코스닥 일봉 히스토리
+  - 네이버 증권      : 개인/외국인/기관 수급(현물·선물), 지수 일봉·시세, 시총상위, 업종별 등락
+  - 다음 금융        : 수급 예비 소스 (네이버가 실패할 때만)
+  - FinanceDataReader: 지수 일봉 예비 소스
+  - 금융투자협회     : 신용융자 잔고, 예탁금·반대매매
   - yfinance         : 미국 지수/선물/금리/환율/원자재
-  - federalreserve.gov / bls.gov : FOMC·CPI 발표 일정 (실패 시 events_seed.json 사용)
+  - federalreserve.gov / FRED : FOMC·CPI 등 발표 일정, 매크로 지표 (+ events_seed.json)
+
+소스가 실패하거나 멈추면 그 섹션은 직전 정상본을 유지하고(meta.json 의 stale/freshAt),
+핵심인 코스피 수급·일봉이 갱신되지 않으면 exit 3 으로 끝나 워크플로가 실패로 표시된다.
 """
 
 from __future__ import annotations
@@ -45,8 +50,21 @@ session.headers.update({"User-Agent": UA, "Referer": "https://finance.naver.com/
 
 WARNINGS: list[str] = []
 
+# 경고는 meta.json 으로 공개 저장소에 커밋되고 화면에도 찍힌다.
+# Actions 의 시크릿 마스킹은 로그에만 적용되므로, 키가 섞인 오류 메시지는 여기서 가린다.
+SECRETS: set[str] = set()
+_KEY_PARAM = re.compile(r"((?:api_?key|serviceKey|token)=)[^&\s'\"]+", re.I)
+
+
+def scrub(text) -> str:
+    s = _KEY_PARAM.sub(r"\1***", str(text))
+    for secret in SECRETS:
+        s = s.replace(secret, "***")
+    return s
+
 
 def warn(msg: str) -> None:
+    msg = scrub(msg)
     WARNINGS.append(msg)
     print(f"  [warn] {msg}")
 
@@ -77,7 +95,7 @@ def get_json(url: str, tries: int = 3, **kw):
         except Exception as e:  # noqa: BLE001
             last = f"{type(e).__name__}: {e}"
         time.sleep(0.6 * (i + 1))
-    raise RuntimeError(f"{url} -> {last}")
+    raise RuntimeError(scrub(f"{url} -> {last}"))
 
 
 def write(name: str, payload) -> None:
@@ -89,71 +107,340 @@ def write(name: str, payload) -> None:
     print(f"  -> {path.relative_to(ROOT)} ({path.stat().st_size:,} bytes)")
 
 
+# ---------------------------------------------------------------- 직전 정상본 유지
+# 소스 하나가 죽었다고 마지막 정상 데이터를 빈 값으로 덮어쓰면, 공개 페이지가 빈칸과 '+0억'이 된다.
+# 섹션마다 '마지막으로 정상 수집된 시각'을 meta.json 에 이어서 기록하고,
+# 이번 수집이 비었으면 직전 정상본을 내보내되 화면에 그 사실을 알린다.
+
+FRESH_AT: dict[str, str] = {}   # 섹션 키 -> 마지막 정상 수집 시각(ISO)
+STALE: list[dict] = []          # 이번 실행에서 갱신되지 못한 섹션 (화면 맨 위 '지난 데이터' 안내)
+
+
+def mark_stale(key: str, label: str, *, asOf: str | None = None, since: str | None = None) -> None:
+    """같은 섹션은 한 번만 — 나중 판단(실제로 내보낸 데이터 기준)이 앞의 것을 덮는다."""
+    for s in STALE:
+        if s["key"] == key:
+            s.update(label=label, asOf=asOf, since=since)
+            return
+    STALE.append({"key": key, "label": label, "asOf": asOf, "since": since})
+
+
+def load_prev(name: str):
+    """docs/data 에 이미 있는(직전 실행이 쓴) 파일. 없거나 깨졌으면 None."""
+    try:
+        return json.loads((OUT / name).read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _last_date(fn):
+    """payload 의 마지막 데이터 날짜를 꺼내는 함수. 형식이 어긋나면 ''."""
+    def get(x):
+        try:
+            return fn(x) or ""
+        except Exception:  # noqa: BLE001
+            return ""
+    return get
+
+
+def keep_good(key: str, label: str, new, prev, ok, now_iso: str,
+              stale_keys: set[str] = frozenset(), last=None):
+    """
+    new 가 정상이면 그대로, 비었으면 직전 정상본(prev)을 돌려준다.
+    비지 않았어도 멈춘 데이터(stale_keys)라면 '정상 수집'으로 치지 않고,
+    직전 정상본이 더 최신이면 그쪽을 내보낸다 (예: 네이버 일봉 실패 → 멈춰 있는 FDR 로 떨어졌을 때).
+    """
+    since = FRESH_AT.get(key)
+    if ok(new):
+        if key not in stale_keys:
+            FRESH_AT[key] = now_iso
+            return new
+        if last and prev is not None and ok(prev) and last(prev) > last(new):
+            warn(f"{label}: 이번 데이터가 {last(new)}에서 멈춰 있어 더 최신인 직전 데이터({last(prev)}까지)를 유지합니다")
+            mark_stale(key, label, asOf=last(prev), since=since)
+            return prev
+        return new
+    if prev is not None and ok(prev):
+        when = f" (마지막 정상 수집 {since[:16].replace('T', ' ')})" if since else ""
+        warn(f"{label}: 이번 수집이 비어 직전 데이터를 유지합니다{when}")
+        mark_stale(key, label, asOf=last(prev) if last else None, since=since)
+        return prev
+    return new
+
+
+def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset()) -> dict:
+    """out: {파일명: 이번 수집 결과}. 비었거나 멈춘 섹션만 직전 정상본으로 갈아 끼워 돌려준다."""
+    FRESH_AT.update((load_prev("meta.json") or {}).get("freshAt") or {})
+
+    def keep(key, label, new, prev, ok=bool, last=None):
+        return keep_good(key, label, new, prev, ok, now_iso, stale_keys, last)
+
+    rows_last = _last_date(lambda xs: xs[-1]["date"])
+
+    flows = out["flows.json"]
+    prev = load_prev("flows.json") or {}
+    for code, name in (("KOSPI", "코스피"), ("KOSDAQ", "코스닥")):
+        got = keep(f"flows.{code}", f"{name} 투자자 수급", flows["markets"].get(code),
+                   (prev.get("markets") or {}).get(code), lambda m: bool(m and m.get("daily")),
+                   _last_date(lambda m: m["daily"][-1]["date"]))
+        if got:
+            flows["markets"][code] = got
+
+    out["futures.json"] = keep("futures", "선물 수급", out["futures.json"], load_prev("futures.json"),
+                               lambda f: bool(f and f.get("daily")),
+                               _last_date(lambda f: f["daily"][-1]["date"]))
+    out["ant.json"] = keep("ant", "개미 성적표", out["ant.json"], load_prev("ant.json"),
+                           last=_last_date(lambda a: a["sample"]["to"]))
+    out["analog.json"] = keep("analog", "유사 국면", out["analog.json"], load_prev("analog.json"),
+                              last=_last_date(lambda a: a["today"]["date"]))
+    out["antstocks.json"] = keep("antstocks", "장바구니 비교", out["antstocks.json"],
+                                 load_prev("antstocks.json"), last=_last_date(lambda a: f"{a['window']['to'][:4]}-{a['window']['to'][4:6]}-{a['window']['to'][6:]}"))
+
+    credit = out["credit.json"]
+    prev = load_prev("credit.json") or {}
+    for part, label in (("loans", "신용융자 잔고"), ("money", "증시자금·반대매매")):
+        got = keep(f"credit.{part}", label, credit.get(part), prev.get(part), last=rows_last)
+        if got is not credit.get(part):
+            credit[part] = got
+            if (prev.get("latest") or {}).get(part):
+                credit.setdefault("latest", {})[part] = prev["latest"][part]
+
+    market = out["market.json"]
+    prev = (load_prev("market.json") or {}).get("indices") or {}
+    for code, e in market["indices"].items():
+        p = prev.get(code) or {}
+        hist = keep(f"market.{code}.history", f"{e.get('name', code)} 일봉", e.get("history"), p.get("history"),
+                    last=rows_last)
+        if hist is not e.get("history"):
+            e["history"] = hist
+        price = keep(f"market.{code}.price", f"{e.get('name', code)} 현재가", e.get("price"), p.get("price"),
+                     lambda v: v is not None)
+        if price is not e.get("price"):
+            for k in ("price", "change", "changeRate", "marketStatus", "tradedAt"):
+                e[k] = p.get(k)
+        if e.get("price") is None and e.get("history"):       # 처음 실행인데 시세 API 가 죽었을 때만
+            e["price"] = e["history"][-1]["close"]
+
+    stocks = out["stocks.json"]
+    prev = load_prev("stocks.json") or {}
+    stocks["top"] = keep("stocks.top", "시총 상위 종목", stocks.get("top"), prev.get("top"))
+    stocks["industries"] = keep("stocks.industries", "업종 등락", stocks.get("industries"),
+                                prev.get("industries"))
+
+    # 글로벌은 종목마다 asOf 가 붙어 있으니 빠진 것만 직전 값으로 채운다
+    glob = out["global.json"]
+    prev = load_prev("global.json") or {}
+    have = {x["symbol"] for x in glob.get("items", [])}
+    order = {t[0]: n for n, t in enumerate(GLOBAL_TICKERS)}
+    kept = [x for x in prev.get("items", []) if x.get("symbol") in order and x["symbol"] not in have]
+    if kept:
+        warn(f"글로벌 지표 {', '.join(x['name'] for x in kept)}: 이번 수집이 비어 직전 값을 유지합니다")
+        glob["items"] = sorted(glob.get("items", []) + kept, key=lambda x: order[x["symbol"]])
+    if glob.get("macro") is None:          # FRED 키를 일부러 안 쓴 경우 — 실패가 아니므로 직전 값도 쓰지 않는다
+        glob["macro"] = []
+        FRESH_AT.pop("global.macro", None)
+    else:
+        glob["macro"] = keep("global.macro", "미국 매크로 지표", glob["macro"], prev.get("macro"))
+
+    events = out["events.json"]
+    ev = keep("events", "이벤트 일정", events, load_prev("events.json"),
+              lambda e: bool(e and e.get("upcoming")))
+    if ev is not events:
+        today = datetime.now(KST).date()
+        for e in ev["upcoming"]:
+            e["dday"] = (date.fromisoformat(e["date"]) - today).days
+        ev["upcoming"] = [e for e in ev["upcoming"] if e["dday"] >= 0]
+        ev["today"] = today.isoformat()
+        out["events.json"] = ev
+    return out
+
+
 # ---------------------------------------------------------------- 수급 (핵심)
 
 ACTOR_KEYS = ["individual", "foreign", "institution"]
+MARKET_NAME = {"KOSPI": "코스피", "KOSDAQ": "코스닥", "FUT": "코스피200 선물"}
 
-# 네이버 투자자별 매매동향 표의 컬럼 순서 (단위: 억원)
-FLOW_COLS = [
-    "date",
-    "individual",      # 개인
-    "foreign",         # 외국인
-    "institution",     # 기관계
-    "inst_fin_inv",    # 금융투자
-    "inst_insurance",  # 보험
-    "inst_trust",      # 투신(사모)
-    "inst_bank",       # 은행
-    "inst_other_fin",  # 기타금융기관
-    "inst_pension",    # 연기금등
-    "other_corp",      # 기타법인
-]
+# 네이버 Npay 증권 '투자자별 매매동향' 페이지가 쓰는 공개 JSON.
+# 옛 finance.naver.com/sise/investorDealTrendDay.naver 는 2026-09-17 폐지(HTTP 410)됐고, 이게 그 후속이다.
+# 옛 표와 153거래일 × 10필드(선물 94거래일)가 전부 일치함을 확인했다. 시장당 200행씩, 750거래일이면 요청 4번.
+NAVER_TREND_URL = "https://stock.naver.com/api/domestic/market/trend/daily"
+NAVER_TREND_REFERER = "https://stock.naver.com/market/stock/kr/trend/trader"
+
+# investorGubun 코드 -> 필드. 현물은 원 단위 금액, 선물은 계약 수.
+INVESTOR_GROUPS = {
+    "individual":     ("8000",),                         # 개인
+    "foreign":        ("9000", "9001"),                  # 외국인 + 기타외국인
+    "institution":    ("1000", "2000", "3000", "3100", "4000", "5000", "6000", "7000"),   # 기관계
+    "inst_fin_inv":   ("1000",),                         # 금융투자
+    "inst_insurance": ("2000",),                         # 보험
+    "inst_trust":     ("3000", "3100"),                  # 투신 + 사모
+    "inst_bank":      ("4000",),                         # 은행
+    "inst_other_fin": ("5000",),                         # 기타금융
+    "inst_pension":   ("6000", "7000"),                  # 연기금 + 국가·지자체
+    "other_corp":     ("7100",),                         # 기타법인
+}
+_REQUIRED_CODES = {"1000", "2000", "3000", "4000", "5000", "6000", "7000", "7100", "8000", "9000"}
 
 
-def fetch_investor_flows(sosok: str, days: int = 40) -> list[dict]:
+def fetch_naver_trend(market: str, days: int) -> list[dict]:
     """
-    네이버 '투자자별 매매동향' 일별 표를 긁는다. 한 페이지 10거래일.
-    sosok: '01'=코스피, '02'=코스닥. 단위 억원.
+    market: 'KOSPI' | 'KOSDAQ' | 'FUT'(코스피200 선물). 날짜 오름차순, 최근 days거래일.
+    현물은 억원(원 단위 합계를 반올림), 선물은 계약. 장중이면 당일 잠정치가 들어올 수 있다.
     """
-    url = "https://finance.naver.com/sise/investorDealTrendDay.naver"
-    rows: list[dict] = []
-    seen: set[str] = set()
-    cursor = datetime.now(KST).date()
-
-    while len(rows) < days:
-        r = session.get(
-            url, params={"bizdate": cursor.strftime("%Y%m%d"), "sosok": sosok}, timeout=20
-        )
-        r.encoding = "euc-kr"
-        page_rows = []
-        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", r.text, re.S):
-            cells = [
-                re.sub(r"<[^>]+>", "", c).replace("\xa0", "").replace("&nbsp;", "").strip()
-                for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)
-            ]
-            cells = [c for c in cells if c != ""]
-            if not cells or not re.match(r"^\d\d\.\d\d\.\d\d$", cells[0]):
-                continue
-            if len(cells) < len(FLOW_COLS):
-                continue
-            yy, mm, dd = cells[0].split(".")
-            iso = f"20{yy}-{mm}-{dd}"
-            if iso in seen:
-                continue
-            seen.add(iso)
-            rec = {"date": iso}
-            for key, raw in zip(FLOW_COLS[1:], cells[1 : len(FLOW_COLS)]):
-                rec[key] = num(raw)
-            page_rows.append(rec)
-
-        if not page_rows:
+    # 모르는 marketType 을 주면 서버가 오류 없이 '코스피+코스닥 합계'를 돌려준다 — 반드시 셋 중 하나
+    if market not in MARKET_NAME:
+        raise ValueError(market)
+    by_date: dict[str, dict] = {}
+    skipped = 0
+    for page in range(days // 200 + 2):            # startIdx 는 오프셋이 아니라 페이지 번호
+        if len(by_date) >= days:
             break
-        rows.extend(page_rows)
-        oldest = min(r_["date"] for r_ in page_rows)
-        cursor = date.fromisoformat(oldest) - timedelta(days=1)
-        time.sleep(0.4)
-
-    rows.sort(key=lambda r_: r_["date"])
+        try:
+            j = get_json(NAVER_TREND_URL, headers={"Referer": NAVER_TREND_REFERER},
+                         params={"tradeType": "KRX", "marketType": market, "startIdx": page, "pageSize": 200})
+        except Exception as e:  # noqa: BLE001
+            if not by_date:
+                raise
+            warn(f"{MARKET_NAME[market]} 수급: 네이버 {page + 1}번째 페이지 실패 — 앞서 받은 {len(by_date)}일만 씀 ({e})")
+            break
+        content = j.get("content") if isinstance(j, dict) else None
+        if not isinstance(content, list):
+            raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
+        for c in content:
+            d = str(c.get("bizdate") or "")
+            if not re.fullmatch(r"\d{8}", d) or d in by_date:
+                continue
+            amt: dict[str, int] = {}
+            for n in c.get("netAmounts") or []:
+                try:
+                    amt[str(n["investorGubun"])] = int(str(n["diffValue"]).replace(",", ""))
+                except (KeyError, TypeError, ValueError):
+                    pass
+            if market == "FUT" and amt.keys() & {"3100", "9001"}:
+                raise RuntimeError("선물을 요청했는데 현물 응답이 왔음")
+            if not _REQUIRED_CODES <= amt.keys():
+                skipped += 1
+                continue
+            row = {"date": f"{d[:4]}-{d[4:6]}-{d[6:]}"}
+            for key, codes in INVESTOR_GROUPS.items():
+                v = sum(amt.get(code, 0) for code in codes)
+                row[key] = float(v) if market == "FUT" else float(round(v / 1e8))
+            by_date[d] = row
+        if not content or str(j.get("last")).lower() == "true":
+            break
+        time.sleep(0.3)
+    if skipped:
+        warn(f"{MARKET_NAME[market]} 수급: 투자자 구분이 빠진 {skipped}행을 건너뜀")
+    rows = sorted(by_date.values(), key=lambda r_: r_["date"])
     return rows[-days:]
+
+
+# 예비 소스: 다음 금융. Referer 가 finance.daum.net 아래가 아니면 403 이다.
+DAUM = "https://finance.daum.net"
+_DAUM_SPOT_TOP = {
+    "individual":  "individualStraightPurchasePrice",
+    "foreign":     "foreignStraightPurchasePrice",
+    "institution": "institutionStraightPurchasePrice",
+}
+_DAUM_SPOT_DETAIL = {
+    "inst_fin_inv":   ("FINANCIAL_INVESTOR",),
+    "inst_insurance": ("INSURANCE_COMPANIES",),
+    "inst_trust":     ("MUTUAL_FUND", "PRIVATE_EQUITY_FUND"),
+    "inst_bank":      ("BANK",),
+    "inst_other_fin": ("ETC_FINANCIAL_INSTITUTION",),
+    "inst_pension":   ("PENSION_FUND",),
+    "other_corp":     ("ETC_CORPORATION",),
+}
+_DAUM_FUT = {
+    "individual": "privateSettlement", "foreign": "foreignSettlement",
+    "institution": "institutionalSettlement", "inst_fin_inv": "financialInvestment",
+    "inst_insurance": "insuranceInvestment", "inst_trust": "trustInvestment",
+    "inst_bank": "bankInvestment", "inst_other_fin": "etcInvestment",
+    "inst_pension": "pensionFundInvestment", "other_corp": "etcCorporationSettlement",
+}
+
+
+def fetch_daum_flows(market: str, days: int) -> list[dict]:
+    """네이버와 같은 형식(현물 억원, 선물 계약). 한 번 요청에 days+10 행."""
+    if market == "FUT":
+        path, ref = "/api/investor/future/days", f"{DAUM}/domestic/investors/DERIVATIVES"
+        params = {"terms": "days", "type": "VOLUME"}          # terms 가 없으면 500
+    else:
+        path, ref = f"/api/investor/{market}/days", f"{DAUM}/domestic/investors/{market}"
+        params = {"details": "true"}                          # 없으면 기관 세부가 빠진다
+    j = get_json(DAUM + path, headers={"Referer": ref}, params={**params, "page": 1, "perPage": days + 10})
+    if j.get("code") != 200 or not isinstance(j.get("data"), list):
+        raise RuntimeError(f"code={j.get('code')} {j.get('message')}")
+
+    by_date: dict[str, dict] = {}
+    for x in j["data"]:
+        d = str(x.get("date") or "")[:10]
+        try:
+            if date.fromisoformat(d).weekday() >= 5:          # 2024-06-16(일) 같은 가짜 주말 행이 있다
+                continue
+            if market == "FUT":
+                row = {k: float(x[src]) for k, src in _DAUM_FUT.items()}
+            else:
+                det = x.get("details") or {}
+                v = {k: float(x[src]) for k, src in _DAUM_SPOT_TOP.items()}
+                # 다음의 '외국인'은 2024-06-14까지 기타외국인을 뺀 값이다. 네 주체 합이 0이 아니고
+                # 기타외국인을 더하면 0이 되는 날만 더해 네이버(기타외국인 포함)와 정의를 맞춘다.
+                ef, corp = float(det.get("ETC_FOREIGN") or 0.0), float(det["ETC_CORPORATION"])
+                r4 = v["individual"] + v["foreign"] + v["institution"] + corp
+                if abs(r4) > 1e6 and abs(r4 + ef) <= 1e6:
+                    v["foreign"] += ef
+                row = {k: float(round(v[k] / 1e8)) for k in v}
+                for k, srcs in _DAUM_SPOT_DETAIL.items():
+                    row[k] = float(round(sum(float(det[s]) for s in srcs) / 1e8))
+        except (KeyError, TypeError, ValueError):
+            continue
+        by_date.setdefault(d, {"date": d, **row})
+    rows = sorted(by_date.values(), key=lambda r_: r_["date"])
+    return rows[-days:]
+
+
+def _merge_by_date(*sources: list[dict]) -> list[dict]:
+    """날짜별로 합친다. 뒤에 온 소스가 같은 날짜를 덮는다."""
+    by: dict[str, dict] = {}
+    for rows in sources:
+        for r in rows:
+            by[r["date"]] = {k: v for k, v in r.items() if k != "cum"}
+    return sorted(by.values(), key=lambda r_: r_["date"])
+
+
+def fetch_flows(market: str, days: int, prev_rows: list[dict] | None = None) -> list[dict]:
+    """
+    주 소스(네이버)가 실패하거나 비면 예비 소스(다음)로. 둘 다 안 되면 빈 리스트.
+    다음 금융은 2026-09-11 까지는 네이버와 ±1억 안에서 같지만, 그 뒤 날짜는 수천억씩(부호까지) 다른 날이 있다.
+    그래서 다음 행은 네이버에 없는 날짜만 채운다:
+      - 네이버 과거 페이지만 실패했으면 → 네이버 행보다 오래된 날짜만 다음으로 보충
+      - 네이버가 통째로 실패했으면 → 직전 정상본(prev_rows)에 있는 날짜는 직전 값을 우선
+    """
+    name = MARKET_NAME[market]
+    rows: list[dict] = []
+    try:
+        rows = fetch_naver_trend(market, days)
+        if not rows:
+            warn(f"{name} 수급: 네이버 응답이 비어 있음")
+    except Exception as e:  # noqa: BLE001
+        warn(f"{name} 수급: 네이버 실패 — {type(e).__name__}: {e}")
+    if len(rows) >= days:
+        return rows
+    try:
+        daum = fetch_daum_flows(market, days)
+    except Exception as e:  # noqa: BLE001
+        if not rows:
+            warn(f"{name} 수급: 다음 금융도 실패 — {type(e).__name__}: {e}")
+        return rows
+    if rows:
+        older = [r for r in daum if r["date"] < rows[0]["date"]]
+        if older:
+            warn(f"{name} 수급: {rows[0]['date']} 이전 {len(older)}일은 예비 소스(다음 금융)로 채웠습니다")
+        return (older + rows)[-days:]
+    if daum:
+        warn(f"{name} 수급은 예비 소스(다음 금융)로 받았습니다. "
+             "직전 데이터에 없던 최근 날짜는 주 소스 확정치와 다를 수 있습니다")
+    return _merge_by_date(daum, prev_rows or [])[-days:] if daum else []
 
 
 def streak(rows: list[dict], key: str) -> dict:
@@ -182,9 +469,10 @@ def build_flows() -> tuple[dict, dict]:
     """(화면용 flows, 통계용 전체 히스토리) 를 함께 돌려준다."""
     out: dict = {"unit": "억원", "chartDays": CHART_DAYS, "markets": {}}
     full: dict = {}
-    for code, sosok in (("KOSPI", "01"), ("KOSDAQ", "02")):
+    prev = (load_prev("flows.json") or {}).get("markets") or {}
+    for code in ("KOSPI", "KOSDAQ"):
         try:
-            rows = fetch_investor_flows(sosok, days=STAT_DAYS)
+            rows = fetch_flows(code, STAT_DAYS, (prev.get(code) or {}).get("daily"))
             if not rows:
                 warn(f"{code} 수급 데이터가 비어 있음")
                 continue
@@ -212,12 +500,12 @@ def build_flows() -> tuple[dict, dict]:
 
 def build_futures() -> dict:
     """
-    코스피200 선물 투자자별 순매수 (네이버 sosok=03, 단위: 계약).
+    코스피200 선물 투자자별 순매수 (단위: 계약).
     외국인은 현물보다 선물을 먼저 움직이는 경우가 많아 선행 지표로 쓴다.
     """
     out: dict = {"unit": "계약", "daily": [], "latest": None, "streaks": {}, "divergence": None}
     try:
-        rows = fetch_investor_flows("03", days=60)
+        rows = fetch_flows("FUT", 60, (load_prev("futures.json") or {}).get("daily"))
         if not rows:
             warn("선물 수급 데이터가 비어 있음")
             return out
@@ -336,6 +624,59 @@ def build_credit() -> dict:
 # ---------------------------------------------------------------- 지수 / 종목
 
 INDEX_META = {"KOSPI": {"name": "코스피", "fdr": "KS11"}, "KOSDAQ": {"name": "코스닥", "fdr": "KQ11"}}
+INDEX_DAYS = 1200   # 달력일. 성적표 750거래일 + 20일 선행을 덮는다
+
+
+def fetch_index_daily(code: str) -> list[dict]:
+    """
+    네이버 지수 일봉 (요청 1번, 날짜 오름차순). 확정 종가가 옛 FDR 캐시와 782거래일 전부 일치.
+    거래대금은 이 소스에 없어 value=None.
+    """
+    end = datetime.now(KST).date()
+    start = end - timedelta(days=INDEX_DAYS)
+    arr = get_json(f"https://api.stock.naver.com/chart/domestic/index/{code}/day",
+                   params={"startDateTime": start.strftime("%Y%m%d") + "0000",
+                           "endDateTime": end.strftime("%Y%m%d") + "0000"})
+    bars = []
+    for x in arr if isinstance(arr, list) else []:
+        d = str(x.get("localDate") or "")
+        close = num(x.get("closePrice"))
+        if not re.fullmatch(r"\d{8}", d) or close is None:
+            continue
+        vol = num(x.get("accumulatedTradingVolume"))          # 천주
+        bars.append({
+            "date": f"{d[:4]}-{d[4:6]}-{d[6:]}",
+            "close": round(close, 2),
+            "open": round(num(x.get("openPrice")) or close, 2),
+            "high": round(num(x.get("highPrice")) or close, 2),
+            "low": round(num(x.get("lowPrice")) or close, 2),
+            "volume": int(vol * 1000) if vol is not None else None,
+            "value": None,
+        })
+    bars.sort(key=lambda b: b["date"])
+    return bars
+
+
+def fetch_index_daily_fdr(symbol: str) -> list[dict]:
+    """예비 소스: FinanceDataReader (GitHub 캐시라 멈출 수 있다 — 2026-09-17에 실제로 멈췄다)."""
+    import FinanceDataReader as fdr
+
+    df = fdr.DataReader(symbol, (datetime.now(KST).date() - timedelta(days=INDEX_DAYS)).isoformat())
+    bars = []
+    for idx, row in df.iterrows():
+        close = float(row["Close"])
+        if close != close:                                    # NaN 이면 JSON 이 깨진다
+            continue
+        def f(k):
+            v = row.get(k)
+            return round(float(v), 2) if v == v and v is not None else close
+        bars.append({
+            "date": idx.strftime("%Y-%m-%d"),
+            "close": round(close, 2), "open": f("Open"), "high": f("High"), "low": f("Low"),
+            "volume": int(row["Volume"]) if row.get("Volume") == row.get("Volume") else None,
+            "value": int(row["Amount"]) if "Amount" in row and row["Amount"] == row["Amount"] else None,
+        })
+    return bars
 
 
 def build_market() -> tuple[dict, dict]:
@@ -358,32 +699,88 @@ def build_market() -> tuple[dict, dict]:
         except Exception as e:  # noqa: BLE001
             warn(f"{code} 지수 시세 실패: {e}")
 
+        bars: list[dict] = []
         try:
-            import FinanceDataReader as fdr
-
-            df = fdr.DataReader(meta["fdr"], (date.today() - timedelta(days=1200)).isoformat())
-            closes[code] = {i.strftime("%Y-%m-%d"): float(v) for i, v in df["Close"].items()}
-            hist = []
-            for idx, row in df.tail(CHART_DAYS).iterrows():
-                hist.append(
-                    {
-                        "date": idx.strftime("%Y-%m-%d"),
-                        "close": round(float(row["Close"]), 2),
-                        "open": round(float(row["Open"]), 2),
-                        "high": round(float(row["High"]), 2),
-                        "low": round(float(row["Low"]), 2),
-                        "volume": int(row["Volume"]) if row.get("Volume") == row.get("Volume") else None,
-                        "value": int(row["Amount"]) if "Amount" in row and row["Amount"] == row["Amount"] else None,
-                    }
-                )
-            entry["history"] = hist
-            if entry.get("price") is None and hist:
-                entry["price"] = hist[-1]["close"]
-            print(f"  {code} 일봉 {len(hist)}개")
+            bars = fetch_index_daily(code)
         except Exception as e:  # noqa: BLE001
-            warn(f"{code} 일봉 실패: {type(e).__name__}: {e}")
+            warn(f"{code} 일봉: 네이버 실패 — {type(e).__name__}: {e}")
+        if not bars:
+            try:
+                bars = fetch_index_daily_fdr(meta["fdr"])
+                if bars:
+                    warn(f"{code} 일봉은 예비 소스(FinanceDataReader)로 받았습니다")
+            except Exception as e:  # noqa: BLE001
+                warn(f"{code} 일봉: FinanceDataReader도 실패 — {type(e).__name__}: {e}")
+        if bars:
+            closes[code] = {b["date"]: b["close"] for b in bars}
+            entry["history"] = bars[-CHART_DAYS:]
+            print(f"  {code} 일봉 {len(bars)}개 ({bars[0]['date']} ~ {bars[-1]['date']})")
         out["indices"][code] = entry
     return out, closes
+
+
+def _weekdays_between(a: str, b: str) -> int:
+    """a 다음 날부터 b 까지(포함)의 평일 수."""
+    da, db = date.fromisoformat(a), date.fromisoformat(b)
+    return sum(1 for k in range(1, (db - da).days + 1) if (da + timedelta(days=k)).weekday() < 5)
+
+
+def check_freshness(flows: dict, market: dict, closes: dict) -> set[str]:
+    """
+    '성공했는데 멈춘' 소스를 잡는다 — 2026-09 에 FDR 지수 캐시가 경고 없이 9/17 에 멈춰 있었다.
+    멈춘 것으로 판단한 섹션 키를 돌려준다.
+
+    - 지수 일봉의 마지막 날짜를 기준일과 비교한다. 기준일은 네이버 현재가의 tradedAt,
+      시세 API 가 죽었으면 수급 최신일이다.
+    - 빠진 날이 기준일 하루뿐이면(장 시작 전·장중이라 일봉에 오늘 봉이 아직 없을 때) 멈춤이 아니다.
+      장중이면 현재가로 그날 종가를 채워, 성적표·유사 국면의 '오늘'을 수급 표의 '오늘'과 맞춘다.
+    - 휴장일 달력이 없으므로 '하루뿐'은 수급 날짜로 판단한다. 수급에도 그날이 없으면,
+      기준일이 오늘이고 일봉과 수급이 같은 마지막 거래일에 머물러 있을 때만 하루뿐으로 본다
+      (평일 휴장 다음 날 아침의 오탐을 막기 위해, 명절 연휴를 덮는 평일 5일까지).
+    - 수급 최신일 뒤로 지수 거래일이 2일 이상 쌓였으면 수급 소스가 멈춘 것으로 본다.
+    """
+    stale: set[str] = set()
+    today = datetime.now(KST).date().isoformat()
+    for code, e in market["indices"].items():
+        px = closes.get(code)
+        if not px:
+            continue
+        name = e.get("name", code)
+        rows = (flows["markets"].get(code) or {}).get("daily") or []
+        flow_last = rows[-1]["date"] if rows else None
+        traded = str(e.get("tradedAt") or "")[:10]
+        live = bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", traded))
+        if not live:
+            traded = flow_last
+        if not traded:
+            continue
+        last = max(px)
+        hist_stale = False
+        if last < traded:
+            pending = {r["date"] for r in rows if r["date"] > last}
+            if pending:
+                only_today = pending == {traded}
+            elif live and traded == today:
+                agree = flow_last == last if rows else _weekdays_between(last, traded) <= 1
+                only_today = agree and _weekdays_between(last, traded) <= 5
+            else:
+                only_today = False
+            if only_today:
+                if live and e.get("marketStatus") != "PREOPEN" and e.get("price") is not None:
+                    px[traded] = float(e["price"])
+            else:
+                hist_stale = True
+                warn(f"{name} 일봉이 {last}에서 멈춤 (기준일 {traded})")
+                mark_stale(f"market.{code}.history", f"{name} 일봉", asOf=last)
+                stale.add(f"market.{code}.history")
+        if rows:
+            behind = [d for d in px if d > flow_last]
+            # 일봉까지 멈췄으면 거래일을 셀 수 없으니 평일 수로 어림한다
+            if len(behind) >= 2 or (hist_stale and _weekdays_between(flow_last, traded) >= 2):
+                warn(f"{name} 수급이 {flow_last}에서 멈춤 (지수 기준일 {traded})")
+                mark_stale(f"flows.{code}", f"{name} 투자자 수급", asOf=flow_last)
+                stale.add(f"flows.{code}")
+    return stale
 
 
 def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40) -> dict:
@@ -707,9 +1104,10 @@ def fetch_fred_series(api_key: str) -> list[dict]:
     return out
 
 
-def build_events() -> tuple[dict, list[dict]]:
+def build_events() -> tuple[dict, list[dict] | None]:
+    """(이벤트, 매크로 지표). FRED 키가 없으면 매크로는 None — 실패가 아니라 '쓰지 않음'."""
     events: list[dict] = []
-    macro: list[dict] = []
+    macro: list[dict] | None = []
     try:
         events = scrape_fomc()
         print(f"  FOMC 일정 {len(events)}건 (연준 사이트)")
@@ -722,6 +1120,7 @@ def build_events() -> tuple[dict, list[dict]]:
     if not fred_key and key_file.exists():
         fred_key = key_file.read_text(encoding="utf-8").strip()
     if fred_key:
+        SECRETS.add(fred_key)
         try:
             fe = fetch_fred_events(fred_key)
             events.extend(fe)
@@ -731,6 +1130,7 @@ def build_events() -> tuple[dict, list[dict]]:
         except Exception as e:  # noqa: BLE001
             warn(f"FRED 실패: {type(e).__name__}: {e}")
     else:
+        macro = None
         warn("FRED_API_KEY 미설정 — 미국 CPI/고용/PCE 발표 일정과 매크로 실측치를 건너뜁니다. "
              "무료 키: https://fred.stlouisfed.org/docs/api/api_key.html")
 
@@ -1049,43 +1449,46 @@ def build_analog(full: dict, closes: dict, code: str = "KOSPI") -> dict:
 
 def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
                    futures: dict | None = None, credit: dict | None = None) -> list[dict]:
-    """수치에서 바로 읽히는 사실만 문장으로. 예측이나 매매 조언은 하지 않는다."""
+    """
+    수치에서 바로 읽히는 사실만 문장으로. 예측이나 매매 조언은 하지 않는다.
+    입력은 모두 '이번 수집분'이어야 한다 — 직전 정상본을 넣으면 지난 날의 일을 '오늘'로 말하게 된다.
+    수급이 비어도 지수·글로벌·빚투 문장은 따로 나간다.
+    """
     tips: list[dict] = []
-    ks = flows.get("markets", {}).get("KOSPI")
-    if not ks:
-        return tips
-    latest, st = ks["latest"], ks["streaks"]
 
     def cho(v):
         return f"{v / 10000:.2f}조" if abs(v) >= 10000 else f"{abs(v):,.0f}억"
 
-    for key, label in (("foreign", "외국인"), ("institution", "기관"), ("individual", "개인")):
-        s = st[key]
-        if s["days"] >= 3:
-            verb = "순매수" if s["side"] == "buy" else "순매도"
-            tips.append({
-                "tone": "buy" if s["side"] == "buy" else "sell",
-                "text": f"{label}이 {s['days']}거래일 연속 {verb} 중입니다. 누적 {cho(abs(s['total']))}원.",
-            })
+    ks = flows.get("markets", {}).get("KOSPI")
+    if ks:
+        latest, st = ks["latest"], ks["streaks"]
+        for key, label in (("foreign", "외국인"), ("institution", "기관"), ("individual", "개인")):
+            s = st[key]
+            if s["days"] >= 3:
+                verb = "순매수" if s["side"] == "buy" else "순매도"
+                tips.append({
+                    "tone": "buy" if s["side"] == "buy" else "sell",
+                    "text": f"{label}이 {s['days']}거래일 연속 {verb} 중입니다. 누적 {cho(abs(s['total']))}원.",
+                })
 
-    f, i, o = latest.get("foreign") or 0, latest.get("individual") or 0, latest.get("institution") or 0
-    if f < 0 and i > 0:
-        tips.append({"tone": "neutral",
-                     "text": f"오늘은 외국인이 판 물량({cho(abs(f))}원)을 개인이 받아내는 구도입니다."})
-    elif f > 0 and i < 0:
-        tips.append({"tone": "neutral",
-                     "text": f"오늘은 외국인이 사고({cho(f)}원) 개인이 파는 구도입니다."})
-    if i < 0 and f < 0 and o > 0:
-        tips.append({"tone": "neutral",
-                     "text": "개인과 외국인이 동시에 팔고 기관 홀로 받았습니다. 흔치 않은 조합입니다."})
+        f, i, o = latest.get("foreign") or 0, latest.get("individual") or 0, latest.get("institution") or 0
+        if f < 0 and i > 0:
+            tips.append({"tone": "neutral",
+                         "text": f"오늘은 외국인이 판 물량({cho(abs(f))}원)을 개인이 받아내는 구도입니다."})
+        elif f > 0 and i < 0:
+            tips.append({"tone": "neutral",
+                         "text": f"오늘은 외국인이 사고({cho(f)}원) 개인이 파는 구도입니다."})
+        if i < 0 and f < 0 and o > 0:
+            tips.append({"tone": "neutral",
+                         "text": "개인과 외국인이 동시에 팔고 기관 홀로 받았습니다. 흔치 않은 조합입니다."})
 
-    det = {k: latest.get(k) or 0 for k in ("inst_pension", "inst_trust", "inst_fin_inv")}
-    top = max(det, key=lambda k: abs(det[k]))
-    if abs(det[top]) > 1000:
-        nm = {"inst_pension": "연기금", "inst_trust": "투신", "inst_fin_inv": "금융투자(증권)"}[top]
-        tips.append({"tone": "buy" if det[top] > 0 else "sell",
-                     "text": f"기관 안에서는 {nm}이 {cho(abs(det[top]))}원 "
-                             f"{'순매수' if det[top] > 0 else '순매도'}로 가장 크게 움직였습니다."})
+        det = {k: latest.get(k) or 0 for k in ("inst_pension", "inst_trust", "inst_fin_inv")}
+        top = max(det, key=lambda k: abs(det[k]))
+        if abs(det[top]) > 1000:
+            nm = {"inst_pension": "연기금", "inst_trust": "투신", "inst_fin_inv": "금융투자(증권)"}[top]
+            tips.append({"tone": "buy" if det[top] > 0 else "sell",
+                         "text": f"기관 안에서는 {nm}이 {cho(abs(det[top]))}원 "
+                                 f"{'순매수' if det[top] > 0 else '순매도'}로 가장 크게 움직였습니다."})
 
     kospi = market.get("indices", {}).get("KOSPI", {})
     if kospi.get("changeRate") is not None and abs(kospi["changeRate"]) >= 3:
@@ -1292,6 +1695,7 @@ def main() -> int:
     flows, full = build_flows()
     print("[2/8] 지수")
     market, closes = build_market()
+    stale_keys = check_freshness(flows, market, closes)
     print("[3/8] 개미 성적표")
     ant = build_ant(full, closes, "KOSPI")
     if ant:
@@ -1322,30 +1726,49 @@ def main() -> int:
     events, macro = build_events()
     glob["macro"] = macro
 
-    insights = build_insights(flows, market, glob, ant, futures, credit)
+    # 성적표·유사 국면은 수급과 종가가 둘 다 있는 날까지만 계산돼, 어느 쪽이 멈춰도 '오늘'이 그날에 묶인다.
+    # 여기서는 이번에 계산한 결과의 기준일로 표시해 두고, 직전 정상본이 더 최신이면 apply_last_good 이 고쳐 쓴다.
+    if stale_keys & {"market.KOSPI.history", "flows.KOSPI"}:
+        stale_keys |= {"ant", "analog"}
+        if ant:
+            mark_stale("ant", "개미 성적표", asOf=ant["sample"]["to"])
+        if analog:
+            mark_stale("analog", "유사 국면", asOf=analog["today"]["date"])
+    ant_today = {} if "ant" in stale_keys else ant
 
-    write("flows.json", flows)
-    write("ant.json", ant)
-    write("analog.json", analog)
-    write("antstocks.json", antstocks)
-    write("futures.json", futures)
-    write("credit.json", credit)
-    write("market.json", market)
-    write("stocks.json", stocks)
-    write("global.json", glob)
-    write("events.json", events)
+    # 브리핑은 이번 수집분으로만 만든다 (직전 정상본이나 멈춘 데이터로 '오늘'을 말하지 않도록)
+    core_ok = bool(flows["markets"].get("KOSPI")) and "flows.KOSPI" not in stale_keys
+    if core_ok:
+        insights = build_insights(flows, market, glob, ant_today, futures, credit)
+    else:
+        insights = build_insights({"markets": {}}, market, glob, {}, None, credit)
+
+    out = apply_last_good(now.isoformat(), {
+        "flows.json": flows, "ant.json": ant, "analog.json": analog,
+        "antstocks.json": antstocks, "futures.json": futures, "credit.json": credit,
+        "market.json": market, "stocks.json": stocks, "global.json": glob,
+        "events.json": events,
+    }, stale_keys)
+    for name, payload in out.items():
+        write(name, payload)
     write("insights.json", {"items": insights})
-    build_og_card(flows, market, ant)
+    if core_ok:
+        build_og_card(out["flows.json"], out["market.json"], ant_today)
+    else:
+        warn("코스피 수급이 갱신되지 않아 공유 카드(og.png)를 다시 그리지 않았습니다")
     write("meta.json", {
         "generatedAt": now.isoformat(),
         "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),
         "phase": market_phase(now),
         "warnings": WARNINGS,
+        "stale": STALE,
+        "freshAt": FRESH_AT,
         "sources": [
-            {"name": "네이버 금융", "for": "개인/외국인/기관 수급, 지수, 종목, 업종"},
-            {"name": "FinanceDataReader", "for": "코스피/코스닥 일봉"},
+            {"name": "네이버 증권", "for": "개인/외국인/기관 수급, 지수 일봉·시세, 종목, 업종"},
+            {"name": "다음 금융", "for": "수급 예비 소스"},
+            {"name": "금융투자협회", "for": "신용융자·증시자금"},
             {"name": "yfinance", "for": "미국 지수·선물·금리·환율·원자재"},
-            {"name": "Federal Reserve", "for": "FOMC 일정"},
+            {"name": "Federal Reserve · FRED", "for": "FOMC·경제지표 일정, 매크로 지표"},
         ],
         "caveat": "장중 수급은 잠정치이며 장 마감 후 확정치로 정정됩니다.",
     })
@@ -1353,6 +1776,13 @@ def main() -> int:
     print(f"\n완료. 경고 {len(WARNINGS)}건")
     for w in WARNINGS:
         print(f"  - {w}")
+    # 파일은 다 썼다(직전 정상본 유지). 핵심 데이터가 갱신되지 않았으면 워크플로가 커밋한 뒤
+    # 실행을 실패로 표시해 알림이 가게 한다 — 2026-09 에는 수급과 지수 일봉이 둘 다 조용히 멈췄었다.
+    failed = [label for ok, label in ((core_ok, "코스피 수급"),
+                                      ("market.KOSPI.history" not in stale_keys, "코스피 일봉")) if not ok]
+    if failed:
+        print(f"핵심 데이터({', '.join(failed)}) 갱신 실패 — exit 3")
+        return 3
     return 0
 
 
