@@ -59,8 +59,8 @@ GitHub Actions (cron)
        ├─ 금융투자협회       → 신용융자·예탁금·반대매매
        ├─ yfinance           → 미국 지수·선물·금리·환율·원자재
        └─ federalreserve.gov / FRED → FOMC·경제지표 일정, 매크로 지표
-            └─ docs/data/*.json 커밋
-                 └─ GitHub Pages 가 docs/ 를 서빙 → 페이지가 같은 오리진에서 읽음
+            └─ docs/data/*.json, og.png → data 브랜치에 최신본 한 커밋으로 덮어쓰기
+                 └─ main 의 docs/(화면 코드) + 이번 데이터를 묶어 Pages 에 배포 → 페이지가 같은 오리진에서 읽음
 ```
 
 또 하나 알아둘 것. **개인·외국인·기관 수급에는 진짜 실시간이 없습니다.**
@@ -84,6 +84,15 @@ python -m venv .venv
 ```
 
 `docs/data/*.json` 이 생기면 정적 서버로 열어 봅니다. (`file://` 로 열면 fetch 가 막힙니다.)
+수집기를 돌리지 않고 지금 배포된 데이터를 그대로 받아 보려면 data 브랜치에서 꺼냅니다.
+
+```bash
+git fetch origin data
+```
+
+```bash
+git archive FETCH_HEAD docs | tar -x
+```
 
 ```bash
 .venv/Scripts/python -m http.server 8765 --directory docs
@@ -112,9 +121,13 @@ python -m venv .venv
 ## 배포 (GitHub Pages)
 
 1. 이 폴더를 GitHub 저장소로 올립니다.
-2. **Settings → Pages → Source** 를 `Deploy from a branch`, 브랜치는 `main`, 폴더는 `/docs` 로 지정합니다.
+2. **Settings → Pages → Source** 를 `GitHub Actions` 로 지정합니다.
 3. **Actions** 탭에서 `시장 데이터 수집` 을 한 번 수동 실행(`Run workflow`)해 봅니다.
-   (워크플로가 `contents: write` 권한을 직접 선언하므로 저장소 설정을 바꿀 필요는 없습니다.)
+   첫 실행이 `data` 브랜치를 만들고 사이트를 배포합니다.
+
+수집 결과는 main 에 커밋하지 않습니다. 최신 데이터 한 벌만 `data` 브랜치에 부모 없는 커밋으로 덮어쓰므로
+저장소가 데이터 이력으로 불어나지 않습니다(대신 데이터 변경 이력은 남지 않습니다).
+화면 코드(`docs/`)를 main 에 올리면 `사이트 배포` 워크플로가 data 브랜치의 최신 데이터와 묶어 바로 배포합니다.
 
 이후 평일에는 장중 30분마다(KST 09:07~15:37), 장 마감 후 18:17, 수급 확정치가 나오는 20:23,
 다음 날 아침 07:37 에 자동 갱신됩니다(하루 약 17회). GitHub 의 예약 실행은 부하가 몰리면 늦어지거나
@@ -126,7 +139,8 @@ Actions 스케줄 실행은 **public 저장소에서 무료**입니다.
 private 이면 하루 약 17회 실행이 무료 사용량에서 차감됩니다(1회 약 1~2분).
 더 아끼려면 `collect.yml` 의 첫 cron 을 `7 0-6 * * 1-5`(1시간마다) 정도로 줄이세요.
 
-> 참고: GitHub 는 60일간 커밋이 없는 저장소의 예약 워크플로를 자동 비활성화합니다.
+> 참고: GitHub 는 60일간 활동이 없는 저장소의 예약 워크플로를 자동 비활성화합니다.
+> 수집 워크플로가 실행할 때마다 자기 자신을 다시 켜 두는 API 를 부르므로(`예약 실행 유지` 단계) 따로 할 일은 없습니다.
 
 ---
 
@@ -202,7 +216,7 @@ docs/                  ← GitHub Pages 루트
   index.html
   style.css
   app.js               의존성 없는 바닐라 JS + 손으로 그린 SVG 차트
-  data/*.json          수집 결과 (워크플로가 갱신)
+  data/*.json          수집 결과 — main 에는 없고 data 브랜치에 있다 (워크플로가 갱신)
     flows.json           120거래일 수급 (화면 차트용, 거래대금 포함)
     ant.json             성적표·상관계수·백분위·흑역사·연도별 (750거래일 통계)
     analog.json          유사 국면 매칭
@@ -210,10 +224,11 @@ docs/                  ← GitHub Pages 루트
     futures.json         코스피200 선물 투자자별 순매수 + 현선물 다이버전스
     credit.json          신용융자 잔고·반대매매·예탁금 (금융투자협회)
     market/stocks/global/events/insights/meta.json
-  og.png               공유 미리보기 카드 (수집기가 그림)
+  og.png               공유 미리보기 카드 (수집기가 그림, data 브랜치)
 tests/                 수집기 테스트 (네트워크 없이 pytest)
 .github/workflows/
-  collect.yml          데이터 수집 (예약 실행)
+  collect.yml          데이터 수집 → data 브랜치 → Pages 배포 (예약 실행)
+  pages.yml            화면 코드가 바뀌면 최신 데이터와 묶어 배포
   test.yml             코드가 바뀌면 테스트
 ```
 
@@ -227,7 +242,7 @@ tests/                 수집기 테스트 (네트워크 없이 pytest)
   지금은 Npay 증권 페이지가 쓰는 `stock.naver.com/api/domestic/market/trend/daily` 를 씁니다.
   KRX 공식 데이터를 쓰려면 `data.krx.co.kr` 무료 계정을 만들어 로그인 세션으로 접근해야 합니다.
 - 소스가 실패하거나 멈추면 그 섹션은 **직전 정상 데이터를 유지**하고, 화면 맨 위에 '지난 데이터' 안내가 뜹니다.
-  핵심인 코스피 수급·일봉이 갱신되지 않으면 워크플로가 커밋 후 **실패로 표시**되어 GitHub 알림이 갑니다.
+  핵심인 코스피 수급·일봉이 갱신되지 않으면 워크플로가 데이터를 올리고 배포한 뒤 **실패로 표시**되어 GitHub 알림이 갑니다.
 - 장중 수급은 잠정치입니다. 확정치는 장 마감 후에 나옵니다.
 - 지수 수급 단위는 **억원**, 종목 수급 단위는 **주**입니다.
 
