@@ -215,5 +215,158 @@
   "이 기간 지수의 20거래일 평균 수익률은 +3.17% 였습니다. 상승장에서는 '떨어질 때 사는' 쪽이 불리하게 보이기 쉽습니다.",
   "상관관계이지 인과관계가 아닙니다. 개인이 사서 떨어진 게 아니라, 떨어지는 국면에서 개인이 사는 쪽에 서는 것에 가깝습니다.",
   "순매수 총합은 개인·외국인·기관·기타법인을 모두 더해야 0이 됩니다. 개인의 상대가 꼭 외국인일 필요는 없으므로 개인↔외국인 상관(-0.78)은 산수가 아니라 이 기간에 관찰된 사실입니다(개인↔기관 -0.63)."
- ]
+ ],
+ "byMarket": {
+  "KOSDAQ": {
+   "market": "KOSDAQ",
+   "basis": "intensity",
+   "yearly": [
+    {
+     "year": "2023",
+     "days": 80,
+     "corrIF": -0.881,
+     "baseline20": -0.7,
+     "indivHeavyR20": 0.24,
+     "excess": 0.94,
+     "excessCI": [
+      -0.45,
+      1.44
+     ],
+     "significant": false,
+     "grade": "C"
+    },
+    {
+     "year": "2024",
+     "days": 244,
+     "corrIF": -0.893,
+     "baseline20": -1.28,
+     "indivHeavyR20": -1.36,
+     "excess": -0.08,
+     "excessCI": [
+      -0.79,
+      0.85
+     ],
+     "significant": false,
+     "grade": "C"
+    },
+    {
+     "year": "2025",
+     "days": 242,
+     "corrIF": -0.858,
+     "baseline20": 2.77,
+     "indivHeavyR20": 3.26,
+     "excess": 0.48,
+     "excessCI": [
+      -0.49,
+      1.03
+     ],
+     "significant": false,
+     "grade": "C"
+    },
+    {
+     "year": "2026",
+     "days": 184,
+     "corrIF": -0.665,
+     "baseline20": -1.21,
+     "indivHeavyR20": -0.56,
+     "excess": 0.64,
+     "excessCI": [
+      -1.78,
+      4.05
+     ],
+     "significant": false,
+     "grade": "C"
+    }
+   ],
+   "sample": {
+    "days": 750,
+    "from": "2023-08-31",
+    "to": "2026-10-02"
+   },
+   "baseline": {
+    "r1": 0.02,
+    "r5": 0.05,
+    "r20": 0.14
+   },
+   "actors": {
+    "individual": {
+     "timing": {
+      "corr1": -0.045,
+      "corr5": -0.074,
+      "corr20": 0.003
+     },
+     "heavyBuy": {
+      "r1": -0.04,
+      "r5": -0.35,
+      "r20": 0.48,
+      "n": 150,
+      "n20": 147
+     },
+     "excess20": 0.34,
+     "excessCI": [
+      -0.8,
+      0.94
+     ],
+     "significant": false,
+     "grade": "C",
+     "todayValue": 841.0,
+     "todayIntensity": 0.95,
+     "todayPercentile": 57.7
+    },
+    "foreign": {
+     "timing": {
+      "corr1": 0.069,
+      "corr5": 0.066,
+      "corr20": -0.013
+     },
+     "heavyBuy": {
+      "r1": 0.22,
+      "r5": 0.51,
+      "r20": 0.06,
+      "n": 150,
+      "n20": 146
+     },
+     "excess20": -0.08,
+     "excessCI": [
+      -1.7,
+      1.45
+     ],
+     "significant": false,
+     "grade": "C",
+     "todayValue": -1767.0,
+     "todayIntensity": -2.0,
+     "todayPercentile": 11.7
+    },
+    "institution": {
+     "timing": {
+      "corr1": -0.004,
+      "corr5": 0.042,
+      "corr20": 0.016
+     },
+     "heavyBuy": {
+      "r1": -0.12,
+      "r5": 0.5,
+      "r20": 0.13,
+      "n": 150,
+      "n20": 145
+     },
+     "excess20": -0.01,
+     "excessCI": [
+      -1.59,
+      1.46
+     ],
+     "significant": false,
+     "grade": "C",
+     "todayValue": 936.0,
+     "todayIntensity": 1.06,
+     "todayPercentile": 83.4
+    }
+   },
+   "correlation": {
+    "individual_foreign": -0.765,
+    "individual_institution": -0.752,
+    "foreign_institution": 0.164
+   }
+  }
+ }
 }

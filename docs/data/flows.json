@@ -2320,6 +2320,567 @@
      "side": "buy",
      "total": 7394.0
     }
+   },
+   "intraday": {
+    "date": "2026-10-02",
+    "open": "09:00",
+    "close": "15:30",
+    "points": [
+     {
+      "t": "09:04",
+      "individual": 1525.0,
+      "foreign": -1407.0,
+      "institution": -345.0,
+      "other_corp": 228.0
+     },
+     {
+      "t": "09:10",
+      "individual": 1627.0,
+      "foreign": -1609.0,
+      "institution": -398.0,
+      "other_corp": 380.0
+     },
+     {
+      "t": "09:15",
+      "individual": 1437.0,
+      "foreign": -1517.0,
+      "institution": -542.0,
+      "other_corp": 622.0
+     },
+     {
+      "t": "09:19",
+      "individual": 1514.0,
+      "foreign": -1694.0,
+      "institution": -639.0,
+      "other_corp": 819.0
+     },
+     {
+      "t": "09:25",
+      "individual": 456.0,
+      "foreign": -1549.0,
+      "institution": 47.0,
+      "other_corp": 1046.0
+     },
+     {
+      "t": "09:30",
+      "individual": 309.0,
+      "foreign": -1717.0,
+      "institution": 156.0,
+      "other_corp": 1252.0
+     },
+     {
+      "t": "09:34",
+      "individual": 174.0,
+      "foreign": -1605.0,
+      "institution": -9.0,
+      "other_corp": 1441.0
+     },
+     {
+      "t": "09:40",
+      "individual": -232.0,
+      "foreign": -1408.0,
+      "institution": -48.0,
+      "other_corp": 1688.0
+     },
+     {
+      "t": "09:45",
+      "individual": -235.0,
+      "foreign": -1260.0,
+      "institution": -353.0,
+      "other_corp": 1848.0
+     },
+     {
+      "t": "09:49",
+      "individual": -382.0,
+      "foreign": -1379.0,
+      "institution": -238.0,
+      "other_corp": 1999.0
+     },
+     {
+      "t": "09:55",
+      "individual": -934.0,
+      "foreign": -1217.0,
+      "institution": -136.0,
+      "other_corp": 2287.0
+     },
+     {
+      "t": "10:00",
+      "individual": -1434.0,
+      "foreign": -1082.0,
+      "institution": 20.0,
+      "other_corp": 2495.0
+     },
+     {
+      "t": "10:04",
+      "individual": -1245.0,
+      "foreign": -1266.0,
+      "institution": -168.0,
+      "other_corp": 2679.0
+     },
+     {
+      "t": "10:10",
+      "individual": -1187.0,
+      "foreign": -1335.0,
+      "institution": -413.0,
+      "other_corp": 2935.0
+     },
+     {
+      "t": "10:15",
+      "individual": -1572.0,
+      "foreign": -1271.0,
+      "institution": -189.0,
+      "other_corp": 3032.0
+     },
+     {
+      "t": "10:19",
+      "individual": -1907.0,
+      "foreign": -1213.0,
+      "institution": -207.0,
+      "other_corp": 3328.0
+     },
+     {
+      "t": "10:25",
+      "individual": -1796.0,
+      "foreign": -1274.0,
+      "institution": -478.0,
+      "other_corp": 3548.0
+     },
+     {
+      "t": "10:30",
+      "individual": -1705.0,
+      "foreign": -1338.0,
+      "institution": -739.0,
+      "other_corp": 3782.0
+     },
+     {
+      "t": "10:34",
+      "individual": -1309.0,
+      "foreign": -1392.0,
+      "institution": -1257.0,
+      "other_corp": 3958.0
+     },
+     {
+      "t": "10:40",
+      "individual": -1045.0,
+      "foreign": -1502.0,
+      "institution": -1657.0,
+      "other_corp": 4205.0
+     },
+     {
+      "t": "10:45",
+      "individual": -1017.0,
+      "foreign": -1536.0,
+      "institution": -1896.0,
+      "other_corp": 4448.0
+     },
+     {
+      "t": "10:49",
+      "individual": -1014.0,
+      "foreign": -1664.0,
+      "institution": -1927.0,
+      "other_corp": 4605.0
+     },
+     {
+      "t": "10:55",
+      "individual": -1415.0,
+      "foreign": -1538.0,
+      "institution": -1882.0,
+      "other_corp": 4836.0
+     },
+     {
+      "t": "11:00",
+      "individual": -2005.0,
+      "foreign": -1546.0,
+      "institution": -1452.0,
+      "other_corp": 5003.0
+     },
+     {
+      "t": "11:04",
+      "individual": -2497.0,
+      "foreign": -1388.0,
+      "institution": -1276.0,
+      "other_corp": 5161.0
+     },
+     {
+      "t": "11:10",
+      "individual": -2941.0,
+      "foreign": -1302.0,
+      "institution": -1196.0,
+      "other_corp": 5440.0
+     },
+     {
+      "t": "11:15",
+      "individual": -3017.0,
+      "foreign": -1303.0,
+      "institution": -1273.0,
+      "other_corp": 5594.0
+     },
+     {
+      "t": "11:19",
+      "individual": -3371.0,
+      "foreign": -1424.0,
+      "institution": -973.0,
+      "other_corp": 5767.0
+     },
+     {
+      "t": "11:25",
+      "individual": -3482.0,
+      "foreign": -1502.0,
+      "institution": -1100.0,
+      "other_corp": 6084.0
+     },
+     {
+      "t": "11:30",
+      "individual": -3565.0,
+      "foreign": -1623.0,
+      "institution": -1093.0,
+      "other_corp": 6281.0
+     },
+     {
+      "t": "11:34",
+      "individual": -3640.0,
+      "foreign": -1756.0,
+      "institution": -1011.0,
+      "other_corp": 6407.0
+     },
+     {
+      "t": "11:40",
+      "individual": -3972.0,
+      "foreign": -1914.0,
+      "institution": -788.0,
+      "other_corp": 6674.0
+     },
+     {
+      "t": "11:45",
+      "individual": -4123.0,
+      "foreign": -2142.0,
+      "institution": -548.0,
+      "other_corp": 6813.0
+     },
+     {
+      "t": "11:49",
+      "individual": -4533.0,
+      "foreign": -2123.0,
+      "institution": -367.0,
+      "other_corp": 7022.0
+     },
+     {
+      "t": "11:55",
+      "individual": -5054.0,
+      "foreign": -1920.0,
+      "institution": -265.0,
+      "other_corp": 7238.0
+     },
+     {
+      "t": "12:00",
+      "individual": -5412.0,
+      "foreign": -1880.0,
+      "institution": -192.0,
+      "other_corp": 7484.0
+     },
+     {
+      "t": "12:04",
+      "individual": -5940.0,
+      "foreign": -1838.0,
+      "institution": 133.0,
+      "other_corp": 7645.0
+     },
+     {
+      "t": "12:10",
+      "individual": -6303.0,
+      "foreign": -1743.0,
+      "institution": 182.0,
+      "other_corp": 7864.0
+     },
+     {
+      "t": "12:15",
+      "individual": -6734.0,
+      "foreign": -1748.0,
+      "institution": 394.0,
+      "other_corp": 8088.0
+     },
+     {
+      "t": "12:19",
+      "individual": -6890.0,
+      "foreign": -1805.0,
+      "institution": 491.0,
+      "other_corp": 8204.0
+     },
+     {
+      "t": "12:25",
+      "individual": -7345.0,
+      "foreign": -1819.0,
+      "institution": 643.0,
+      "other_corp": 8520.0
+     },
+     {
+      "t": "12:30",
+      "individual": -7480.0,
+      "foreign": -1828.0,
+      "institution": 651.0,
+      "other_corp": 8657.0
+     },
+     {
+      "t": "12:34",
+      "individual": -7720.0,
+      "foreign": -1796.0,
+      "institution": 636.0,
+      "other_corp": 8880.0
+     },
+     {
+      "t": "12:40",
+      "individual": -7849.0,
+      "foreign": -1740.0,
+      "institution": 503.0,
+      "other_corp": 9086.0
+     },
+     {
+      "t": "12:45",
+      "individual": -7908.0,
+      "foreign": -1819.0,
+      "institution": 436.0,
+      "other_corp": 9291.0
+     },
+     {
+      "t": "12:49",
+      "individual": -7662.0,
+      "foreign": -1972.0,
+      "institution": 121.0,
+      "other_corp": 9513.0
+     },
+     {
+      "t": "12:55",
+      "individual": -7827.0,
+      "foreign": -2104.0,
+      "institution": 154.0,
+      "other_corp": 9777.0
+     },
+     {
+      "t": "13:00",
+      "individual": -7882.0,
+      "foreign": -2219.0,
+      "institution": 136.0,
+      "other_corp": 9964.0
+     },
+     {
+      "t": "13:04",
+      "individual": -8164.0,
+      "foreign": -2303.0,
+      "institution": 302.0,
+      "other_corp": 10165.0
+     },
+     {
+      "t": "13:10",
+      "individual": -8513.0,
+      "foreign": -2172.0,
+      "institution": 275.0,
+      "other_corp": 10410.0
+     },
+     {
+      "t": "13:15",
+      "individual": -8699.0,
+      "foreign": -2105.0,
+      "institution": 240.0,
+      "other_corp": 10564.0
+     },
+     {
+      "t": "13:19",
+      "individual": -8699.0,
+      "foreign": -2160.0,
+      "institution": 83.0,
+      "other_corp": 10776.0
+     },
+     {
+      "t": "13:25",
+      "individual": -8887.0,
+      "foreign": -2130.0,
+      "institution": -27.0,
+      "other_corp": 11044.0
+     },
+     {
+      "t": "13:30",
+      "individual": -9221.0,
+      "foreign": -2079.0,
+      "institution": 98.0,
+      "other_corp": 11201.0
+     },
+     {
+      "t": "13:34",
+      "individual": -9523.0,
+      "foreign": -2141.0,
+      "institution": 238.0,
+      "other_corp": 11426.0
+     },
+     {
+      "t": "13:40",
+      "individual": -9852.0,
+      "foreign": -2120.0,
+      "institution": 279.0,
+      "other_corp": 11693.0
+     },
+     {
+      "t": "13:45",
+      "individual": -10023.0,
+      "foreign": -2094.0,
+      "institution": 205.0,
+      "other_corp": 11913.0
+     },
+     {
+      "t": "13:49",
+      "individual": -10066.0,
+      "foreign": -2172.0,
+      "institution": 119.0,
+      "other_corp": 12119.0
+     },
+     {
+      "t": "13:55",
+      "individual": -10535.0,
+      "foreign": -2164.0,
+      "institution": 339.0,
+      "other_corp": 12359.0
+     },
+     {
+      "t": "14:00",
+      "individual": -10633.0,
+      "foreign": -2185.0,
+      "institution": 329.0,
+      "other_corp": 12489.0
+     },
+     {
+      "t": "14:04",
+      "individual": -11268.0,
+      "foreign": -2196.0,
+      "institution": 745.0,
+      "other_corp": 12719.0
+     },
+     {
+      "t": "14:10",
+      "individual": -11357.0,
+      "foreign": -2088.0,
+      "institution": 487.0,
+      "other_corp": 12959.0
+     },
+     {
+      "t": "14:15",
+      "individual": -11407.0,
+      "foreign": -2018.0,
+      "institution": 322.0,
+      "other_corp": 13102.0
+     },
+     {
+      "t": "14:19",
+      "individual": -11623.0,
+      "foreign": -2066.0,
+      "institution": 379.0,
+      "other_corp": 13311.0
+     },
+     {
+      "t": "14:25",
+      "individual": -11799.0,
+      "foreign": -2014.0,
+      "institution": 276.0,
+      "other_corp": 13537.0
+     },
+     {
+      "t": "14:30",
+      "individual": -11860.0,
+      "foreign": -2062.0,
+      "institution": 183.0,
+      "other_corp": 13739.0
+     },
+     {
+      "t": "14:34",
+      "individual": -11756.0,
+      "foreign": -2091.0,
+      "institution": -54.0,
+      "other_corp": 13902.0
+     },
+     {
+      "t": "14:40",
+      "individual": -11828.0,
+      "foreign": -2080.0,
+      "institution": -307.0,
+      "other_corp": 14214.0
+     },
+     {
+      "t": "14:45",
+      "individual": -12194.0,
+      "foreign": -2074.0,
+      "institution": -80.0,
+      "other_corp": 14348.0
+     },
+     {
+      "t": "14:49",
+      "individual": -12358.0,
+      "foreign": -2092.0,
+      "institution": -118.0,
+      "other_corp": 14568.0
+     },
+     {
+      "t": "14:55",
+      "individual": -12736.0,
+      "foreign": -2026.0,
+      "institution": 5.0,
+      "other_corp": 14757.0
+     },
+     {
+      "t": "15:00",
+      "individual": -13045.0,
+      "foreign": -2060.0,
+      "institution": 324.0,
+      "other_corp": 14782.0
+     },
+     {
+      "t": "15:04",
+      "individual": -13336.0,
+      "foreign": -2006.0,
+      "institution": 558.0,
+      "other_corp": 14785.0
+     },
+     {
+      "t": "15:10",
+      "individual": -14217.0,
+      "foreign": -1883.0,
+      "institution": 1294.0,
+      "other_corp": 14806.0
+     },
+     {
+      "t": "15:15",
+      "individual": -15482.0,
+      "foreign": -1718.0,
+      "institution": 2379.0,
+      "other_corp": 14821.0
+     },
+     {
+      "t": "15:19",
+      "individual": -16012.0,
+      "foreign": -1768.0,
+      "institution": 2950.0,
+      "other_corp": 14829.0
+     },
+     {
+      "t": "15:25",
+      "individual": -16034.0,
+      "foreign": -1770.0,
+      "institution": 2974.0,
+      "other_corp": 14830.0
+     },
+     {
+      "t": "15:30",
+      "individual": -17206.0,
+      "foreign": -1438.0,
+      "institution": 3814.0,
+      "other_corp": 14830.0
+     }
+    ],
+    "final": {
+     "t": "20:04",
+     "individual": -17897.0,
+     "foreign": -1080.0,
+     "institution": 4155.0,
+     "other_corp": 14822.0
+    },
+    "after": null
    }
   },
   "KOSDAQ": {
@@ -4640,6 +5201,567 @@
      "side": "buy",
      "total": 7168.0
     }
+   },
+   "intraday": {
+    "date": "2026-10-02",
+    "open": "09:00",
+    "close": "15:30",
+    "points": [
+     {
+      "t": "09:04",
+      "individual": -39.0,
+      "foreign": -53.0,
+      "institution": 96.0,
+      "other_corp": -4.0
+     },
+     {
+      "t": "09:10",
+      "individual": -371.0,
+      "foreign": 123.0,
+      "institution": 262.0,
+      "other_corp": -14.0
+     },
+     {
+      "t": "09:15",
+      "individual": -289.0,
+      "foreign": -35.0,
+      "institution": 343.0,
+      "other_corp": -19.0
+     },
+     {
+      "t": "09:19",
+      "individual": -138.0,
+      "foreign": -230.0,
+      "institution": 405.0,
+      "other_corp": -37.0
+     },
+     {
+      "t": "09:25",
+      "individual": -266.0,
+      "foreign": -127.0,
+      "institution": 435.0,
+      "other_corp": -41.0
+     },
+     {
+      "t": "09:30",
+      "individual": -259.0,
+      "foreign": -151.0,
+      "institution": 447.0,
+      "other_corp": -37.0
+     },
+     {
+      "t": "09:34",
+      "individual": -359.0,
+      "foreign": -73.0,
+      "institution": 478.0,
+      "other_corp": -46.0
+     },
+     {
+      "t": "09:40",
+      "individual": -502.0,
+      "foreign": 15.0,
+      "institution": 536.0,
+      "other_corp": -49.0
+     },
+     {
+      "t": "09:45",
+      "individual": -569.0,
+      "foreign": 42.0,
+      "institution": 580.0,
+      "other_corp": -53.0
+     },
+     {
+      "t": "09:49",
+      "individual": -665.0,
+      "foreign": 98.0,
+      "institution": 615.0,
+      "other_corp": -48.0
+     },
+     {
+      "t": "09:55",
+      "individual": -700.0,
+      "foreign": 63.0,
+      "institution": 681.0,
+      "other_corp": -44.0
+     },
+     {
+      "t": "10:00",
+      "individual": -783.0,
+      "foreign": 82.0,
+      "institution": 746.0,
+      "other_corp": -45.0
+     },
+     {
+      "t": "10:04",
+      "individual": -479.0,
+      "foreign": -195.0,
+      "institution": 718.0,
+      "other_corp": -44.0
+     },
+     {
+      "t": "10:10",
+      "individual": -513.0,
+      "foreign": -198.0,
+      "institution": 757.0,
+      "other_corp": -46.0
+     },
+     {
+      "t": "10:15",
+      "individual": -649.0,
+      "foreign": -113.0,
+      "institution": 808.0,
+      "other_corp": -46.0
+     },
+     {
+      "t": "10:19",
+      "individual": -738.0,
+      "foreign": -51.0,
+      "institution": 834.0,
+      "other_corp": -45.0
+     },
+     {
+      "t": "10:25",
+      "individual": -595.0,
+      "foreign": -230.0,
+      "institution": 867.0,
+      "other_corp": -43.0
+     },
+     {
+      "t": "10:30",
+      "individual": -574.0,
+      "foreign": -269.0,
+      "institution": 878.0,
+      "other_corp": -35.0
+     },
+     {
+      "t": "10:34",
+      "individual": -392.0,
+      "foreign": -463.0,
+      "institution": 886.0,
+      "other_corp": -31.0
+     },
+     {
+      "t": "10:40",
+      "individual": -456.0,
+      "foreign": -411.0,
+      "institution": 910.0,
+      "other_corp": -43.0
+     },
+     {
+      "t": "10:45",
+      "individual": -418.0,
+      "foreign": -453.0,
+      "institution": 918.0,
+      "other_corp": -46.0
+     },
+     {
+      "t": "10:49",
+      "individual": -389.0,
+      "foreign": -479.0,
+      "institution": 915.0,
+      "other_corp": -48.0
+     },
+     {
+      "t": "10:55",
+      "individual": -490.0,
+      "foreign": -393.0,
+      "institution": 924.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "11:00",
+      "individual": -563.0,
+      "foreign": -342.0,
+      "institution": 939.0,
+      "other_corp": -34.0
+     },
+     {
+      "t": "11:04",
+      "individual": -569.0,
+      "foreign": -322.0,
+      "institution": 916.0,
+      "other_corp": -26.0
+     },
+     {
+      "t": "11:10",
+      "individual": -429.0,
+      "foreign": -453.0,
+      "institution": 903.0,
+      "other_corp": -21.0
+     },
+     {
+      "t": "11:15",
+      "individual": -304.0,
+      "foreign": -557.0,
+      "institution": 884.0,
+      "other_corp": -24.0
+     },
+     {
+      "t": "11:19",
+      "individual": -278.0,
+      "foreign": -597.0,
+      "institution": 900.0,
+      "other_corp": -25.0
+     },
+     {
+      "t": "11:25",
+      "individual": -181.0,
+      "foreign": -695.0,
+      "institution": 896.0,
+      "other_corp": -20.0
+     },
+     {
+      "t": "11:30",
+      "individual": -108.0,
+      "foreign": -771.0,
+      "institution": 893.0,
+      "other_corp": -14.0
+     },
+     {
+      "t": "11:34",
+      "individual": -105.0,
+      "foreign": -795.0,
+      "institution": 912.0,
+      "other_corp": -13.0
+     },
+     {
+      "t": "11:40",
+      "individual": -80.0,
+      "foreign": -822.0,
+      "institution": 942.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "11:45",
+      "individual": -2.0,
+      "foreign": -884.0,
+      "institution": 941.0,
+      "other_corp": -54.0
+     },
+     {
+      "t": "11:49",
+      "individual": -33.0,
+      "foreign": -877.0,
+      "institution": 963.0,
+      "other_corp": -54.0
+     },
+     {
+      "t": "11:55",
+      "individual": -18.0,
+      "foreign": -888.0,
+      "institution": 966.0,
+      "other_corp": -59.0
+     },
+     {
+      "t": "12:00",
+      "individual": -58.0,
+      "foreign": -887.0,
+      "institution": 1005.0,
+      "other_corp": -60.0
+     },
+     {
+      "t": "12:04",
+      "individual": -63.0,
+      "foreign": -900.0,
+      "institution": 1021.0,
+      "other_corp": -58.0
+     },
+     {
+      "t": "12:10",
+      "individual": -11.0,
+      "foreign": -949.0,
+      "institution": 1022.0,
+      "other_corp": -62.0
+     },
+     {
+      "t": "12:15",
+      "individual": 50.0,
+      "foreign": -1013.0,
+      "institution": 1017.0,
+      "other_corp": -54.0
+     },
+     {
+      "t": "12:19",
+      "individual": 105.0,
+      "foreign": -1082.0,
+      "institution": 1028.0,
+      "other_corp": -51.0
+     },
+     {
+      "t": "12:25",
+      "individual": 145.0,
+      "foreign": -1142.0,
+      "institution": 1043.0,
+      "other_corp": -46.0
+     },
+     {
+      "t": "12:30",
+      "individual": 187.0,
+      "foreign": -1185.0,
+      "institution": 1043.0,
+      "other_corp": -44.0
+     },
+     {
+      "t": "12:34",
+      "individual": 210.0,
+      "foreign": -1213.0,
+      "institution": 1048.0,
+      "other_corp": -45.0
+     },
+     {
+      "t": "12:40",
+      "individual": 368.0,
+      "foreign": -1377.0,
+      "institution": 1052.0,
+      "other_corp": -43.0
+     },
+     {
+      "t": "12:45",
+      "individual": 414.0,
+      "foreign": -1434.0,
+      "institution": 1060.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "12:49",
+      "individual": 501.0,
+      "foreign": -1531.0,
+      "institution": 1071.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "12:55",
+      "individual": 464.0,
+      "foreign": -1493.0,
+      "institution": 1071.0,
+      "other_corp": -42.0
+     },
+     {
+      "t": "13:00",
+      "individual": 493.0,
+      "foreign": -1529.0,
+      "institution": 1075.0,
+      "other_corp": -39.0
+     },
+     {
+      "t": "13:04",
+      "individual": 487.0,
+      "foreign": -1558.0,
+      "institution": 1109.0,
+      "other_corp": -38.0
+     },
+     {
+      "t": "13:10",
+      "individual": 602.0,
+      "foreign": -1654.0,
+      "institution": 1091.0,
+      "other_corp": -38.0
+     },
+     {
+      "t": "13:15",
+      "individual": 514.0,
+      "foreign": -1587.0,
+      "institution": 1112.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "13:19",
+      "individual": 532.0,
+      "foreign": -1591.0,
+      "institution": 1097.0,
+      "other_corp": -38.0
+     },
+     {
+      "t": "13:25",
+      "individual": 518.0,
+      "foreign": -1567.0,
+      "institution": 1094.0,
+      "other_corp": -44.0
+     },
+     {
+      "t": "13:30",
+      "individual": 536.0,
+      "foreign": -1565.0,
+      "institution": 1077.0,
+      "other_corp": -48.0
+     },
+     {
+      "t": "13:34",
+      "individual": 543.0,
+      "foreign": -1575.0,
+      "institution": 1081.0,
+      "other_corp": -49.0
+     },
+     {
+      "t": "13:40",
+      "individual": 567.0,
+      "foreign": -1577.0,
+      "institution": 1060.0,
+      "other_corp": -50.0
+     },
+     {
+      "t": "13:45",
+      "individual": 615.0,
+      "foreign": -1605.0,
+      "institution": 1041.0,
+      "other_corp": -51.0
+     },
+     {
+      "t": "13:49",
+      "individual": 636.0,
+      "foreign": -1621.0,
+      "institution": 1034.0,
+      "other_corp": -49.0
+     },
+     {
+      "t": "13:55",
+      "individual": 585.0,
+      "foreign": -1573.0,
+      "institution": 1033.0,
+      "other_corp": -45.0
+     },
+     {
+      "t": "14:00",
+      "individual": 600.0,
+      "foreign": -1575.0,
+      "institution": 1022.0,
+      "other_corp": -47.0
+     },
+     {
+      "t": "14:04",
+      "individual": 633.0,
+      "foreign": -1604.0,
+      "institution": 1017.0,
+      "other_corp": -47.0
+     },
+     {
+      "t": "14:10",
+      "individual": 609.0,
+      "foreign": -1579.0,
+      "institution": 1022.0,
+      "other_corp": -51.0
+     },
+     {
+      "t": "14:15",
+      "individual": 599.0,
+      "foreign": -1570.0,
+      "institution": 1020.0,
+      "other_corp": -49.0
+     },
+     {
+      "t": "14:19",
+      "individual": 612.0,
+      "foreign": -1582.0,
+      "institution": 1029.0,
+      "other_corp": -59.0
+     },
+     {
+      "t": "14:25",
+      "individual": 656.0,
+      "foreign": -1608.0,
+      "institution": 1013.0,
+      "other_corp": -61.0
+     },
+     {
+      "t": "14:30",
+      "individual": 798.0,
+      "foreign": -1725.0,
+      "institution": 987.0,
+      "other_corp": -61.0
+     },
+     {
+      "t": "14:34",
+      "individual": 894.0,
+      "foreign": -1772.0,
+      "institution": 944.0,
+      "other_corp": -66.0
+     },
+     {
+      "t": "14:40",
+      "individual": 888.0,
+      "foreign": -1772.0,
+      "institution": 946.0,
+      "other_corp": -62.0
+     },
+     {
+      "t": "14:45",
+      "individual": 808.0,
+      "foreign": -1740.0,
+      "institution": 985.0,
+      "other_corp": -52.0
+     },
+     {
+      "t": "14:49",
+      "individual": 815.0,
+      "foreign": -1749.0,
+      "institution": 974.0,
+      "other_corp": -40.0
+     },
+     {
+      "t": "14:55",
+      "individual": 833.0,
+      "foreign": -1774.0,
+      "institution": 977.0,
+      "other_corp": -36.0
+     },
+     {
+      "t": "15:00",
+      "individual": 725.0,
+      "foreign": -1712.0,
+      "institution": 1022.0,
+      "other_corp": -35.0
+     },
+     {
+      "t": "15:04",
+      "individual": 760.0,
+      "foreign": -1754.0,
+      "institution": 1030.0,
+      "other_corp": -36.0
+     },
+     {
+      "t": "15:10",
+      "individual": 686.0,
+      "foreign": -1701.0,
+      "institution": 1052.0,
+      "other_corp": -37.0
+     },
+     {
+      "t": "15:15",
+      "individual": 645.0,
+      "foreign": -1677.0,
+      "institution": 1064.0,
+      "other_corp": -32.0
+     },
+     {
+      "t": "15:19",
+      "individual": 744.0,
+      "foreign": -1740.0,
+      "institution": 1021.0,
+      "other_corp": -26.0
+     },
+     {
+      "t": "15:25",
+      "individual": 771.0,
+      "foreign": -1753.0,
+      "institution": 1007.0,
+      "other_corp": -26.0
+     },
+     {
+      "t": "15:30",
+      "individual": 815.0,
+      "foreign": -1731.0,
+      "institution": 937.0,
+      "other_corp": -21.0
+     }
+    ],
+    "final": {
+     "t": "20:04",
+     "individual": 841.0,
+     "foreign": -1767.0,
+     "institution": 936.0,
+     "other_corp": -10.0
+    },
+    "after": null
    }
   }
  }
