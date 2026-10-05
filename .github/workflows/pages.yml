@@ -1,0 +1,48 @@
+name: 사이트 배포
+
+# 화면 코드(docs/)가 바뀌면 data 브랜치의 최신 데이터와 묶어 바로 배포한다.
+# (데이터가 바뀔 때의 배포는 '시장 데이터 수집' 워크플로가 직접 한다)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      # 데이터가 없으면 배포하지 않는다(빈 사이트를 올리지 않게) — 이전 배포가 그대로 남는다
+      - name: 최신 데이터 붙이기 (data 브랜치)
+        run: |
+          git fetch -q --depth=1 origin data
+          git archive FETCH_HEAD docs | tar -x
+          test -f docs/data/meta.json
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346  # v5.0.1

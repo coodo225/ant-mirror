@@ -10,8 +10,13 @@ on:
     - cron: '37 22 * * 0-4'      # KST 07:37 — 간밤 미국장 마감 반영
   workflow_dispatch:             # 수동 실행 버튼
 
+# 수집 결과는 main 에 커밋하지 않는다. 최신 데이터 한 벌만 data 브랜치에 덮어쓰고(이력이 쌓이지 않게),
+# 사이트는 main 의 화면 코드 + 이번 데이터를 묶어 GitHub Actions 로 Pages 에 배포한다.
 permissions:
-  contents: write
+  contents: write     # data 브랜치에 올리기
+  pages: write        # Pages 배포
+  id-token: write     # Pages 배포 인증
+  actions: write      # 예약 실행 유지(맨 아래 단계)
 
 # 앞 실행이 끝나기 전에 다음 실행이 겹치지 않게 한다
 concurrency:
@@ -23,13 +28,24 @@ jobs:
     # ubuntu-latest 는 2026-10-19 부터 26.04 로 바뀐다. 새 이미지용 파이썬 빌드가 늦게 나올 수 있어 버전을 고정한다
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    outputs:
+      code: ${{ steps.collect.outputs.code }}
+      uploaded: ${{ steps.upload.outcome == 'success' }}
 
     steps:
-      # 대기열에 있던 실행도 '지금의' 브랜치 끝을 받는다. 기본값(이벤트 시점 커밋)이면 앞 실행이 올린
-      # 데이터를 모른 채 수집해, 커밋할 때 데이터 JSON 이 충돌한다(2026-08 에 실제로 3번 실패)
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           ref: ${{ github.ref_name }}
+
+      # 수집기는 소스가 실패하면 직전 정상본(docs/data)을 유지한다 — 그 직전본을 data 브랜치에서 받는다
+      - name: 직전 데이터 받기 (data 브랜치)
+        run: |
+          if git fetch -q --depth=1 origin data; then
+            git archive FETCH_HEAD docs | tar -x
+            echo "data 브랜치에서 직전 데이터를 받았습니다"
+          else
+            echo "::warning::data 브랜치가 없어 직전 데이터 없이 시작합니다"
+          fi
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
@@ -69,7 +85,7 @@ jobs:
           # 무료 발급: https://fred.stlouisfed.org/docs/api/api_key.html
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         # exit 3 = 핵심 데이터(코스피 수급·일봉)가 갱신되지 않아 직전 정상본을 유지함.
-        # 나머지 데이터는 커밋해야 하므로 여기서는 멈추지 않고, 마지막 단계에서 실패로 표시한다.
+        # 나머지 데이터는 올리고 배포해야 하므로 여기서는 멈추지 않고, 마지막 단계에서 실패로 표시한다.
         run: |
           set +e
           OG_FONT_DIR="$HOME/.cache/og-fonts" python collector/collect.py
@@ -77,43 +93,65 @@ jobs:
           echo "code=$code" >> "$GITHUB_OUTPUT"
           if [ "$code" -ne 0 ] && [ "$code" -ne 3 ]; then exit "$code"; fi
 
-      # 다른 실행이 먼저 push 했을 수 있다. 매번 최신 브랜치 위에 '데이터 파일만' 얹어 커밋한다.
-      # (rebase 로 합치면 같은 데이터 JSON 이 충돌한다. 데이터는 매 실행 통째로 다시 만들므로 이번 실행 것이 맞다.
-      #  인덱스만 최신으로 되돌리므로, 그사이 사람이 올린 코드 변경은 건드리지 않는다)
-      - name: 변경분 커밋
-        env:
-          BRANCH: ${{ github.ref_name }}
+      # data 브랜치에는 부모 없는 커밋 하나만 둔다(덮어쓰기). 저장소가 데이터 이력으로 불어나지 않는다.
+      # 동시 실행은 concurrency 가 막고, 데이터는 매 실행 통째로 다시 만들므로 덮어써도 잃는 것이 없다.
+      - name: 데이터 브랜치에 올리기
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          CHECKOUT_SHA="$(git rev-parse HEAD)"
+          export GIT_INDEX_FILE="$RUNNER_TEMP/data-index"
+          rm -f "$GIT_INDEX_FILE"
+          git add -f docs/data
+          if [ -f docs/og.png ]; then git add -f docs/og.png; fi
+          tree="$(git write-tree)"
+          commit="$(git commit-tree "$tree" -m "데이터 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')")"
           for i in 1 2 3; do
-            if ! git fetch -q origin "$BRANCH"; then
-              echo "fetch 재시도 $i"; sleep $((i * 5)); continue
-            fi
-            # 실행 도중 사람이 수집기나 데이터를 바꿔 올렸으면, 옛 코드로 만든 이번 결과로 덮어쓰지 않는다
-            # (다음 실행이 새 코드로 다시 만든다). 동시 실행은 concurrency 가 막으므로 이 차이는 사람 커밋뿐이다.
-            if ! git diff --quiet "$CHECKOUT_SHA" "origin/$BRANCH" -- collector docs/data docs/og.png; then
-              echo "::warning::실행 중 수집기·데이터가 바뀌어 이번 결과는 커밋하지 않습니다"
-              exit 0
-            fi
-            git reset -q "origin/$BRANCH"
-            # 삭제는 스테이징하지 않는다 — 인덱스(최신)에만 있는 파일을 지우지 않게
-            git add --ignore-removal docs/data
-            if [ -f docs/og.png ]; then git add docs/og.png; fi
-            if git diff --cached --quiet; then
-              echo "변경 없음 — 커밋 생략"
-              exit 0
-            fi
-            git commit -q -m "데이터 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')"
-            if git push -q origin "HEAD:$BRANCH"; then exit 0; fi
+            if git push -q -f origin "$commit:refs/heads/data"; then exit 0; fi
             echo "push 재시도 $i"
             sleep $((i * 5))
           done
           exit 1
+
+      # 수집하는 동안 화면 코드가 바뀌었을 수 있다 — 배포 직전에 main 의 최신 화면 코드로 맞춘다(데이터는 그대로)
+      - name: 최신 화면 코드로 맞추기
+        if: ${{ !cancelled() && steps.collect.outcome == 'success' }}
+        run: |
+          git fetch -q --depth=1 origin "${{ github.ref_name }}"
+          git checkout FETCH_HEAD -- docs ':(exclude)docs/data' ':(exclude)docs/og.png'
+
+      - name: 사이트 묶기
+        id: upload
+        if: ${{ !cancelled() && steps.collect.outcome == 'success' }}
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: docs
+
+      # 60일 동안 저장소 활동이 없으면 GitHub 가 예약 실행을 끈다. 이제 봇이 main 에 커밋하지 않으므로 직접 켜 둔다
+      - name: 예약 실행 유지
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/collect.yml/enable"
 
       - name: 핵심 데이터 갱신 실패 알림
         if: steps.collect.outputs.code == '3'
         run: |
           echo "::error::핵심 데이터(코스피 수급 또는 일봉)가 갱신되지 않았습니다. 화면은 직전 정상본을 보여 주는 중입니다 (meta.json 의 stale/warnings 참고)."
           exit 1
+
+  # 수집이 exit 3 으로 끝나도(직전 정상본 + 새 비핵심 데이터) 묶은 사이트는 배포한다
+  deploy:
+    needs: collect
+    if: ${{ !cancelled() && needs.collect.outputs.uploaded == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346  # v5.0.1
