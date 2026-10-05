@@ -705,3 +705,12 @@ code {
 .sd-60 { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
 .sd-60-head { font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
 .sd-60-sum { display: flex; flex-direction: column; gap: 3px; font-size: 12px; margin-top: 8px; }
+
+/* ── 프로그램 매매 · 공매도 ─────────────────────────── */
+.tag-prov {
+  display: inline-block; font-size: 10px; font-weight: 700; color: #ffb02e;
+  border: 1px solid #ffb02e66; border-radius: 4px; padding: 0 4px; margin-left: 4px; vertical-align: 1px;
+}
+.event.holiday:not(.today) { opacity: .78; }
+/* 두 칸 묶음에서 한쪽 카드가 숨으면 남은 카드가 한 줄을 다 쓴다 */
+.grid-2:has(> [hidden]) { grid-template-columns: 1fr; }

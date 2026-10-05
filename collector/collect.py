@@ -13,6 +13,9 @@
   - 금융투자협회     : 신용융자 잔고, 예탁금·반대매매
   - yfinance         : 미국 지수/선물/금리/환율/원자재
   - federalreserve.gov / FRED : FOMC·CPI 등 발표 일정, 매크로 지표 (+ events_seed.json)
+  - 네이버 증권      : 프로그램 매매(차익·비차익)
+  - 한국거래소(KRX)  : 공매도 거래·순보유잔고(시장 단위), 휴장일
+  - 한국은행         : 금통위 통화정책방향 결정회의 날짜 (krx_calendar.json 에 해마다 적어 두고 실행 때 다시 확인)
 
 소스가 실패하거나 멈추면 그 섹션은 직전 정상본을 유지하고(meta.json 의 stale/freshAt),
 핵심인 코스피 수급·일봉이 갱신되지 않으면 exit 3 으로 끝나 워크플로가 실패로 표시된다.
@@ -253,6 +256,32 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
     else:
         glob["macro"] = keep("global.macro", "미국 매크로 지표", glob["macro"], prev.get("macro"))
 
+    if "program.json" in out:
+        prog = out["program.json"]
+        prev = load_prev("program.json") or {}
+        for code, name in (("KOSPI", "코스피"), ("KOSDAQ", "코스닥")):
+            got = keep(f"program.{code}", f"{name} 프로그램 매매", prog["markets"].get(code),
+                       (prev.get("markets") or {}).get(code), lambda m: bool(m and m.get("daily")),
+                       _last_date(lambda m: m["daily"][-1]["date"]))
+            if got:
+                prog["markets"][code] = got
+
+    if "short.json" in out:
+        # build_short 가 직전 행을 이미 이어 붙인다. 여기서는 실패를 화면 안내로 올리기만 한다
+        sh = out["short.json"]
+        failed = sh.get("failed", [])
+        for code, name in (("KOSPI", "코스피"), ("KOSDAQ", "코스닥")):
+            m = sh["markets"].get(code) or {}
+            bad = False
+            for part, key, label in (("daily", f"short.{code}", f"{name} 공매도"),
+                                     ("balance", f"short.{code}.balance", f"{name} 공매도 잔고")):
+                if f"{code}.{part}" in failed and m.get(part):
+                    mark_stale(key, label, asOf=m[part][-1]["date"], since=FRESH_AT.get(f"short.{code}"))
+                    bad = True
+            if m.get("daily") and not bad and not stale_keys & {f"short.{code}", f"short.{code}.balance"} \
+                    and krx_short_due(datetime.fromisoformat(now_iso)):
+                FRESH_AT[f"short.{code}"] = now_iso
+
     events = out["events.json"]
     ev = keep("events", "이벤트 일정", events, load_prev("events.json"),
               lambda e: bool(e and e.get("upcoming")))
@@ -425,16 +454,41 @@ def _merge_by_date(*sources: list[dict]) -> list[dict]:
     return sorted(by.values(), key=lambda r_: r_["date"])
 
 
-# 정규장이 평소(09:00~15:30)와 다른 날 — 수능일은 10:00 개장, 16:30 마감. 매년 수능 날짜를 더한다.
-SPECIAL_SESSIONS: dict[str, tuple[str, str]] = {
-    "2026-11-19": ("1000", "1630"),
-}
+# ---------------------------------------------------------------- 국내 장 일정 (휴장일·특별 장 시간·금통위)
+# collector/krx_calendar.json 에 해마다 적어 두고(수능일 장 시간도 여기), 실행 때 KRX·한국은행에서 다시 받아
+# docs/data/calendar.json 에 이어 둔다. 받지 못해도 적어 둔 목록으로 돈다.
+
+CAL_FILE = Path(__file__).resolve().parent / "krx_calendar.json"
+HOLIDAYS: dict[str, str] = {}                        # 'YYYY-MM-DD' -> 휴일 이름 (평일 휴장일만)
+MPC: dict[str, list[str]] = {}                       # 'YYYY' -> 금통위 통화정책방향 결정회의 날짜
+SPECIAL_SESSIONS: dict[str, tuple[str, str]] = {}    # 정규장이 평소(09:00~15:30)와 다른 날 -> (시작, 끝) 'HHMM'
+CAL_SEED: dict = {}
+
+
+def _load_calendar_seed() -> None:
+    try:
+        cal = json.loads(CAL_FILE.read_text(encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001
+        warn(f"{CAL_FILE.name} 를 읽지 못해 직전 실행이 받아 둔 일정만 씁니다: {type(e).__name__}: {e}")
+        return
+    CAL_SEED.update(cal)
+    HOLIDAYS.update(cal.get("holidays") or {})
+    MPC.update({str(y): sorted(v) for y, v in (cal.get("mpc") or {}).items()})
+    SPECIAL_SESSIONS.update({d: tuple(v) for d, v in (cal.get("special_sessions") or {}).items()})
+
+
+_load_calendar_seed()
+
 FINAL_AFTER = "200000"    # KRX 투자자별 값은 20시 전후까지 바뀐다 — 그 뒤 값만 '확정'으로 부른다
 
 
 def session_hours(day: str) -> tuple[str, str]:
-    """그날 정규장 (시작, 끝) 'HHMM'."""
-    return SPECIAL_SESSIONS.get(day, ("0900", "1530"))
+    """그날 정규장 (시작, 끝) 'HHMM'. 새해 첫 거래일은 해마다 10시에 연다(마감은 평소대로)."""
+    if day in SPECIAL_SESSIONS:
+        return SPECIAL_SESSIONS[day]
+    if day[5:7] == "01" and day == first_trading_day(int(day[:4])).isoformat():
+        return ("1000", "1530")
+    return ("0900", "1530")
 
 
 NAVER_TREND_TIME_URL = "https://stock.naver.com/api/domestic/market/trend/time"
@@ -710,6 +764,322 @@ def attach_futures_divergence(futures: dict, full: dict, fut_full: list[dict], c
         warn(f"현·선물 비교 실패: {type(e).__name__}: {e}")
 
 
+# ---------------------------------------------------------------- 프로그램 매매 (시장 전체)
+# 네이버 '프로그램 매매동향' 화면(stock.naver.com/market/stock/kr/trend/program)이 쓰는 공개 JSON.
+# bizdate 는 필수지만 서버가 무시하고 늘 최신 거래일부터 내림차순으로 준다. startIdx 는 페이지 번호, pageSize ≤ 200.
+# 값은 '원' 단위 정수 문자열. 2023-06~2026-10 800거래일 × 두 시장 전부 차익+비차익=전체, 매수−매도=순매수가 원 단위까지
+# 맞았고, 다음 금융과 550일 중 549일 일치했다. 휴장일에는 행이 없다.
+
+NAVER_PROGRAM_URL = "https://stock.naver.com/api/domestic/market/trendProgram"
+NAVER_PROGRAM_REFERER = "https://stock.naver.com/market/stock/kr/trend/program"
+_PROGRAM_KINDS = {"diff": "arb", "biDiff": "nonarb", "totalDiff": "total"}     # 차익·비차익·전체
+_PROGRAM_SIDES = {"BuyAmt": "buy", "SellAmt": "sell", "PureBuyAmt": "net"}
+PROGRAM_FINAL_AFTER = "2005"   # 10-02 코스피 전체 순매수 15:30 −970억 → 18:00 −742억 → 20:00 −225억(확정)
+PROGRAM_DAYS = 250             # 1년 — 오늘 규모를 견줄 분포
+PROGRAM_CHART_DAYS = 60
+
+
+def _program_won(c: dict) -> dict[str, float] | None:
+    """한 행의 9개 값(원). 필드가 빠졌거나 항등식이 깨지면 None — 필드 이름·의미가 바뀐 걸 잡는다."""
+    try:
+        won = {f"{k}_{s}": float(str(c[pre + suf]).replace(",", ""))
+               for pre, k in _PROGRAM_KINDS.items() for suf, s in _PROGRAM_SIDES.items()}
+    except (KeyError, TypeError, ValueError):
+        return None
+    tol = 1e6                                          # 100만원. 실측에선 원 단위까지 맞았다
+    for k in _PROGRAM_KINDS.values():
+        if abs(won[f"{k}_buy"] - won[f"{k}_sell"] - won[f"{k}_net"]) > tol:
+            return None
+    for s_ in _PROGRAM_SIDES.values():
+        if abs(won[f"arb_{s_}"] + won[f"nonarb_{s_}"] - won[f"total_{s_}"]) > tol:
+            return None
+    if won["total_buy"] <= 0:                          # 거래일이면 프로그램 매수가 0 일 수 없다 — 빈 행
+        return None
+    return won
+
+
+def fetch_program_daily(market: str, days: int, now: datetime | None = None) -> list[dict]:
+    """
+    시장 전체 일별 프로그램 매매(억원), 날짜 오름차순 최근 days거래일. 키: arb_*·nonarb_*·total_* × buy/sell/net.
+    마지막 행이 오늘이고 20:05 전이면 provisional — KRX 값이 장 마감 뒤에도 20시 무렵까지 바뀐다.
+    """
+    if market not in ("KOSPI", "KOSDAQ"):        # 소문자나 모르는 값은 오류 없이 '두 시장 합계'가 온다
+        raise ValueError(market)
+    now = now or datetime.now(KST)
+    name = MARKET_NAME[market]
+    by_date: dict[str, dict] = {}
+    skipped = seen = 0
+    for page in range(days // 200 + 2):
+        if len(by_date) >= days:
+            break
+        try:
+            j = get_json(NAVER_PROGRAM_URL, headers={"Referer": NAVER_PROGRAM_REFERER},
+                         params={"tradeType": "KRX", "krxMarketType": market, "bizdate": now.strftime("%Y%m%d"),
+                                 "startIdx": page, "pageSize": 200, "periodType": "DATE"})
+            if not isinstance(j, dict) or not isinstance(j.get("content"), list):
+                raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
+        except Exception as e:  # noqa: BLE001
+            if not by_date:
+                raise
+            warn(f"{name} 프로그램 매매: {page + 1}번째 페이지 실패 — 앞서 받은 {len(by_date)}일만 씁니다 ({e})")
+            break
+        content = j["content"]
+        for c in content:
+            seen += 1
+            d = str(c.get("bizdate") or "")
+            try:
+                ok_day = bool(re.fullmatch(r"\d{8}", d)) and date(int(d[:4]), int(d[4:6]), int(d[6:])).weekday() < 5
+            except ValueError:
+                ok_day = False
+            won = _program_won(c) if ok_day else None
+            if won is None:
+                skipped += 1
+                continue
+            row = {"date": f"{d[:4]}-{d[4:6]}-{d[6:]}"}
+            row.update({k: float(round(v / 1e8)) for k, v in won.items()})
+            by_date.setdefault(row["date"], row)
+        if not content or str(j.get("last")).lower() == "true":
+            break
+        time.sleep(0.3)
+    if seen and not by_date:
+        raise RuntimeError(f"{seen}행이 모두 형식 검사에서 빠짐 — 필드가 바뀐 듯")
+    if skipped:
+        warn(f"{name} 프로그램 매매: 형식이 어긋난 {skipped}행을 건너뜀")
+    rows = sorted(by_date.values(), key=lambda r_: r_["date"])[-days:]
+    if rows and rows[-1]["date"] == now.date().isoformat() and now.strftime("%H%M") < PROGRAM_FINAL_AFTER:
+        rows[-1]["provisional"] = True
+    return rows
+
+
+def build_program(now: datetime | None = None) -> dict:
+    """코스피·코스닥 프로그램 매매. 화면에는 최근 60일, '오늘'의 위치는 최근 1년 확정치 분포로."""
+    out: dict = {"unit": "억원", "chartDays": PROGRAM_CHART_DAYS, "markets": {}}
+    got: dict[str, list[dict]] = {}
+    for code in ("KOSPI", "KOSDAQ"):
+        try:
+            rows = fetch_program_daily(code, PROGRAM_DAYS, now)
+            if rows:
+                got[code] = rows
+                print(f"  {code} 프로그램 매매 {len(rows)}일 ({rows[0]['date']} ~ {rows[-1]['date']})")
+            else:
+                warn(f"{MARKET_NAME[code]} 프로그램 매매: 응답이 비어 있음")
+        except Exception as e:  # noqa: BLE001
+            warn(f"{MARKET_NAME[code]} 프로그램 매매 수집 실패: {type(e).__name__}: {e}")
+    a, b = got.get("KOSPI"), got.get("KOSDAQ")
+    if a and b and a[-1]["date"] == b[-1]["date"] and a[-1]["total_buy"] == b[-1]["total_buy"]:
+        warn("프로그램 매매: 코스피와 코스닥이 똑같이 와서(시장 구분이 무시된 응답) 버립니다")
+        got = {}
+    for code, rows in got.items():
+        last = rows[-1]
+        settled = [r["total_net"] for r in rows if not r.get("provisional")]
+        out["markets"][code] = {
+            "daily": [{"date": r["date"], "arb": r["arb_net"], "nonarb": r["nonarb_net"], "total": r["total_net"],
+                       **({"provisional": True} if r.get("provisional") else {})}
+                      for r in rows[-PROGRAM_CHART_DAYS:]],
+            "latest": {
+                "date": last["date"], "arb": last["arb_net"], "nonarb": last["nonarb_net"], "total": last["total_net"],
+                "provisional": bool(last.get("provisional")),
+                "pctl": round(_percentile(settled, last["total_net"]), 1) if len(settled) >= 60 else None,
+                "days": len(settled),
+                "streak": streak(rows, "total_net"),
+            },
+        }
+    return out
+
+
+# ---------------------------------------------------------------- 공매도 (KRX 공매도 통계 임베드 경로)
+# 네이버·다음 종목 '공매도' 탭이 iframe 으로 띄우는 data.krx.co.kr srtLoader 화면이 부르는 공개 경로.
+# 쿠키·로그인은 필요 없지만 Referer(data.krx.co.kr 아래)와 브라우저 UA 가 없으면 403.
+# 회원제 원본 경로(dbms/MDC/STAT/srt/...)는 이미 400 'LOGOUT' — 이 경로도 언제든 같은 처지가 될 수 있어 실패해도 조용히 넘어간다.
+# 2년 창 조회는 서버에서 15초 넘게 걸린다 → 평소엔 최근 40일만 받아 직전 파일에 덮어 합치고, 비었을 때만 이력을 채운다.
+
+KRX_JSON_URL = "https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd"
+KRX_SRT_REFERER = "https://data.krx.co.kr/comm/srt/srtLoader/index.cmd?screenId=MDCSTAT302"
+KRX_SRT_MKT = {"KOSPI": "1", "KOSDAQ": "2"}     # indTpCd = mktTpCd. idxIndCd 001 = 시장 전체
+KRX_MAX_SPAN = 700                              # 서버 한도 2년(넘으면 400 INVALIDPERIOD2)
+KRX_REFRESH_DAYS = 40                           # 평소 다시 받는 구간 — 잔고 정정(T+2)·잠정치 확정을 덮는다
+SHORT_RESUMED = "2025-03-31"                    # 공매도 전면 재개 첫날. 금지 기간 값(예외분만, 비중 0.1~0.5%)은 성격이 달라 싣지 않는다
+
+
+def krx_short_due(now: datetime) -> bool:
+    """거래일 09:00~15:45 에는 KRX 에 새 값이 없다(당일 정규장분이 15:40 이후). 그 시간대 실행은 건너뛴다."""
+    hm = now.hour * 60 + now.minute
+    return not (is_trading_day(now.date()) and 9 * 60 <= hm < 15 * 60 + 45)
+
+
+class KrxBlocked(RuntimeError):
+    """접속 자체가 막힘(연결 실패·시간 초과·403·회원제 전환·요청 과다) — 이번 실행의 남은 KRX 요청은 건너뛴다."""
+
+
+def krx_srt_post(bld: str, **params) -> list[dict]:
+    """KRX 공매도 bld 호출 → OutBlock_1. 잘못된 파라미터도 200 + 빈 배열이라 빈 결과 판단은 호출부에서."""
+    form = {"bld": f"dbms/MDC_OUT/STAT/srt/{bld}", "locale": "ko_KR", "share": "1", "money": "1", **params}
+    headers = {"Referer": KRX_SRT_REFERER, "X-Requested-With": "XMLHttpRequest",   # session 의 네이버 Referer 를 덮는다
+               "Origin": "https://data.krx.co.kr"}
+    last, blocked = None, False
+    for i in range(2):
+        try:
+            r = session.post(KRX_JSON_URL, data=form, headers=headers, timeout=(10, 45))
+        except requests.RequestException as e:
+            last, blocked = f"{type(e).__name__}: {e}", True
+        else:
+            body = r.text.strip()
+            if r.status_code == 200 and body[:1] == "{":
+                rows = r.json().get("OutBlock_1")       # Content-Type 은 text/html 이지만 본문은 JSON
+                if not isinstance(rows, list):
+                    raise RuntimeError(f"응답 형식이 바뀜 ({body[:120]})")
+                return rows
+            # 400 본문이 곧 오류 코드: INVALIDPERIOD2(2년 초과) / LOGOUT(회원제 전환) / TEMPBLOCK(요청 과다)
+            last = body if r.status_code == 400 and len(body) < 40 else f"HTTP {r.status_code}"
+            blocked = r.status_code == 403 or last in ("LOGOUT", "TEMPBLOCK")
+            if r.status_code in (400, 403):            # 다시 해도 같거나(형식·차단) 더 나빠진다(TEMPBLOCK)
+                break
+        time.sleep(2.0 * (i + 1))
+    raise (KrxBlocked if blocked else RuntimeError)(f"KRX {bld}: {last}")
+
+
+def _krx_market_rows(bld: str, market: str, start: date, end: date, date_key: str) -> dict[str, dict]:
+    """[start, end] 를 2년 이하 창으로 쪼개 받아 {YYYY-MM-DD: 원본행}."""
+    tp = KRX_SRT_MKT[market]
+    out: dict[str, dict] = {}
+    e = end
+    while e >= start:
+        s_ = max(start, e - timedelta(days=KRX_MAX_SPAN))
+        for x in krx_srt_post(bld, indTpCd=tp, mktTpCd=tp, indAggClssCd="001", idxIndCd="001",
+                              strtDd=s_.strftime("%Y%m%d"), endDd=e.strftime("%Y%m%d")):
+            d = str(x.get(date_key) or "")
+            if re.fullmatch(r"\d{4}/\d{2}/\d{2}", d):
+                out[d.replace("/", "-")] = x
+        e = s_ - timedelta(days=1)
+        if e >= start:
+            time.sleep(0.6)
+    return out
+
+
+def _eok_int(v):
+    return round(v / 1e8) if v is not None else None
+
+
+def _check_parsed(raw: dict[str, dict], rows: list[dict], label: str) -> None:
+    """날짜는 왔는데 값이 거의 안 읽혔으면 필드 이름이 바뀐 것 — 조용히 직전 값에 머물지 않게 실패로."""
+    n = sum(1 for d in raw if d >= SHORT_RESUMED)
+    if n >= 3 and len(rows) < n // 2:
+        raise RuntimeError(f"{label}: {n}행 중 값이 읽힌 행 {len(rows)}개 — 형식 변경 의심")
+
+
+def parse_short_daily(raw: dict[str, dict], now: datetime) -> list[dict]:
+    """30201 행 → {date, value(공매도 거래대금 억원), total(전체 거래대금 억원), pct(%)}. 형식·단위가 바뀐 낌새면 예외."""
+    today = now.date().isoformat()
+    settled = now.hour * 60 + now.minute >= 20 * 60 + 10     # NXT 를 포함한 당일 값은 20:10 이후 확정
+    rows = []
+    for d, x in sorted(raw.items()):
+        if d < SHORT_RESUMED:
+            continue
+        sv, tv = num(x.get("CVSRTSELL_TRDVAL")), num(x.get("ACC_TRDVAL"))
+        if sv is None or not tv:
+            continue
+        if sv > tv:
+            raise RuntimeError(f"{d}: 공매도 대금이 전체 거래대금보다 큼 — 형식 변경 의심")
+        pct = num(x.get("TRDVAL_WT"))
+        if pct is None or abs(sv / tv * 100 - pct) > 0.02:
+            pct = round(sv / tv * 100, 2)                 # 제공 비중이 비거나 어긋나면 직접 계산
+        row = {"date": d, "value": _eok_int(sv), "total": _eok_int(tv), "pct": pct}
+        if d == today and not settled:
+            row["provisional"] = True
+        rows.append(row)
+    _check_parsed(raw, rows, "공매도 거래")
+    tv_ = sorted(r["total"] for r in rows[-20:])
+    if tv_ and tv_[len(tv_) // 2] < 1000:                 # 원 단위가 아니라 백만원 등으로 바뀌면 하루 거래대금이 1000억 아래로 찍힌다
+        raise RuntimeError(f"거래대금 중앙값 {tv_[len(tv_) // 2]}억원 — 단위 변경 의심")
+    return rows
+
+
+def parse_short_balance(raw: dict[str, dict]) -> list[dict]:
+    """30601 행 → {date, value(순보유잔고 억원), pct(시가총액 대비 %)}. 보고 의무자 합산이라 실제 잔고보다 작다."""
+    rows = []
+    for d, x in sorted(raw.items()):
+        if d < SHORT_RESUMED:
+            continue
+        amt, cap = num(x.get("BAL_AMT")), num(x.get("MKTCAP"))
+        if amt is None or not cap:
+            continue
+        if amt > cap:
+            raise RuntimeError(f"{d}: 잔고 금액이 시가총액보다 큼 — 형식 변경 의심")
+        rows.append({"date": d, "value": _eok_int(amt), "pct": num(x.get("BAL_RTO2"))})
+    _check_parsed(raw, rows, "공매도 잔고")
+    return rows
+
+
+def _merge_short(prev: list, new: list[dict]) -> list[dict]:
+    by = {r["date"]: r for r in (prev or []) if isinstance(r, dict) and str(r.get("date", "")) >= SHORT_RESUMED}
+    by.update({r["date"]: r for r in new})      # 새로 받은 값이 이긴다 (잠정치 → 확정치, 잔고 정정)
+    return [by[d] for d in sorted(by)]
+
+
+def build_short(now: datetime | None = None) -> dict:
+    """
+    KRX 공매도: 시장별 일별 거래(30201) + 순보유잔고(30601, 2거래일 늦음). 평소 요청 4번.
+    직전 short.json 이 비었거나 끊겼으면 재개일(2025-03-31)부터 다시 채운다.
+    한 번 막히면(차단·시간 초과) 이번 실행의 나머지 요청은 건너뛰고 직전 값을 둔다. 실패한 쪽은 failed 에 남긴다.
+    """
+    now = now or datetime.now(KST)
+    end = now.date()
+    prev = load_prev("short.json") or {}
+    out: dict = {"unit": "억원", "resumed": SHORT_RESUMED, "markets": {}, "failed": []}
+    due = krx_short_due(now)
+    down = None
+    for market in ("KOSPI", "KOSDAQ"):
+        old = (prev.get("markets") or {}).get(market) or {}
+        block: dict = {}
+        for part, bld, key, parse in (
+            ("daily", "MDCSTAT30201_OUT", "TRD_DD", lambda raw: parse_short_daily(raw, now)),
+            ("balance", "MDCSTAT30601_OUT", "RPT_DUTY_OCCR_DD", parse_short_balance),
+        ):
+            prev_rows = _merge_short(old.get(part) if isinstance(old.get(part), list) else [], [])
+            block[part] = prev_rows
+            if not due and prev_rows:                   # 장중이라도 갖고 있는 이력이 없으면 받는다
+                continue
+            if down:
+                out["failed"].append(f"{market}.{part}")
+                continue
+            last = prev_rows[-1]["date"] if prev_rows else ""
+            fresh = bool(prev_rows) and prev_rows[0]["date"] <= "2025-04-07" and \
+                last >= (end - timedelta(days=KRX_REFRESH_DAYS - 10)).isoformat()
+            start = end - timedelta(days=KRX_REFRESH_DAYS) if fresh else date.fromisoformat(SHORT_RESUMED)
+            try:
+                raw = _krx_market_rows(bld, market, start, end, key)
+                if not raw:                             # 40일 창이 통째로 휴장일 수는 없다 — 파라미터·형식 변경 신호
+                    raise RuntimeError(f"{start}~{end} 창에 행이 하나도 없음")
+                block[part] = _merge_short(prev_rows, parse(raw))
+                print(f"  {market} 공매도 {part} {len(block[part])}일 (받은 {len(raw)}행, 마지막 {block[part][-1]['date']})")
+            except Exception as e:  # noqa: BLE001
+                out["failed"].append(f"{market}.{part}")
+                warn(f"{MARKET_NAME[market]} 공매도 {'거래' if part == 'daily' else '잔고'}(KRX) 실패 — "
+                     f"직전 {len(prev_rows)}일 유지: {type(e).__name__}: {e}")
+                if isinstance(e, KrxBlocked):
+                    down = e
+            time.sleep(0.6)
+        latest: dict = {}
+        daily = [r for r in block["daily"] if not r.get("provisional")]
+        if daily:
+            pcts = [r["pct"] for r in daily]
+            shown = block["daily"][-1]
+            prior = [r["pct"] for r in daily if r["date"] < shown["date"]][-20:]   # 보여 주는 날 앞의 확정 20일
+            latest["daily"] = {
+                **block["daily"][-1],
+                "pctAvg20": round(sum(prior) / len(prior), 2) if prior else None,
+                "pctPctl": round(_percentile(pcts, block["daily"][-1]["pct"]), 1) if len(pcts) >= 60 else None,
+                "days": len(pcts),
+            }
+        bal = block["balance"]
+        if bal:
+            delta = lambda n: bal[-1]["value"] - bal[-1 - n]["value"] if len(bal) > n else None
+            latest["balance"] = {**bal[-1], "d5": delta(5), "d20": delta(20)}
+        if block["daily"] or block["balance"]:
+            out["markets"][market] = {**block, "latest": latest}
+    return out
+
+
 # ---------------------------------------------------------------- 신용융자 / 증시자금 (KOFIA)
 
 KOFIA_URL = "https://freesis.kofia.or.kr/meta/getMetaDataList.do"
@@ -906,9 +1276,9 @@ def build_market() -> tuple[dict, dict]:
 
 
 def _weekdays_between(a: str, b: str) -> int:
-    """a 다음 날부터 b 까지(포함)의 평일 수."""
+    """a 다음 날부터 b 까지(포함)의 거래일 수 — 평일에서 알려진 휴장일(HOLIDAYS)을 뺀다."""
     da, db = date.fromisoformat(a), date.fromisoformat(b)
-    return sum(1 for k in range(1, (db - da).days + 1) if (da + timedelta(days=k)).weekday() < 5)
+    return sum(1 for k in range(1, (db - da).days + 1) if is_trading_day(da + timedelta(days=k)))
 
 
 def check_freshness(flows: dict, market: dict, closes: dict, today: str | None = None) -> set[str]:
@@ -920,9 +1290,10 @@ def check_freshness(flows: dict, market: dict, closes: dict, today: str | None =
       시세 API 가 죽었으면 수급 최신일이다.
     - 빠진 날이 기준일 하루뿐이면(장 시작 전·장중이라 일봉에 오늘 봉이 아직 없을 때) 멈춤이 아니다.
       장중이면 현재가로 그날 종가를 채워, 성적표·유사 국면의 '오늘'을 수급 표의 '오늘'과 맞춘다.
-    - 휴장일 달력이 없으므로 '하루뿐'은 수급 날짜로 판단한다. 수급에도 그날이 없으면,
+    - '하루뿐'은 수급 날짜로 판단한다. 수급에도 그날이 없으면,
       기준일이 오늘이고 일봉과 수급이 같은 마지막 거래일에 머물러 있을 때만 하루뿐으로 본다
-      (평일 휴장 다음 날 아침의 오탐을 막기 위해, 명절 연휴를 덮는 평일 5일까지).
+      날짜 간격은 휴장일 목록을 뺀 거래일로 세고, 목록에 없는 휴장 하루를 봐주려고 2거래일까지 허용한다
+      (예전엔 휴장일 목록이 없어 평일 5일까지 봐줬는데, 그러면 연휴를 낀 멈춤을 며칠씩 놓친다).
     - 수급 최신일 뒤로 지수 거래일이 2일 이상 쌓였으면 수급 소스가 멈춘 것으로 본다.
     """
     stale: set[str] = set()
@@ -948,7 +1319,7 @@ def check_freshness(flows: dict, market: dict, closes: dict, today: str | None =
                 only_today = pending == {traded}
             elif live and traded == today:
                 agree = flow_last == last if rows else _weekdays_between(last, traded) <= 1
-                only_today = agree and _weekdays_between(last, traded) <= 5
+                only_today = agree and _weekdays_between(last, traded) <= 2
             else:
                 only_today = False
             if only_today:
@@ -1228,6 +1599,314 @@ def build_global() -> dict:
     return out
 
 
+# ---------------------------------------------------------------- 국내 일정 소스 (한국은행·KRX·네이버 캘린더)
+
+BOK_MPC_URL = "https://www.bok.or.kr/portal/singl/crncyPolicyDrcMtg/listYear.do"
+_BOK_ROW = re.compile(r'<th[^>]*scope="row"[^>]*>\s*(\d{1,2})월\s*(\d{1,2})일\s*\((.)\)\s*</th>')
+_WEEKDAY_KO = "월화수목금토일"
+
+
+def parse_bok_mpc(html: str, year: int) -> list[str]:
+    """
+    한국은행 '통화정책방향 결정회의' 연간 목록. 표의 행 머리가 'MM월 DD일(요일)'.
+    아직 공표되지 않은 해(예: 2026-10 기준 2027)는 표가 비어 있어 [] — 오류가 아니다.
+    연도·요일이 어긋나거나 행은 있는데 날짜가 하나도 안 읽히면 형식이 바뀐 것으로 본다.
+    """
+    m = re.search(r'<div class="h-group">\s*<h3>\s*(\d{1,4})년\s*</h3>', html)
+    if not m or int(m.group(1)) != year:
+        raise RuntimeError(f"연도 불일치 (요청 {year}, 응답 {m.group(1) if m else '없음'})")
+    s = html.find('<table id="tableId"')
+    b = html.find("<tbody", s) if s >= 0 else -1
+    if b < 0:
+        raise RuntimeError("회의 목록 표가 없음 — 형식이 바뀐 듯")
+    body = html[b:html.find("</tbody>", b)]
+    rows = re.split(r"<tr[\s>]", body)[1:]
+    out: set[str] = set()
+    for row in rows:
+        mm = _BOK_ROW.search(row)
+        if not mm:
+            continue
+        d = date(year, int(mm.group(1)), int(mm.group(2)))
+        if _WEEKDAY_KO[d.weekday()] != mm.group(3):
+            raise RuntimeError(f"요일 불일치 {d} ({mm.group(3)})")
+        out.add(d.isoformat())
+    if rows and not out:
+        raise RuntimeError(f"행 {len(rows)}개에서 날짜를 하나도 못 읽음 — 형식이 바뀐 듯")
+    if out and not 4 <= len(out) <= 16:
+        raise RuntimeError(f"회의 수가 이상함 ({len(out)}회)")
+    return sorted(out)
+
+
+def fetch_bok_mpc(year: int) -> list[str]:
+    r = session.get(BOK_MPC_URL, params={"mtgSe": "A", "menuNo": "200755", "pYear": year},
+                    headers={"Referer": "https://www.bok.or.kr/"}, timeout=30)
+    if r.status_code != 200:
+        raise RuntimeError(f"HTTP {r.status_code}")
+    return parse_bok_mpc(r.text, year)
+
+
+KRX_OPEN = "https://open.krx.co.kr"
+_KRX_HOL_PAGE = "/contents/MKD/01/0110/01100305/MKD01100305.jsp"
+_KRX_HOL_BLD = "MKD/01/0110/01100305/mkd01100305_01"
+
+
+def fetch_krx_holidays(years: list[int]) -> dict[int, dict[str, str]]:
+    """
+    KRX 휴장일 (open.krx.co.kr: OTP 발급 → 조회). 브라우저 UA 가 없으면 OTP 가 빈 문자열로 온다.
+    잘못된 요청은 302 로 엉뚱한 주소에 보내므로 리다이렉트를 따라가지 않는다. 다음 해 목록은 KRX 잠정치다.
+    """
+    hdr = {"Referer": KRX_OPEN + _KRX_HOL_PAGE}
+    r = session.get(KRX_OPEN + "/contents/COM/GenerateOTP.jspx", headers=hdr, timeout=20, allow_redirects=False,
+                    params={"bld": _KRX_HOL_BLD, "name": "form", "_": int(time.time() * 1000)})
+    otp = r.text.strip()
+    if r.status_code != 200 or not otp or "<" in otp:
+        raise RuntimeError(f"OTP 발급 실패 (HTTP {r.status_code})")
+    out: dict[int, dict[str, str]] = {}
+    for y in years:
+        time.sleep(0.4)
+        r = session.post(KRX_OPEN + "/contents/OPN/99/OPN99000001.jspx", headers=hdr, timeout=20,
+                         allow_redirects=False,
+                         data={"search_bas_yy": str(y), "gridTp": "KRX", "pagePath": _KRX_HOL_PAGE, "code": otp})
+        if r.status_code != 200 or not r.content.strip():
+            raise RuntimeError(f"{y}년 조회 실패 (HTTP {r.status_code})")
+        rows = json.loads(r.content.decode("utf-8")).get("block1")
+        if not isinstance(rows, list):
+            raise RuntimeError(f"{y}년 응답 형식이 바뀜")
+        days: dict[str, str] = {}
+        for x in rows:
+            d = date.fromisoformat(str(x.get("calnd_dd")))
+            if d.year != y or d.weekday() > 4:
+                raise RuntimeError(f"{y}년 목록에 이상한 날짜 {d}")
+            days[d.isoformat()] = (x.get("holdy_nm") or "").strip() or "휴장"
+        out[y] = days
+    return out
+
+
+NAVER_CAL_URL = "https://stock.naver.com/api/marketCalendars/v1/events/search"
+
+
+def fetch_naver_calendar(category: str, start: date, end: date) -> list[tuple[str, str, str]]:
+    """네이버 증시 캘린더의 한국 일정 (날짜, 이름, 부제). 한 번에 42일까지, 데이터는 오늘 앞뒤 약 90일만 있다."""
+    out: list[tuple[str, str, str]] = []
+    cur = start
+    while cur <= end:
+        e = min(cur + timedelta(days=41), end)
+        r = session.post(NAVER_CAL_URL, timeout=20,
+                         headers={"Referer": "https://stock.naver.com/calendar", "Origin": "https://stock.naver.com"},
+                         json={"codes": [], "from": cur.isoformat(), "to": e.isoformat(),
+                               "category": category, "myStocksOnly": False})
+        if r.status_code != 200:
+            raise RuntimeError(f"HTTP {r.status_code}")
+        for g in r.json().get("dateGroups") or []:
+            for ev in g.get("events") or []:
+                if ev.get("nationType") == "KOR" and re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(g.get("date"))):
+                    out.append((str(g["date"]), str(ev.get("eventName") or ""), str(ev.get("subtitle") or "")))
+        cur = e + timedelta(days=1)
+        time.sleep(0.3)
+    return out
+
+
+CAL_RECHECK_DAYS = 7      # 일정 소스는 일주일에 한 번만 다시 받는다(실패했거나 다음 해가 비었으면 하루에 한 번)
+
+
+def refresh_calendar(now: datetime) -> dict:
+    """
+    휴장일·금통위 날짜를 최신으로 맞추고 calendar.json 에 쓸 내용을 돌려준다.
+    연도마다 우선순위: 이번에 받은 공식 목록(KRX·한국은행) > 직전 실행이 받아 둔 공식 목록 > krx_calendar.json.
+    공식 소스가 실패하면 네이버 증시 캘린더(앞으로 약 90일)에서 찾은 휴장일·금통위를 더한다.
+    전역 HOLIDAYS·MPC 를 그 결과로 바꾼다 — 장 상태, 멈춤 판단, 만기 계산이 이 목록을 쓴다.
+    """
+    today = now.date()
+    years = [today.year, today.year + 1]
+    prev = load_prev("calendar.json") or {}
+    attempt = dict(prev.get("attempt") or {})          # 소스 -> {"at": 시각, "ok": bool}
+    source = dict(prev.get("source") or {})            # "holidays.2026" -> "KRX" | "한국은행" | "seed"
+    extra_hol = dict(prev.get("extraHolidays") or {})  # 네이버에서 찾아 더한 휴장일
+    extra_mpc = sorted(prev.get("extraMpc") or [])
+
+    seed_hol: dict[str, dict[str, str]] = {}
+    for d, nm in (CAL_SEED.get("holidays") or {}).items():
+        seed_hol.setdefault(d[:4], {})[d] = nm
+    seed_mpc = {str(y): sorted(v) for y, v in (CAL_SEED.get("mpc") or {}).items()}
+    if not CAL_SEED:            # krx_calendar.json 이 깨졌으면 직전 실행이 쓴 목록을 seed 로
+        seed_hol = {y: dict(v) for y, v in (prev.get("holidays") or {}).items() if isinstance(v, dict)}
+        seed_mpc = {y: sorted(v) for y, v in (prev.get("mpc") or {}).items() if isinstance(v, list)}
+        SPECIAL_SESSIONS.update({d: tuple(v) for d, v in (prev.get("specialSessions") or {}).items()
+                                 if d >= today.isoformat() and isinstance(v, list) and len(v) == 2})
+    # 공식 목록이 이기지만, seed 에 손으로 더한 날짜는 늘 합친다(공식 소스가 막혔을 때 새 임시공휴일을 넣는 길)
+    hol = {y: dict(v) for y, v in seed_hol.items()}
+    mpc = dict(seed_mpc)
+    for y, v in (prev.get("holidays") or {}).items():
+        if source.get(f"holidays.{y}") == "KRX" and isinstance(v, dict):
+            hol[y] = {**seed_hol.get(y, {}), **v}
+    for y, v in (prev.get("mpc") or {}).items():
+        if source.get(f"mpc.{y}") == "한국은행" and isinstance(v, list):
+            mpc[y] = sorted(v)
+    fresh_hol: set[str] = set()                         # 이번 실행에 공식 목록을 받은 해
+    fresh_mpc: set[str] = set()
+
+    def due(kind: str, complete: bool) -> bool:
+        a = attempt.get(kind) or {}
+        try:
+            age = now - datetime.fromisoformat(a["at"])
+        except Exception:  # noqa: BLE001
+            return True
+        return age >= timedelta(days=CAL_RECHECK_DAYS if a.get("ok") and complete else 1)
+
+    def stamp(kind: str, ok: bool) -> None:
+        attempt[kind] = {"at": now.isoformat(timespec="seconds"), "ok": ok}
+
+    naver_from, naver_to = today, today + timedelta(days=84)
+
+    if due("holidays", all(source.get(f"holidays.{y}") == "KRX" for y in years)):
+        try:
+            got = fetch_krx_holidays(years)
+            for y, days in got.items():
+                if len(days) >= 8:                      # 확정 연도는 15~20건. 너무 적으면 미공표·장애로 보고 쓰지 않는다
+                    hol[str(y)] = {**seed_hol.get(str(y), {}), **days}
+                    source[f"holidays.{y}"] = "KRX"
+                    fresh_hol.add(str(y))
+            print(f"  KRX 휴장일 {', '.join(f'{y}년 {len(v)}일' for y, v in got.items())}")
+            if str(today.year) not in fresh_hol:        # 올해 목록이 비거나 너무 짧으면 '받았다'고 치지 않는다
+                raise RuntimeError(f"{today.year}년 휴장일이 {len(got.get(today.year) or {})}건뿐")
+            stamp("holidays", True)
+        except Exception as e:  # noqa: BLE001
+            stamp("holidays", False)
+            warn(f"KRX 휴장일 갱신 실패 — 저장된 목록을 씁니다: {type(e).__name__}: {e}")
+            try:
+                before = len(extra_hol)
+                for d, name, sub in fetch_naver_calendar("holiday", naver_from, naver_to):
+                    if "휴장" in name and date.fromisoformat(d).weekday() < 5:
+                        extra_hol[d] = sub.strip() or "휴장"
+                if len(extra_hol) > before:
+                    print(f"  네이버 증시 캘린더로 휴장일 {len(extra_hol) - before}일 보충")
+            except Exception as e2:  # noqa: BLE001
+                warn(f"네이버 증시 캘린더(휴장일)도 실패: {type(e2).__name__}: {e2}")
+
+    if due("mpc", all(mpc.get(str(y)) for y in years)):
+        try:
+            for y in years:
+                got = fetch_bok_mpc(y)
+                if got:                                 # 미공표 연도는 [] — 갖고 있던 값을 지우지 않는다
+                    mpc[str(y)] = got
+                    source[f"mpc.{y}"] = "한국은행"
+                    fresh_mpc.add(str(y))
+                elif y == today.year:                   # 올해가 비었으면 형식이 바뀐 것 — 다음 해만 미공표일 수 있다
+                    raise RuntimeError(f"{y}년 회의 목록이 비어 있음")
+                time.sleep(0.4)
+            stamp("mpc", True)
+            print(f"  금통위 일정 {', '.join(f'{y}년 {len(mpc.get(str(y)) or [])}회' for y in years)} (한국은행)")
+        except Exception as e:  # noqa: BLE001
+            stamp("mpc", False)
+            warn(f"한국은행 금통위 일정 갱신 실패 — 저장된 목록을 씁니다: {type(e).__name__}: {e}")
+            try:
+                found = {d for d, name, _ in fetch_naver_calendar("economicIndicators", naver_from, naver_to)
+                         if "기준금리" in name}
+                extra_mpc = sorted(set(extra_mpc) | found)
+            except Exception as e2:  # noqa: BLE001
+                warn(f"네이버 증시 캘린더(금통위)도 실패: {type(e2).__name__}: {e2}")
+
+    # 지난 보충분, 그리고 이번 실행에 공식 목록을 새로 받은 해의 보충분은 버린다
+    keep_from = (today - timedelta(days=40)).isoformat()
+    extra_hol = {d: n for d, n in extra_hol.items() if d >= keep_from and d[:4] not in fresh_hol}
+    extra_mpc = [d for d in extra_mpc if d >= keep_from and d[:4] not in fresh_mpc]
+
+    HOLIDAYS.clear()
+    for v in hol.values():
+        HOLIDAYS.update(v)
+    for d, n in extra_hol.items():
+        HOLIDAYS.setdefault(d, n)
+    MPC.clear()
+    MPC.update({y: sorted(v) for y, v in mpc.items()})
+    for d in extra_mpc:
+        MPC[d[:4]] = sorted(set(MPC.get(d[:4]) or []) | {d})
+    for y in hol:
+        source.setdefault(f"holidays.{y}", "seed")
+    for y in mpc:
+        source.setdefault(f"mpc.{y}", "seed")
+    return {
+        "holidays": {y: dict(sorted(v.items())) for y, v in sorted(hol.items())},
+        "mpc": {y: v for y, v in sorted(mpc.items())},
+        "extraHolidays": dict(sorted(extra_hol.items())),
+        "extraMpc": extra_mpc,
+        "specialSessions": {d: list(v) for d, v in sorted(SPECIAL_SESSIONS.items())},
+        "source": dict(sorted(source.items())),
+        "attempt": attempt,
+    }
+
+
+def is_trading_day(d: date) -> bool:
+    return d.weekday() < 5 and d.isoformat() not in HOLIDAYS
+
+
+def first_trading_day(year: int) -> date:
+    d = date(year, 1, 1)
+    while not is_trading_day(d):
+        d += timedelta(days=1)
+    return d
+
+
+def next_trading_day(d: date) -> date:
+    d += timedelta(days=1)
+    while not is_trading_day(d):
+        d += timedelta(days=1)
+    return d
+
+
+def derivative_expiries(start: date, end: date) -> list[dict]:
+    """
+    코스피200 선물·옵션 최종거래일: 각 결제월의 두 번째 목요일, 휴장일이면 앞당긴다(KRX 상품명세).
+    3·6·9·12월은 선물과 옵션이 함께 끝나는 동시만기. 위클리 옵션은 넣지 않는다.
+    """
+    out = []
+    y, m = start.year, start.month
+    while date(y, m, 1) <= end:
+        first = date(y, m, 1)
+        d = first + timedelta(days=(3 - first.weekday()) % 7 + 7)
+        while not is_trading_day(d):
+            d -= timedelta(days=1)
+        if start <= d <= end:
+            out.append({"date": d.isoformat(), "quarterly": m % 3 == 0})
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
+
+
+def korean_events(today: date, horizon: int = 150) -> list[dict]:
+    """금통위·선물옵션 만기·휴장일. 이어진 연휴(사이 주말 포함)는 한 건으로 묶는다."""
+    start, end = today - timedelta(days=31), today + timedelta(days=horizon)
+    lo, hi = start.isoformat(), end.isoformat()
+    md = lambda d: f"{d.month}/{d.day}({_WEEKDAY_KO[d.weekday()]})"
+    ev = []
+    for d in sorted({d for v in MPC.values() for d in v}):
+        if lo <= d <= hi:
+            ev.append({"type": "금통위", "date": d, "title": "한국은행 기준금리 결정",
+                       "note": "통화정책방향 결정회의 · 결과 발표 오전 10시경", "impact": "high"})
+    for x in derivative_expiries(start, end):
+        q = x["quarterly"]
+        ev.append({"type": "만기", "date": x["date"],
+                   "title": "선물·옵션 동시만기" if q else "옵션 만기",
+                   "note": ("코스피200 선물·옵션 최종거래일 · 장 막판에 프로그램 매매가 몰리기 쉬운 날" if q
+                            else "코스피200 옵션 최종거래일"),
+                   "impact": "mid" if q else "low"})
+    groups: list[list[date]] = []
+    for d in sorted(date.fromisoformat(x) for x in HOLIDAYS if lo <= x <= hi):
+        if groups:
+            gap = groups[-1][-1] + timedelta(days=1)
+            while gap.weekday() >= 5:
+                gap += timedelta(days=1)
+            if gap == d:
+                groups[-1].append(d)
+                continue
+        groups.append([d])
+    for g in groups:
+        names = list(dict.fromkeys(HOLIDAYS[d.isoformat()] for d in g))
+        shown = next((d for d in g if d >= today), g[0])        # 연휴 중간이면 오늘 날짜로 띄운다
+        span = f"{md(g[0])}~{md(g[-1])} · " if len(g) > 1 else ""
+        ev.append({"type": "휴장", "date": shown.isoformat(), "title": f"증시 휴장 · {'·'.join(names)}",
+                   "note": f"{span}다음 거래일 {md(next_trading_day(g[-1]))}", "impact": "low"})
+    return ev
+
+
 # ---------------------------------------------------------------- 이벤트 일정
 
 MONTHS = {
@@ -1354,6 +2033,9 @@ def fetch_fred_series(api_key: str) -> list[dict]:
     return out
 
 
+UPCOMING_MAX = 10
+
+
 def build_events() -> tuple[dict, list[dict] | None]:
     """(이벤트, 매크로 지표). FRED 키가 없으면 매크로는 None — 실패가 아니라 '쓰지 않음'."""
     events: list[dict] = []
@@ -1384,6 +2066,13 @@ def build_events() -> tuple[dict, list[dict] | None]:
         warn("FRED_API_KEY 미설정 — 미국 CPI/고용/PCE 발표 일정과 매크로 실측치를 건너뜁니다. "
              "무료 키: https://fred.stlouisfed.org/docs/api/api_key.html")
 
+    try:
+        kr = korean_events(datetime.now(KST).date())
+        events.extend(kr)
+        print(f"  국내 일정 {len(kr)}건 (금통위·만기·휴장)")
+    except Exception as e:  # noqa: BLE001
+        warn(f"국내 일정 계산 실패: {type(e).__name__}: {e}")
+
     if SEED.exists():
         try:
             seed = json.loads(SEED.read_text(encoding="utf-8"))
@@ -1408,11 +2097,13 @@ def build_events() -> tuple[dict, list[dict] | None]:
         uniq.setdefault((e["type"], e["date"]), e)
     events = sorted(uniq.values(), key=lambda e: e["date"])
     future = [e for e in events if e["dday"] >= 0]
-    upcoming = future[:8]
-    # FOMC 는 영향이 가장 큰 이벤트 — 8개 제한에 밀려나지 않게 보장한다
-    next_fomc = next((e for e in future if e["type"] == "FOMC"), None)
-    if next_fomc and next_fomc not in upcoming:
-        upcoming = upcoming[:7] + [next_fomc]
+    upcoming = future[:UPCOMING_MAX]
+    # FOMC·금통위는 영향이 가장 큰 이벤트 — 개수 제한에 밀려나지 않게 보장한다(가까운 순서는 유지)
+    for kind in ("FOMC", "금통위"):
+        nxt = next((e for e in future if e["type"] == kind), None)
+        if nxt and nxt not in upcoming:
+            drop = next((e for e in reversed(upcoming) if e["type"] not in ("FOMC", "금통위")), upcoming[-1])
+            upcoming = sorted([e for e in upcoming if e is not drop] + [nxt], key=lambda e: e["date"])
     recent = [e for e in events if e["dday"] < 0][-4:]
     return {"upcoming": upcoming, "recent": recent, "today": today.isoformat()}, macro
 
@@ -1838,7 +2529,8 @@ def rank_text(p: float) -> str:
 
 
 def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
-                   futures: dict | None = None, credit: dict | None = None) -> list[dict]:
+                   futures: dict | None = None, credit: dict | None = None,
+                   program: dict | None = None) -> list[dict]:
     """
     수치에서 바로 읽히는 사실만 문장으로. 예측이나 매매 조언은 하지 않는다.
     입력은 모두 '이번 수집분'이어야 한다 — 직전 정상본을 넣으면 지난 날의 일을 '오늘'로 말하게 된다.
@@ -1891,6 +2583,19 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
             tips.append({"tone": "buy" if det[top] > 0 else "sell",
                          "text": f"기관 안에서는 {nm}이 {cho(abs(det[top]))}원 "
                                  f"{'순매수' if det[top] > 0 else '순매도'}로 가장 크게 움직였습니다."})
+
+    # 프로그램 매매 — 최근 1년 중 극단일 때만
+    pg = ((program or {}).get("markets") or {}).get("KOSPI")
+    if pg:
+        lt = pg["latest"]
+        q = lt.get("pctl")
+        buy = (lt.get("total") or 0) > 0
+        if q is not None and ((buy and q >= 95) or (not buy and q <= 5)) and abs(lt.get("total") or 0) >= 1000:
+            tips.append({"tone": "neutral", "text":
+                f"코스피 프로그램 매매가 {cho(abs(lt['total']))}원 {'순매수' if buy else '순매도'}"
+                f"(비차익 {'+' if lt['nonarb'] >= 0 else '−'}{cho(abs(lt['nonarb']))}원)입니다. "
+                f"최근 {lt['days']}거래일 중 {'순매수' if buy else '순매도'} 쪽 상위 {rank_text(100 - q if buy else q)} 규모"
+                + (" — 20시 확정 전 잠정치입니다." if lt.get("provisional") else "입니다.")})
 
     kospi = market.get("indices", {}).get("KOSPI", {})
     if kospi.get("changeRate") is not None and abs(kospi["changeRate"]) >= 3:
@@ -1992,7 +2697,7 @@ def build_feed(prev: dict, flows: dict | None, market: dict, insights: list[dict
     if ks:
         latest = ks["latest"]
         day = latest["date"]
-        final = now.date().isoformat() > day or now.hour >= 20
+        final = now.date().isoformat() > day or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER   # 수급 20시, 프로그램 20:05
         idx = market.get("indices", {}).get("KOSPI", {})
         head = (f"코스피 {idx['price']:,.2f} ({idx.get('changeRate') or 0:+.2f}%) · " if idx.get("price") else "")
         title = (f"{day} {head}개인 {_eok_text(latest.get('individual'))} · "
@@ -2186,8 +2891,15 @@ def market_phase(now: datetime, kospi: dict | None = None) -> str:
     """
     if now.weekday() >= 5:
         return "주말"
-    hm = now.hour * 60 + now.minute
+    today = now.date().isoformat()
     traded = str((kospi or {}).get("tradedAt") or "")[:10]
+    if today in HOLIDAYS:
+        if traded != today:
+            return "휴장일"
+        # 목록이 틀렸다(잠정 목록·오타) — 오늘 시세가 있으니 거래일로 보고, 남은 계산에서도 휴장일에서 뺀다
+        warn(f"휴장일 목록의 {today}({HOLIDAYS[today]})에 오늘 시세가 있습니다 — krx_calendar.json 확인 필요")
+        HOLIDAYS.pop(today, None)
+    hm = now.hour * 60 + now.minute
     o_ = int(session_hours(now.date().isoformat())[0][:2]) * 60
     if hm >= o_ + 5 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", traded) and traded < now.date().isoformat():
         return "휴장일"
@@ -2206,7 +2918,14 @@ def market_phase(now: datetime, kospi: dict | None = None) -> str:
 
 def main() -> int:
     now = datetime.now(KST)
-    print(f"수집 시작 {now:%Y-%m-%d %H:%M:%S} KST  ({market_phase(now)})")
+    print(f"수집 시작 {now:%Y-%m-%d %H:%M:%S} KST")
+    print("[0/9] 국내 장 일정 (휴장일·금통위)")
+    try:
+        calendar = refresh_calendar(now)
+    except Exception as e:  # noqa: BLE001
+        warn(f"장 일정 갱신 실패 — krx_calendar.json 만 씁니다: {type(e).__name__}: {e}")
+        calendar = None
+    print(f"  장 상태: {market_phase(now)}")
 
     print("[1/8] 투자자 수급")
     flows, full = build_flows()
@@ -2233,9 +2952,27 @@ def main() -> int:
               f" · 반대 비율 {ant['oppositeRate']['vsForeign']}%")
         for k in ACTOR_KEYS:
             print(f"    {k:12} 학점 {a[k]['grade']}  20일 초과수익 {a[k]['excess20']:+.2f}%p")
-    print("[4/8] 선물 수급")
+    print("[4/8] 선물 수급 · 프로그램 매매 · 공매도")
     futures, fut_full = build_futures()
     attach_futures_divergence(futures, full, fut_full, closes)
+    program = build_program(now)
+    short = build_short(now)
+    # 수급(같은 네이버)보다 거래일이 2일 이상 뒤처졌으면 멈춘 것으로 본다 (장중엔 오늘 행이 늦게 붙을 수 있어 1일은 봐준다)
+    for code, name in (("KOSPI", "코스피"), ("KOSDAQ", "코스닥")):
+        fdays = [r["date"] for r in (flows["markets"].get(code) or {}).get("daily") or []]
+        for key, label, blk in ((f"program.{code}", f"{name} 프로그램 매매", program["markets"].get(code)),
+                                (f"short.{code}", f"{name} 공매도", short["markets"].get(code))):
+            rows = (blk or {}).get("daily") or []
+            if rows and sum(1 for d in fdays if d > rows[-1]["date"]) >= 2:
+                warn(f"{label}이 {rows[-1]['date']}에서 멈춤 (수급 최신 {fdays[-1]})")
+                mark_stale(key, label, asOf=rows[-1]["date"])
+                stale_keys.add(key)
+        # 잔고는 원래 2거래일 늦다(장중엔 수급에 오늘이 붙어 3일). 5거래일 넘게 뒤처지면 멈춘 것
+        bal = (short["markets"].get(code) or {}).get("balance") or []
+        if bal and sum(1 for d in fdays if d > bal[-1]["date"]) >= 5:
+            warn(f"{name} 공매도 잔고가 {bal[-1]['date']}에서 멈춤 (수급 최신 {fdays[-1]})")
+            mark_stale(f"short.{code}.balance", f"{name} 공매도 잔고", asOf=bal[-1]["date"])
+            stale_keys.add(f"short.{code}.balance")
     print("[5/8] 신용융자·증시자금 (KOFIA)")
     credit = build_credit()
     print("[6/9] 유사 국면 매칭")
@@ -2268,7 +3005,11 @@ def main() -> int:
     # 브리핑은 이번 수집분으로만 만든다 (직전 정상본이나 멈춘 데이터로 '오늘'을 말하지 않도록)
     core_ok = bool(flows["markets"].get("KOSPI")) and "flows.KOSPI" not in stale_keys
     if core_ok:
-        insights = build_insights(flows, market, glob, ant_today, futures, credit)
+        # 수급과 같은 날의 프로그램 매매만 — 장중엔 하루 늦게 붙을 수 있는데, 날짜 없는 문장이 어제 값을 '오늘'로 말하게 된다
+        fdate = flows["markets"]["KOSPI"]["latest"]["date"]
+        prog_today = {"markets": {k: v for k, v in program["markets"].items()
+                                  if f"program.{k}" not in stale_keys and v["latest"]["date"] == fdate}}
+        insights = build_insights(flows, market, glob, ant_today, futures, credit, prog_today)
     else:
         insights = build_insights({"markets": {}}, market, glob, {}, None, credit)
 
@@ -2280,10 +3021,13 @@ def main() -> int:
         "antstocks.json": antstocks, "futures.json": futures, "credit.json": credit,
         "market.json": market, "stocks.json": stocks, "global.json": glob,
         "stockflows.json": {"unit": "주", "stocks": stocks.pop("series", {})},
+        "program.json": program, "short.json": short,
         "events.json": events,
     }, stale_keys)
     for name, payload in out.items():
-        write(name, payload, compact=name == "stockflows.json")
+        write(name, payload, compact=name in ("stockflows.json", "short.json"))
+    if calendar:
+        write("calendar.json", calendar)
     write("insights.json", {"items": insights})
     notify_telegram(feed)
     write("feed.json", feed)
@@ -2303,7 +3047,9 @@ def main() -> int:
         "stale": STALE,
         "freshAt": FRESH_AT,
         "sources": [
-            {"name": "네이버 증권", "for": "개인/외국인/기관 수급, 지수 일봉·시세, 종목, 업종"},
+            {"name": "네이버 증권", "for": "개인/외국인/기관 수급, 프로그램 매매, 지수 일봉·시세, 종목, 업종"},
+            {"name": "한국거래소", "for": "공매도, 휴장일"},
+            {"name": "한국은행", "for": "금통위 일정"},
             {"name": "다음 금융", "for": "수급 예비 소스"},
             {"name": "금융투자협회", "for": "신용융자·증시자금"},
             {"name": "yfinance", "for": "미국 지수·선물·금리·환율·원자재"},

@@ -9,6 +9,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "collector"))
 
@@ -29,7 +30,25 @@ def clean_state(tmp_path, monkeypatch):
     monkeypatch.setattr(c, "OUT", tmp_path / "docs" / "data")
     # 네트워크로 새는 호출은 바로 실패하게
     monkeypatch.setattr(c, "get_json", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("테스트: 네트워크 금지")))
+    blocked = lambda *a, **k: (_ for _ in ()).throw(requests.ConnectionError("테스트: 네트워크 금지"))
+    monkeypatch.setattr(c.session, "get", blocked)
+    monkeypatch.setattr(c.session, "post", blocked)
+    # 장 일정(휴장일·금통위)은 실행 중에 바뀔 수 있어 테스트마다 저장소 seed 상태로
+    monkeypatch.setattr(c, "HOLIDAYS", dict(c.HOLIDAYS))
+    monkeypatch.setattr(c, "MPC", {y: list(v) for y, v in c.MPC.items()})
+    monkeypatch.setattr(c, "SPECIAL_SESSIONS", dict(c.SPECIAL_SESSIONS))
     yield
+
+
+def freeze_now(monkeypatch, when):
+    """collect 안의 datetime.now() 를 when(KST aware)으로 고정 — 실행 날짜에 따라 결과가 바뀌는 테스트를 막는다."""
+    real = c.datetime
+
+    class Frozen(real):
+        @classmethod
+        def now(cls, tz=None):
+            return when.astimezone(tz) if tz else when.replace(tzinfo=None)
+    monkeypatch.setattr(c, "datetime", Frozen)
 
 
 def trading_days(n: int, end: date) -> list[str]:

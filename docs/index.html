@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/atom+xml" title="개미들을 위한 투자정보 — 하루 요약" href="data/feed.xml">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
 </head>
 <body>
@@ -268,6 +268,42 @@
   </section>
 
   <!-- ══════════════════ 장바구니 비교 ══════════════════ -->
+  <section class="grid-2">
+    <div class="card" id="program-card" hidden>
+      <div class="card-head">
+        <h2>프로그램 매매</h2>
+        <div class="seg" id="program-market-seg">
+          <button data-market="KOSPI" class="on">코스피</button>
+          <button data-market="KOSDAQ">코스닥</button>
+        </div>
+      </div>
+      <p class="report-intro" style="margin-bottom:12px">
+        미리 정한 조건에 따라 여러 종목을 한꺼번에 사고파는 매매입니다.
+        <b>비차익</b>은 바스켓으로 묶어 사고파는 지수형 자금(주로 외국인·기관), <b>차익</b>은 선물과 현물의 가격 차를 노린 매매입니다.
+      </p>
+      <div class="credit-stats" id="program-stats"></div>
+      <div class="chart-wrap"><svg id="program-chart" class="chart chart-xs" role="img" aria-label="최근 60거래일 프로그램 전체 순매수 막대 차트"></svg></div>
+      <p class="dim small" id="program-note" style="margin:8px 0 0"></p>
+    </div>
+
+    <div class="card" id="short-card" hidden>
+      <div class="card-head">
+        <h2>공매도</h2>
+        <div class="seg" id="short-market-seg">
+          <button data-market="KOSPI" class="on">코스피</button>
+          <button data-market="KOSDAQ">코스닥</button>
+        </div>
+      </div>
+      <p class="report-intro" style="margin-bottom:12px">
+        빌린 주식을 먼저 파는 매매입니다. 2025-03-31 전면 재개 뒤의 날들끼리만 비교합니다.
+        시장조성·헤지 물량도 섞여 있어, 많다고 곧 하락 신호라는 뜻은 아닙니다.
+      </p>
+      <div class="credit-stats" id="short-stats"></div>
+      <div class="chart-wrap"><svg id="short-chart" class="chart chart-xs" role="img" aria-label="최근 120거래일 거래대금 대비 공매도 비중 선 차트"></svg></div>
+      <p class="dim small" id="short-note" style="margin:8px 0 0"></p>
+    </div>
+  </section>
+
   <section class="card" id="basket-card">
     <div class="card-head">
       <h2>개미 장바구니 <span class="vs-mid">vs</span> 외인 장바구니</h2>
@@ -361,6 +397,6 @@
 
 <div id="tooltip" class="tooltip" hidden></div>
 
-<script src="app.js?v=13"></script>
+<script src="app.js?v=14"></script>
 </body>
 </html>

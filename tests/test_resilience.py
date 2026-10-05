@@ -8,7 +8,9 @@ from datetime import date, timedelta
 import pytest
 
 import collect as c
-from conftest import make_market, market_payload
+from datetime import datetime
+
+from conftest import freeze_now, make_market, market_payload
 
 
 # ── 멈춤 감지 ────────────────────────────────────────────────
@@ -118,7 +120,8 @@ def test_fetch_flows_partial_naver_fills_older_from_daum(monkeypatch):
 # ── 전체 실행 (외부 소스는 가짜) ─────────────────────────────
 
 def _offline(monkeypatch, *, naver=True, daum=False, fred=True, end=date(2026, 10, 2),
-             kosdaq_stuck=False, kosdaq_naver=True, og_raises=False):
+             kosdaq_stuck=False, kosdaq_naver=True, og_raises=False, program_lag=0, krx_blocked=False):
+    freeze_now(monkeypatch, datetime(2026, 10, 5, 7, 37, tzinfo=c.KST))   # 10/5 개천절 대체 휴장일 아침
     rows, closes = make_market(750, end=end)
     kosdaq, _ = make_market(750, end=end, seed=2)
     fut = [{**{k: 0.0 for k in c.INVESTOR_GROUPS}, "date": r["date"], "foreign": -r["foreign"] / 20,
@@ -152,6 +155,39 @@ def _offline(monkeypatch, *, naver=True, daum=False, fred=True, end=date(2026, 1
         if og_raises:
             raise OSError("폰트 파일이 깨짐")
     monkeypatch.setattr(c, "build_og_card", og)
+
+    # 프로그램 매매: 시장마다 총매수를 달리 해 '두 시장이 같음' 검사에 걸리지 않게
+    def program_daily(market, days, now=None):
+        src = (rows if market == "KOSPI" else kosdaq)[:len(rows) - program_lag]
+        out = [{"date": r["date"], "arb_net": 10.0, "nonarb_net": r["foreign"] / 10, "total_net": 10 + r["foreign"] / 10,
+                "total_buy": 30000.0 if market == "KOSPI" else 9000.0} for r in src[-days:]]
+        out[-1].update(total_net=-90000.0, nonarb_net=-90010.0)      # 마지막 날은 1년 중 가장 큰 순매도 → 브리핑 한 줄이 나온다
+        return out
+    monkeypatch.setattr(c, "fetch_program_daily", program_daily)
+
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)              # 소스 사이 쉬는 시간은 테스트에선 필요 없다
+    # 공매도(KRX): 장중 건너뛰기와 상관없이 늘 받는 것으로
+    monkeypatch.setattr(c, "krx_short_due", lambda now: True)
+    def krx_rows(bld, market, start, end_, key):
+        if krx_blocked:
+            raise c.KrxBlocked("KRX MDCSTAT30201_OUT: HTTP 403")
+        out = {}
+        for r in rows:
+            if start.isoformat() <= r["date"] <= end_.isoformat():
+                d = r["date"].replace("-", "/")
+                out[r["date"]] = ({"TRD_DD": d, "CVSRTSELL_TRDVAL": "500,000,000,000", "ACC_TRDVAL": "10,000,000,000,000",
+                                   "TRDVAL_WT": "5.00"} if key == "TRD_DD" else
+                                  {"RPT_DUTY_OCCR_DD": d, "BAL_AMT": "1,900,000,000,000", "MKTCAP": "560,000,000,000,000",
+                                   "BAL_RTO2": "0.34"})
+        return out
+    monkeypatch.setattr(c, "_krx_market_rows", krx_rows)
+
+    # 장 일정: 공식 소스가 저장소 seed 와 같은 값을 주는 것으로
+    seed_by_year = {}
+    for d, nm in c.CAL_SEED["holidays"].items():
+        seed_by_year.setdefault(int(d[:4]), {})[d] = nm
+    monkeypatch.setattr(c, "fetch_krx_holidays", lambda years: {y: dict(seed_by_year.get(y, {})) for y in years})
+    monkeypatch.setattr(c, "fetch_bok_mpc", lambda y: list(c.CAL_SEED["mpc"].get(str(y), [])))
 
 
 def _read(name):
@@ -390,3 +426,122 @@ def test_main_writes_feed(monkeypatch):
     assert _read("feed.json")["entries"][0]["id"] == "2026-10-02"
     assert (c.OUT / "feed.xml").read_text(encoding="utf-8").startswith("<?xml")
     assert _read("stockflows.json")["unit"] == "주"
+
+
+def test_main_writes_program_short_calendar(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    prog = _read("program.json")["markets"]
+    assert len(prog["KOSPI"]["daily"]) == c.PROGRAM_CHART_DAYS and prog["KOSPI"]["latest"]["date"] == "2026-10-02"
+    assert prog["KOSDAQ"]["latest"]["pctl"] is not None
+    sh = _read("short.json")
+    k = sh["markets"]["KOSPI"]
+    assert cal["source"]["holidays.2027"] == "KRX" if (cal := _read("calendar.json")) else False
+    assert k["daily"][0]["date"] >= c.SHORT_RESUMED and k["daily"][-1] == {"date": "2026-10-02", "value": 5000,
+                                                                          "total": 100000, "pct": 5.0}
+    assert k["latest"]["balance"]["pct"] == 0.34 and k["latest"]["daily"]["pctAvg20"] == 5.0
+    cal = _read("calendar.json")
+    assert cal["source"]["holidays.2026"] == "KRX" and "2026-10-05" in cal["holidays"]["2026"]
+    meta = _read("meta.json")
+    assert meta["stale"] == [] and "program.KOSPI" in meta["freshAt"] and "short.KOSPI" in meta["freshAt"]
+
+
+def test_main_flags_stuck_program_and_blocked_krx(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    good_short = _read("short.json")["markets"]["KOSPI"]["daily"]
+    c.WARNINGS.clear(); c.STALE.clear(); c.FRESH_AT.clear()
+    _offline(monkeypatch, program_lag=3, krx_blocked=True)
+    assert c.main() == 0                                        # 부가 섹션이라 실행 실패로 만들지 않는다
+    stale = {s_["key"]: s_ for s_ in _read("meta.json")["stale"]}
+    assert "program.KOSPI" in stale and stale["program.KOSPI"]["asOf"] == "2026-10-02"   # 더 최신인 직전본을 유지
+    assert _read("program.json")["markets"]["KOSPI"]["latest"]["date"] == "2026-10-02"
+    assert "short.KOSPI" in stale and "short.KOSDAQ" in stale
+    assert _read("short.json")["markets"]["KOSPI"]["daily"] == good_short   # 막혀도 직전 행은 그대로
+    assert sum("공매도" in w for w in c.WARNINGS) == 1                       # 한 번 막히면 나머지 요청은 건너뛴다
+    # 브리핑은 멈춘 프로그램 매매로 '오늘'을 말하지 않는다
+    assert not any("프로그램" in t["text"] for t in _read("insights.json")["items"])
+
+
+def test_program_briefing_only_for_the_flows_day(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    assert any("코스피 프로그램 매매가 9.00조원 순매도" in t["text"] for t in _read("insights.json")["items"])
+    c.WARNINGS.clear(); c.STALE.clear(); c.FRESH_AT.clear()
+    # 하루 늦은 프로그램 매매(장중에 흔함)는 멈춤으로 치지 않지만, 날짜 없는 브리핑 문장에는 쓰지 않는다
+    _offline(monkeypatch, program_lag=1)
+    for f in ("program.json",):
+        (c.OUT / f).unlink()
+    assert c.main() == 0
+    assert not any("프로그램" in t["text"] for t in _read("insights.json")["items"])
+    assert "program.KOSPI" not in {s_["key"] for s_ in _read("meta.json")["stale"]}
+
+
+def test_short_balance_freeze_is_flagged(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    sh = _read("short.json")
+    for m in sh["markets"].values():                     # 잔고만 9월 초에서 멈춘 직전 파일
+        m["balance"] = [r for r in m["balance"] if r["date"] <= "2026-09-03"]
+    c.write("short.json", sh, compact=True)
+    c.WARNINGS.clear(); c.STALE.clear(); c.FRESH_AT.clear()
+    _offline(monkeypatch)
+    real = c._krx_market_rows
+    def no_balance(bld, market, start, end_, key):
+        if key == "RPT_DUTY_OCCR_DD":
+            return {d: {**x, "BAL_AMT": "-"} for d, x in real(bld, market, start, end_, key).items()}   # 필드가 비어 옴
+        return real(bld, market, start, end_, key)
+    monkeypatch.setattr(c, "_krx_market_rows", no_balance)
+    assert c.main() == 0
+    stale = {s_["key"] for s_ in _read("meta.json")["stale"]}
+    assert {"short.KOSPI.balance", "short.KOSDAQ.balance"} <= stale and "short.KOSPI" not in stale
+    assert any("값이 읽힌 행 0개" in w for w in c.WARNINGS)
+
+
+def test_short_balance_silently_frozen_at_source_is_flagged(monkeypatch):
+    # KRX 가 잔고를 정상 형식으로 주지만 9/3 이후 행이 더 생기지 않는 경우 — 실패 기록 없이 나이로 잡는다
+    _offline(monkeypatch)
+    real = c._krx_market_rows
+    monkeypatch.setattr(c, "_krx_market_rows", lambda bld, market, start, end_, key: {
+        d: x for d, x in real(bld, market, start, end_, key).items() if key == "TRD_DD" or d <= "2026-09-03"})
+    assert c.main() == 0
+    stale = {s_["key"]: s_ for s_ in _read("meta.json")["stale"]}
+    assert stale["short.KOSPI.balance"]["asOf"] == "2026-09-03" and "short.KOSPI" not in stale
+
+
+def test_joint_stall_across_holidays_is_still_caught():
+    # 지수 일봉과 수급이 9/22 에 함께 멈춘 채 10/1 장중 — 추석(9/24·25)을 빼도 4거래일이 빠졌다
+    m = {"indices": {"KOSPI": {"name": "코스피", "tradedAt": "2026-10-01T10:05:00+09:00", "marketStatus": "OPEN",
+                                "price": 1.0}}}
+    flows = {"markets": {"KOSPI": {"daily": [{"date": "2026-09-21"}, {"date": "2026-09-22"}]}}}
+    stale = c.check_freshness(flows, m, {"KOSPI": {"2026-09-21": 1.0, "2026-09-22": 1.0}}, today="2026-10-01")
+    assert stale == {"market.KOSPI.history", "flows.KOSPI"}
+    # 휴장 다음 날 아침(하루만 빠짐)은 여전히 정상
+    m["indices"]["KOSPI"]["tradedAt"] = "2026-10-06T09:05:00+09:00"
+    flows = {"markets": {"KOSPI": {"daily": [{"date": "2026-10-02"}]}}}
+    assert c.check_freshness(flows, m, {"KOSPI": {"2026-10-02": 1.0}}, today="2026-10-06") == set()
+
+
+def test_market_phase_trusts_live_quote_over_holiday_list():
+    c.HOLIDAYS["2026-10-08"] = "잘못 적힌 날"
+    K = c.KST
+    assert c.market_phase(datetime(2026, 10, 8, 8, 0, tzinfo=K)) == "휴장일"
+    assert c.market_phase(datetime(2026, 10, 8, 11, 0, tzinfo=K), {"tradedAt": "2026-10-08T11:00"}) == "장중"
+    assert "2026-10-08" not in c.HOLIDAYS and any("잘못 적힌 날" in w for w in c.WARNINGS)
+
+
+def test_first_trading_day_opens_at_ten():
+    assert c.session_hours("2026-01-02") == ("1000", "1530")
+    assert c.session_hours("2027-01-04") == ("1000", "1530")     # 1/1 신정 뒤 첫 평일
+    assert c.session_hours("2027-01-05") == ("0900", "1530")
+    assert c.session_hours("2026-11-19") == ("1000", "1630")     # 수능일
+    assert c.market_phase(datetime(2027, 1, 4, 9, 30, tzinfo=c.KST), {"tradedAt": "2026-12-30T15:30"}) == "동시호가"
+
+
+def test_feed_final_waits_for_program_trading_to_settle():
+    day = {"date": "2026-10-06", "individual": -1.0, "foreign": 1.0, "institution": 0.0}
+    flows = {"markets": {"KOSPI": {"latest": day}}}
+    f = c.build_feed({}, flows, {"indices": {}}, [], datetime(2026, 10, 6, 20, 3, tzinfo=c.KST))
+    assert f["entries"][0]["final"] is False
+    f = c.build_feed(f, flows, {"indices": {}}, [], datetime(2026, 10, 6, 20, 6, tzinfo=c.KST))
+    assert f["entries"][0]["final"] is True

@@ -38,6 +38,8 @@ let flowRange  = 40;
 let treeMarket = 'KOSPI';
 let reportMarket = 'KOSPI';
 let selectedStock = null;
+let programMarket = 'KOSPI';
+let shortMarket = 'KOSPI';
 
 /* ── 포맷 ─────────────────────────────────────────────── */
 
@@ -76,7 +78,7 @@ function shares(v) {
 /* ── 부트 ─────────────────────────────────────────────── */
 
 const FILES = ['meta', 'flows', 'ant', 'analog', 'antstocks', 'futures', 'credit',
-               'market', 'stocks', 'global', 'events', 'insights'];
+               'market', 'stocks', 'global', 'events', 'insights', 'program', 'short'];
 
 /** 응답이 없으면 무한정 기다리지 않는다. 실패하면 왜 실패했는지 남긴다. */
 async function fetchJSON(name, { timeout = 8000, tries = 2 } = {}) {
@@ -145,9 +147,12 @@ const EMPTY = {
   flows: { markets: {} }, ant: {}, analog: {}, antstocks: {}, futures: { daily: [] },
   credit: { loans: [], money: [], latest: {} }, market: { indices: {} },
   stocks: { top: [], industries: [] }, global: { items: [], macro: [] },
-  events: { upcoming: [] }, insights: { items: [] },
+  events: { upcoming: [] }, insights: { items: [] }, program: { markets: {} }, short: { markets: {} },
 };
 const LOAD_ERRORS = [];
+
+/** 새로 생긴 섹션 파일 — 새 수집기가 처음 돌기 전(배포 직후)엔 없을 수 있어 404 는 '없음'으로만 본다 */
+const OPTIONAL = new Set(['program', 'short']);
 
 /** 파일마다 따로 받는다. 실패한 파일은 keep(이전 값) 또는 빈 모양으로 채우고 이유를 남긴다. */
 async function loadFiles(files, opts, keep = false) {
@@ -157,7 +162,7 @@ async function loadFiles(files, opts, keep = false) {
     const f = files[i];
     if (r.status === 'fulfilled') D[f] = r.value;
     else {
-      errs.push(r.reason?.message || `${f} 실패`);
+      if (!(OPTIONAL.has(f) && /HTTP 404/.test(r.reason?.message || ''))) errs.push(r.reason?.message || `${f} 실패`);
       if (!keep || D[f] === undefined) D[f] = structuredClone(EMPTY[f] ?? {});
     }
   });
@@ -203,7 +208,8 @@ const RENDERERS = [
   [renderReportCard, '성적표'], [renderOppose, '반대로 가는 본능'], [renderHall, '흑역사'],
   [renderCaveats, '한계 고백'], [renderInsights, '브리핑'], [renderIndices, '지수'],
   [renderAnalog, '유사 국면'], [renderBaskets, '장바구니 비교'], [renderFlowChart, '수급 차트'],
-  [renderStreaks, '연속 매매'], [renderInstBreakdown, '기관 분해'], [renderTreemap, '트리맵'],
+  [renderStreaks, '연속 매매'], [renderInstBreakdown, '기관 분해'],
+  [renderProgram, '프로그램 매매'], [renderShort, '공매도'], [renderTreemap, '트리맵'],
   [renderIndustries, '업종'], [renderGlobals, '글로벌'], [renderEvents, '이벤트'],
 ];
 function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); syncPressed(); }
@@ -776,6 +782,181 @@ function renderFutures() {
   $('#fut-note').textContent =
     `외국인 선물 순매수 최근 20거래일. 오늘 ${(last.foreign ?? 0) >= 0 ? '+' : ''}${(last.foreign ?? 0).toLocaleString()}계약` +
     (st && st.days >= 2 ? ` · ${st.days}일 연속 ${st.side === 'buy' ? '매수' : '매도'}` : '') + '.';
+}
+
+/* ── 프로그램 매매 · 공매도 ─────────────────────────────── */
+
+const provTag = r => r && r.provisional ? ' <span class="tag-prov">잠정</span>' : '';
+
+/** 0 기준 막대 차트 (색 = 부호). 잠정치 막대는 흐리게 */
+function drawBars(svg, rows, val, title, fmt) {
+  const W = 640, H = 190, M = { t: 12, r: 10, b: 24, l: 58 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+  const vals = rows.map(r => val(r) ?? 0);
+  let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const pad = (hi - lo) * 0.12 || 1; lo -= pad; hi += pad;
+  const Y = v => M.t + ph - (v - lo) / (hi - lo) * ph;
+  const bw = pw / rows.length;
+  let g = '';
+  for (let i = 0; i <= 3; i++) {
+    const v = lo + (hi - lo) * i / 3, y = Y(v);
+    g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
+    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
+           font-size="10.5" font-family="ui-monospace,monospace">${fmt(v)}</text>`;
+  }
+  g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.3"/>`;
+  const step = Math.max(1, Math.round(rows.length / 6));
+  rows.forEach((r, i) => {
+    const v = val(r) ?? 0;
+    const x = M.l + i * bw + bw * 0.15;
+    const y0 = Y(0), y1 = Y(v);
+    g += `<rect x="${x.toFixed(1)}" y="${Math.min(y0, y1).toFixed(1)}" width="${(bw * 0.7).toFixed(1)}"
+           height="${Math.max(Math.abs(y1 - y0), 0.8).toFixed(1)}" rx="1.5"
+           fill="${v >= 0 ? '#ff4d4d' : '#4d94ff'}" opacity="${r.provisional ? 0.4 : 0.88}"><title>${esc(title(r))}</title></rect>`;
+    if (i % step === 0 || i === rows.length - 1)
+      g += `<text x="${(x + bw * 0.35).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#7f89a2"
+             font-size="9.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
+  });
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = g;
+}
+
+function renderProgram() {
+  const card = $('#program-card');
+  const all = D.program?.markets || {};
+  card.hidden = !Object.keys(all).length;
+  if (card.hidden) return;
+  $$('#program-market-seg button').forEach(b => b.classList.toggle('on', b.dataset.market === programMarket));
+  const m = all[programMarket];
+  if (!m || !m.daily?.length) {
+    $('#program-stats').innerHTML = '<p class="dim">이 시장의 프로그램 매매 데이터를 받지 못했습니다.</p>';
+    $('#program-chart').innerHTML = '';
+    $('#program-note').textContent = '';
+    return;
+  }
+  const lt = m.latest, st = lt.streak || {};
+  const q = lt.pctl, buy = lt.total > 0;
+  // 순위는 극단일 때만 말한다 — 부호를 섞은 백분위로 '순매수 쪽 상위 45%'라고 하면 작은 매수도 두드러져 보인다
+  const rank = q == null ? '' :
+    (buy && q >= 80) || (!buy && q <= 20)
+      ? `최근 ${lt.days}거래일 중 ${buy ? '순매수' : '순매도'} 쪽 상위 ${rankTxt(buy ? 100 - q : q)}`
+      : `최근 ${lt.days}거래일 기준 평소 범위`;
+  const rankNote = rank && lt.provisional ? `${rank} · 잠정치 기준` : rank;
+  $('#program-stats').innerHTML = `
+    <div class="cstat">
+      <div class="cstat-label">전체 순매수 · ${mdy(lt.date)}${provTag(lt)}</div>
+      <div class="cstat-val ${dirCls(lt.total)}">${eok(lt.total)}</div>
+      <div class="cstat-sub">${rankNote}</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">연속</div>
+      <div class="cstat-val">${st.days ? `${st.days}일 ${st.side === 'buy' ? '순매수' : '순매도'}` : '—'}</div>
+      <div class="cstat-sub">${st.days ? `그동안 ${eok(st.total)}` : ''}</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">비차익 (바스켓)</div>
+      <div class="cstat-val ${dirCls(lt.nonarb)}">${eok(lt.nonarb)}</div>
+      <div class="cstat-sub">여러 종목을 한꺼번에</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">차익 (선물↔현물)</div>
+      <div class="cstat-val ${dirCls(lt.arb)}">${eok(lt.arb)}</div>
+      <div class="cstat-sub">가격 차를 노린 매매</div>
+    </div>`;
+  drawBars($('#program-chart'), m.daily, r => r.total,
+           r => `${r.date} 전체 ${eok(r.total)} · 비차익 ${eok(r.nonarb)} · 차익 ${eok(r.arb)}${r.provisional ? ' (잠정)' : ''}`,
+           v => eok(v, { sign: false }));
+  $('#program-note').textContent =
+    `막대 = 전체 순매수, 최근 ${m.daily.length}거래일. 장 마감 뒤에도 20시 무렵까지 값이 바뀌어, 그 전 수집분은 잠정치입니다.`;
+}
+
+/** 선 차트: 값 + 가로 기준선(평균) */
+function drawLine(svg, rows, val, fmt, ref, color) {
+  const W = 640, H = 190, M = { t: 12, r: 10, b: 24, l: 46 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+  const vals = rows.map(val).concat(ref != null ? [ref] : []);
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const pad = (hi - lo) * 0.12 || 1; lo -= pad; hi += pad;
+  const X = i => M.l + (rows.length === 1 ? pw / 2 : i / (rows.length - 1) * pw);
+  const Y = v => M.t + ph - (v - lo) / (hi - lo) * ph;
+  let g = '';
+  for (let i = 0; i <= 3; i++) {
+    const v = lo + (hi - lo) * i / 3, y = Y(v);
+    g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
+    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
+           font-size="10.5" font-family="ui-monospace,monospace">${fmt(v)}</text>`;
+  }
+  if (ref != null)
+    g += `<line x1="${M.l}" y1="${Y(ref).toFixed(1)}" x2="${W - M.r}" y2="${Y(ref).toFixed(1)}" stroke="#ffffff"
+           stroke-opacity=".35" stroke-dasharray="4 3"/>`;
+  g += `<polyline points="${rows.map((r, i) => `${X(i).toFixed(1)},${Y(val(r)).toFixed(1)}`).join(' ')}" fill="none"
+         stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  const n = rows.length - 1;
+  g += `<circle cx="${X(n).toFixed(1)}" cy="${Y(val(rows[n])).toFixed(1)}" r="3.4" fill="${color}"/>`;
+  const step = Math.max(1, Math.round(rows.length / 6));
+  rows.forEach((r, i) => {
+    if (i % step && i !== n) return;
+    g += `<text x="${X(i).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#7f89a2"
+           font-size="9.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
+  });
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = g;
+}
+
+function renderShort() {
+  const card = $('#short-card');
+  const all = D.short?.markets || {};
+  card.hidden = !Object.keys(all).length;
+  if (card.hidden) return;
+  $$('#short-market-seg button').forEach(b => b.classList.toggle('on', b.dataset.market === shortMarket));
+  const m = all[shortMarket];
+  const d = m?.latest?.daily, b = m?.latest?.balance;
+  const balNote = '순보유잔고는 보고 의무(상장주식의 0.01% 이상 등)가 있는 물량만 합친 값이라 실제 잔고보다 작습니다. 출처 한국거래소.';
+  if (!d && !b) {
+    $('#short-stats').innerHTML = '<p class="dim">이 시장의 공매도 데이터를 받지 못했습니다.</p>';
+    $('#short-chart').innerHTML = '';
+    $('#short-note').textContent = '';
+    return;
+  }
+  // 잔고는 원래 2거래일 늦다 — 실제로 몇 거래일 뒤처졌는지 거래 기록 날짜로 센다
+  const lag = b ? (m.daily || []).filter(r => r.date > b.date).length : 0;
+  const q = d?.pctPctl;
+  const where = q == null ? '' : q >= 80 ? `재개 뒤 ${d.days}거래일 중 비중 상위 ${rankTxt(100 - q)}`
+              : q <= 20 ? `재개 뒤 ${d.days}거래일 중 비중 하위 ${rankTxt(q)}` : `재개 뒤 ${d.days}거래일 기준 평소 범위`;
+  const whereNote = where && d.provisional ? `${where} · 잠정치 기준` : where;
+  $('#short-stats').innerHTML = (d ? `
+    <div class="cstat">
+      <div class="cstat-label">공매도 거래대금 · ${mdy(d.date)}${provTag(d)}</div>
+      <div class="cstat-val">${eok(d.value, { sign: false })}</div>
+      <div class="cstat-sub">전체 거래대금 ${eok(d.total, { sign: false })}</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">거래대금 대비 비중</div>
+      <div class="cstat-val">${d.pct.toFixed(2)}%</div>
+      <div class="cstat-sub">20일 평균 ${d.pctAvg20 != null ? d.pctAvg20.toFixed(2) + '%' : '—'}${whereNote ? ' · ' + whereNote : ''}</div>
+    </div>` : '<p class="dim">공매도 거래 데이터를 받지 못했습니다.</p>') + (b ? `
+    <div class="cstat">
+      <div class="cstat-label">순보유잔고 · ${mdy(b.date)}${lag ? ` <span class="dim">(${lag}거래일 늦음)</span>` : ''}</div>
+      <div class="cstat-val">${eok(b.value, { sign: false })}</div>
+      <div class="cstat-sub">시가총액의 ${b.pct ?? '—'}%</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-label">잔고 변화</div>
+      <div class="cstat-val ${dirCls(b.d20)}">${b.d20 != null ? eok(b.d20) : '—'}</div>
+      <div class="cstat-sub">20거래일 · 5거래일 ${b.d5 != null ? eok(b.d5) : '—'}</div>
+    </div>` : '');
+  if (!d) {
+    $('#short-chart').innerHTML = '';
+    $('#short-note').textContent = balNote;
+    return;
+  }
+  const rows = m.daily.slice(-120);
+  const settled = m.daily.filter(r => !r.provisional);
+  const avg = settled.length ? settled.reduce((s, r) => s + r.pct, 0) / settled.length : null;
+  drawLine($('#short-chart'), rows, r => r.pct, v => `${v.toFixed(1)}%`, avg, '#c58bff');
+  $('#short-note').innerHTML =
+    `<span style="color:#c58bff">━</span> 거래대금 대비 공매도 비중, 최근 ${rows.length}거래일 · ` +
+    `<span style="opacity:.5">┄</span> 재개 뒤 평균${avg != null ? ` ${avg.toFixed(2)}%` : ''}. ` + balNote;
 }
 
 /* ── 빚투 체온계 ─────────────────────────────────────── */
@@ -1686,7 +1867,7 @@ function renderEvents() {
   if (!list.length) { box.innerHTML = '<p class="dim">예정된 이벤트가 없습니다.</p>'; return; }
 
   list.forEach(e => {
-    const cls = e.dday === 0 ? 'today' : e.dday <= 7 ? 'soon' : '';
+    const cls = (e.dday === 0 ? 'today' : e.dday <= 7 ? 'soon' : '') + (e.type === '휴장' ? ' holiday' : '');
     box.appendChild(el('div', `event ${cls}`, `
       <div class="event-dday">${e.dday === 0 ? 'D-DAY' : `D-${e.dday}`}</div>
       <div class="event-body">
@@ -1709,6 +1890,16 @@ function wireControls() {
   $$('#report-market-seg button').forEach(b => b.addEventListener('click', () => {
     reportMarket = b.dataset.market;
     safe(renderReportCard, '성적표');
+  }));
+
+  $$('#program-market-seg button').forEach(b => b.addEventListener('click', () => {
+    programMarket = b.dataset.market;
+    safe(renderProgram, '프로그램 매매');
+  }));
+
+  $$('#short-market-seg button').forEach(b => b.addEventListener('click', () => {
+    shortMarket = b.dataset.market;
+    safe(renderShort, '공매도');
   }));
 
   $$('#flow-mode-seg button').forEach(b => b.addEventListener('click', () => {

@@ -73,7 +73,8 @@ def test_flow_basis_variants():
 
 
 def test_weekdays_and_fomc_hour():
-    assert c._weekdays_between("2026-10-02", "2026-10-06") == 2      # 월·화
+    assert c._weekdays_between("2026-10-02", "2026-10-06") == 1      # 월(10/5 개천절 대체 휴장)·화 → 화만
+    assert c._weekdays_between("2026-10-12", "2026-10-16") == 4      # 화~금
     assert c.fomc_kst_hour(2026, 10, 28) == 3                         # 미국 서머타임
     assert c.fomc_kst_hour(2026, 12, 9) == 4
 
