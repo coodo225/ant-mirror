@@ -233,6 +233,7 @@ async function refresh() {
     LOAD_ERRORS.length = 0;
     LOAD_ERRORS.push(...errs);
     D.meta = meta;
+    STOCKFLOWS = null;
   } catch (e) {
     console.warn('자동 갱신 실패, 다음 주기에 재시도:', e.message);
     return;                       // 이미 그려진 화면은 그대로 둔다
@@ -1533,10 +1534,84 @@ function showStock(code, { scroll = true } = {}) {
     </div>
     <div class="sd-legend">${
       ACTOR_KEYS.map(k => `<span><i style="background:${ACTORS[k].raw}"></i>${ACTORS[k].name}</span>`).join('')
-    }<span class="dim">진한 색 = 순매수, 흐린 색 = 순매도 · 막대 길이 = 수량</span></div>`;
+    }<span class="dim">진한 색 = 순매수, 흐린 색 = 순매도 · 막대 길이 = 수량</span></div>
+    <div class="sd-60" id="sd-60"><p class="dim small">최근 60거래일 수급을 불러오는 중…</p></div>`;
+  renderStock60($('#sd-60', box), code, s);
 
   $$('.tile').forEach(t => t.classList.toggle('sel', t.dataset.code === code));
   if (scroll) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ── 종목 60일 수급 (상세를 처음 열 때만 받는다) ───────── */
+
+let STOCKFLOWS = null;
+function loadStockFlows() {
+  if (!STOCKFLOWS) {
+    STOCKFLOWS = fetchJSON('stockflows', { timeout: 8000, tries: 2 })
+      .catch(e => { STOCKFLOWS = null; throw e; });
+  }
+  return STOCKFLOWS;
+}
+
+/** 주체별 누적 순매수(주)와 종가, 그리고 주체별 '산 뒤 등락'을 지수 기준선과 함께 */
+function renderStock60(box, code, s) {
+  const st = s.stat60;
+  const sinceRow = (label, v, m) => v == null ? '' :
+    `<span><b>${label}</b> <b class="${dirCls(v)}">${sgn(v)}%</b>${m != null ? ` <span class="dim">(같은 날 지수였다면 ${sgn(m)}%)</span>` : ''}</span>`;
+  const summary = st ? `
+    <div class="sd-60-sum">
+      <span class="dim">순매수한 날들의 평균 가격 대비 지금(추정)</span>
+      ${sinceRow('개인', st.indivSinceBuy, st.indivMarketSinceBuy)}
+      ${sinceRow('외국인', st.foreignSinceBuy, st.foreignMarketSinceBuy)}
+      <span class="dim">60일 순매수 금액(근사) 개인 ${eok(st.indivValue)} · 외국인 ${eok(st.foreignValue)} · 기관 ${eok(st.instValue)}</span>
+    </div>` : '';
+  loadStockFlows().then(sf => {
+    if (selectedStock !== code) return;                    // 그사이 다른 종목을 골랐다
+    const x = sf.stocks?.[code];
+    if (!x || x.d.length < 2) { box.innerHTML = '<p class="dim small">60일 수급 데이터가 없습니다.</p>' + summary; return; }
+    const n = x.d.length;
+    const cum = k => { let acc = 0; return x[k].map(v => (acc += v || 0)); };
+    const lines = [['individual', cum('i')], ['foreign', cum('f')], ['institution', cum('o')]];
+    const W = 640, H = 200, M = { t: 12, r: 60, b: 24, l: 66 };
+    const pw = W - M.l - M.r, ph = H - M.t - M.b;
+    const vals = lines.flatMap(([, v]) => v);
+    let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+    const pad = (hi - lo) * 0.1 || 1; lo -= pad; hi += pad;
+    const cs = x.c.filter(v => v != null);
+    const cLo = Math.min(...cs), cHi = Math.max(...cs);
+    const X = i => M.l + i / (n - 1) * pw;
+    const Y = v => M.t + ph - (v - lo) / (hi - lo) * ph;
+    const CY = v => M.t + ph - (v - cLo) / ((cHi - cLo) || 1) * ph;
+    let g = '';
+    for (let i = 0; i <= 3; i++) {
+      const v = lo + (hi - lo) * i / 3, y = Y(v);
+      g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
+      g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
+             font-size="10" font-family="ui-monospace,monospace">${shares(v)}</text>`;
+      const cv = cLo + (cHi - cLo) * i / 3;
+      g += `<text x="${W - M.r + 6}" y="${(CY(cv) + 4).toFixed(1)}" fill="#7f89a2"
+             font-size="10" font-family="ui-monospace,monospace">${nfmt(cv, 0)}</text>`;
+    }
+    g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.2"/>`;
+    const price = x.c.map((v, i) => v == null ? null : `${X(i).toFixed(1)},${CY(v).toFixed(1)}`).filter(Boolean).join(' ');
+    g += `<polyline points="${price}" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+    lines.forEach(([k, v]) => {
+      g += `<polyline points="${v.map((y, i) => `${X(i).toFixed(1)},${Y(y).toFixed(1)}`).join(' ')}" fill="none"
+             stroke="${ACTORS[k].raw}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    });
+    [0, Math.floor((n - 1) / 2), n - 1].forEach(i => {
+      const d = x.d[i];
+      g += `<text x="${X(i).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#7f89a2"
+             font-size="9.5" font-family="ui-monospace,monospace">${+d.slice(4, 6)}/${+d.slice(6, 8)}</text>`;
+    });
+    box.innerHTML = `
+      <div class="sd-60-head">최근 ${n}거래일 누적 순매수(주) <span class="dim">· 점선 = 종가</span></div>
+      <div class="chart-wrap"><svg class="chart chart-xs" viewBox="0 0 ${W} ${H}" role="img"
+        aria-label="${esc(s.name)} 최근 ${n}거래일 개인·외국인·기관 누적 순매수와 종가">${g}</svg></div>
+      ${summary}`;
+  }).catch(() => {
+    if (selectedStock === code) box.innerHTML = '<p class="dim small">60일 수급을 불러오지 못했습니다.</p>' + summary;
+  });
 }
 
 /* ── 업종 ─────────────────────────────────────────────── */

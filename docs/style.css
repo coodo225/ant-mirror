@@ -700,3 +700,8 @@ code {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ── 종목 60일 수급 ─────────────────────────────────── */
+.sd-60 { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.sd-60-head { font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
+.sd-60-sum { display: flex; flex-direction: column; gap: 3px; font-size: 12px; margin-top: 8px; }

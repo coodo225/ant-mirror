@@ -339,3 +339,54 @@ def test_find_korean_font_prefers_og_font_dir(tmp_path, monkeypatch):
     monkeypatch.setenv("OG_FONT_DIR", str(tmp_path))
     bold, regular = c.find_korean_font()
     assert Path(bold) == tmp_path / "NanumGothic-Bold.ttf" and Path(regular) == tmp_path / "NanumGothic-Regular.ttf"
+
+
+def test_feed_entry_provisional_then_final_and_valid_xml():
+    import xml.etree.ElementTree as ET
+    from datetime import datetime
+    day = {"date": "2026-10-06", "individual": -17897.0, "foreign": -1080.0, "institution": 4155.0}
+    flows = {"markets": {"KOSPI": {"latest": day}}}
+    market = {"indices": {"KOSPI": {"price": 7003.74, "changeRate": 0.46}}}
+    tips = [{"text": "외국인이 <6>거래일 & 연속"}]
+    f1 = c.build_feed({}, flows, market, tips, datetime(2026, 10, 6, 15, 37, tzinfo=c.KST))
+    assert f1["entries"][0]["final"] is False and f1["entries"][0]["title"].endswith("(잠정)")
+    f2 = c.build_feed(f1, flows, market, tips, datetime(2026, 10, 6, 20, 23, tzinfo=c.KST))
+    e = f2["entries"][0]
+    assert len(f2["entries"]) == 1 and e["final"] is True and "-1.79조" in e["title"] and "+4,155억" in e["title"]
+    root = ET.fromstring(c.feed_xml(f2))                     # 특수문자가 있어도 올바른 XML
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    assert root.find("a:entry/a:content", ns).text.startswith("외국인이 <6>거래일 & 연속")
+    # 수집 실패(flows 없음)면 직전 피드 그대로
+    assert c.build_feed(f2, None, market, [], datetime(2026, 10, 7, 9, 7, tzinfo=c.KST))["entries"] == f2["entries"]
+
+
+def test_telegram_sends_final_once(monkeypatch):
+    sent = []
+
+    class R:
+        status_code = 200
+        def json(self):
+            return {"ok": True}
+
+    monkeypatch.setattr(c.session, "post", lambda url, **kw: sent.append((url, kw)) or R())
+    feed = {"entries": [{"id": "2026-10-06", "title": "t", "summary": "s", "final": True, "sent": False}]}
+    c.notify_telegram(feed)                                   # 토큰 없음 → 안 보냄
+    assert not sent
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "123:SECRET")
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "42")
+    c.notify_telegram(feed)
+    c.notify_telegram(feed)                                   # 두 번째는 보내지 않는다
+    assert len(sent) == 1 and feed["entries"][0]["sent"] is True and sent[0][1]["json"]["chat_id"] == "42"
+    feed["entries"][0].update(final=False, sent=False)
+    c.notify_telegram(feed)                                   # 잠정본은 보내지 않는다
+    assert len(sent) == 1
+    c.warn("x 123:SECRET y")
+    assert "SECRET" not in c.WARNINGS[-1]                    # 토큰은 경고에 섞이지 않는다
+
+
+def test_main_writes_feed(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    assert _read("feed.json")["entries"][0]["id"] == "2026-10-02"
+    assert (c.OUT / "feed.xml").read_text(encoding="utf-8").startswith("<?xml")
+    assert _read("stockflows.json")["unit"] == "주"

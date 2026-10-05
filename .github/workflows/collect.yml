@@ -84,6 +84,9 @@ jobs:
           # 선택사항. 없으면 미국 CPI/고용/PCE 일정과 매크로 실측치만 빠집니다.
           # 무료 발급: https://fred.stlouisfed.org/docs/api/api_key.html
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          # 선택사항. 둘 다 있으면 매일 확정 요약(20시 이후 수집분)을 텔레그램으로 한 번 보냅니다.
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         # exit 3 = 핵심 데이터(코스피 수급·일봉)가 갱신되지 않아 직전 정상본을 유지함.
         # 나머지 데이터는 올리고 배포해야 하므로 여기서는 멈추지 않고, 마지막 단계에서 실패로 표시한다.
         run: |

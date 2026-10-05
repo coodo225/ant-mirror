@@ -96,11 +96,12 @@ def get_json(url: str, tries: int = 3, **kw):
     raise RuntimeError(scrub(f"{url} -> {last}"))
 
 
-def write(name: str, payload) -> None:
+def write(name: str, payload, compact: bool = False) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / name
     path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8"
+        json.dumps(payload, ensure_ascii=False, **({"separators": (",", ":")} if compact else {"indent": 1})),
+        encoding="utf-8",
     )
     print(f"  -> {path.relative_to(ROOT)} ({path.stat().st_size:,} bytes)")
 
@@ -231,6 +232,9 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
     stocks = out["stocks.json"]
     prev = load_prev("stocks.json") or {}
     stocks["top"] = keep("stocks.top", "시총 상위 종목", stocks.get("top"), prev.get("top"))
+    if "stockflows.json" in out:
+        out["stockflows.json"] = keep("stockflows", "종목 60일 수급", out["stockflows.json"],
+                                      load_prev("stockflows.json"), lambda x: bool(x and x.get("stocks")))
     stocks["industries"] = keep("stocks.industries", "업종 등락", stocks.get("industries"),
                                 prev.get("industries"))
 
@@ -966,7 +970,7 @@ def check_freshness(flows: dict, market: dict, closes: dict, today: str | None =
 
 
 def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = None) -> dict:
-    out: dict = {"top": [], "industries": []}
+    out: dict = {"top": [], "industries": [], "series": {}}
     for market, top_n in (("KOSPI", n_kospi), ("KOSDAQ", n_kosdaq)):
         try:
             got = 0
@@ -1061,6 +1065,15 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
 
             s["flow"] = [{k: d[k] for k in ("date", "individual", "foreign", "institution", "foreignHoldRatio")}
                          for d in days[-5:]]
+            # 상세 화면의 60일 차트용 — 날짜·주체별 순매수 수량(주)·종가를 열 단위로 짧게
+            whole = lambda v: int(v) if v is not None else None
+            out["series"][s["code"]] = {
+                "d": [d["date"] for d in days],
+                "i": [whole(d["individual"]) for d in days],
+                "f": [whole(d["foreign"]) for d in days],
+                "o": [whole(d["institution"]) for d in days],
+                "c": [d["close"] for d in days],
+            }
             if days:
                 s["foreignHoldRatio"] = days[-1]["foreignHoldRatio"]
             time.sleep(0.12)
@@ -1957,6 +1970,102 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
     return tips
 
 
+# ---------------------------------------------------------------- 하루 요약 피드 (RSS·텔레그램)
+
+SITE_URL = "https://coodo225.github.io/ant-mirror/"
+FEED_DAYS = 30
+
+
+def _eok_text(v) -> str:
+    if v is None:
+        return "—"
+    return f"{v / 10000:+.2f}조" if abs(v) >= 10000 else f"{v:+,.0f}억"
+
+
+def build_feed(prev: dict, flows: dict | None, market: dict, insights: list[dict], now: datetime) -> dict:
+    """
+    거래일마다 한 항목의 요약. 항목 id 는 수급 기준일이고, 같은 날은 실행마다 덮어쓴다.
+    20시(KRX 확정) 이후 수집분이면 final, 그 전이면 잠정. flows 가 없으면(이번 수집 실패) 직전 피드 그대로.
+    """
+    entries = {e["id"]: e for e in (prev or {}).get("entries", [])}
+    ks = (flows or {}).get("markets", {}).get("KOSPI")
+    if ks:
+        latest = ks["latest"]
+        day = latest["date"]
+        final = now.date().isoformat() > day or now.hour >= 20
+        idx = market.get("indices", {}).get("KOSPI", {})
+        head = (f"코스피 {idx['price']:,.2f} ({idx.get('changeRate') or 0:+.2f}%) · " if idx.get("price") else "")
+        title = (f"{day} {head}개인 {_eok_text(latest.get('individual'))} · "
+                 f"외국인 {_eok_text(latest.get('foreign'))} · 기관 {_eok_text(latest.get('institution'))}"
+                 + ("" if final else " (잠정)"))
+        old = entries.get(day) or {}
+        entries[day] = {
+            "id": day, "title": title, "final": final,
+            "summary": "\n".join(t["text"] for t in insights),
+            "updated": now.isoformat(timespec="seconds"),
+            "sent": bool(old.get("sent")) and bool(old.get("final")),   # 확정본을 보낸 적이 있을 때만 '보냄'
+        }
+    ordered = sorted(entries.values(), key=lambda e: e["id"], reverse=True)[:FEED_DAYS]
+    return {"title": "개미들을 위한 투자정보 — 하루 요약", "link": SITE_URL, "entries": ordered}
+
+
+def feed_xml(feed: dict) -> str:
+    """Atom 1.0. 요약 본문은 줄바꿈을 살린 텍스트."""
+    from xml.sax.saxutils import escape
+    entries = feed.get("entries", [])
+    updated = entries[0]["updated"] if entries else datetime.now(KST).isoformat(timespec="seconds")
+    parts = [
+        '<?xml version="1.0" encoding="utf-8"?>',
+        '<feed xmlns="http://www.w3.org/2005/Atom">',
+        f"  <title>{escape(feed['title'])}</title>",
+        f'  <link href="{escape(SITE_URL)}"/>',
+        f'  <link rel="self" href="{escape(SITE_URL)}data/feed.xml"/>',
+        f"  <id>{escape(SITE_URL)}</id>",
+        f"  <updated>{escape(updated)}</updated>",
+        "  <author><name>개미들을 위한 투자정보</name></author>",
+    ]
+    for e in entries:
+        parts += [
+            "  <entry>",
+            f"    <title>{escape(e['title'])}</title>",
+            f'    <link href="{escape(SITE_URL)}"/>',
+            f"    <id>{escape(SITE_URL)}#{escape(e['id'])}</id>",
+            f"    <updated>{escape(e['updated'])}</updated>",
+            f'    <content type="text">{escape(e["summary"])}\n\n투자 조언이 아닙니다.</content>',
+            "  </entry>",
+        ]
+    parts.append("</feed>")
+    return "\n".join(parts) + "\n"
+
+
+def notify_telegram(feed: dict) -> None:
+    """
+    선택: TELEGRAM_BOT_TOKEN·TELEGRAM_CHAT_ID 가 있으면 그날 확정 요약을 한 번만 보낸다.
+    보낸 기록(sent)은 feed.json 에 남아 다음 실행에서 다시 보내지 않는다.
+    """
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    chat = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    entries = feed.get("entries") or []
+    if not (token and chat and entries):
+        return
+    SECRETS.add(token)
+    e = entries[0]
+    if not e.get("final") or e.get("sent"):
+        return
+    try:
+        r = session.post(f"https://api.telegram.org/bot{token}/sendMessage", timeout=20, json={
+            "chat_id": chat, "disable_web_page_preview": True,
+            "text": f"{e['title']}\n\n{e['summary']}\n\n{SITE_URL}",
+        })
+        if r.status_code == 200 and r.json().get("ok"):
+            e["sent"] = True
+            print("  텔레그램 요약 보냄")
+        else:
+            warn(f"텔레그램 알림 실패: HTTP {r.status_code}")
+    except Exception as ex:  # noqa: BLE001
+        warn(f"텔레그램 알림 실패: {type(ex).__name__}")
+
+
 # ---------------------------------------------------------------- OG 공유 카드
 
 def find_korean_font() -> tuple[str | None, str | None]:
@@ -2163,15 +2272,22 @@ def main() -> int:
     else:
         insights = build_insights({"markets": {}}, market, glob, {}, None, credit)
 
+    # 하루 요약 피드도 이번 수집분으로만 (apply_last_good 이 market 을 직전 값으로 바꾸기 전에)
+    feed = build_feed(load_prev("feed.json") or {}, flows if core_ok else None, market, insights, now)
+
     out = apply_last_good(now.isoformat(), {
         "flows.json": flows, "ant.json": ant, "analog.json": analog,
         "antstocks.json": antstocks, "futures.json": futures, "credit.json": credit,
         "market.json": market, "stocks.json": stocks, "global.json": glob,
+        "stockflows.json": {"unit": "주", "stocks": stocks.pop("series", {})},
         "events.json": events,
     }, stale_keys)
     for name, payload in out.items():
-        write(name, payload)
+        write(name, payload, compact=name == "stockflows.json")
     write("insights.json", {"items": insights})
+    notify_telegram(feed)
+    write("feed.json", feed)
+    (OUT / "feed.xml").write_text(feed_xml(feed), encoding="utf-8")
     if core_ok:
         try:
             build_og_card(out["flows.json"], out["market.json"], ant_today)
