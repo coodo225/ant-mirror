@@ -8,14 +8,14 @@
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:title" content="개미들을 위한 투자정보">
-<meta property="og:description" content="오늘 한국 증시에서 누가 사고 누가 팔았나 — 개인·외국인·기관 수급, 종목별 순위, 관심 종목, 빚투 체온계까지 한 화면에.">
+<meta property="og:description" content="한국 증시에서 누가 사고 누가 팔았나 — 개인·외국인·기관 수급, 종목별 순위, 관심 종목, 빚투 체온계까지 한 화면에.">
 <meta property="og:url" content="https://coodo225.github.io/ant-mirror/">
 <meta property="og:image" content="https://coodo225.github.io/ant-mirror/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/atom+xml" title="개미들을 위한 투자정보 — 하루 요약" href="data/feed.xml">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
 </head>
 <body>
@@ -57,7 +57,7 @@
   <!-- ══════════════════ 3. 수급 보드 ══════════════════ -->
   <section class="card hero" id="board">
     <div class="card-head">
-      <h2 id="hero-title">오늘의 수급</h2>
+      <h2 id="hero-title">수급</h2>
       <div class="seg" id="hero-market-seg">
         <button data-market="KOSPI" class="on">코스피</button>
         <button data-market="KOSDAQ">코스닥</button>
@@ -161,7 +161,7 @@
   <!-- ══════════════════ 장중 수급 흐름 (장중엔 app.js 가 수급 보드 바로 아래로 옮긴다) ══════════════════ -->
   <section class="card" id="intraday-card" hidden>
     <div class="card-head">
-      <h2 id="intraday-title">오늘 장중 수급 흐름</h2>
+      <h2 id="intraday-title">장중 수급 흐름</h2>
       <span class="dim small" id="intraday-date"></span>
     </div>
     <div class="legend" id="intraday-legend"></div>
@@ -180,7 +180,7 @@
       <p class="dim small streak-baseline" id="streak-baseline"></p>
     </div>
     <div class="card">
-      <div class="card-head"><h2>기관은 누가 움직였나 <span class="dim" id="inst-when">오늘</span></h2></div>
+      <div class="card-head"><h2>기관은 누가 움직였나 <span class="dim" id="inst-when"></span></h2></div>
       <div class="inst" id="inst-breakdown"></div>
     </div>
   </section>
@@ -188,7 +188,7 @@
   <!-- ══════════════════ 개미 온도계 ══════════════════ -->
   <section class="card" id="thermo-card">
     <div class="card-head">
-      <h2 id="thermo-title">오늘의 개미 온도계</h2>
+      <h2 id="thermo-title">개미 온도계</h2>
       <span class="dim small">최근 <b id="thermo-sample"></b>거래일 중 개인의 매수 강도 <span id="thermo-basis"></span></span>
     </div>
     <div class="thermo">
@@ -279,7 +279,7 @@
       </div>
       <p class="report-intro" style="margin-bottom:12px">
         외국인의 현물 매매와 코스피200 선물 포지션이 같은 방향인지 봅니다.
-        둘 다 평소보다 크게 움직였을 때만 갈림·일치를 판단하고, 갈렸던 과거 날들 이후의 기록을 함께 보여 줍니다.
+        둘 다 평소보다 크게 움직였을 때만 갈림·일치를 판단합니다.
       </p>
       <div id="fut-divergence" class="divergence"></div>
       <div class="chart-wrap"><svg id="fut-chart" class="chart" role="img" aria-label="최근 20거래일 외국인 코스피200 선물 순매수 막대 차트"></svg></div>
@@ -432,14 +432,13 @@
           <span class="dim small" id="analog-sample"></span>
         </div>
         <p class="report-intro" id="analog-intro">
-          오늘의 <b>수급(거래대금 대비 순매수 강도) + 가격 움직임</b> 조합과 가장 비슷했던 과거의 날을
+          가장 최근 거래일의 <b>수급(거래대금 대비 순매수 강도) + 가격 움직임</b> 조합과 가장 비슷했던 과거의 날을
           서로 20거래일 이상 떨어진 날로 골라, 그 날들로부터 20거래일 뒤 지수가 어떻게 됐는지 보여줍니다.
           수급과 가격은 같은 비중으로 비교합니다. 예측이 아니라 기록입니다.
         </p>
         <div class="analog-today" id="analog-today"></div>
         <div class="analog-list" id="analog-list"></div>
         <p class="analog-verdict" id="analog-verdict"></p>
-        <p class="dim small" id="analog-acc" style="margin:10px 0 0"></p>
       </section>
 
       <!-- 개미가 크게 질렀던 날들 -->
@@ -512,6 +511,6 @@
 <div id="term-pop" class="term-pop" role="dialog" aria-label="용어 풀이" hidden></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

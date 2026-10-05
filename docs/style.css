@@ -1013,3 +1013,14 @@ details.research > summary h2 { font-size: 17px; }
   .rank-col { padding: 8px 8px 2px; }
   .stock-detail { padding: 12px; }
 }
+
+/* ── v15: 리뷰 반영 ─────────────────────────────────── */
+/* 막대 안에도 밖에도 다 안 들어가는 값 글자: 밖에 두되 불투명 바탕으로 이름 위에서도 부호가 보이게 */
+.lane-val.pill {
+  background: #0d1220; padding: 1px 6px; border-radius: 6px; z-index: 2;
+  box-shadow: 0 0 0 1px var(--line);
+}
+.lane-bar.buy .lane-val.pill { left: calc(100% + 4px); }
+.lane-bar.sell .lane-val.pill { right: calc(100% + 4px); }
+/* 자동 갱신으로 다시 그릴 때는 자라는 연출을 끈다 */
+.no-grow *, .no-grow *::before, .no-grow *::after { transition: none !important; animation: none !important; }
