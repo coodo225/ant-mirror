@@ -9,7 +9,12 @@ on:
     - cron: '17 9 * * 1-5'       # KST 18:17 — 장 마감 후
     - cron: '23 11 * * 1-5'      # KST 20:23 — 투자자별 수급 확정치 (KRX 값은 20시 전후까지 바뀐다)
     - cron: '37 22 * * 0-4'      # KST 07:37 — 간밤 미국장 마감 반영
-  workflow_dispatch:             # 수동 실행 버튼
+  workflow_dispatch:             # 외부 스케줄러(5분마다) · 수동 실행 버튼
+    inputs:
+      force:
+        description: '시간대와 상관없이 전체 수집'
+        type: boolean
+        default: false
 
 # 수집 결과는 main 에 커밋하지 않는다. 최신 데이터 한 벌만 data 브랜치에 덮어쓰고(이력이 쌓이지 않게),
 # 사이트는 main 의 화면 코드 + 이번 데이터를 묶어 GitHub Actions 로 Pages 에 배포한다.
@@ -48,46 +53,13 @@ jobs:
             echo "::warning::data 브랜치가 없어 직전 데이터 없이 시작합니다"
           fi
 
-      # 장중엔 매시 한 번만 전체 수집(약 3분)을 하고 그 사이엔 가벼운 수집(요청 약 12번, 수 초)만 한다.
-      # 2.5분 안에 이미 돈 실행이 있으면(외부 스케줄러와 cron 이 겹침) 건너뛴다. 휴장일·주말은 6시간에 한 번 전체 수집.
+      # 하루 종일 5분마다 깨워도 되게, 깨어날 때마다 할 일을 고른다(collector/mode.py — 장중 가벼운 수집,
+      # 장 전·마감 뒤·20시 확정 전체 수집, 밤·중복은 건너뜀). 수동 실행에서 force 를 켜면 늘 전체 수집.
       - name: 수집 방식 정하기
         id: mode
-        run: |
-          python3 - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, datetime as dt
-          KST = dt.timezone(dt.timedelta(hours=9))
-          now = dt.datetime.now(KST)
-          def load(path):
-              try:
-                  return json.load(open(path, encoding="utf-8"))
-              except Exception:
-                  return {}
-          meta = load("docs/data/meta.json")
-          def age(key):
-              v = meta.get(key)
-              try:
-                  return (now - dt.datetime.fromisoformat(v)).total_seconds() / 60
-              except Exception:
-                  return 1e9
-          holidays = set((load("collector/krx_calendar.json").get("holidays") or {}))
-          for days in (load("docs/data/calendar.json").get("holidays") or {}).values():
-              holidays |= set(days or {})
-          last_any = age("generatedAt")
-          last_full = age("fullAt") if meta.get("fullAt") else last_any
-          hm = now.hour * 60 + now.minute
-          trading_day = now.weekday() < 5 and now.date().isoformat() not in holidays
-          in_session = trading_day and 8 * 60 + 55 <= hm <= 15 * 60 + 40
-          if last_any < 2.5:
-              mode = "skip"
-          elif not trading_day:
-              mode = "full" if last_full >= 360 else "skip"
-          elif in_session and last_full < 55:
-              mode = "intraday"
-          else:
-              mode = "full"
-          print(f"mode={mode}")
-          PY
-          cat "$GITHUB_OUTPUT"
+        env:
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && inputs.force || 'false' }}
+        run: python3 collector/mode.py >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         if: steps.mode.outputs.mode != 'skip'

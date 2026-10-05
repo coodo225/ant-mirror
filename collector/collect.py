@@ -1695,10 +1695,23 @@ def build_universe(now: datetime) -> tuple[list[dict], dict] | None:
     if changed:
         store["updated"] = now.isoformat(timespec="seconds")
         save_stock_store(store)
-    print(f"  종목 범위 {len(uni)}개 · 처음 받은 종목 {backfilled}개 · 실패 {failed}개")
+    pending = sum(1 for u in uni if (codes.get(u["code"]) or {}).get("partial"))
+    print(f"  종목 범위 {len(uni)}개 · 처음 받은 종목 {backfilled}개 · 남은 종목 {pending}개 · 실패 {failed}개")
     rows_by = {u["code"]: (codes.get(u["code"]) or {}).get("rows") or [] for u in uni}
     summaries = [stock_summary(u, rows_by[u["code"]]) for u in uni if rows_by[u["code"]]]
-    return summaries, rows_by
+    return summaries, rows_by, pending
+
+
+def universe_due(prev_stocks: dict, data_day: str | None, now: datetime) -> bool:
+    """350종목을 다시 돌릴 때: 처음이거나, 2018년부터 채우는 중이거나, 새 거래일 데이터가 생겼거나, 18시 이후 아직 안 돌았을 때."""
+    uni = prev_stocks.get("universe") or []
+    if not uni or prev_stocks.get("universePending"):
+        return True
+    as_of = max((u.get("asOf") or "" for u in uni), default="")
+    if data_day and as_of < data_day:
+        return True
+    at = prev_stocks.get("universeAt") or ""
+    return now.strftime("%H%M") >= "1800" and at < f"{now.date().isoformat()}T18:00"
 
 
 def write_stock_series(rows_by: dict, keep: set) -> int:
@@ -3633,8 +3646,12 @@ def main() -> int:
     used = (prev_meta.get("requests") or {})
     used_today = used.get("count", 0) if used.get("date") == now.date().isoformat() else 0
     universe = None
+    prev_stocks = load_prev("stocks.json") or {}
+    data_day0 = ((flows["markets"].get("KOSPI") or {}).get("latest") or {}).get("date")
     if phase in ("장중", "동시호가"):
         pass                                            # 장중엔 350종목을 돌리지 않는다(직전 요약 유지)
+    elif not universe_due(prev_stocks, data_day0, now):
+        print("  350종목: 새 거래일 데이터가 없어 직전 요약 유지")
     elif used_today + REQUESTS["n"] + 400 > REQUEST_CAP:
         warn(f"오늘 요청 수가 상한({REQUEST_CAP})에 가까워 350종목 범위를 갱신하지 않았습니다")
     else:
@@ -3642,10 +3659,14 @@ def main() -> int:
     stocks = build_stocks(closes=closes, store_rows=universe[1] if universe else None)
     if universe:
         stocks["universe"] = universe[0]
+        stocks["universeAt"] = now.isoformat(timespec="seconds")
+        stocks["universePending"] = universe[2]
         keep = {u["code"] for u in universe[0]}
         print(f"  종목 1년 시계열 {write_stock_series(universe[1], keep)}개")
     else:
-        stocks["universe"] = (load_prev("stocks.json") or {}).get("universe") or []
+        stocks["universe"] = prev_stocks.get("universe") or []
+        stocks["universeAt"] = prev_stocks.get("universeAt")
+        stocks["universePending"] = prev_stocks.get("universePending", 0)
     antstocks = build_ant_stocks(stocks, closes)
     if antstocks:
         print(f"  장바구니 비교(산 뒤 등락): 개미 {antstocks['antAvgSinceBuy']}% vs "

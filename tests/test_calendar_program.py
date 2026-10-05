@@ -478,8 +478,9 @@ def test_build_universe_backfills_in_batches_and_writes_series(monkeypatch, tmp_
     asked = []
     monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: asked.append(days) or _trend_rows(min(days, 80)))
     now = datetime(2026, 10, 5, 7, 37, tzinfo=K)
-    summaries, rows_by = c.build_universe(now)
+    summaries, rows_by, pending = c.build_universe(now)
     assert len(summaries) == 350 and asked.count(c.STOCK_BACKFILL_DAYS) == 150 and asked.count(60) == 200
+    assert pending == 200
     store = c.load_stock_store()
     assert sum(1 for r in store["codes"].values() if r.get("partial")) == 200
     # 다음 실행: 남은 종목을 이어서 처음부터, 끝난 종목은 최근 며칠만
@@ -513,3 +514,37 @@ def test_patch_daily_keeps_cumulative_chain():
     assert [r["date"] for r in out] == ["2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01"]
     assert out[2]["cum"] == {"individual": 12.0, "foreign": 4.0, "institution": 6.0}
     assert out[3]["cum"] == {"individual": 13.0, "foreign": 5.0, "institution": 7.0}
+
+
+def test_universe_due_rules():
+    now = datetime(2026, 10, 6, 16, 40, tzinfo=K)
+    done = {"universe": [{"asOf": "2026-10-06"}], "universePending": 0, "universeAt": "2026-10-06T16:40:00+09:00"}
+    assert c.universe_due({}, "2026-10-06", now)                                       # 처음
+    assert c.universe_due({**done, "universePending": 30}, "2026-10-06", now)           # 채우는 중
+    assert c.universe_due({**done, "universe": [{"asOf": "2026-10-02"}]}, "2026-10-06", now)   # 새 거래일
+    assert not c.universe_due(done, "2026-10-06", now)                                 # 오늘 이미 돎
+    assert c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 18, 40, tzinfo=K))  # 18시 뒤 확정치 한 번
+    assert not c.universe_due({**done, "universeAt": "2026-10-06T18:40:00+09:00"}, "2026-10-06",
+                              datetime(2026, 10, 6, 20, 23, tzinfo=K))
+
+
+def test_mode_decide_every_five_minutes_all_day():
+    import mode as md
+    hols = {"2026-10-09"}
+    at = lambda h, m, d=6: datetime(2026, 10, d, h, m, tzinfo=K)
+    meta = lambda gen, full=None: {"generatedAt": gen.isoformat(), "fullAt": (full or gen).isoformat()}
+    assert md.decide(meta(at(10, 3)), hols, at(10, 4)) == "skip"                       # 2.5분 안 중복
+    assert md.decide(meta(at(10, 0), at(9, 30)), hols, at(10, 5)) == "intraday"
+    assert md.decide(meta(at(10, 25), at(9, 30)), hols, at(10, 30)) == "full"          # 1시간 지난 전체
+    assert md.decide(meta(at(20, 30, 5)), hols, at(2, 0)) == "skip"                    # 밤
+    assert md.decide(meta(at(20, 30, 5)), hols, at(7, 35)) == "full"                   # 장 전 한 번
+    assert md.decide(meta(at(7, 35)), hols, at(7, 45)) == "skip"
+    assert md.decide(meta(at(16, 40)), hols, at(17, 0)) == "skip"                      # 마감 뒤는 1시간마다
+    assert md.decide(meta(at(16, 40)), hols, at(17, 45)) == "full"
+    assert md.decide(meta(at(19, 50)), hols, at(20, 10)) == "full"                     # 20시 확정 한 번
+    assert md.decide(meta(at(20, 10)), hols, at(20, 40)) == "skip"
+    assert md.decide(meta(at(20, 10)), hols, at(22, 0)) == "skip"
+    assert md.decide(meta(at(10, 0, 9)), hols, at(12, 0, 9)) == "skip"                 # 휴장일은 6시간마다
+    assert md.decide(meta(at(5, 0, 9)), hols, at(12, 0, 9)) == "full"
+    assert md.decide({}, hols, at(3, 0)) == "skip" and md.decide({}, hols, at(10, 0)) == "full"
+    assert md.decide(meta(at(2, 0)), hols, at(2, 1), force=True) == "full"
