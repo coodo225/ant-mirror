@@ -644,7 +644,7 @@ def build_flows() -> tuple[dict, dict]:
             out["markets"][code] = {
                 "daily": series,
                 "latest": series[-1],
-                "streaks": {k: streak(rows, k) for k in ("individual", "foreign", "institution")},
+                "streaks": {k: streak(rows, k) for k in ("individual", "foreign", "institution", "other_corp")},
             }
             print(f"  {code} 수급 {len(rows)}일 ({rows[0]['date']} ~ {rows[-1]['date']})")
             try:
@@ -2222,6 +2222,15 @@ def flow_scale(rows: list[dict], basis: str, key: str) -> list[float]:
     return [r[key] or 0.0 for r in rows]
 
 
+# 같은 계산(개인 거래대금 대비 순매수 상·하위 20% → 20거래일 뒤 지수 − 모든 날 평균, 블록 부트스트랩 90% 범위)을
+# 2009-03~2023-08 코스피 3,572거래일에 돌린 결과(2026-10-05 표본 외 검증). 사이트 표본 3년은 상승장이라 이보다 크게 나온다.
+# 화면이 '이 3년'의 숫자만 보여 주면 신호처럼 읽히므로 함께 싣는다. 성적표 표본을 늘리면 이 상수는 계산값으로 바꾼다.
+LONG_RUN_CONTRARIAN = {
+    "sell": {"period": "2009-03~2023-08", "excess": 0.22, "ci": [-0.11, 0.57], "significant": False},
+    "buy": {"period": "2009-03~2023-08", "excess": -0.20, "ci": [-0.62, 0.19], "significant": False},
+}
+
+
 def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     """
     '개미는 정말 반대로 움직이고, 그래서 틀렸는가' 를 실제 데이터로 채점한다.
@@ -2309,6 +2318,8 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
                 "excessCI": list(ci) if ci else None,
                 "significant": _significant(ci),
             }
+            if code == "KOSPI":
+                bucket["longRun"] = LONG_RUN_CONTRARIAN["buy" if p >= 80 else "sell"]
 
     # 개인이 가장 강하게 사들였던 날들의 그 후 20일 — 같은 국면이 여러 번 뽑히지 않게 20거래일 간격
     hall = [
@@ -2317,6 +2328,7 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
             "amount": S["individual"][i],
             "intensity": round(iv[i], 2) if basis == "intensity" else None,
             "close": round(C[i], 2),
+            "dayChange": round((C[i] / C[i - 1] - 1) * 100, 2) if i > 0 and C[i - 1] else None,
             "after20": round(C[i + 20], 2),
             "return20": round(fwd[20][i], 2),
         }
@@ -2381,7 +2393,9 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
         "contrarianRead": bucket,
         "hallOfFame": hall,
         "caveats": [
-            f"표본은 {rows[0]['date']}~{rows[-1]['date']} {n}거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다.",
+            f"표본은 {rows[0]['date']}~{rows[-1]['date']} {n}거래일뿐입니다. 다른 기간에는 다른 결과가 나옵니다. "
+            "같은 계산을 2009-03~2023-08 코스피에 돌리면 '개인이 크게 판 날' 뒤 초과수익은 +0.22%p"
+            "(90% 범위 -0.11~+0.57)로 시장 평균과 구분되지 않았고, 개인·외국인·기관이 크게 산 날의 학점은 그때도 모두 C였습니다.",
             "성적표는 각 주체의 실제 손익이 아닙니다. 크게 순매수한 날 이후 코스피 지수가 움직인 폭으로 "
             "'산 시점'만 채점한 것이라, 실제로 산 종목·체결 가격과는 다릅니다.",
             basis_note,
@@ -2528,9 +2542,14 @@ def rank_text(p: float) -> str:
     return "1% 미만" if p < 1 else f"{p:.0f}%"
 
 
+def _day_label(iso: str) -> str:
+    d = date.fromisoformat(iso)
+    return f"{d.month}/{d.day}({_WEEKDAY_KO[d.weekday()]})"
+
+
 def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
                    futures: dict | None = None, credit: dict | None = None,
-                   program: dict | None = None) -> list[dict]:
+                   program: dict | None = None, today: str | None = None) -> list[dict]:
     """
     수치에서 바로 읽히는 사실만 문장으로. 예측이나 매매 조언은 하지 않는다.
     입력은 모두 '이번 수집분'이어야 한다 — 직전 정상본을 넣으면 지난 날의 일을 '오늘'로 말하게 된다.
@@ -2541,7 +2560,11 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
     def cho(v):
         return f"{v / 10000:.2f}조" if abs(v) >= 10000 else f"{abs(v):,.0f}억"
 
+    today = today or datetime.now(KST).date().isoformat()
     ks = flows.get("markets", {}).get("KOSPI")
+    day = (ks or {}).get("latest", {}).get("date") or today
+    when = "오늘" if day == today else _day_label(day)          # 휴장일·다음 날 아침엔 '10/2(금)'
+    when_topic = "오늘은" if day == today else f"{_day_label(day)}에는"
     if ks:
         latest, st = ks["latest"], ks["streaks"]
         for key, label in (("foreign", "외국인"), ("institution", "기관"), ("individual", "개인")):
@@ -2556,10 +2579,10 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
         f, i, o = latest.get("foreign") or 0, latest.get("individual") or 0, latest.get("institution") or 0
         if f < 0 and i > 0:
             tips.append({"tone": "neutral",
-                         "text": f"오늘은 외국인이 판 물량({cho(abs(f))}원)을 개인이 받아내는 구도입니다."})
+                         "text": f"{when_topic} 외국인이 판 물량({cho(abs(f))}원)을 개인이 받아내는 구도였습니다."})
         elif f > 0 and i < 0:
             tips.append({"tone": "neutral",
-                         "text": f"오늘은 외국인이 사고({cho(f)}원) 개인이 파는 구도입니다."})
+                         "text": f"{when_topic} 외국인이 사고({cho(f)}원) 개인이 파는 구도였습니다."})
         if i < 0 and f < 0:
             # 개인·외국인이 함께 판 물량을 받은 쪽 — 기관만이 아니라 기타법인도 본다(최근엔 기타법인이 더 큰 날이 많다)
             def takers(r):
@@ -2606,8 +2629,11 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
     g = {x["name"]: x for x in glob.get("items", [])}
     sox = g.get("필라델피아 반도체")
     if sox and sox.get("changeRate") is not None and abs(sox["changeRate"]) >= 2:
+        us_day = str(sox.get("asOf") or "")[:10]
+        yday = (date.fromisoformat(today) - timedelta(days=1)).isoformat()
+        night = "간밤" if us_day in ("", yday, today) else f"{_day_label(us_day)} 미국장에서"
         tips.append({"tone": "sell" if sox["changeRate"] < 0 else "buy",
-                     "text": f"간밤 필라델피아 반도체 지수가 {sox['changeRate']:+.2f}%. "
+                     "text": f"{night} 필라델피아 반도체 지수가 {sox['changeRate']:+.2f}%. "
                              f"국내 반도체 대형주와 외국인 수급에 직결되는 지표입니다."})
     fx = g.get("원/달러 환율")
     if fx and fx.get("price"):
@@ -2626,17 +2652,12 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
         how = (f"(거래대금 대비 순매수 {ia['todayIntensity']:+.1f}%)" if ia.get("todayIntensity") is not None else "")
         if pctl >= 80:
             tips.append({"tone": "neutral", "text":
-                f"오늘 개미의 매수 강도{how}는 최근 {days}거래일 중 상위 {rank_text(100 - pctl)} 수준입니다."})
+                f"{when} 개미의 매수 강도{how}는 최근 {days}거래일 중 상위 {rank_text(100 - pctl)} 수준입니다."})
         elif pctl <= 20:
             tips.append({"tone": "neutral", "text":
-                f"오늘 개미의 매도 강도{how}는 최근 {days}거래일 중 상위 {rank_text(pctl)} 수준입니다."})
-        cr = ant.get("contrarianRead")
-        if cr:
-            judge = ("시장 평균과 통계적으로 구분되지 않는 차이입니다." if not cr.get("significant")
-                     else "날짜가 서로 겹쳐 실제 독립 사례는 이보다 적습니다.")
-            tips.append({"tone": "neutral", "text":
-                f"과거 {cr['label']} {cr['n']}번의 20거래일 뒤 지수는 평균 {cr['r20']:+.2f}% "
-                f"(같은 기간 시장 평균 {cr['baseline20']:+.2f}%)였습니다. {judge}"})
+                f"{when} 개미의 매도 강도{how}는 최근 {days}거래일 중 상위 {rank_text(pctl)} 수준입니다."})
+        # 과거 '비슷한 날' 뒤의 지수 기록은 브리핑에 싣지 않는다 — 3년 표본에선 커 보이지만
+        # 2009~2023 같은 계산에선 시장 평균과 구분되지 않았다(LONG_RUN_CONTRARIAN). 온도계 카드에서 단서와 함께만 보여 준다.
 
     # 현물 ↔ 선물 다이버전스
     div = (futures or {}).get("divergence")
@@ -2884,6 +2905,14 @@ def build_og_card(flows: dict, market: dict, ant: dict) -> None:
 
 # ---------------------------------------------------------------- main
 
+def next_session(now: datetime) -> date:
+    """지금 열려 있거나 다음에 열릴 정규장 날짜."""
+    d = now.date()
+    if is_trading_day(d) and now.strftime("%H%M") < session_hours(d.isoformat())[1]:
+        return d
+    return next_trading_day(d)
+
+
 def market_phase(now: datetime, kospi: dict | None = None) -> str:
     """
     장 상태 라벨. kospi 는 이번에 받은 네이버 지수 시세(tradedAt 이 있어야 휴장일을 안다).
@@ -3009,9 +3038,9 @@ def main() -> int:
         fdate = flows["markets"]["KOSPI"]["latest"]["date"]
         prog_today = {"markets": {k: v for k, v in program["markets"].items()
                                   if f"program.{k}" not in stale_keys and v["latest"]["date"] == fdate}}
-        insights = build_insights(flows, market, glob, ant_today, futures, credit, prog_today)
+        insights = build_insights(flows, market, glob, ant_today, futures, credit, prog_today, now.date().isoformat())
     else:
-        insights = build_insights({"markets": {}}, market, glob, {}, None, credit)
+        insights = build_insights({"markets": {}}, market, glob, {}, None, credit, None, now.date().isoformat())
 
     # 하루 요약 피드도 이번 수집분으로만 (apply_last_good 이 market 을 직전 값으로 바꾸기 전에)
     feed = build_feed(load_prev("feed.json") or {}, flows if core_ok else None, market, insights, now)
@@ -3039,10 +3068,16 @@ def main() -> int:
             warn(f"공유 카드(og.png) 생성 실패: {type(e).__name__}: {e}")
     else:
         warn("코스피 수급이 갱신되지 않아 공유 카드(og.png)를 다시 그리지 않았습니다")
+    data_day = ((out["flows.json"]["markets"].get("KOSPI") or {}).get("latest") or {}).get("date")
     write("meta.json", {
         "generatedAt": now.isoformat(),
         "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),
         "phase": phase,
+        # 화면이 '오늘' 대신 날짜를 쓰고, 잠정/확정과 다음 장을 알리는 데 쓴다
+        "dataDate": data_day,
+        "dataFinal": bool(data_day) and (data_day < now.date().isoformat()
+                                         or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER),
+        "nextSession": next_session(now).isoformat(),
         "warnings": WARNINGS,
         "stale": STALE,
         "freshAt": FRESH_AT,

@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/atom+xml" title="개미들을 위한 투자정보 — 하루 요약" href="data/feed.xml">
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
 </head>
 <body>
@@ -62,7 +62,7 @@
   <!-- ══════════════════ 히어로: 오늘의 줄다리기 ══════════════════ -->
   <section class="card hero">
     <div class="card-head">
-      <h2>오늘의 수급 줄다리기</h2>
+      <h2 id="hero-title">오늘의 수급 줄다리기</h2>
       <div class="seg" id="hero-market-seg">
         <button data-market="KOSPI" class="on">코스피</button>
         <button data-market="KOSDAQ">코스닥</button>
@@ -104,12 +104,12 @@
   <!-- ══════════════════ 개미 온도계 ══════════════════ -->
   <section class="card" id="thermo-card">
     <div class="card-head">
-      <h2>오늘의 개미 온도계</h2>
-      <span class="dim small">최근 <b id="thermo-sample"></b>거래일 중 오늘의 매수 강도 <span id="thermo-basis">(거래대금 대비 순매수)</span></span>
+      <h2 id="thermo-title">오늘의 개미 온도계</h2>
+      <span class="dim small">최근 <b id="thermo-sample"></b>거래일 중 개인의 매수 강도 <span id="thermo-basis">(거래대금 대비 순매수)</span></span>
     </div>
     <div class="thermo">
       <div class="thermo-scale">
-        <span>패닉 매도</span><span>관망</span><span>영끌 매수</span>
+        <span>강한 매도</span><span>보통</span><span>강한 매수</span>
       </div>
       <div class="thermo-track">
         <div class="thermo-zone z-sell"></div>
@@ -262,7 +262,7 @@
       <div class="streaks" id="streaks"></div>
     </div>
     <div class="card">
-      <div class="card-head"><h2>기관은 누가 움직였나 <span class="dim">오늘</span></h2></div>
+      <div class="card-head"><h2>기관은 누가 움직였나 <span class="dim" id="inst-when">오늘</span></h2></div>
       <div class="inst" id="inst-breakdown"></div>
     </div>
   </section>
@@ -397,6 +397,6 @@
 
 <div id="tooltip" class="tooltip" hidden></div>
 
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 </body>
 </html>

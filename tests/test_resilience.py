@@ -545,3 +545,38 @@ def test_feed_final_waits_for_program_trading_to_settle():
     assert f["entries"][0]["final"] is False
     f = c.build_feed(f, flows, {"indices": {}}, [], datetime(2026, 10, 6, 20, 6, tzinfo=c.KST))
     assert f["entries"][0]["final"] is True
+
+
+def test_main_meta_dates_and_date_aware_briefing(monkeypatch):
+    _offline(monkeypatch)                                   # 시계: 10/5(휴장일) 07:37, 데이터: 10/2
+    assert c.main() == 0
+    meta = _read("meta.json")
+    assert meta["dataDate"] == "2026-10-02" and meta["dataFinal"] is True and meta["nextSession"] == "2026-10-06"
+    texts = [t["text"] for t in _read("insights.json")["items"]]
+    assert not any(t.startswith("오늘") for t in texts)      # 휴장일 아침에 10/2 를 '오늘'이라 부르지 않는다
+    assert not any("20거래일 뒤 지수는 평균" in t for t in texts)   # 표본 밖에서 유지 안 된 기록은 브리핑에서 뺀다
+    flows = _read("flows.json")["markets"]["KOSPI"]
+    assert set(flows["streaks"]) == {"individual", "foreign", "institution", "other_corp"}
+    ant = _read("ant.json")
+    assert all("dayChange" in h for h in ant["hallOfFame"])
+    cr = ant.get("contrarianRead")
+    if cr:
+        assert cr["longRun"]["period"] == "2009-03~2023-08" and cr["longRun"]["significant"] is False
+    assert "2009-03~2023-08" in ant["caveats"][0]
+
+
+def test_next_session_and_briefing_words():
+    K = c.KST
+    assert c.next_session(datetime(2026, 10, 6, 10, 0, tzinfo=K)).isoformat() == "2026-10-06"   # 장중
+    assert c.next_session(datetime(2026, 10, 6, 16, 0, tzinfo=K)).isoformat() == "2026-10-07"   # 마감 뒤
+    assert c.next_session(datetime(2026, 10, 8, 18, 0, tzinfo=K)).isoformat() == "2026-10-12"   # 10/9 한글날·주말
+    latest = {"date": "2026-10-02", "individual": 5.0, "foreign": -9.0, "institution": 1.0, "other_corp": 3.0}
+    flows = {"markets": {"KOSPI": {"latest": latest, "daily": [latest], "streaks": {
+        k: {"days": 1, "side": "buy", "total": 1.0} for k in ("individual", "foreign", "institution")}}}}
+    sox = {"name": "필라델피아 반도체", "changeRate": 3.0, "asOf": "2026-10-02"}
+    tips = [t["text"] for t in c.build_insights(flows, {"indices": {}}, {"items": [sox]}, {}, today="2026-10-05")]
+    assert any(t.startswith("10/2(금)에는 외국인이 판 물량") for t in tips)
+    assert any(t.startswith("10/2(금) 미국장에서 필라델피아") for t in tips)
+    tips = [t["text"] for t in c.build_insights(flows, {"indices": {}}, {"items": [{**sox, "asOf": "2026-10-04"}]}, {},
+                                                today="2026-10-02")]
+    assert any(t.startswith("오늘은 외국인이") for t in tips)

@@ -7,8 +7,10 @@ const ACTORS = {
   individual:  { name: '개인',   sub: '개미',   face: '🐜', color: 'var(--individual)', raw: '#ffb02e' },
   foreign:     { name: '외국인', sub: '외인',   face: '🦅', color: 'var(--foreign)',    raw: '#4fc3f7' },
   institution: { name: '기관',   sub: '기관계', face: '🐋', color: 'var(--institution)', raw: '#b388ff' },
+  other_corp:  { name: '기타법인', sub: '일반 법인', face: '🏢', color: '#9aa5bd', raw: '#9aa5bd' },
 };
-const ACTOR_KEYS = ['individual', 'foreign', 'institution'];
+const ACTOR_KEYS = ['individual', 'foreign', 'institution'];   // 성적표·장바구니 등 통계는 세 주체
+const FLOW_KEYS = [...ACTOR_KEYS, 'other_corp'];             // 그날 수급은 기타법인까지(넷을 더하면 0)
 
 const INST_PARTS = [
   ['inst_fin_inv',   '금융투자'],
@@ -65,6 +67,27 @@ const sgn = (v, d = 2) => v == null || isNaN(v) ? '—' : `${v >= 0 ? '+' : ''}$
 const rankTxt = p => p < 1 ? '1% 미만' : `${p.toFixed(0)}%`;
 /** 블록 부트스트랩 90% 범위 */
 const ciTxt = ci => ci ? `90% 범위 ${sgn(ci[0])} ~ ${sgn(ci[1])}%p` : '';
+
+/** KST 오늘(YYYY-MM-DD) */
+const todayKST = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+/** '10/2(금)' */
+const dayLabel = iso => {
+  if (!iso) return '';
+  const d = new Date(`${iso}T00:00:00Z`);
+  return `${d.getUTCMonth() + 1}/${d.getUTCDate()}(${'일월화수목금토'[d.getUTCDay()]})`;
+};
+/** 데이터 날짜가 오늘이면 '오늘', 아니면 '10/2(금)' — 휴장일·다음 날 아침에 지난 거래일을 '오늘'이라 부르지 않게 */
+const whenWord = iso => (!iso || iso === todayKST()) ? '오늘' : dayLabel(iso);
+/** 그 날짜의 지수 등락률(%) — 지수 일봉에서 */
+function dayChange(market, iso) {
+  const h = D.market?.indices?.[market]?.history || [];
+  const i = h.findIndex(x => x.date === iso);
+  return i > 0 && h[i - 1].close ? (h[i].close / h[i - 1].close - 1) * 100 : null;
+}
+/** 정수 부호 + 천 단위 쉼표 */
+const sgnInt = v => v == null || isNaN(v) ? '—' : `${v >= 0 ? '+' : ''}${Math.round(v).toLocaleString()}`;
+/** 수급이 잠정인 시간대(장중·동시호가·마감 뒤 20시 전) */
+const isProvisionalPhase = ph => /장중|동시호가|확정 반영중/.test(ph || '');
 
 /** 종목 수급은 '주' 단위 */
 function shares(v) {
@@ -212,13 +235,22 @@ const RENDERERS = [
   [renderProgram, '프로그램 매매'], [renderShort, '공매도'], [renderTreemap, '트리맵'],
   [renderIndustries, '업종'], [renderGlobals, '글로벌'], [renderEvents, '이벤트'],
 ];
-function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); syncPressed(); }
+function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); syncPressed(); scrollChartsToLatest(); }
+
+/** 차트가 화면보다 넓으면 최신(오른쪽) 구간부터 보이게 */
+function scrollChartsToLatest() {
+  requestAnimationFrame(() => $$('.chart-wrap').forEach(w => {
+    if (w.scrollWidth > w.clientWidth + 2) w.scrollLeft = w.scrollWidth;
+  }));
+}
 
 /** 토글 버튼의 눌림 상태(.on)를 aria-pressed 로 */
 function syncPressed() {
   $$('.seg button').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on') ? 'true' : 'false'));
 }
-document.addEventListener('click', e => { if (e.target.closest('.seg button')) setTimeout(syncPressed); });
+document.addEventListener('click', e => {
+  if (e.target.closest('.seg button')) setTimeout(() => { syncPressed(); scrollChartsToLatest(); });
+});
 
 /** 차트 툴팁: 터치에서는 손을 떼도 남겨 두고, 차트 바깥을 누르면 숨긴다 */
 function hideChartTips() {
@@ -257,8 +289,19 @@ function renderMeta() {
   const badge = $('#phase-badge');
   badge.textContent = m.phase;
   badge.classList.toggle('live', (m.phase || '').includes('장중'));
-  $('#updated').textContent = m.generatedAtText;
-  $('#provisional').hidden = !((m.phase || '').includes('장중') || (m.phase || '').includes('동시호가'));
+  renderUpdated();
+  const prov = $('#provisional');
+  prov.hidden = !isProvisionalPhase(m.phase);
+  if (!prov.hidden) {
+    prov.innerHTML = (m.phase || '').includes('확정 반영중')
+      ? '<strong>잠정치</strong> 장 마감 뒤에도 20시 무렵까지 수급 값이 바뀝니다. 20시 이후 수집분이 확정치입니다.'
+      : '<strong>잠정치</strong> 장중 수급은 추정값이며, 장 마감 뒤 20시 무렵 확정치로 정정됩니다.';
+  }
+  // 섹션 제목의 '오늘'도 데이터 날짜에 맞춘다
+  const dw = whenWord(m.dataDate || D.flows?.markets?.KOSPI?.latest?.date);
+  setText('#hero-title', dw === '오늘' ? '오늘의 수급 줄다리기' : `${dw} 수급 줄다리기`);
+  setText('#thermo-title', dw === '오늘' ? '오늘의 개미 온도계' : `${dw} 개미 온도계`);
+  setText('#inst-when', dw);
 
   $('#sources').textContent = (m.sources || []).map(s => s.name).join(' · ');
   $('#caveat').textContent = m.caveat || '';
@@ -287,6 +330,24 @@ function renderMeta() {
   }
 }
 
+/** '수집 10/5 14:13 (23분 전) · 데이터 10/2(금) 확정 · 다음 장 10/6(화)'. 장중에 수집이 45분 넘게 없으면 경고 */
+function renderUpdated() {
+  const m = D.meta, box = $('#updated');
+  if (!m || !box) return;
+  const gen = Date.parse(m.generatedAt);
+  const mins = isNaN(gen) ? null : Math.max(0, Math.round((Date.now() - gen) / 60000));
+  const ago = mins == null ? '' : mins < 1 ? ' (방금)' : mins < 60 ? ` (${mins}분 전)`
+            : mins < 1440 ? ` (${Math.floor(mins / 60)}시간 전)` : ` (${Math.floor(mins / 1440)}일 전)`;
+  const parts = [`수집 ${(m.generatedAtText || '').slice(5, 16)}${ago}`];
+  if (m.dataDate) parts.push(`데이터 ${dayLabel(m.dataDate)} ${m.dataFinal ? '확정' : '잠정'}`);
+  const live = /장중|동시호가/.test(m.phase || '');
+  if (m.nextSession && !live) parts.push(`다음 장 ${m.nextSession === todayKST() ? '오늘' : dayLabel(m.nextSession)}`);
+  const late = live && mins != null && mins > 45;
+  box.textContent = parts.join(' · ') + (late ? ' · 새 수집이 늦어지고 있습니다' : '');
+  box.classList.toggle('late', late);
+}
+setInterval(() => { if (!document.hidden) renderUpdated(); }, 60 * 1000);
+
 /** 못 받은 파일이나 렌더 중 터진 섹션이 있으면 조용히 넘어가지 않고 화면에 적는다 */
 function reportRenderErrors() {
   const w = $('#warnings');
@@ -306,37 +367,42 @@ function renderHero() {
   if (!mk) { tug.innerHTML = '<p class="dim">데이터가 없습니다.</p>'; return; }
 
   const last = mk.latest;
+  const chg = dayChange(heroMarket, last.date);
   $('#hero-date').textContent =
-    `${last.date} · ${heroMarket === 'KOSPI' ? '코스피' : '코스닥'} · 단위 억원`;
+    `${dayLabel(last.date)} · ${heroMarket === 'KOSPI' ? '코스피' : '코스닥'}` +
+    (chg != null ? ` ${sgn(chg)}%` : '') + ' · 단위 억원';
 
-  const vals = ACTOR_KEYS.map(k => ({ key: k, v: last[k] ?? 0 }));
+  const keys = FLOW_KEYS.filter(k => k !== 'other_corp' || last.other_corp != null);
+  const vals = keys.map(k => ({ key: k, v: last[k] ?? 0 }));
   const max = Math.max(...vals.map(x => Math.abs(x.v)), 1);
   const lead = vals.reduce((a, b) => Math.abs(b.v) > Math.abs(a.v) ? b : a);
 
-  // 3주체 다이버징 바
+  // 주체별 다이버징 바
+  const leadWord = whenWord(last.date) === '오늘' ? '오늘의 주역' : '그날의 주역';
   tug.innerHTML = '';
   vals.forEach(({ key, v }, i) => {
     const a = ACTORS[key];
     const lane = el('div', 'lane' + (key === lead.key ? ' grow' : ''));
     const half = Math.abs(v) / max * 50;   // 트랙 절반 기준 %
+    const inside = half > 34;              // 막대가 길면 값을 막대 안에(좁은 화면에서 이름과 겹치지 않게)
 
     lane.innerHTML = `
       <div class="lane-who">
         <div class="lane-face" aria-hidden="true">${a.face}</div>
-        <div class="lane-name">${a.name}<small>${key === lead.key ? '오늘의 주역' : a.sub}</small></div>
+        <div class="lane-name">${a.name}<small>${key === lead.key ? leadWord : a.sub}</small></div>
       </div>
       <div class="lane-track">
         <div class="lane-bar ${v >= 0 ? 'buy' : 'sell'}"
              style="background:linear-gradient(${v >= 0 ? '90deg' : '270deg'}, ${a.raw}dd, ${a.raw}77);
                     ${v >= 0 ? '' : `left:${50 - half}%;`}">
-          <span class="lane-val" style="color:${a.raw}">${eok(v)}</span>
+          <span class="lane-val${inside ? ' in' : ''}" style="${inside ? '' : `color:${a.raw}`}">${eok(v)}</span>
         </div>
       </div>`;
     tug.appendChild(lane);
     growIn(() => { $('.lane-bar', lane).style.width = `${Math.max(half, 0.6)}%`; }, 60 + i * 90);
   });
 
-  renderBalance(vals, last);
+  renderBalance(vals.filter(x => x.key !== 'other_corp'), last);
 }
 
 /** 파는 진영 vs 사는 진영 구성 막대.
@@ -376,7 +442,7 @@ function renderBalance(vals, last) {
   put(sellers, true);
   put(buyers, false);
 
-  const knot = el('div', 'balance-knot', '🪢');
+  const knot = el('div', 'balance-knot', '▼');
   knot.style.left = `${sellSum / total * 100}%`;
   wrap.appendChild(knot);
 
@@ -508,28 +574,33 @@ function renderMirror() {
   if (!hasAnt()) return;
   const a = D.ant.actors.individual;
   const p = a.todayPercentile;
-  const opp = D.ant.oppositeRate.vsForeign;
   const days = D.ant.sample.days;
-  const cr = D.ant.contrarianRead;
-  // 과거 같은 구간의 기록 — 좋았으면 좋았다고, 구분이 안 되면 구분이 안 된다고
-  const zone = cr && cr.side === 'buy' ? '매수 강도 상위 20%' : '매도 강도 상위 20%';
-  const record = !cr ? '' :
-    ` 과거 ${zone}였던 날 ${cr.n}번, 20거래일 뒤 지수는 시장 평균보다 <b class="${dirCls(cr.excess)}">${sgn(cr.excess)}%p</b>` +
-    (cr.significant === false ? '로, 시장 평균과 구분되지 않는 차이였습니다.' : '였습니다.');
+  const day = D.ant.sample.to;
+  const w = whenWord(day), past = w !== '오늘';
+  const ks = D.flows.markets.KOSPI?.latest;
+  const chg = dayChange('KOSPI', day);
+  // 그날의 사실: 개인의 강도, 지수 방향, 반대편에 선 쪽
+  const idx = chg == null ? '' : ` 그날 코스피는 <b class="${dirCls(chg)}">${sgn(chg)}%</b>.`;
+  const side = ks && ks.date === day ? (() => {
+    const others = FLOW_KEYS.filter(k => k !== 'individual' && ks[k] != null)
+      .map(k => ({ k, v: ks[k] })).filter(x => (x.v > 0) === (a.todayValue < 0) && x.v !== 0)
+      .sort((x, y) => Math.abs(y.v) - Math.abs(x.v));
+    return others.length ? ` 반대편에서 ${others.map(x => `${ACTORS[x.k].name} ${eok(x.v)}`).join(' · ')}.` : '';
+  })() : '';
 
   let head, tail;
   if (p >= 80) {
-    head = '오늘도 개미는 담고 있습니다.';
-    tail = `최근 ${days}거래일 중 <b>상위 ${rankTxt(100 - p)}</b>의 매수 강도.${record}`;
+    head = past ? `${w} 개미는 크게 담았습니다.` : '오늘도 개미는 담고 있습니다.';
+    tail = `최근 ${days}거래일 중 <b>상위 ${rankTxt(100 - p)}</b>의 매수 강도.`;
   } else if (p <= 20) {
-    head = '오늘 개미는 던지고 있습니다.';
-    tail = `최근 ${days}거래일 중 매도 강도 <b>상위 ${rankTxt(p)}</b>.${record}`;
+    head = past ? `${w} 개미는 크게 던졌습니다.` : '오늘 개미는 던지고 있습니다.';
+    tail = `최근 ${days}거래일 중 매도 강도 <b>상위 ${rankTxt(p)}</b>.`;
   } else {
-    head = '오늘 개미는 어중간합니다.';
+    head = past ? `${w} 개미는 어중간했습니다.` : '오늘 개미는 어중간합니다.';
     tail = `최근 ${days}거래일 중 <b>${Math.max(1, Math.round(p))}번째 백분위</b>. 방향이 뚜렷하지 않은 날입니다.`;
   }
   line.textContent = head;
-  sub.innerHTML = `${tail} 참고로 개미는 이 기간 <b>${opp}%</b>의 날에 외국인과 정반대로 움직였습니다.`;
+  sub.innerHTML = `${tail}${idx}${side}`;
 }
 
 /** 오늘의 매수 강도(거래대금 대비 순매수)를 표본 기간 분포 안에 놓아 본다 */
@@ -543,22 +614,23 @@ function renderThermo() {
   setText('#thermo-basis', basisOf(D.ant) === 'intensity' ? '(거래대금 대비 순매수)' : '(순매수 금액 기준)');
   growIn(() => { $('#thermo-ant').style.left = `${p}%`; }, 120);
 
-  const mood = p >= 80 ? { t: '영끌 매수 구간', c: 'up' }
+  const mood = p >= 80 ? { t: '강한 순매수 구간', c: 'up' }
              : p >= 60 ? { t: '사는 쪽', c: 'up' }
-             : p > 40  ? { t: '관망', c: 'flat' }
+             : p > 40  ? { t: '보통', c: 'flat' }
              : p > 20  ? { t: '파는 쪽', c: 'down' }
-             :           { t: '패닉 매도 구간', c: 'down' };
+             :           { t: '강한 순매도 구간', c: 'down' };
 
-  const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
-  const phase = D.meta.phase || '';
-  const provisional = D.ant.sample.to === today && (phase.includes('장중') || phase.includes('동시호가'));
+  const day = D.ant.sample.to;
+  const provisional = day === todayKST() && isProvisionalPhase(D.meta.phase);
+  const chg = dayChange('KOSPI', day);
   $('#thermo-nums').innerHTML = `
     <div>
       <span class="thermo-big ${mood.c}">${Math.max(1, Math.round(p))}<small style="font-size:14px">번째 백분위</small></span>
       <span class="thermo-desc" style="margin-left:10px">${mood.t}${provisional ? ' · 장중 잠정치 기준' : ''}</span>
     </div>
-    <div class="thermo-desc">오늘 개인 순매수 <b class="${dirCls(a.todayValue)}">${eok(a.todayValue)}</b>` +
+    <div class="thermo-desc">${whenWord(day)} 개인 순매수 <b class="${dirCls(a.todayValue)}">${eok(a.todayValue)}</b>` +
     (a.todayIntensity != null ? ` · 거래대금의 <b class="${dirCls(a.todayIntensity)}">${sgn(a.todayIntensity, 1)}%</b>` : '') +
+    (chg != null ? ` · 그날 코스피 <b class="${dirCls(chg)}">${sgn(chg)}%</b>` : '') +
     `</div>`;
 
   const cr = D.ant.contrarianRead;
@@ -570,15 +642,18 @@ function renderThermo() {
     return;
   }
   const better = cr.excess >= 0;
-  const sigNote = !cr.excessCI ? '' : cr.significant
-    ? ` ${ciTxt(cr.excessCI)} — 0을 포함하지 않는 차이입니다.`
-    : ` ${ciTxt(cr.excessCI)} — 0을 포함해 시장 평균과 구분되지 않습니다.`;
+  const lr = cr.longRun;
+  const sigNote = (!cr.excessCI ? '' : cr.significant
+    ? ` 이 기간만 보면 ${ciTxt(cr.excessCI)}로 0을 포함하지 않지만, 화면의 여러 비교 중 하나이고 이 기간은 상승장이었습니다.`
+    : ` ${ciTxt(cr.excessCI)} — 0을 포함해 시장 평균과 구분되지 않습니다.`) +
+    (lr ? ` <b>${lr.period} 같은 계산에서는 ${sgn(lr.excess)}%p</b>(90% 범위 ${sgn(lr.ci[0])} ~ ${sgn(lr.ci[1])}%p)로 시장 평균과 구분되지 않았습니다.` : '');
   box.innerHTML = `
     <div class="c-head">🐜 ${cr.label} — 과거 ${cr.n}번</div>
     그 <b>20거래일 뒤</b> 지수는 평균 <b class="${better ? 'up' : 'down'}">${sgn(cr.r20)}%</b>,
     같은 기간 시장 평균은 <b>${sgn(cr.baseline20)}%</b>였습니다.
     시장 평균 대비 <b class="${better ? 'up' : 'down'}">${sgn(cr.excess)}%p</b>.
-    <div class="c-note">과거 기록이지 예측이 아닙니다. 날짜가 서로 겹쳐 독립 사례는 ${cr.n}번보다 훨씬 적습니다.${sigNote}</div>`;
+    <div class="c-note">과거 기록이지 예측이 아닙니다. 날짜가 서로 겹쳐 독립 사례는 ${cr.n}번보다 훨씬 적습니다.${sigNote}
+      매매 근거로 쓰기엔 약한 숫자입니다.</div>`;
 }
 
 /* ── 지금과 비슷했던 날들 ────────────────────────────── */
@@ -711,7 +786,7 @@ function renderFutures() {
   if (div) {
     const state = div.state || (div.aligned ? 'aligned' : 'split');
     const period = div.from ? `${mdy(div.from)}~${mdy(div.to)}` : `최근 ${div.window}거래일`;
-    const both = `외국인 현물 <b>${eok(div.spotForeign)}</b>, 선물 <b>${sgn(div.futuresForeign, 0)}계약</b>`;
+    const both = `외국인 현물 <b>${eok(div.spotForeign)}</b>, 선물 <b>${sgnInt(div.futuresForeign)}계약</b>`;
     const typ = `최근 ${div.typicalDays || 120}거래일 5일 합계의 중앙값`;
     if (!div.state) {               // 예전 형식: 부호만 비교한 결과라 크기를 말할 근거가 없다
       box.className = div.aligned ? 'divergence' : 'divergence split';
@@ -780,7 +855,7 @@ function renderFutures() {
   const st = f.streaks?.foreign;
   const last = f.latest;
   $('#fut-note').textContent =
-    `외국인 선물 순매수 최근 20거래일. 오늘 ${(last.foreign ?? 0) >= 0 ? '+' : ''}${(last.foreign ?? 0).toLocaleString()}계약` +
+    `외국인 선물 순매수 최근 20거래일. ${whenWord(last.date)} ${sgnInt(last.foreign ?? 0)}계약` +
     (st && st.days >= 2 ? ` · ${st.days}일 연속 ${st.side === 'buy' ? '매수' : '매도'}` : '') + '.';
 }
 
@@ -1124,7 +1199,7 @@ function renderReportCard() {
       <div class="grade-top">
         <span class="grade-face" aria-hidden="true">${A.face}</span>
         <span class="grade-who">${A.name}<small>크게 산 날 ${a.heavyBuy.n20 ?? a.heavyBuy.n}일 기준</small></span>
-        <span class="grade-letter g-${a.grade}">${a.grade}</span>
+        <span class="grade-letter g-${a.grade}">${a.grade}${a.significant === false ? '<small>구분 안 됨</small>' : ''}</span>
       </div>
       <div class="grade-rows">
         ${[1, 5, 20].map(h => `
@@ -1297,7 +1372,7 @@ function renderHall() {
         <div class="hall-bar" style="background:${bad ? '#4d94ff' : '#ff4d4d'};
              ${bad ? `left:${50 - half}%` : 'left:50%'}"></div>
       </div>
-      <div class="hall-amt">개미 ${eok(r.amount)} 매수${r.intensity != null ? ` · 거래대금의 ${r.intensity.toFixed(1)}%` : ''}</div>
+      <div class="hall-amt">개미 ${eok(r.amount)} 매수${r.intensity != null ? ` · 거래대금의 ${r.intensity.toFixed(1)}%` : ''}${r.dayChange != null ? ` · 그날 코스피 <b class="${dirCls(r.dayChange)}">${sgn(r.dayChange)}%</b>` : ''}</div>
       <div class="hall-ret ${dirCls(r.return20)}">${sgn(r.return20)}%</div>`);
     box.appendChild(node);
     growIn(() => { $('.hall-bar', node).style.width = `${Math.max(half, 0.6)}%`; }, 70 + i * 65);
@@ -1317,7 +1392,8 @@ function renderHall() {
   $('#hall-verdict').innerHTML =
     `개미가 가장 강하게 질렀던 ${n}번${apart}, 20거래일 뒤 지수가 오른 건 ${up}번,
      시장 평균(${sgn(base)}%)보다 좋았던 건 <b>${beat}번</b>입니다. 평균 ${sgn(avg)}%.
-     ${punch} 다만 ${n}번은 통계가 아니라 일화입니다.`;
+     ${punch} 다만 ${n}번은 통계가 아니라 일화이고,${rows.some(r => r.dayChange != null && r.dayChange < -2) ? ' 대부분 지수가 크게 빠진 날이라 그 뒤의 반등이 섞여 있습니다.' : ''}
+     성적표처럼 '크게 산 날' 전체로 보면 시장 평균과 구분되지 않습니다.`;
 }
 
 function renderCaveats() {
@@ -1407,7 +1483,8 @@ function renderFlowChart() {
   const closes = rows.map(r => closeBy[r.date] ?? null);
 
   // 누적은 보이는 구간의 시작점을 0 으로 다시 잡는다
-  const series = ACTOR_KEYS.map(k => {
+  const keys = FLOW_KEYS.filter(k => rows.some(r => r[k] != null));
+  const series = keys.map(k => {
     if (flowMode !== 'cum') return { key: k, vals: rows.map(r => r[k] ?? 0) };
     let acc = 0;
     return { key: k, vals: rows.map(r => (acc += r[k] ?? 0)) };
@@ -1463,11 +1540,12 @@ function renderFlowChart() {
              fill="${ACTORS[s.key].raw}"/>`;
     });
   } else {
-    const sub = Math.max(1.6, bw / 3 - 1.4);
+    const nk = keys.length;
+    const sub = Math.max(1.2, bw / nk - 1.2);
     rows.forEach((r, i) => {
-      ACTOR_KEYS.forEach((k, j) => {
+      keys.forEach((k, j) => {
         const v = r[k] ?? 0;
-        const x = X(i) - bw / 2 + j * (bw / 3) + (bw / 3 - sub) / 2;
+        const x = X(i) - bw / 2 + j * (bw / nk) + (bw / nk - sub) / 2;
         const y0 = Y(0), y1 = Y(v);
         g += `<rect x="${x.toFixed(1)}" y="${Math.min(y0, y1).toFixed(1)}"
                width="${sub.toFixed(1)}" height="${Math.max(Math.abs(y1 - y0), 0.8).toFixed(1)}"
@@ -1493,7 +1571,7 @@ function renderFlowChart() {
   svg.innerHTML = g;
 
   $('#flow-legend').innerHTML =
-    ACTOR_KEYS.map(k => `<span><i style="background:${ACTORS[k].raw}"></i>${ACTORS[k].name}</span>`).join('') +
+    keys.map(k => `<span><i style="background:${ACTORS[k].raw}"></i>${ACTORS[k].name}</span>`).join('') +
     `<span><i class="lineish" style="background:#ffffff66"></i>${heroMarket === 'KOSPI' ? '코스피' : '코스닥'} 지수</span>`;
 
   $('#flow-note').textContent = flowMode === 'cum'
@@ -1543,8 +1621,9 @@ function renderStreaks() {
   if (!mk) return;
 
   const recent = mk.daily.slice(-10);
-  ACTOR_KEYS.forEach(k => {
-    const s = mk.streaks[k], a = ACTORS[k];
+  FLOW_KEYS.forEach(k => {
+    const s = mk.streaks[k] || streakOf(mk.daily, k), a = ACTORS[k];
+    if (!s) return;
     const buying = s.side === 'buy';
     const label = s.days === 0 ? '보합' : `${s.days}일 연속 ${buying ? '순매수' : '순매도'}`;
     const dots = recent.map(r => {
@@ -1562,6 +1641,20 @@ function renderStreaks() {
       </div>
       <div class="streak-count ${buying ? 'up' : 'down'}">${s.days}<small>일</small></div>`));
   });
+}
+
+/** 수집기가 연속 기록을 안 준 주체(예전 데이터의 기타법인)는 화면에서 센다 */
+function streakOf(rows, k) {
+  if (!rows?.length || rows[rows.length - 1][k] == null) return null;
+  const last = rows[rows.length - 1][k];
+  if (!last) return { days: 0, side: 'flat', total: 0 };
+  let days = 0, total = 0;
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const v = rows[i][k];
+    if (v == null || v === 0 || (v > 0) !== (last > 0)) break;
+    days++; total += v;
+  }
+  return { days, side: last > 0 ? 'buy' : 'sell', total };
 }
 
 /* ── 기관 분해 ────────────────────────────────────────── */
