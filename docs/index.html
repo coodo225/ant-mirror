@@ -14,14 +14,14 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
 </head>
 <body>
 
 <div id="loading" class="loading">
   <div class="loading-dot"></div>
-  <p id="loading-msg">시장 데이터를 불러오는 중…</p>
+  <p id="loading-msg" aria-live="polite">시장 데이터를 불러오는 중…</p>
   <p id="loading-detail" class="dim small"></p>
 </div>
 
@@ -37,7 +37,7 @@
   <!-- ══════════════════ 헤더 ══════════════════ -->
   <header class="topbar">
     <div class="topbar-left">
-      <h1><span class="ant-mark">🐜</span> 개미들을 위한 투자정보</h1>
+      <h1><span class="ant-mark" aria-hidden="true">🐜</span> 개미들을 위한 투자정보</h1>
       <p class="sub">개인 <span class="vs">vs</span> 외국인 <span class="vs">vs</span> 기관 —
          오늘 한국 증시에서 누가 사고 누가 팔았나</p>
     </div>
@@ -56,7 +56,7 @@
     <strong>잠정치</strong> 장중 수급은 추정값이며, 장 마감 후 확정치로 정정됩니다.
   </div>
 
-  <div id="stale" class="notice" hidden></div>
+  <div id="stale" class="notice" hidden aria-live="polite"></div>
 
   <!-- ══════════════════ 히어로: 오늘의 줄다리기 ══════════════════ -->
   <section class="card hero">
@@ -96,7 +96,7 @@
       <span class="dim small" id="intraday-date"></span>
     </div>
     <div class="legend" id="intraday-legend"></div>
-    <div class="chart-wrap"><svg id="intraday-chart" class="chart chart-sm"></svg></div>
+    <div class="chart-wrap"><svg id="intraday-chart" class="chart chart-sm" role="img" aria-label="장중 5분 간격 투자자별 누적 순매수 선 차트"></svg></div>
     <p class="dim small" id="intraday-note" style="margin:8px 0 0"></p>
   </section>
 
@@ -114,7 +114,7 @@
         <div class="thermo-zone z-sell"></div>
         <div class="thermo-zone z-mid"></div>
         <div class="thermo-zone z-buy"></div>
-        <div class="thermo-ant" id="thermo-ant">🐜</div>
+        <div class="thermo-ant" id="thermo-ant" aria-hidden="true">🐜</div>
       </div>
       <div class="thermo-nums" id="thermo-nums"></div>
     </div>
@@ -133,7 +133,7 @@
         둘 다 평소보다 크게 움직였을 때만 갈림·일치를 판단하고, 갈렸던 과거 날들 이후의 기록을 함께 보여 줍니다.
       </p>
       <div id="fut-divergence" class="divergence"></div>
-      <div class="chart-wrap"><svg id="fut-chart" class="chart chart-xs"></svg></div>
+      <div class="chart-wrap"><svg id="fut-chart" class="chart chart-xs" role="img" aria-label="최근 20거래일 외국인 코스피200 선물 순매수 막대 차트"></svg></div>
       <p class="dim small" id="fut-note" style="margin:8px 0 0"></p>
     </div>
 
@@ -143,7 +143,7 @@
         <span class="dim small">신용융자 · 반대매매 (금융투자협회)</span>
       </div>
       <div class="credit-stats" id="credit-stats"></div>
-      <div class="chart-wrap"><svg id="credit-chart" class="chart chart-xs"></svg></div>
+      <div class="chart-wrap"><svg id="credit-chart" class="chart chart-xs" role="img" aria-label="신용융자 잔고 추이와 코스피 비교 선 차트"></svg></div>
       <p class="dim small" id="credit-note" style="margin:8px 0 0"></p>
     </div>
   </section>
@@ -192,7 +192,7 @@
     </p>
     <div class="grades" id="grades"></div>
     <div class="legend" id="timing-legend"></div>
-    <div class="chart-wrap"><svg id="timing-chart" class="chart chart-sm"></svg></div>
+    <div class="chart-wrap"><svg id="timing-chart" class="chart chart-sm" role="img" aria-label="주체별로 크게 산 날 이후 1·5·20거래일 수익률과 시장 평균 막대 차트"></svg></div>
     <p class="dim small" style="margin:8px 0 0">
       막대가 점선(시장 평균)보다 높으면 그 주체가 산 시점이 평균보다 좋았다는 뜻입니다.
     </p>
@@ -250,7 +250,7 @@
       </div>
     </div>
     <div class="legend" id="flow-legend"></div>
-    <div class="chart-wrap"><svg id="flow-chart" class="chart"></svg></div>
+    <div class="chart-wrap"><svg id="flow-chart" class="chart" role="img" aria-label="개인·외국인·기관 순매수 흐름과 지수 선 차트"></svg></div>
     <p class="dim small" id="flow-note"></p>
   </section>
 
@@ -359,6 +359,6 @@
 
 <div id="tooltip" class="tooltip" hidden></div>
 
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

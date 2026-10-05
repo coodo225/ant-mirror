@@ -55,6 +55,9 @@ const nfmt = (v, d = 2) => v == null || isNaN(v) ? '—'
   : v.toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d });
 const dirCls = v => v == null ? 'flat' : v > 0 ? 'up' : v < 0 ? 'down' : 'flat';
 const mdy = iso => iso ? `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}` : '';
+/** 외부 소스(종목명·업종명·일정 등)의 문자열을 HTML 에 넣기 전에 */
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sgn = (v, d = 2) => v == null || isNaN(v) ? '—' : `${v >= 0 ? '+' : ''}${(+v).toFixed(d)}`;
 /** 상·하위 비율. 0.5 미만이 '0%' 로 보이지 않게 */
 const rankTxt = p => p < 1 ? '1% 미만' : `${p.toFixed(0)}%`;
@@ -137,6 +140,30 @@ function safe(fn, label) {
 }
 const RENDER_ERRORS = [];
 
+/** 파일을 못 받았을 때 대신 쓸 빈 모양 — 섹션은 '데이터 없음'으로 그려진다 */
+const EMPTY = {
+  flows: { markets: {} }, ant: {}, analog: {}, antstocks: {}, futures: { daily: [] },
+  credit: { loans: [], money: [], latest: {} }, market: { indices: {} },
+  stocks: { top: [], industries: [] }, global: { items: [], macro: [] },
+  events: { upcoming: [] }, insights: { items: [] },
+};
+const LOAD_ERRORS = [];
+
+/** 파일마다 따로 받는다. 실패한 파일은 keep(이전 값) 또는 빈 모양으로 채우고 이유를 남긴다. */
+async function loadFiles(files, opts, keep = false) {
+  const res = await Promise.allSettled(files.map(f => fetchJSON(f, opts)));
+  const errs = [];
+  res.forEach((r, i) => {
+    const f = files[i];
+    if (r.status === 'fulfilled') D[f] = r.value;
+    else {
+      errs.push(r.reason?.message || `${f} 실패`);
+      if (!keep || D[f] === undefined) D[f] = structuredClone(EMPTY[f] ?? {});
+    }
+  });
+  return errs;
+}
+
 async function boot() {
   RENDER_ERRORS.length = 0;
   const slow = setTimeout(() => {
@@ -144,8 +171,10 @@ async function boot() {
   }, 6000);
 
   try {
-    const results = await Promise.all(FILES.map(async f => [f, await fetchJSON(f)]));
-    results.forEach(([k, v]) => { D[k] = v; });
+    // meta 가 없으면 서버나 경로 문제다 — 그때만 오류 화면
+    D.meta = await fetchJSON('meta');
+    LOAD_ERRORS.length = 0;
+    LOAD_ERRORS.push(...await loadFiles(FILES.filter(f => f !== 'meta')));
   } catch (e) {
     showFatal(e);
     return;
@@ -177,16 +206,32 @@ const RENDERERS = [
   [renderStreaks, '연속 매매'], [renderInstBreakdown, '기관 분해'], [renderTreemap, '트리맵'],
   [renderIndustries, '업종'], [renderGlobals, '글로벌'], [renderEvents, '이벤트'],
 ];
-function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); }
+function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); syncPressed(); }
+
+/** 토글 버튼의 눌림 상태(.on)를 aria-pressed 로 */
+function syncPressed() {
+  $$('.seg button').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on') ? 'true' : 'false'));
+}
+document.addEventListener('click', e => { if (e.target.closest('.seg button')) setTimeout(syncPressed); });
+
+/** 차트 툴팁: 터치에서는 손을 떼도 남겨 두고, 차트 바깥을 누르면 숨긴다 */
+function hideChartTips() {
+  $('#tooltip').hidden = true;
+  ['#intra-cursor', '#flow-cursor'].forEach(sel => $(sel)?.setAttribute('visibility', 'hidden'));
+}
+document.addEventListener('pointerdown', ev => {
+  if (ev.pointerType !== 'mouse' && !ev.target.closest('#intraday-chart, #flow-chart')) hideChartTips();
+});
 
 async function refresh() {
   try {
     const meta = await fetchJSON('meta', { timeout: 8000, tries: 1 });
     if (meta.generatedAt === D.meta.generatedAt) return;          // 새 수집이 없으면 아무것도 안 한다
-    const results = await Promise.all(
-      FILES.filter(f => f !== 'meta').map(async f => [f, await fetchJSON(f, { timeout: 8000, tries: 1 })])
-    );
-    results.forEach(([k, v]) => { D[k] = v; });
+    const others = FILES.filter(f => f !== 'meta');
+    const errs = await loadFiles(others, { timeout: 8000, tries: 1 }, true);   // 실패한 파일은 이전 값 유지
+    if (errs.length === others.length) throw new Error(errs[0]);
+    LOAD_ERRORS.length = 0;
+    LOAD_ERRORS.push(...errs);
     D.meta = meta;
   } catch (e) {
     console.warn('자동 갱신 실패, 다음 주기에 재시도:', e.message);
@@ -235,13 +280,15 @@ function renderMeta() {
   }
 }
 
-/** 렌더 중 터진 섹션이 있으면 조용히 넘어가지 않고 화면에 적는다 */
+/** 못 받은 파일이나 렌더 중 터진 섹션이 있으면 조용히 넘어가지 않고 화면에 적는다 */
 function reportRenderErrors() {
-  if (!RENDER_ERRORS.length) return;
   const w = $('#warnings');
-  w.hidden = false;
-  w.innerHTML += '<b style="margin-top:8px">화면 오류</b>' +
-    RENDER_ERRORS.map(x => `<div>· ${x}</div>`).join('');
+  [['데이터를 불러오지 못함', LOAD_ERRORS], ['화면 오류', RENDER_ERRORS]].forEach(([title, list]) => {
+    if (!list.length) return;
+    w.hidden = false;
+    const b = el('b'); b.style.marginTop = '8px'; b.textContent = title; w.append(b);
+    list.forEach(x => { const d = el('div'); d.textContent = `· ${x}`; w.append(d); });
+  });
 }
 
 /* ── 히어로: 줄다리기 ─────────────────────────────────── */
@@ -268,7 +315,7 @@ function renderHero() {
 
     lane.innerHTML = `
       <div class="lane-who">
-        <div class="lane-face">${a.face}</div>
+        <div class="lane-face" aria-hidden="true">${a.face}</div>
         <div class="lane-name">${a.name}<small>${key === lead.key ? '오늘의 주역' : a.sub}</small></div>
       </div>
       <div class="lane-track">
@@ -370,7 +417,7 @@ function renderIntraday() {
   for (let i = 0; i <= 4; i++) {
     const v = lo + (hi - lo) * i / 4, y = Y(v);
     g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
-    g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#5d6780"
+    g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
            font-size="10.5" font-family="ui-monospace,monospace">${eok(v, { sign: false })}</text>`;
   }
   g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.3"/>`;
@@ -380,7 +427,7 @@ function renderIntraday() {
   if (!ticks.includes(hh(T0))) ticks.unshift(hh(T0));
   ticks.push(hh(T1));
   ticks.forEach(t => {
-    g += `<text x="${X(t).toFixed(1)}" y="${H - 8}" text-anchor="middle" fill="#5d6780"
+    g += `<text x="${X(t).toFixed(1)}" y="${H - 8}" text-anchor="middle" fill="#7f89a2"
            font-size="10" font-family="ui-monospace,monospace">${t}</text>`;
   });
   // 끝값 라벨이 겹치지 않게 위아래로 밀어 둔다
@@ -431,22 +478,11 @@ function renderIntraday() {
     tip.style.left = `${Math.min(ev.clientX + 14, window.innerWidth - tw - 8)}px`;
     tip.style.top = `${Math.max(8, ev.clientY - th - 12)}px`;
   };
-  const hide = () => { tip.hidden = true; cursor.setAttribute('visibility', 'hidden'); };
-  // 터치는 손을 떼는 순간 pointerleave 가 오므로, 마우스일 때만 떠날 때 숨긴다.
+  // 터치는 손을 떼는 순간 pointerleave 가 오므로, 마우스일 때만 떠날 때 숨긴다(바깥을 누르면 hideChartTips).
   // 터치에서 가로로 끌면 차트 상자가 스크롤되고(좁은 화면), 값은 누른 자리의 것이 남는다.
-  const leave = ev => { if (ev.pointerType === 'mouse') hide(); };
   hit.addEventListener('pointermove', move);
   hit.addEventListener('pointerdown', move);
-  hit.addEventListener('pointerleave', leave);
-  if (!renderIntraday._bound) {
-    renderIntraday._bound = true;
-    document.addEventListener('pointerdown', ev => {
-      if (ev.pointerType !== 'mouse' && !ev.target.closest('#intraday-chart')) {
-        $('#tooltip').hidden = true;
-        $('#intra-cursor')?.setAttribute('visibility', 'hidden');
-      }
-    });
-  }
+  hit.addEventListener('pointerleave', ev => { if (ev.pointerType === 'mouse') hideChartTips(); });
 }
 
 /* ══════════════════════════════════════════════════════
@@ -506,10 +542,13 @@ function renderThermo() {
              : p > 20  ? { t: '파는 쪽', c: 'down' }
              :           { t: '패닉 매도 구간', c: 'down' };
 
+  const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+  const phase = D.meta.phase || '';
+  const provisional = D.ant.sample.to === today && (phase.includes('장중') || phase.includes('동시호가'));
   $('#thermo-nums').innerHTML = `
     <div>
       <span class="thermo-big ${mood.c}">${Math.max(1, Math.round(p))}<small style="font-size:14px">번째 백분위</small></span>
-      <span class="thermo-desc" style="margin-left:10px">${mood.t}</span>
+      <span class="thermo-desc" style="margin-left:10px">${mood.t}${provisional ? ' · 장중 잠정치 기준' : ''}</span>
     </div>
     <div class="thermo-desc">오늘 개인 순매수 <b class="${dirCls(a.todayValue)}">${eok(a.todayValue)}</b>` +
     (a.todayIntensity != null ? ` · 거래대금의 <b class="${dirCls(a.todayIntensity)}">${sgn(a.todayIntensity, 1)}%</b>` : '') +
@@ -633,7 +672,7 @@ function renderBaskets() {
       <h3>${title}</h3>
       ${items.map(x => `
         <div class="basket-item">
-          <span class="bi-name">${x.name}<small>${x.market === 'KOSDAQ' ? '코스닥' : ''}</small></span>
+          <span class="bi-name">${esc(x.name)}<small>${x.market === 'KOSDAQ' ? '코스닥' : ''}</small></span>
           <span class="bi-val">${eok(x.value)}</span>
           <span class="bi-chg ${dirCls(ret(x))}">${sgn(ret(x))}%</span>
         </div>`).join('')}
@@ -642,7 +681,7 @@ function renderBaskets() {
     col(`🐜 개미 순매수 TOP ${b.antBasket.length}`, b.antBasket) +
     col(`🦅 외인 순매수 TOP ${b.foreignBasket.length}`, b.foreignBasket);
 
-  const exRow = x => `<div class="row"><span>${x.name}</span>
+  const exRow = x => `<div class="row"><span>${esc(x.name)}</span>
     <b class="${dirCls(ret(x))}">${sgn(ret(x))}%</b></div>`;
   const rowsOr = arr => arr.length ? arr.map(exRow).join('') : '<div class="row dim">해당 종목 없음</div>';
   $('#basket-extremes').innerHTML = `
@@ -712,7 +751,7 @@ function renderFutures() {
   for (let i = 0; i <= 3; i++) {
     const v = lo + (hi - lo) * i / 3, y = Y(v);
     g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
-    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#5d6780"
+    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
            font-size="10.5" font-family="ui-monospace,monospace">${Math.round(v).toLocaleString()}</text>`;
   }
   g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.3"/>`;
@@ -724,7 +763,7 @@ function renderFutures() {
            height="${Math.max(Math.abs(y1 - y0), 0.8).toFixed(1)}" rx="2"
            fill="${v >= 0 ? '#ff4d4d' : '#4d94ff'}" opacity=".88"><title>${r.date} ${v >= 0 ? '+' : ''}${v.toLocaleString()}계약</title></rect>`;
     if (i % 4 === 0 || i === rows.length - 1)
-      g += `<text x="${(x + bw * 0.32).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#5d6780"
+      g += `<text x="${(x + bw * 0.32).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#7f89a2"
              font-size="9.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
   });
   const svg = $('#fut-chart');
@@ -797,7 +836,7 @@ function renderCredit() {
   for (let i = 0; i <= 3; i++) {
     const v = lo + (hi - lo) * i / 3, y = Y(v);
     g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
-    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#5d6780"
+    g += `<text x="${M.l - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
            font-size="10.5" font-family="ui-monospace,monospace">${eok(v, { sign: false })}</text>`;
   }
   if (cv.length > 1) {
@@ -814,7 +853,7 @@ function renderCredit() {
   const step = Math.max(1, Math.round(rows.length / 5));
   rows.forEach((r, i) => {
     if (i % step && i !== rows.length - 1) return;
-    g += `<text x="${X(i).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#5d6780"
+    g += `<text x="${X(i).toFixed(1)}" y="${H - 7}" text-anchor="middle" fill="#7f89a2"
            font-size="9.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
   });
   const svg = $('#credit-chart');
@@ -901,7 +940,7 @@ function renderReportCard() {
     const cls = !marked.includes(k) || marked.length < 2 ? '' : ex === worst ? ' worst' : ex === best ? ' best' : '';
     box.appendChild(el('div', `grade-card${cls}`, `
       <div class="grade-top">
-        <span class="grade-face">${A.face}</span>
+        <span class="grade-face" aria-hidden="true">${A.face}</span>
         <span class="grade-who">${A.name}<small>크게 산 날 ${a.heavyBuy.n20 ?? a.heavyBuy.n}일 기준</small></span>
         <span class="grade-letter g-${a.grade}">${a.grade}</span>
       </div>
@@ -946,7 +985,7 @@ function renderTimingChart() {
   for (let i = 0; i <= 4; i++) {
     const v = lo + (hi - lo) * i / 4, y = Y(v);
     g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
-    g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#5d6780"
+    g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#7f89a2"
            font-size="11" font-family="ui-monospace,monospace">${v.toFixed(0)}%</text>`;
   }
   g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.4"/>`;
@@ -1103,7 +1142,7 @@ function renderCaveats() {
   const box = $('#caveats');
   const list = (D.ant && D.ant.caveats) || [];
   box.innerHTML = list.length
-    ? list.map(c => `<li>${c}</li>`).join('')
+    ? list.map(c => `<li>${esc(c)}</li>`).join('')
     : '<li class="dim">표시할 내용이 없습니다.</li>';
 }
 
@@ -1115,7 +1154,7 @@ function renderInsights() {
   box.innerHTML = '';
   (D.insights.items || []).forEach((t, i) => {
     const n = el('div', `tip ${t.tone}`,
-      `<span class="tip-icon">${icons[t.tone] || '🔎'}</span><span>${t.text}</span>`);
+      `<span class="tip-icon" aria-hidden="true">${icons[t.tone] || '🔎'}</span><span>${esc(t.text)}</span>`);
     n.style.animationDelay = `${i * 55}ms`;
     box.appendChild(n);
   });
@@ -1214,7 +1253,7 @@ function renderFlowChart() {
     g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}"
            stroke="#232b40" stroke-width="1"/>`;
     g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end"
-           fill="#5d6780" font-size="11" font-family="ui-monospace,monospace">${eok(v, { sign: false })}</text>`;
+           fill="#7f89a2" font-size="11" font-family="ui-monospace,monospace">${eok(v, { sign: false })}</text>`;
   }
   g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}"
          stroke="#4a5570" stroke-width="1.4"/>`;
@@ -1260,7 +1299,7 @@ function renderFlowChart() {
   rows.forEach((r, i) => {
     if (i % step && i !== rows.length - 1) return;
     g += `<text x="${X(i).toFixed(1)}" y="${H - 8}" text-anchor="middle"
-           fill="#5d6780" font-size="10.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
+           fill="#7f89a2" font-size="10.5" font-family="ui-monospace,monospace">${mdy(r.date)}</text>`;
   });
 
   // 호버 레이어
@@ -1308,11 +1347,9 @@ function wireFlowHover(svg, rows, series, X, W, M, pw) {
     tip.style.top  = `${Math.max(8, ev.clientY - th - 12)}px`;
   };
 
-  hit.addEventListener('mousemove', move);
-  hit.addEventListener('touchmove', e => { move(e.touches[0]); e.preventDefault(); }, { passive: false });
-  const leave = () => { tip.hidden = true; cursor.setAttribute('visibility', 'hidden'); };
-  hit.addEventListener('mouseleave', leave);
-  hit.addEventListener('touchend', leave);
+  hit.addEventListener('pointermove', move);
+  hit.addEventListener('pointerdown', move);
+  hit.addEventListener('pointerleave', ev => { if (ev.pointerType === 'mouse') hideChartTips(); });
 }
 
 /* ── 연속 매매 ────────────────────────────────────────── */
@@ -1442,7 +1479,7 @@ function renderTreemap() {
         background: heatColor(t.changeRate),
         color: '#fff', font: 'inherit', textAlign: 'left',
       });
-      tile.innerHTML = `<div class="tile-name">${t.name}</div>
+      tile.innerHTML = `<div class="tile-name">${esc(t.name)}</div>
                         <div class="tile-chg">${pct(t.changeRate)}</div>`;
       tile.title = `${t.name}  ${nfmt(t.price, 0)}원  ${pct(t.changeRate)}\n시총 ${t.marketCapText || ''}`;
       tile.dataset.code = t.code;
@@ -1476,9 +1513,9 @@ function showStock(code, { scroll = true } = {}) {
   box.hidden = false;
   box.innerHTML = `
     <div class="sd-head">
-      <span class="sd-name">${s.name}</span>
+      <span class="sd-name">${esc(s.name)}</span>
       <span class="sd-price ${dirCls(s.changeRate)}">${nfmt(s.price, 0)}원 ${pct(s.changeRate)}</span>
-      <span class="sd-meta">시총 ${s.marketCapText || '—'}${
+      <span class="sd-meta">시총 ${esc(s.marketCapText || '—')}${
         s.foreignHoldRatio != null ? ` · 외국인 보유 ${s.foreignHoldRatio}%` : ''}</span>
     </div>
     <div class="sd-flow">${
@@ -1516,7 +1553,7 @@ function renderIndustries() {
         <div class="bar-shell">
           <div class="bar-fill" style="width:0%;background:linear-gradient(90deg,${
             g.changeRate >= 0 ? '#ff4d4dcc,#ff4d4d55' : '#4d94ffcc,#4d94ff55'})"></div>
-          <div class="bar-label">${g.name} <span class="dim">${g.rise}▲ ${g.fall}▼</span></div>
+          <div class="bar-label">${esc(g.name)} <span class="dim">${esc(g.rise)}▲ ${esc(g.fall)}▼</span></div>
         </div>
         <div class="bar-val ${dirCls(g.changeRate)}">${pct(g.changeRate)}</div>`);
       box.appendChild(row);
@@ -1545,7 +1582,7 @@ function renderGlobals() {
     const digits = Math.abs(g.price) >= 1000 ? 2 : (Math.abs(g.price) < 10 ? 2 : 2);
     const n = el('div', 'gitem', `
       <div class="gitem-l">
-        <div class="gitem-name">${g.name}</div>
+        <div class="gitem-name">${esc(g.name)}</div>
         <div class="gitem-price">${nfmt(g.price, digits)}</div>
         <div class="gitem-chg ${dirCls(g.changeRate)}">${pct(g.changeRate)}</div>
       </div>
@@ -1558,7 +1595,7 @@ function renderGlobals() {
   const mac = $('#macro');
   const items = D.global.macro || [];
   mac.innerHTML = items.length
-    ? items.map(m => `<div class="mitem">${m.name}<b>${m.value}${m.unit}</b><small>${m.asOf}</small></div>`).join('')
+    ? items.map(m => `<div class="mitem">${esc(m.name)}<b>${esc(m.value)}${esc(m.unit)}</b><small>${esc(m.asOf)}</small></div>`).join('')
     : '';
 }
 
@@ -1578,9 +1615,9 @@ function renderEvents() {
     box.appendChild(el('div', `event ${cls}`, `
       <div class="event-dday">${e.dday === 0 ? 'D-DAY' : `D-${e.dday}`}</div>
       <div class="event-body">
-        <div class="event-title">${e.title}</div>
+        <div class="event-title">${esc(e.title)}</div>
         <div class="event-date">${e.date}</div>
-        ${e.note ? `<div class="event-note">${e.note}</div>` : ''}
+        ${e.note ? `<div class="event-note">${esc(e.note)}</div>` : ''}
       </div>`));
   });
 }
@@ -1640,7 +1677,7 @@ function wireSearch() {
     if (!hits.length) {
       list.hidden = false;
       list.innerHTML = `<div class="sr-item" style="cursor:default;color:var(--dimmer)">
-        "${q}" — 수집된 ${(D.stocks.top || []).length}종목 안에 없습니다 (시총 상위만 수집합니다)</div>`;
+        "${esc(q)}" — 수집된 ${(D.stocks.top || []).length}종목 안에 없습니다 (시총 상위만 수집합니다)</div>`;
       return;
     }
     list.hidden = false;
@@ -1667,8 +1704,8 @@ function wireSearch() {
 
   const highlight = (name, q) => {
     const i = name.toLowerCase().indexOf(q);
-    if (i < 0) return name;
-    return `${name.slice(0, i)}<b>${name.slice(i, i + q.length)}</b>${name.slice(i + q.length)}`;
+    if (i < 0) return esc(name);
+    return `${esc(name.slice(0, i))}<b>${esc(name.slice(i, i + q.length))}</b>${esc(name.slice(i + q.length))}`;
   };
 
   input.addEventListener('input', () => search(input.value));

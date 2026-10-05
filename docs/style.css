@@ -11,7 +11,7 @@
   --line:      #252d42;
   --text:      #e8ecf5;
   --dim:       #8b96ad;
-  --dimmer:    #5d6780;
+  --dimmer:    #7f89a2;   /* 카드 배경 위 4.5:1 이상 (WCAG AA) */
 
   /* 한국 증시 관례 */
   --up:        #ff4d4d;
