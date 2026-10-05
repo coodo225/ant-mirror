@@ -1,0 +1,5508 @@
+{
+ "check_reproduce_site": {
+  "site_panic_sell_IS": [
+   0.16,
+   2.98
+  ],
+  "my_bootstrap": [
+   0.16,
+   2.98
+  ],
+  "excess": 1.56,
+  "n20": 140
+ },
+ "data": {
+  "flows": [
+   "2009-03-23",
+   "2026-10-02",
+   4322
+  ],
+  "expiries_in_flows": 210,
+  "expiries_moved_off_thursday": [
+   "2014-10-08",
+   "2019-09-11",
+   "2021-02-10"
+  ],
+  "corr_cum20_past20_OOS": 0.585,
+  "corr_cum20_past20_IS": 0.302,
+  "H6_bot20_overlap_with_price_bot20_OOS": {
+   "both": 347,
+   "flow_only": 364,
+   "price_only": 364,
+   "share_of_flow_days_also_price": 0.488
+  },
+  "H6_bot20_flow_only_excess_OOS": {
+   "n": 364,
+   "excess": 0.647,
+   "ci90": [
+    -0.28,
+    1.65
+   ],
+   "sig": false
+  },
+  "H6_bot20_overlap_with_price_bot20_IS": {
+   "both": 59,
+   "flow_only": 92,
+   "price_only": 92,
+   "share_of_flow_days_also_price": 0.391
+  },
+  "H6_bot20_flow_only_excess_IS": {
+   "n": 81,
+   "excess": -1.573,
+   "ci90": [
+    -8.19,
+    6.31
+   ],
+   "sig": false
+  }
+ },
+ "periods": {
+  "OOS": {
+   "from": "2009-03-23",
+   "to": "2023-08-30",
+   "days": 3572,
+   "direction": [
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 1,
+     "pred": 1,
+     "n": 511,
+     "runs": 112,
+     "days": 3571,
+     "mean_sel": 0.005,
+     "base": 0.027,
+     "excess": -0.022,
+     "ci90": [
+      -0.07,
+      0.04
+     ],
+     "sig": false,
+     "sd": 1.054,
+     "excess_sd": -0.021,
+     "hit_pred": 0.517,
+     "base_pred": 0.53,
+     "hit_up": 0.517,
+     "base_up": 0.53,
+     "p_shift": 0.6019,
+     "open_entry": {
+      "n": 511,
+      "excess": 0.004,
+      "ci90": [
+       -0.03,
+       0.05
+      ],
+      "sig": false,
+      "hit_pred": 0.489,
+      "base_pred": 0.479
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 112,
+      "excess": -0.099,
+      "ci90": [
+       -0.19,
+       0.05
+      ],
+      "sig": false,
+      "hit_pred": 0.536,
+      "base_pred": 0.53
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.8368
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 5,
+     "pred": 1,
+     "n": 511,
+     "runs": 112,
+     "days": 3567,
+     "mean_sel": 0.217,
+     "base": 0.131,
+     "excess": 0.086,
+     "ci90": [
+      -0.12,
+      0.29
+     ],
+     "sig": false,
+     "sd": 2.383,
+     "excess_sd": 0.036,
+     "hit_pred": 0.548,
+     "base_pred": 0.556,
+     "hit_up": 0.548,
+     "base_up": 0.556,
+     "p_shift": 0.6276,
+     "open_entry": {
+      "n": 511,
+      "excess": 0.112,
+      "ci90": [
+       -0.08,
+       0.31
+      ],
+      "sig": false,
+      "hit_pred": 0.526,
+      "base_pred": 0.535
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 112,
+      "excess": 0.184,
+      "ci90": [
+       -0.15,
+       0.47
+      ],
+      "sig": false,
+      "hit_pred": 0.527,
+      "base_pred": 0.556
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.8368
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 20,
+     "pred": 1,
+     "n": 511,
+     "runs": 112,
+     "days": 3552,
+     "mean_sel": 0.508,
+     "base": 0.506,
+     "excess": 0.003,
+     "ci90": [
+      -0.55,
+      0.54
+     ],
+     "sig": false,
+     "sd": 4.719,
+     "excess_sd": 0.001,
+     "hit_pred": 0.55,
+     "base_pred": 0.558,
+     "hit_up": 0.55,
+     "base_up": 0.558,
+     "p_shift": 0.9977,
+     "open_entry": {
+      "n": 511,
+      "excess": 0.03,
+      "ci90": [
+       -0.5,
+       0.56
+      ],
+      "sig": false,
+      "hit_pred": 0.55,
+      "base_pred": 0.555
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 112,
+      "excess": -0.044,
+      "ci90": [
+       -0.67,
+       0.5
+      ],
+      "sig": false,
+      "hit_pred": 0.562,
+      "base_pred": 0.558
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.9977
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 1,
+     "pred": -1,
+     "n": 377,
+     "runs": 100,
+     "days": 3571,
+     "mean_sel": 0.115,
+     "base": 0.027,
+     "excess": 0.088,
+     "ci90": [
+      -0.02,
+      0.21
+     ],
+     "sig": false,
+     "sd": 1.054,
+     "excess_sd": 0.084,
+     "hit_pred": 0.448,
+     "base_pred": 0.47,
+     "hit_up": 0.552,
+     "base_up": 0.53,
+     "p_shift": 0.0851,
+     "open_entry": {
+      "n": 377,
+      "excess": 0.008,
+      "ci90": [
+       -0.07,
+       0.09
+      ],
+      "sig": false,
+      "hit_pred": 0.477,
+      "base_pred": 0.521
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 100,
+      "excess": -0.09,
+      "ci90": [
+       -0.31,
+       0.13
+      ],
+      "sig": false,
+      "hit_pred": 0.5,
+      "base_pred": 0.47
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.3143
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 5,
+     "pred": -1,
+     "n": 377,
+     "runs": 100,
+     "days": 3567,
+     "mean_sel": 0.466,
+     "base": 0.131,
+     "excess": 0.335,
+     "ci90": [
+      -0.05,
+      0.73
+     ],
+     "sig": false,
+     "sd": 2.383,
+     "excess_sd": 0.14,
+     "hit_pred": 0.374,
+     "base_pred": 0.444,
+     "hit_up": 0.626,
+     "base_up": 0.556,
+     "p_shift": 0.0943,
+     "open_entry": {
+      "n": 377,
+      "excess": 0.251,
+      "ci90": [
+       -0.08,
+       0.63
+      ],
+      "sig": false,
+      "hit_pred": 0.408,
+      "base_pred": 0.464
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 100,
+      "excess": -0.052,
+      "ci90": [
+       -0.52,
+       0.36
+      ],
+      "sig": false,
+      "hit_pred": 0.36,
+      "base_pred": 0.444
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.3143
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 20,
+     "pred": -1,
+     "n": 377,
+     "runs": 100,
+     "days": 3552,
+     "mean_sel": 1.238,
+     "base": 0.506,
+     "excess": 0.732,
+     "ci90": [
+      -0.23,
+      1.73
+     ],
+     "sig": false,
+     "sd": 4.719,
+     "excess_sd": 0.155,
+     "hit_pred": 0.387,
+     "base_pred": 0.442,
+     "hit_up": 0.613,
+     "base_up": 0.558,
+     "p_shift": 0.154,
+     "open_entry": {
+      "n": 377,
+      "excess": 0.654,
+      "ci90": [
+       -0.28,
+       1.64
+      ],
+      "sig": false,
+      "hit_pred": 0.408,
+      "base_pred": 0.445
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 100,
+      "excess": -0.445,
+      "ci90": [
+       -1.25,
+       0.29
+      ],
+      "sig": false,
+      "hit_pred": 0.52,
+      "base_pred": 0.442
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.44
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 1,
+     "pred": 1,
+     "n": 203,
+     "runs": 175,
+     "days": 3571,
+     "mean_sel": 0.042,
+     "base": 0.027,
+     "excess": 0.015,
+     "ci90": [
+      -0.1,
+      0.11
+     ],
+     "sig": false,
+     "sd": 1.054,
+     "excess_sd": 0.014,
+     "hit_pred": 0.522,
+     "base_pred": 0.53,
+     "hit_up": 0.522,
+     "base_up": 0.53,
+     "p_shift": 0.8451,
+     "open_entry": {
+      "n": 203,
+      "excess": 0.03,
+      "ci90": [
+       -0.04,
+       0.1
+      ],
+      "sig": false,
+      "hit_pred": 0.532,
+      "base_pred": 0.479
+     },
+     "realtime": {
+      "n": 197,
+      "days": 3322,
+      "excess": -0.045,
+      "ci90": [
+       -0.13,
+       0.04
+      ],
+      "sig": false,
+      "hit_pred": 0.487,
+      "base_pred": 0.526
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.9942
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 5,
+     "pred": 1,
+     "n": 203,
+     "runs": 175,
+     "days": 3567,
+     "mean_sel": 0.223,
+     "base": 0.131,
+     "excess": 0.092,
+     "ci90": [
+      -0.17,
+      0.32
+     ],
+     "sig": false,
+     "sd": 2.383,
+     "excess_sd": 0.039,
+     "hit_pred": 0.567,
+     "base_pred": 0.556,
+     "hit_up": 0.567,
+     "base_up": 0.556,
+     "p_shift": 0.6061,
+     "open_entry": {
+      "n": 203,
+      "excess": 0.107,
+      "ci90": [
+       -0.13,
+       0.34
+      ],
+      "sig": false,
+      "hit_pred": 0.581,
+      "base_pred": 0.535
+     },
+     "realtime": {
+      "n": 197,
+      "days": 3318,
+      "excess": 0.112,
+      "ci90": [
+       -0.17,
+       0.37
+      ],
+      "sig": false,
+      "hit_pred": 0.548,
+      "base_pred": 0.551
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.8368
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 20,
+     "pred": 1,
+     "n": 203,
+     "runs": 175,
+     "days": 3552,
+     "mean_sel": 0.738,
+     "base": 0.506,
+     "excess": 0.232,
+     "ci90": [
+      -0.4,
+      0.71
+     ],
+     "sig": false,
+     "sd": 4.719,
+     "excess_sd": 0.049,
+     "hit_pred": 0.591,
+     "base_pred": 0.558,
+     "hit_up": 0.591,
+     "base_up": 0.558,
+     "p_shift": 0.5606,
+     "open_entry": {
+      "n": 203,
+      "excess": 0.245,
+      "ci90": [
+       -0.35,
+       0.74
+      ],
+      "sig": false,
+      "hit_pred": 0.591,
+      "base_pred": 0.555
+     },
+     "realtime": {
+      "n": 197,
+      "days": 3303,
+      "excess": 0.198,
+      "ci90": [
+       -0.4,
+       0.79
+      ],
+      "sig": false,
+      "hit_pred": 0.533,
+      "base_pred": 0.547
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.8368
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_top",
+     "cell": "외국인 강도 상위 10% → 다음 날",
+     "h": 1,
+     "pred": 1,
+     "n": 358,
+     "runs": 237,
+     "days": 3571,
+     "mean_sel": 0.095,
+     "base": 0.027,
+     "excess": 0.068,
+     "ci90": [
+      0.01,
+      0.12
+     ],
+     "sig": true,
+     "sd": 1.054,
+     "excess_sd": 0.065,
+     "hit_pred": 0.556,
+     "base_pred": 0.53,
+     "hit_up": 0.556,
+     "base_up": 0.53,
+     "p_shift": 0.1881,
+     "open_entry": {
+      "n": 358,
+      "excess": 0.072,
+      "ci90": [
+       0.02,
+       0.12
+      ],
+      "sig": true,
+      "hit_pred": 0.534,
+      "base_pred": 0.479
+     },
+     "realtime": {
+      "n": 343,
+      "days": 3322,
+      "excess": 0.11,
+      "ci90": [
+       0.04,
+       0.19
+      ],
+      "sig": true,
+      "hit_pred": 0.551,
+      "base_pred": 0.526
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.4466
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_bot",
+     "cell": "외국인 강도 하위 10% → 다음 날",
+     "h": 1,
+     "pred": -1,
+     "n": 358,
+     "runs": 213,
+     "days": 3571,
+     "mean_sel": -0.035,
+     "base": 0.027,
+     "excess": -0.062,
+     "ci90": [
+      -0.19,
+      0.06
+     ],
+     "sig": false,
+     "sd": 1.054,
+     "excess_sd": -0.059,
+     "hit_pred": 0.472,
+     "base_pred": 0.47,
+     "hit_up": 0.528,
+     "base_up": 0.53,
+     "p_shift": 0.2228,
+     "open_entry": {
+      "n": 358,
+      "excess": -0.047,
+      "ci90": [
+       -0.14,
+       0.04
+      ],
+      "sig": false,
+      "hit_pred": 0.511,
+      "base_pred": 0.521
+     },
+     "realtime": {
+      "n": 327,
+      "days": 3322,
+      "excess": -0.077,
+      "ci90": [
+       -0.2,
+       0.05
+      ],
+      "sig": false,
+      "hit_pred": 0.48,
+      "base_pred": 0.474
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.4466
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 5,
+     "pred": 1,
+     "n": 330,
+     "runs": 272,
+     "days": 3567,
+     "mean_sel": 0.148,
+     "base": 0.131,
+     "excess": 0.017,
+     "ci90": [
+      -0.21,
+      0.23
+     ],
+     "sig": false,
+     "sd": 2.383,
+     "excess_sd": 0.007,
+     "hit_pred": 0.533,
+     "base_pred": 0.556,
+     "hit_up": 0.533,
+     "base_up": 0.556,
+     "p_shift": 0.9074,
+     "open_entry": {
+      "n": 330,
+      "excess": 0.05,
+      "ci90": [
+       -0.15,
+       0.25
+      ],
+      "sig": false,
+      "hit_pred": 0.542,
+      "base_pred": 0.535
+     },
+     "realtime": {
+      "n": 310,
+      "days": 3318,
+      "excess": -0.047,
+      "ci90": [
+       -0.25,
+       0.17
+      ],
+      "sig": false,
+      "hit_pred": 0.5,
+      "base_pred": 0.551
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.9944
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 20,
+     "pred": 1,
+     "n": 330,
+     "runs": 272,
+     "days": 3552,
+     "mean_sel": 0.753,
+     "base": 0.506,
+     "excess": 0.247,
+     "ci90": [
+      -0.25,
+      0.68
+     ],
+     "sig": false,
+     "sd": 4.719,
+     "excess_sd": 0.052,
+     "hit_pred": 0.582,
+     "base_pred": 0.558,
+     "hit_up": 0.582,
+     "base_up": 0.558,
+     "p_shift": 0.4575,
+     "open_entry": {
+      "n": 330,
+      "excess": 0.28,
+      "ci90": [
+       -0.21,
+       0.7
+      ],
+      "sig": false,
+      "hit_pred": 0.591,
+      "base_pred": 0.555
+     },
+     "realtime": {
+      "n": 310,
+      "days": 3303,
+      "excess": 0.125,
+      "ci90": [
+       -0.38,
+       0.58
+      ],
+      "sig": false,
+      "hit_pred": 0.542,
+      "base_pred": 0.547
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.8318
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 5,
+     "pred": -1,
+     "n": 337,
+     "runs": 281,
+     "days": 3567,
+     "mean_sel": -0.03,
+     "base": 0.131,
+     "excess": -0.161,
+     "ci90": [
+      -0.5,
+      0.15
+     ],
+     "sig": false,
+     "sd": 2.383,
+     "excess_sd": -0.068,
+     "hit_pred": 0.46,
+     "base_pred": 0.444,
+     "hit_up": 0.54,
+     "base_up": 0.556,
+     "p_shift": 0.2233,
+     "open_entry": {
+      "n": 337,
+      "excess": -0.19,
+      "ci90": [
+       -0.48,
+       0.09
+      ],
+      "sig": false,
+      "hit_pred": 0.484,
+      "base_pred": 0.464
+     },
+     "realtime": {
+      "n": 320,
+      "days": 3318,
+      "excess": -0.229,
+      "ci90": [
+       -0.56,
+       0.08
+      ],
+      "sig": false,
+      "hit_pred": 0.484,
+      "base_pred": 0.449
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.4466
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 20,
+     "pred": -1,
+     "n": 337,
+     "runs": 281,
+     "days": 3552,
+     "mean_sel": 0.484,
+     "base": 0.506,
+     "excess": -0.022,
+     "ci90": [
+      -0.58,
+      0.49
+     ],
+     "sig": false,
+     "sd": 4.719,
+     "excess_sd": -0.005,
+     "hit_pred": 0.475,
+     "base_pred": 0.442,
+     "hit_up": 0.525,
+     "base_up": 0.558,
+     "p_shift": 0.9447,
+     "open_entry": {
+      "n": 337,
+      "excess": -0.05,
+      "ci90": [
+       -0.61,
+       0.43
+      ],
+      "sig": false,
+      "hit_pred": 0.481,
+      "base_pred": 0.445
+     },
+     "realtime": {
+      "n": 319,
+      "days": 3303,
+      "excess": -0.308,
+      "ci90": [
+       -0.82,
+       0.18
+      ],
+      "sig": false,
+      "hit_pred": 0.486,
+      "base_pred": 0.453
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.9944
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_pos",
+     "cell": "20일 누적 외국인 강도 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 1868,
+     "runs": 74,
+     "days": 3533,
+     "mean_sel": 0.023,
+     "base": 0.466,
+     "excess": -0.443,
+     "ci90": [
+      -0.84,
+      -0.1
+     ],
+     "sig": true,
+     "sd": 4.695,
+     "excess_sd": -0.094,
+     "hit_pred": 0.522,
+     "base_pred": 0.555,
+     "hit_up": 0.522,
+     "base_up": 0.555,
+     "p_shift": 0.0704,
+     "open_entry": {
+      "n": 1868,
+      "excess": -0.443,
+      "ci90": [
+       -0.84,
+       -0.11
+      ],
+      "sig": true,
+      "hit_pred": 0.521,
+      "base_pred": 0.553
+     },
+     "ci90_b60": [
+      -0.89,
+      -0.1
+     ],
+     "p_holm": 1.0,
+     "q_bh": 0.3143
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_neg",
+     "cell": "20일 누적 외국인 강도 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 1665,
+     "runs": 74,
+     "days": 3533,
+     "mean_sel": 0.962,
+     "base": 0.466,
+     "excess": 0.497,
+     "ci90": [
+      0.12,
+      0.97
+     ],
+     "sig": true,
+     "sd": 4.695,
+     "excess_sd": 0.106,
+     "hit_pred": 0.407,
+     "base_pred": 0.445,
+     "hit_up": 0.593,
+     "base_up": 0.555,
+     "p_shift": 0.0704,
+     "open_entry": {
+      "n": 1665,
+      "excess": 0.497,
+      "ci90": [
+       0.12,
+       0.96
+      ],
+      "sig": true,
+      "hit_pred": 0.412,
+      "base_pred": 0.447
+     },
+     "ci90_b60": [
+      0.12,
+      0.97
+     ],
+     "p_holm": 1.0,
+     "q_bh": 0.3143
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_top20",
+     "cell": "20일 누적 외국인 강도 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 711,
+     "runs": 67,
+     "days": 3533,
+     "mean_sel": 0.228,
+     "base": 0.466,
+     "excess": -0.237,
+     "ci90": [
+      -0.87,
+      0.31
+     ],
+     "sig": false,
+     "sd": 4.695,
+     "excess_sd": -0.051,
+     "hit_pred": 0.537,
+     "base_pred": 0.555,
+     "hit_up": 0.537,
+     "base_up": 0.555,
+     "p_shift": 0.6853,
+     "open_entry": {
+      "n": 711,
+      "excess": -0.26,
+      "ci90": [
+       -0.88,
+       0.27
+      ],
+      "sig": false,
+      "hit_pred": 0.539,
+      "base_pred": 0.553
+     },
+     "realtime": {
+      "n": 596,
+      "days": 3284,
+      "excess": -0.521,
+      "ci90": [
+       -1.25,
+       0.3
+      ],
+      "sig": false,
+      "hit_pred": 0.49,
+      "base_pred": 0.547
+     },
+     "ci90_b60": [
+      -0.93,
+      0.27
+     ],
+     "p_holm": 1.0,
+     "q_bh": 0.8566
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_bot20",
+     "cell": "20일 누적 외국인 강도 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 711,
+     "runs": 54,
+     "days": 3533,
+     "mean_sel": 1.643,
+     "base": 0.466,
+     "excess": 1.177,
+     "ci90": [
+      0.47,
+      1.87
+     ],
+     "sig": true,
+     "sd": 4.695,
+     "excess_sd": 0.251,
+     "hit_pred": 0.349,
+     "base_pred": 0.445,
+     "hit_up": 0.651,
+     "base_up": 0.555,
+     "p_shift": 0.0197,
+     "open_entry": {
+      "n": 711,
+      "excess": 1.179,
+      "ci90": [
+       0.46,
+       1.89
+      ],
+      "sig": true,
+      "hit_pred": 0.349,
+      "base_pred": 0.447
+     },
+     "realtime": {
+      "n": 688,
+      "days": 3284,
+      "excess": 1.183,
+      "ci90": [
+       0.52,
+       1.9
+      ],
+      "sig": true,
+      "hit_pred": 0.339,
+      "base_pred": 0.453
+     },
+     "ci90_b60": [
+      0.36,
+      1.96
+     ],
+     "p_holm": 0.394,
+     "q_bh": 0.3143
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_rho",
+     "cell": "20일 누적 외국인 강도 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 3533,
+     "rho": -0.128,
+     "ci90_b20": [
+      -0.221,
+      -0.05
+     ],
+     "ci90_b60": [
+      -0.229,
+      -0.044
+     ],
+     "ci90": [
+      -0.221,
+      -0.05
+     ],
+     "sig": true,
+     "hit_pred": 0.468,
+     "base_pred": 0.503,
+     "base_up": 0.555,
+     "excess": -0.128,
+     "p_shift": 0.0356,
+     "open_entry": {
+      "n": 3533,
+      "rho": -0.133,
+      "ci90_b20": [
+       -0.225,
+       -0.055
+      ],
+      "ci90_b60": [
+       -0.231,
+       -0.048
+      ],
+      "ci90": [
+       -0.225,
+       -0.055
+      ],
+      "sig": true,
+      "hit_pred": 0.47,
+      "base_pred": 0.503,
+      "base_up": 0.553,
+      "excess": -0.133
+     },
+     "p_holm": 0.6764,
+     "q_bh": 0.3143
+    }
+   ],
+   "control": [
+    {
+     "hyp": "H6c",
+     "key": "H6c_pos",
+     "cell": "지난 20일 지수 수익 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 1975,
+     "runs": 159,
+     "days": 3533,
+     "mean_sel": 0.265,
+     "base": 0.466,
+     "excess": -0.2,
+     "ci90": [
+      -0.5,
+      0.14
+     ],
+     "sig": false,
+     "sd": 4.695,
+     "excess_sd": -0.043,
+     "hit_pred": 0.533,
+     "base_pred": 0.555,
+     "hit_up": 0.533,
+     "base_up": 0.555
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_neg",
+     "cell": "지난 20일 지수 수익 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 1558,
+     "runs": 158,
+     "days": 3533,
+     "mean_sel": 0.72,
+     "base": 0.466,
+     "excess": 0.254,
+     "ci90": [
+      -0.16,
+      0.62
+     ],
+     "sig": false,
+     "sd": 4.695,
+     "excess_sd": 0.054,
+     "hit_pred": 0.416,
+     "base_pred": 0.445,
+     "hit_up": 0.584,
+     "base_up": 0.555
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_top20",
+     "cell": "지난 20일 지수 수익 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 711,
+     "runs": 118,
+     "days": 3533,
+     "mean_sel": 0.784,
+     "base": 0.466,
+     "excess": 0.318,
+     "ci90": [
+      -0.4,
+      0.9
+     ],
+     "sig": false,
+     "sd": 4.695,
+     "excess_sd": 0.068,
+     "hit_pred": 0.561,
+     "base_pred": 0.555,
+     "hit_up": 0.561,
+     "base_up": 0.555
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_bot20",
+     "cell": "지난 20일 지수 수익 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 702,
+     "runs": 128,
+     "days": 3533,
+     "mean_sel": 1.563,
+     "base": 0.466,
+     "excess": 1.097,
+     "ci90": [
+      0.36,
+      1.75
+     ],
+     "sig": true,
+     "sd": 4.695,
+     "excess_sd": 0.234,
+     "hit_pred": 0.336,
+     "base_pred": 0.445,
+     "hit_up": 0.664,
+     "base_up": 0.555
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_rho",
+     "cell": "지난 20일 지수 수익 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 3533,
+     "rho": -0.078,
+     "ci90_b20": [
+      -0.162,
+      0.0
+     ],
+     "ci90_b60": [
+      -0.17,
+      0.006
+     ],
+     "ci90": [
+      -0.162,
+      0.0
+     ],
+     "sig": false,
+     "hit_pred": 0.481,
+     "base_pred": 0.507,
+     "base_up": 0.555,
+     "excess": -0.078
+    }
+   ],
+   "volatility": [
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 173,
+      "days": 3572,
+      "mean_flag": 0.847,
+      "mean_other": 0.742,
+      "ratio": 1.142,
+      "ratio_ci90": [
+       0.983,
+       1.298
+      ],
+      "excess": 0.1,
+      "ci90": [
+       -0.01,
+       0.21
+      ],
+      "sig": false,
+      "hit_above_median": 0.52,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.053,
+      "p_shift": 0.0329,
+      "p_holm": 0.0412
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 173,
+      "days": 726,
+      "mean_flag": 0.847,
+      "mean_other": 0.756,
+      "ratio": 1.12,
+      "ratio_ci90": [
+       0.973,
+       1.274
+      ],
+      "excess": 0.069,
+      "ci90": [
+       -0.02,
+       0.15
+      ],
+      "sig": false,
+      "hit_above_median": 0.514,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.054
+     },
+     "quarterly_only": {
+      "n": 57,
+      "days": 3572,
+      "mean_flag": 0.784,
+      "mean_other": 0.746,
+      "ratio": 1.051,
+      "ratio_ci90": [
+       0.841,
+       1.25
+      ],
+      "excess": 0.037,
+      "ci90": [
+       -0.12,
+       0.18
+      ],
+      "sig": false,
+      "hit_above_median": 0.491,
+      "base_hit": 0.5,
+      "share_big_flag": 0.053,
+      "share_big_other": 0.055
+     },
+     "monthly_only": {
+      "n": 116,
+      "days": 3572,
+      "mean_flag": 0.878,
+      "mean_other": 0.742,
+      "ratio": 1.182,
+      "ratio_ci90": [
+       0.976,
+       1.385
+      ],
+      "excess": 0.131,
+      "ci90": [
+       -0.02,
+       0.27
+      ],
+      "sig": false,
+      "hit_above_median": 0.534,
+      "base_hit": 0.5,
+      "share_big_flag": 0.103,
+      "share_big_other": 0.053
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 173,
+      "days": 3572,
+      "mean_flag": 1.17,
+      "mean_other": 1.104,
+      "ratio": 1.059,
+      "ratio_ci90": [
+       0.993,
+       1.126
+      ],
+      "excess": 0.062,
+      "ci90": [
+       -0.01,
+       0.13
+      ],
+      "sig": false,
+      "hit_above_median": 0.543,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.078
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 173,
+      "days": 726,
+      "mean_flag": 1.17,
+      "mean_other": 1.131,
+      "ratio": 1.034,
+      "ratio_ci90": [
+       0.974,
+       1.113
+      ],
+      "excess": 0.029,
+      "ci90": [
+       -0.02,
+       0.09
+      ],
+      "sig": false,
+      "hit_above_median": 0.491,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.078
+     },
+     "quarterly_only": {
+      "n": 57,
+      "days": 3572,
+      "mean_flag": 1.202,
+      "mean_other": 1.106,
+      "ratio": 1.087,
+      "ratio_ci90": [
+       0.972,
+       1.197
+      ],
+      "excess": 0.095,
+      "ci90": [
+       -0.03,
+       0.21
+      ],
+      "sig": false,
+      "hit_above_median": 0.561,
+      "base_hit": 0.5,
+      "share_big_flag": 0.088,
+      "share_big_other": 0.078
+     },
+     "monthly_only": {
+      "n": 116,
+      "days": 3572,
+      "mean_flag": 1.154,
+      "mean_other": 1.106,
+      "ratio": 1.043,
+      "ratio_ci90": [
+       0.952,
+       1.137
+      ],
+      "excess": 0.046,
+      "ci90": [
+       -0.05,
+       0.14
+      ],
+      "sig": false,
+      "hit_above_median": 0.534,
+      "base_hit": 0.5,
+      "share_big_flag": 0.086,
+      "share_big_other": 0.078
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 173,
+      "days": 3572,
+      "mean_flag": 0.856,
+      "mean_other": 0.741,
+      "ratio": 1.155,
+      "ratio_ci90": [
+       1.059,
+       1.273
+      ],
+      "excess": 0.109,
+      "ci90": [
+       0.04,
+       0.19
+      ],
+      "sig": true,
+      "hit_above_median": 0.613,
+      "base_hit": 0.5,
+      "share_big_flag": 0.052,
+      "share_big_other": 0.055,
+      "p_shift": 0.0206,
+      "p_holm": 0.0412
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 173,
+      "days": 726,
+      "mean_flag": 0.856,
+      "mean_other": 0.742,
+      "ratio": 1.153,
+      "ratio_ci90": [
+       1.028,
+       1.277
+      ],
+      "excess": 0.087,
+      "ci90": [
+       0.02,
+       0.15
+      ],
+      "sig": true,
+      "hit_above_median": 0.607,
+      "base_hit": 0.5,
+      "share_big_flag": 0.052,
+      "share_big_other": 0.06
+     },
+     "quarterly_only": {
+      "n": 57,
+      "days": 3572,
+      "mean_flag": 0.893,
+      "mean_other": 0.744,
+      "ratio": 1.2,
+      "ratio_ci90": [
+       1.01,
+       1.416
+      ],
+      "excess": 0.146,
+      "ci90": [
+       0.01,
+       0.3
+      ],
+      "sig": true,
+      "hit_above_median": 0.632,
+      "base_hit": 0.5,
+      "share_big_flag": 0.07,
+      "share_big_other": 0.054
+     },
+     "monthly_only": {
+      "n": 116,
+      "days": 3572,
+      "mean_flag": 0.838,
+      "mean_other": 0.744,
+      "ratio": 1.126,
+      "ratio_ci90": [
+       1.009,
+       1.258
+      ],
+      "excess": 0.091,
+      "ci90": [
+       0.01,
+       0.18
+      ],
+      "sig": true,
+      "hit_above_median": 0.595,
+      "base_hit": 0.5,
+      "share_big_flag": 0.043,
+      "share_big_other": 0.055
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 173,
+      "days": 3572,
+      "mean_flag": 1.132,
+      "mean_other": 1.106,
+      "ratio": 1.023,
+      "ratio_ci90": [
+       0.963,
+       1.079
+      ],
+      "excess": 0.024,
+      "ci90": [
+       -0.04,
+       0.08
+      ],
+      "sig": false,
+      "hit_above_median": 0.532,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.078
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 173,
+      "days": 726,
+      "mean_flag": 1.132,
+      "mean_other": 1.087,
+      "ratio": 1.041,
+      "ratio_ci90": [
+       0.986,
+       1.102
+      ],
+      "excess": 0.034,
+      "ci90": [
+       -0.01,
+       0.08
+      ],
+      "sig": false,
+      "hit_above_median": 0.549,
+      "base_hit": 0.5,
+      "share_big_flag": 0.087,
+      "share_big_other": 0.076
+     },
+     "quarterly_only": {
+      "n": 57,
+      "days": 3572,
+      "mean_flag": 1.088,
+      "mean_other": 1.108,
+      "ratio": 0.982,
+      "ratio_ci90": [
+       0.841,
+       1.135
+      ],
+      "excess": -0.02,
+      "ci90": [
+       -0.18,
+       0.15
+      ],
+      "sig": false,
+      "hit_above_median": 0.474,
+      "base_hit": 0.5,
+      "share_big_flag": 0.053,
+      "share_big_other": 0.079
+     },
+     "monthly_only": {
+      "n": 116,
+      "days": 3572,
+      "mean_flag": 1.153,
+      "mean_other": 1.106,
+      "ratio": 1.043,
+      "ratio_ci90": [
+       0.964,
+       1.121
+      ],
+      "excess": 0.046,
+      "ci90": [
+       -0.04,
+       0.13
+      ],
+      "sig": false,
+      "hit_above_median": 0.56,
+      "base_hit": 0.5,
+      "share_big_flag": 0.103,
+      "share_big_other": 0.078
+     }
+    }
+   ]
+  },
+  "IS": {
+   "from": "2023-08-31",
+   "to": "2026-10-02",
+   "days": 750,
+   "direction": [
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 1,
+     "pred": 1,
+     "n": 44,
+     "runs": 17,
+     "days": 749,
+     "mean_sel": -0.152,
+     "base": 0.159,
+     "excess": -0.311,
+     "ci90": [
+      -0.7,
+      -0.01
+     ],
+     "sig": true,
+     "sd": 2.204,
+     "excess_sd": -0.141,
+     "hit_pred": 0.477,
+     "base_pred": 0.571,
+     "hit_up": 0.477,
+     "base_up": 0.571,
+     "p_shift": 0.2657,
+     "open_entry": {
+      "n": 44,
+      "excess": -0.109,
+      "ci90": [
+       -0.28,
+       0.06
+      ],
+      "sig": false,
+      "hit_pred": 0.523,
+      "base_pred": 0.511
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 17,
+      "excess": -0.229,
+      "ci90": [
+       -0.99,
+       0.37
+      ],
+      "sig": false,
+      "hit_pred": 0.588,
+      "base_pred": 0.571
+     }
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 5,
+     "pred": 1,
+     "n": 44,
+     "runs": 17,
+     "days": 745,
+     "mean_sel": 0.764,
+     "base": 0.761,
+     "excess": 0.002,
+     "ci90": [
+      -0.85,
+      0.85
+     ],
+     "sig": false,
+     "sd": 4.349,
+     "excess_sd": 0.001,
+     "hit_pred": 0.568,
+     "base_pred": 0.588,
+     "hit_up": 0.568,
+     "base_up": 0.588,
+     "p_shift": 0.9955,
+     "open_entry": {
+      "n": 44,
+      "excess": 0.213,
+      "ci90": [
+       -0.58,
+       1.02
+      ],
+      "sig": false,
+      "hit_pred": 0.636,
+      "base_pred": 0.587
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 17,
+      "excess": 0.435,
+      "ci90": [
+       -0.63,
+       1.46
+      ],
+      "sig": false,
+      "hit_pred": 0.588,
+      "base_pred": 0.588
+     }
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 20,
+     "pred": 1,
+     "n": 44,
+     "runs": 17,
+     "days": 730,
+     "mean_sel": 2.27,
+     "base": 3.168,
+     "excess": -0.898,
+     "ci90": [
+      -3.53,
+      1.86
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.098,
+     "hit_pred": 0.568,
+     "base_pred": 0.642,
+     "hit_up": 0.568,
+     "base_up": 0.642,
+     "p_shift": 0.6175,
+     "open_entry": {
+      "n": 44,
+      "excess": -0.689,
+      "ci90": [
+       -3.24,
+       2.11
+      ],
+      "sig": false,
+      "hit_pred": 0.614,
+      "base_pred": 0.638
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 17,
+      "excess": 0.178,
+      "ci90": [
+       -3.05,
+       3.55
+      ],
+      "sig": false,
+      "hit_pred": 0.588,
+      "base_pred": 0.642
+     }
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 1,
+     "pred": -1,
+     "n": 105,
+     "runs": 27,
+     "days": 749,
+     "mean_sel": -0.02,
+     "base": 0.159,
+     "excess": -0.179,
+     "ci90": [
+      -0.63,
+      0.19
+     ],
+     "sig": false,
+     "sd": 2.204,
+     "excess_sd": -0.081,
+     "hit_pred": 0.448,
+     "base_pred": 0.429,
+     "hit_up": 0.552,
+     "base_up": 0.571,
+     "p_shift": 0.3045,
+     "open_entry": {
+      "n": 105,
+      "excess": -0.199,
+      "ci90": [
+       -0.46,
+       -0.02
+      ],
+      "sig": true,
+      "hit_pred": 0.448,
+      "base_pred": 0.487
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 27,
+      "excess": 0.137,
+      "ci90": [
+       -0.48,
+       0.74
+      ],
+      "sig": false,
+      "hit_pred": 0.37,
+      "base_pred": 0.429
+     }
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 5,
+     "pred": -1,
+     "n": 104,
+     "runs": 26,
+     "days": 745,
+     "mean_sel": 0.38,
+     "base": 0.761,
+     "excess": -0.382,
+     "ci90": [
+      -2.3,
+      0.94
+     ],
+     "sig": false,
+     "sd": 4.349,
+     "excess_sd": -0.088,
+     "hit_pred": 0.433,
+     "base_pred": 0.412,
+     "hit_up": 0.567,
+     "base_up": 0.588,
+     "p_shift": 0.5556,
+     "open_entry": {
+      "n": 104,
+      "excess": -0.416,
+      "ci90": [
+       -2.17,
+       0.78
+      ],
+      "sig": false,
+      "hit_pred": 0.433,
+      "base_pred": 0.413
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 26,
+      "excess": -1.611,
+      "ci90": [
+       -3.62,
+       -0.25
+      ],
+      "sig": true,
+      "hit_pred": 0.538,
+      "base_pred": 0.412
+     }
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 20,
+     "pred": -1,
+     "n": 101,
+     "runs": 25,
+     "days": 730,
+     "mean_sel": 1.349,
+     "base": 3.168,
+     "excess": -1.818,
+     "ci90": [
+      -5.5,
+      1.77
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.198,
+     "hit_pred": 0.465,
+     "base_pred": 0.358,
+     "hit_up": 0.535,
+     "base_up": 0.642,
+     "p_shift": 0.4055,
+     "open_entry": {
+      "n": 101,
+      "excess": -1.833,
+      "ci90": [
+       -5.43,
+       1.68
+      ],
+      "sig": false,
+      "hit_pred": 0.465,
+      "base_pred": 0.362
+     },
+     "alt": {
+      "name": "연속 정확히 5일째",
+      "n": 25,
+      "excess": -0.807,
+      "ci90": [
+       -2.86,
+       1.74
+      ],
+      "sig": false,
+      "hit_pred": 0.4,
+      "base_pred": 0.358
+     }
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 1,
+     "pred": 1,
+     "n": 78,
+     "runs": 62,
+     "days": 749,
+     "mean_sel": 0.373,
+     "base": 0.159,
+     "excess": 0.214,
+     "ci90": [
+      -0.08,
+      0.49
+     ],
+     "sig": false,
+     "sd": 2.204,
+     "excess_sd": 0.097,
+     "hit_pred": 0.564,
+     "base_pred": 0.571,
+     "hit_up": 0.564,
+     "base_up": 0.571,
+     "p_shift": 0.3657,
+     "open_entry": {
+      "n": 78,
+      "excess": 0.172,
+      "ci90": [
+       0.01,
+       0.34
+      ],
+      "sig": true,
+      "hit_pred": 0.513,
+      "base_pred": 0.511
+     },
+     "realtime": {
+      "n": 81,
+      "days": 749,
+      "excess": 0.239,
+      "ci90": [
+       -0.06,
+       0.52
+      ],
+      "sig": false,
+      "hit_pred": 0.556,
+      "base_pred": 0.571
+     }
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 5,
+     "pred": 1,
+     "n": 78,
+     "runs": 62,
+     "days": 745,
+     "mean_sel": 1.732,
+     "base": 0.761,
+     "excess": 0.971,
+     "ci90": [
+      0.31,
+      1.69
+     ],
+     "sig": true,
+     "sd": 4.349,
+     "excess_sd": 0.223,
+     "hit_pred": 0.679,
+     "base_pred": 0.588,
+     "hit_up": 0.679,
+     "base_up": 0.588,
+     "p_shift": 0.045,
+     "open_entry": {
+      "n": 78,
+      "excess": 0.923,
+      "ci90": [
+       0.37,
+       1.53
+      ],
+      "sig": true,
+      "hit_pred": 0.679,
+      "base_pred": 0.587
+     },
+     "realtime": {
+      "n": 81,
+      "days": 745,
+      "excess": 1.097,
+      "ci90": [
+       0.49,
+       1.77
+      ],
+      "sig": true,
+      "hit_pred": 0.728,
+      "base_pred": 0.588
+     }
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 20,
+     "pred": 1,
+     "n": 75,
+     "runs": 61,
+     "days": 730,
+     "mean_sel": 5.381,
+     "base": 3.168,
+     "excess": 2.213,
+     "ci90": [
+      -0.27,
+      4.19
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": 0.241,
+     "hit_pred": 0.627,
+     "base_pred": 0.642,
+     "hit_up": 0.627,
+     "base_up": 0.642,
+     "p_shift": 0.0338,
+     "open_entry": {
+      "n": 75,
+      "excess": 2.22,
+      "ci90": [
+       -0.14,
+       4.19
+      ],
+      "sig": false,
+      "hit_pred": 0.64,
+      "base_pred": 0.638
+     },
+     "realtime": {
+      "n": 78,
+      "days": 730,
+      "excess": 2.434,
+      "ci90": [
+       0.21,
+       4.32
+      ],
+      "sig": true,
+      "hit_pred": 0.667,
+      "base_pred": 0.642
+     }
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_top",
+     "cell": "외국인 강도 상위 10% → 다음 날",
+     "h": 1,
+     "pred": 1,
+     "n": 75,
+     "runs": 57,
+     "days": 749,
+     "mean_sel": 0.062,
+     "base": 0.159,
+     "excess": -0.097,
+     "ci90": [
+      -0.43,
+      0.18
+     ],
+     "sig": false,
+     "sd": 2.204,
+     "excess_sd": -0.044,
+     "hit_pred": 0.533,
+     "base_pred": 0.571,
+     "hit_up": 0.533,
+     "base_up": 0.571,
+     "p_shift": 0.709,
+     "open_entry": {
+      "n": 75,
+      "excess": -0.002,
+      "ci90": [
+       -0.22,
+       0.2
+      ],
+      "sig": false,
+      "hit_pred": 0.427,
+      "base_pred": 0.511
+     },
+     "realtime": {
+      "n": 81,
+      "days": 749,
+      "excess": -0.159,
+      "ci90": [
+       -0.51,
+       0.13
+      ],
+      "sig": false,
+      "hit_pred": 0.543,
+      "base_pred": 0.571
+     }
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_bot",
+     "cell": "외국인 강도 하위 10% → 다음 날",
+     "h": 1,
+     "pred": -1,
+     "n": 76,
+     "runs": 48,
+     "days": 749,
+     "mean_sel": 0.046,
+     "base": 0.159,
+     "excess": -0.113,
+     "ci90": [
+      -0.75,
+      0.43
+     ],
+     "sig": false,
+     "sd": 2.204,
+     "excess_sd": -0.051,
+     "hit_pred": 0.474,
+     "base_pred": 0.429,
+     "hit_up": 0.526,
+     "base_up": 0.571,
+     "p_shift": 0.5866,
+     "open_entry": {
+      "n": 76,
+      "excess": -0.057,
+      "ci90": [
+       -0.63,
+       0.34
+      ],
+      "sig": false,
+      "hit_pred": 0.474,
+      "base_pred": 0.487
+     },
+     "realtime": {
+      "n": 116,
+      "days": 749,
+      "excess": -0.105,
+      "ci90": [
+       -0.5,
+       0.25
+      ],
+      "sig": false,
+      "hit_pred": 0.414,
+      "base_pred": 0.429
+     }
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 5,
+     "pred": 1,
+     "n": 73,
+     "runs": 60,
+     "days": 745,
+     "mean_sel": 1.582,
+     "base": 0.761,
+     "excess": 0.821,
+     "ci90": [
+      0.22,
+      1.73
+     ],
+     "sig": true,
+     "sd": 4.349,
+     "excess_sd": 0.189,
+     "hit_pred": 0.658,
+     "base_pred": 0.588,
+     "hit_up": 0.658,
+     "base_up": 0.588,
+     "p_shift": 0.1276,
+     "open_entry": {
+      "n": 73,
+      "excess": 0.678,
+      "ci90": [
+       0.09,
+       1.56
+      ],
+      "sig": true,
+      "hit_pred": 0.671,
+      "base_pred": 0.587
+     },
+     "realtime": {
+      "n": 87,
+      "days": 745,
+      "excess": 0.499,
+      "ci90": [
+       -0.01,
+       1.2
+      ],
+      "sig": false,
+      "hit_pred": 0.632,
+      "base_pred": 0.588
+     }
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 20,
+     "pred": 1,
+     "n": 68,
+     "runs": 57,
+     "days": 730,
+     "mean_sel": 5.039,
+     "base": 3.168,
+     "excess": 1.871,
+     "ci90": [
+      -0.29,
+      4.2
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": 0.204,
+     "hit_pred": 0.618,
+     "base_pred": 0.642,
+     "hit_up": 0.618,
+     "base_up": 0.642,
+     "p_shift": 0.1475,
+     "open_entry": {
+      "n": 68,
+      "excess": 1.805,
+      "ci90": [
+       -0.26,
+       4.08
+      ],
+      "sig": false,
+      "hit_pred": 0.647,
+      "base_pred": 0.638
+     },
+     "realtime": {
+      "n": 82,
+      "days": 730,
+      "excess": 1.496,
+      "ci90": [
+       -0.42,
+       3.56
+      ],
+      "sig": false,
+      "hit_pred": 0.622,
+      "base_pred": 0.642
+     }
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 5,
+     "pred": -1,
+     "n": 69,
+     "runs": 55,
+     "days": 745,
+     "mean_sel": 0.864,
+     "base": 0.761,
+     "excess": 0.103,
+     "ci90": [
+      -0.78,
+      0.85
+     ],
+     "sig": false,
+     "sd": 4.349,
+     "excess_sd": 0.024,
+     "hit_pred": 0.449,
+     "base_pred": 0.412,
+     "hit_up": 0.551,
+     "base_up": 0.588,
+     "p_shift": 0.8874,
+     "open_entry": {
+      "n": 69,
+      "excess": 0.193,
+      "ci90": [
+       -0.63,
+       0.87
+      ],
+      "sig": false,
+      "hit_pred": 0.377,
+      "base_pred": 0.413
+     },
+     "realtime": {
+      "n": 95,
+      "days": 745,
+      "excess": -0.107,
+      "ci90": [
+       -0.83,
+       0.45
+      ],
+      "sig": false,
+      "hit_pred": 0.453,
+      "base_pred": 0.412
+     }
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 20,
+     "pred": -1,
+     "n": 67,
+     "runs": 54,
+     "days": 730,
+     "mean_sel": 2.855,
+     "base": 3.168,
+     "excess": -0.313,
+     "ci90": [
+      -3.08,
+      2.12
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.034,
+     "hit_pred": 0.284,
+     "base_pred": 0.358,
+     "hit_up": 0.716,
+     "base_up": 0.642,
+     "p_shift": 0.894,
+     "open_entry": {
+      "n": 67,
+      "excess": -0.3,
+      "ci90": [
+       -2.94,
+       2.11
+      ],
+      "sig": false,
+      "hit_pred": 0.313,
+      "base_pred": 0.362
+     },
+     "realtime": {
+      "n": 94,
+      "days": 730,
+      "excess": -0.42,
+      "ci90": [
+       -2.05,
+       0.88
+      ],
+      "sig": false,
+      "hit_pred": 0.309,
+      "base_pred": 0.358
+     }
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_pos",
+     "cell": "20일 누적 외국인 강도 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 308,
+     "runs": 14,
+     "days": 730,
+     "mean_sel": 4.383,
+     "base": 3.168,
+     "excess": 1.215,
+     "ci90": [
+      -0.73,
+      3.45
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": 0.132,
+     "hit_pred": 0.695,
+     "base_pred": 0.642,
+     "hit_up": 0.695,
+     "base_up": 0.642,
+     "p_shift": 0.5054,
+     "open_entry": {
+      "n": 308,
+      "excess": 1.237,
+      "ci90": [
+       -0.66,
+       3.43
+      ],
+      "sig": false,
+      "hit_pred": 0.685,
+      "base_pred": 0.638
+     },
+     "ci90_b60": [
+      -0.78,
+      3.73
+     ]
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_neg",
+     "cell": "20일 누적 외국인 강도 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 422,
+     "runs": 15,
+     "days": 730,
+     "mean_sel": 2.281,
+     "base": 3.168,
+     "excess": -0.887,
+     "ci90": [
+      -2.26,
+      0.56
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.097,
+     "hit_pred": 0.396,
+     "base_pred": 0.358,
+     "hit_up": 0.604,
+     "base_up": 0.642,
+     "p_shift": 0.5054,
+     "open_entry": {
+      "n": 422,
+      "excess": -0.903,
+      "ci90": [
+       -2.31,
+       0.53
+      ],
+      "sig": false,
+      "hit_pred": 0.396,
+      "base_pred": 0.362
+     },
+     "ci90_b60": [
+      -2.27,
+      0.85
+     ]
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_top20",
+     "cell": "20일 누적 외국인 강도 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 150,
+     "runs": 16,
+     "days": 730,
+     "mean_sel": 3.919,
+     "base": 3.168,
+     "excess": 0.751,
+     "ci90": [
+      -1.97,
+      3.46
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": 0.082,
+     "hit_pred": 0.753,
+     "base_pred": 0.642,
+     "hit_up": 0.753,
+     "base_up": 0.642,
+     "p_shift": 0.7619,
+     "open_entry": {
+      "n": 150,
+      "excess": 0.795,
+      "ci90": [
+       -1.82,
+       3.49
+      ],
+      "sig": false,
+      "hit_pred": 0.74,
+      "base_pred": 0.638
+     },
+     "realtime": {
+      "n": 155,
+      "days": 730,
+      "excess": 2.133,
+      "ci90": [
+       -0.74,
+       4.82
+      ],
+      "sig": false,
+      "hit_pred": 0.826,
+      "base_pred": 0.642
+     },
+     "ci90_b60": [
+      -2.05,
+      3.03
+     ]
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_bot20",
+     "cell": "20일 누적 외국인 강도 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 138,
+     "runs": 6,
+     "days": 730,
+     "mean_sel": 2.339,
+     "base": 3.168,
+     "excess": -0.829,
+     "ci90": [
+      -6.46,
+      5.14
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.09,
+     "hit_pred": 0.42,
+     "base_pred": 0.358,
+     "hit_up": 0.58,
+     "base_up": 0.642,
+     "p_shift": 0.7957,
+     "open_entry": {
+      "n": 138,
+      "excess": -1.006,
+      "ci90": [
+       -6.61,
+       4.82
+      ],
+      "sig": false,
+      "hit_pred": 0.428,
+      "base_pred": 0.362
+     },
+     "realtime": {
+      "n": 231,
+      "days": 730,
+      "excess": -1.572,
+      "ci90": [
+       -3.99,
+       0.81
+      ],
+      "sig": false,
+      "hit_pred": 0.45,
+      "base_pred": 0.358
+     },
+     "ci90_b60": [
+      -6.31,
+      5.53
+     ]
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_rho",
+     "cell": "20일 누적 외국인 강도 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 730,
+     "rho": 0.103,
+     "ci90_b20": [
+      -0.1,
+      0.318
+     ],
+     "ci90_b60": [
+      -0.138,
+      0.312
+     ],
+     "ci90": [
+      -0.1,
+      0.318
+     ],
+     "sig": false,
+     "hit_pred": 0.522,
+     "base_pred": 0.478,
+     "base_up": 0.642,
+     "excess": 0.103,
+     "p_shift": 0.576,
+     "open_entry": {
+      "n": 730,
+      "rho": 0.106,
+      "ci90_b20": [
+       -0.098,
+       0.323
+      ],
+      "ci90_b60": [
+       -0.127,
+       0.319
+      ],
+      "ci90": [
+       -0.098,
+       0.323
+      ],
+      "sig": false,
+      "hit_pred": 0.518,
+      "base_pred": 0.478,
+      "base_up": 0.638,
+      "excess": 0.106
+     }
+    }
+   ],
+   "control": [
+    {
+     "hyp": "H6c",
+     "key": "H6c_pos",
+     "cell": "지난 20일 지수 수익 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 462,
+     "runs": 42,
+     "days": 730,
+     "mean_sel": 3.772,
+     "base": 3.168,
+     "excess": 0.604,
+     "ci90": [
+      -0.41,
+      1.61
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": 0.066,
+     "hit_pred": 0.671,
+     "base_pred": 0.642,
+     "hit_up": 0.671,
+     "base_up": 0.642
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_neg",
+     "cell": "지난 20일 지수 수익 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 268,
+     "runs": 42,
+     "days": 730,
+     "mean_sel": 2.126,
+     "base": 3.168,
+     "excess": -1.041,
+     "ci90": [
+      -2.7,
+      0.66
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.113,
+     "hit_pred": 0.407,
+     "base_pred": 0.358,
+     "hit_up": 0.593,
+     "base_up": 0.642
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_top20",
+     "cell": "지난 20일 지수 수익 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 147,
+     "runs": 18,
+     "days": 730,
+     "mean_sel": 6.269,
+     "base": 3.168,
+     "excess": 3.101,
+     "ci90": [
+      0.02,
+      6.12
+     ],
+     "sig": true,
+     "sd": 9.183,
+     "excess_sd": 0.338,
+     "hit_pred": 0.755,
+     "base_pred": 0.642,
+     "hit_up": 0.755,
+     "base_up": 0.642
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_bot20",
+     "cell": "지난 20일 지수 수익 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 149,
+     "runs": 22,
+     "days": 730,
+     "mean_sel": 3.115,
+     "base": 3.168,
+     "excess": -0.053,
+     "ci90": [
+      -2.41,
+      2.19
+     ],
+     "sig": false,
+     "sd": 9.183,
+     "excess_sd": -0.006,
+     "hit_pred": 0.309,
+     "base_pred": 0.358,
+     "hit_up": 0.691,
+     "base_up": 0.642
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_rho",
+     "cell": "지난 20일 지수 수익 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 730,
+     "rho": 0.123,
+     "ci90_b20": [
+      -0.082,
+      0.284
+     ],
+     "ci90_b60": [
+      -0.05,
+      0.244
+     ],
+     "ci90": [
+      -0.082,
+      0.284
+     ],
+     "sig": false,
+     "hit_pred": 0.574,
+     "base_pred": 0.538,
+     "base_up": 0.642,
+     "excess": 0.123
+    }
+   ],
+   "volatility": [
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 37,
+      "days": 750,
+      "mean_flag": 1.089,
+      "mean_other": 1.385,
+      "ratio": 0.786,
+      "ratio_ci90": [
+       0.552,
+       1.11
+      ],
+      "excess": -0.281,
+      "ci90": [
+       -0.64,
+       0.12
+      ],
+      "sig": false,
+      "hit_above_median": 0.459,
+      "base_hit": 0.5,
+      "share_big_flag": 0.135,
+      "share_big_other": 0.184,
+      "p_shift": 0.2444
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 37,
+      "days": 152,
+      "mean_flag": 1.089,
+      "mean_other": 1.423,
+      "ratio": 0.765,
+      "ratio_ci90": [
+       0.54,
+       1.329
+      ],
+      "excess": -0.253,
+      "ci90": [
+       -0.64,
+       0.2
+      ],
+      "sig": false,
+      "hit_above_median": 0.432,
+      "base_hit": 0.5,
+      "share_big_flag": 0.135,
+      "share_big_other": 0.174
+     },
+     "quarterly_only": {
+      "n": 13,
+      "days": 750,
+      "mean_flag": 0.911,
+      "mean_other": 1.378,
+      "ratio": 0.661,
+      "ratio_ci90": [
+       0.409,
+       0.971
+      ],
+      "excess": -0.459,
+      "ci90": [
+       -0.92,
+       -0.03
+      ],
+      "sig": true,
+      "hit_above_median": 0.538,
+      "base_hit": 0.5,
+      "share_big_flag": 0.077,
+      "share_big_other": 0.183
+     },
+     "monthly_only": {
+      "n": 24,
+      "days": 750,
+      "mean_flag": 1.185,
+      "mean_other": 1.376,
+      "ratio": 0.861,
+      "ratio_ci90": [
+       0.545,
+       1.283
+      ],
+      "excess": -0.185,
+      "ci90": [
+       -0.65,
+       0.36
+      ],
+      "sig": false,
+      "hit_above_median": 0.417,
+      "base_hit": 0.5,
+      "share_big_flag": 0.167,
+      "share_big_other": 0.182
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 37,
+      "days": 750,
+      "mean_flag": 1.609,
+      "mean_other": 1.82,
+      "ratio": 0.884,
+      "ratio_ci90": [
+       0.781,
+       1.002
+      ],
+      "excess": -0.201,
+      "ci90": [
+       -0.41,
+       0.0
+      ],
+      "sig": false,
+      "hit_above_median": 0.568,
+      "base_hit": 0.5,
+      "share_big_flag": 0.243,
+      "share_big_other": 0.25
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 37,
+      "days": 152,
+      "mean_flag": 1.609,
+      "mean_other": 1.782,
+      "ratio": 0.903,
+      "ratio_ci90": [
+       0.792,
+       1.06
+      ],
+      "excess": -0.131,
+      "ci90": [
+       -0.32,
+       0.06
+      ],
+      "sig": false,
+      "hit_above_median": 0.595,
+      "base_hit": 0.5,
+      "share_big_flag": 0.243,
+      "share_big_other": 0.261
+     },
+     "quarterly_only": {
+      "n": 13,
+      "days": 750,
+      "mean_flag": 1.627,
+      "mean_other": 1.813,
+      "ratio": 0.897,
+      "ratio_ci90": [
+       0.648,
+       1.203
+      ],
+      "excess": -0.183,
+      "ci90": [
+       -0.66,
+       0.34
+      ],
+      "sig": false,
+      "hit_above_median": 0.538,
+      "base_hit": 0.5,
+      "share_big_flag": 0.154,
+      "share_big_other": 0.251
+     },
+     "monthly_only": {
+      "n": 24,
+      "days": 750,
+      "mean_flag": 1.599,
+      "mean_other": 1.816,
+      "ratio": 0.88,
+      "ratio_ci90": [
+       0.717,
+       1.055
+      ],
+      "excess": -0.21,
+      "ci90": [
+       -0.5,
+       0.1
+      ],
+      "sig": false,
+      "hit_above_median": 0.542,
+      "base_hit": 0.5,
+      "share_big_flag": 0.292,
+      "share_big_other": 0.248
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 37,
+      "days": 750,
+      "mean_flag": 1.246,
+      "mean_other": 1.377,
+      "ratio": 0.905,
+      "ratio_ci90": [
+       0.687,
+       1.145
+      ],
+      "excess": -0.125,
+      "ci90": [
+       -0.44,
+       0.18
+      ],
+      "sig": false,
+      "hit_above_median": 0.541,
+      "base_hit": 0.5,
+      "share_big_flag": 0.135,
+      "share_big_other": 0.184,
+      "p_shift": 0.6155
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 37,
+      "days": 152,
+      "mean_flag": 1.246,
+      "mean_other": 1.346,
+      "ratio": 0.925,
+      "ratio_ci90": [
+       0.715,
+       1.209
+      ],
+      "excess": -0.076,
+      "ci90": [
+       -0.25,
+       0.2
+      ],
+      "sig": false,
+      "hit_above_median": 0.541,
+      "base_hit": 0.5,
+      "share_big_flag": 0.135,
+      "share_big_other": 0.157
+     },
+     "quarterly_only": {
+      "n": 13,
+      "days": 750,
+      "mean_flag": 1.285,
+      "mean_other": 1.372,
+      "ratio": 0.937,
+      "ratio_ci90": [
+       0.603,
+       1.344
+      ],
+      "excess": -0.085,
+      "ci90": [
+       -0.57,
+       0.48
+      ],
+      "sig": false,
+      "hit_above_median": 0.615,
+      "base_hit": 0.5,
+      "share_big_flag": 0.077,
+      "share_big_other": 0.183
+     },
+     "monthly_only": {
+      "n": 24,
+      "days": 750,
+      "mean_flag": 1.224,
+      "mean_other": 1.375,
+      "ratio": 0.89,
+      "ratio_ci90": [
+       0.605,
+       1.218
+      ],
+      "excess": -0.146,
+      "ci90": [
+       -0.56,
+       0.27
+      ],
+      "sig": false,
+      "hit_above_median": 0.5,
+      "base_hit": 0.5,
+      "share_big_flag": 0.167,
+      "share_big_other": 0.182
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 37,
+      "days": 750,
+      "mean_flag": 1.611,
+      "mean_other": 1.82,
+      "ratio": 0.886,
+      "ratio_ci90": [
+       0.738,
+       1.045
+      ],
+      "excess": -0.198,
+      "ci90": [
+       -0.5,
+       0.08
+      ],
+      "sig": false,
+      "hit_above_median": 0.432,
+      "base_hit": 0.5,
+      "share_big_flag": 0.162,
+      "share_big_other": 0.254
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 37,
+      "days": 152,
+      "mean_flag": 1.611,
+      "mean_other": 1.87,
+      "ratio": 0.862,
+      "ratio_ci90": [
+       0.814,
+       1.034
+      ],
+      "excess": -0.196,
+      "ci90": [
+       -0.26,
+       0.05
+      ],
+      "sig": false,
+      "hit_above_median": 0.459,
+      "base_hit": 0.5,
+      "share_big_flag": 0.162,
+      "share_big_other": 0.261
+     },
+     "quarterly_only": {
+      "n": 13,
+      "days": 750,
+      "mean_flag": 1.563,
+      "mean_other": 1.814,
+      "ratio": 0.862,
+      "ratio_ci90": [
+       0.627,
+       1.134
+      ],
+      "excess": -0.246,
+      "ci90": [
+       -0.69,
+       0.24
+      ],
+      "sig": false,
+      "hit_above_median": 0.462,
+      "base_hit": 0.5,
+      "share_big_flag": 0.231,
+      "share_big_other": 0.25
+     },
+     "monthly_only": {
+      "n": 24,
+      "days": 750,
+      "mean_flag": 1.638,
+      "mean_other": 1.815,
+      "ratio": 0.902,
+      "ratio_ci90": [
+       0.685,
+       1.156
+      ],
+      "excess": -0.172,
+      "ci90": [
+       -0.59,
+       0.26
+      ],
+      "sig": false,
+      "hit_above_median": 0.417,
+      "base_hit": 0.5,
+      "share_big_flag": 0.125,
+      "share_big_other": 0.253
+     }
+    }
+   ]
+  },
+  "A": {
+   "from": "2009-03-23",
+   "to": "2014-12-30",
+   "days": 1438,
+   "direction": [
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 1,
+     "pred": 1,
+     "n": 310,
+     "runs": 55,
+     "days": 1437,
+     "mean_sel": 0.017,
+     "base": 0.039,
+     "excess": -0.022,
+     "ci90": [
+      -0.08,
+      0.05
+     ],
+     "sig": false,
+     "sd": 1.094,
+     "excess_sd": -0.02,
+     "hit_pred": 0.535,
+     "base_pred": 0.521,
+     "hit_up": 0.535,
+     "base_up": 0.521
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 5,
+     "pred": 1,
+     "n": 310,
+     "runs": 55,
+     "days": 1433,
+     "mean_sel": 0.212,
+     "base": 0.187,
+     "excess": 0.024,
+     "ci90": [
+      -0.2,
+      0.31
+     ],
+     "sig": false,
+     "sd": 2.355,
+     "excess_sd": 0.01,
+     "hit_pred": 0.545,
+     "base_pred": 0.567,
+     "hit_up": 0.545,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 20,
+     "pred": 1,
+     "n": 306,
+     "runs": 54,
+     "days": 1418,
+     "mean_sel": 0.59,
+     "base": 0.693,
+     "excess": -0.103,
+     "ci90": [
+      -0.7,
+      0.56
+     ],
+     "sig": false,
+     "sd": 4.417,
+     "excess_sd": -0.023,
+     "hit_pred": 0.556,
+     "base_pred": 0.567,
+     "hit_up": 0.556,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 1,
+     "pred": -1,
+     "n": 138,
+     "runs": 39,
+     "days": 1437,
+     "mean_sel": 0.105,
+     "base": 0.039,
+     "excess": 0.066,
+     "ci90": [
+      -0.09,
+      0.23
+     ],
+     "sig": false,
+     "sd": 1.094,
+     "excess_sd": 0.06,
+     "hit_pred": 0.464,
+     "base_pred": 0.479,
+     "hit_up": 0.536,
+     "base_up": 0.521
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 5,
+     "pred": -1,
+     "n": 137,
+     "runs": 39,
+     "days": 1433,
+     "mean_sel": 0.674,
+     "base": 0.187,
+     "excess": 0.486,
+     "ci90": [
+      -0.1,
+      1.12
+     ],
+     "sig": false,
+     "sd": 2.355,
+     "excess_sd": 0.206,
+     "hit_pred": 0.307,
+     "base_pred": 0.433,
+     "hit_up": 0.693,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 20,
+     "pred": -1,
+     "n": 132,
+     "runs": 38,
+     "days": 1418,
+     "mean_sel": 0.522,
+     "base": 0.693,
+     "excess": -0.171,
+     "ci90": [
+      -1.26,
+      0.89
+     ],
+     "sig": false,
+     "sd": 4.417,
+     "excess_sd": -0.039,
+     "hit_pred": 0.432,
+     "base_pred": 0.433,
+     "hit_up": 0.568,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 1,
+     "pred": 1,
+     "n": 76,
+     "runs": 66,
+     "days": 1437,
+     "mean_sel": 0.185,
+     "base": 0.039,
+     "excess": 0.146,
+     "ci90": [
+      -0.03,
+      0.3
+     ],
+     "sig": false,
+     "sd": 1.094,
+     "excess_sd": 0.134,
+     "hit_pred": 0.539,
+     "base_pred": 0.521,
+     "hit_up": 0.539,
+     "base_up": 0.521
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 5,
+     "pred": 1,
+     "n": 76,
+     "runs": 66,
+     "days": 1433,
+     "mean_sel": 0.409,
+     "base": 0.187,
+     "excess": 0.222,
+     "ci90": [
+      -0.22,
+      0.66
+     ],
+     "sig": false,
+     "sd": 2.355,
+     "excess_sd": 0.094,
+     "hit_pred": 0.566,
+     "base_pred": 0.567,
+     "hit_up": 0.566,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 20,
+     "pred": 1,
+     "n": 76,
+     "runs": 66,
+     "days": 1418,
+     "mean_sel": 1.343,
+     "base": 0.693,
+     "excess": 0.65,
+     "ci90": [
+      -0.25,
+      1.32
+     ],
+     "sig": false,
+     "sd": 4.417,
+     "excess_sd": 0.147,
+     "hit_pred": 0.632,
+     "base_pred": 0.567,
+     "hit_up": 0.632,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_top",
+     "cell": "외국인 강도 상위 10% → 다음 날",
+     "h": 1,
+     "pred": 1,
+     "n": 144,
+     "runs": 88,
+     "days": 1437,
+     "mean_sel": 0.087,
+     "base": 0.039,
+     "excess": 0.049,
+     "ci90": [
+      -0.04,
+      0.14
+     ],
+     "sig": false,
+     "sd": 1.094,
+     "excess_sd": 0.044,
+     "hit_pred": 0.576,
+     "base_pred": 0.521,
+     "hit_up": 0.576,
+     "base_up": 0.521
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_bot",
+     "cell": "외국인 강도 하위 10% → 다음 날",
+     "h": 1,
+     "pred": -1,
+     "n": 144,
+     "runs": 83,
+     "days": 1437,
+     "mean_sel": 0.011,
+     "base": 0.039,
+     "excess": -0.028,
+     "ci90": [
+      -0.17,
+      0.09
+     ],
+     "sig": false,
+     "sd": 1.094,
+     "excess_sd": -0.026,
+     "hit_pred": 0.493,
+     "base_pred": 0.479,
+     "hit_up": 0.507,
+     "base_up": 0.521
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 5,
+     "pred": 1,
+     "n": 134,
+     "runs": 110,
+     "days": 1433,
+     "mean_sel": 0.211,
+     "base": 0.187,
+     "excess": 0.024,
+     "ci90": [
+      -0.31,
+      0.36
+     ],
+     "sig": false,
+     "sd": 2.355,
+     "excess_sd": 0.01,
+     "hit_pred": 0.522,
+     "base_pred": 0.567,
+     "hit_up": 0.522,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 20,
+     "pred": 1,
+     "n": 133,
+     "runs": 109,
+     "days": 1418,
+     "mean_sel": 1.36,
+     "base": 0.693,
+     "excess": 0.667,
+     "ci90": [
+      -0.03,
+      1.32
+     ],
+     "sig": false,
+     "sd": 4.417,
+     "excess_sd": 0.151,
+     "hit_pred": 0.639,
+     "base_pred": 0.567,
+     "hit_up": 0.639,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 5,
+     "pred": -1,
+     "n": 139,
+     "runs": 108,
+     "days": 1433,
+     "mean_sel": 0.117,
+     "base": 0.187,
+     "excess": -0.07,
+     "ci90": [
+      -0.61,
+      0.39
+     ],
+     "sig": false,
+     "sd": 2.355,
+     "excess_sd": -0.03,
+     "hit_pred": 0.468,
+     "base_pred": 0.433,
+     "hit_up": 0.532,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 20,
+     "pred": -1,
+     "n": 138,
+     "runs": 107,
+     "days": 1418,
+     "mean_sel": 0.693,
+     "base": 0.693,
+     "excess": 0.001,
+     "ci90": [
+      -0.54,
+      0.57
+     ],
+     "sig": false,
+     "sd": 4.417,
+     "excess_sd": 0.0,
+     "hit_pred": 0.471,
+     "base_pred": 0.433,
+     "hit_up": 0.529,
+     "base_up": 0.567
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_pos",
+     "cell": "20일 누적 외국인 강도 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 850,
+     "runs": 22,
+     "days": 1399,
+     "mean_sel": 0.199,
+     "base": 0.594,
+     "excess": -0.395,
+     "ci90": [
+      -0.9,
+      0.06
+     ],
+     "sig": false,
+     "sd": 4.354,
+     "excess_sd": -0.091,
+     "hit_pred": 0.54,
+     "base_pred": 0.561,
+     "hit_up": 0.54,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_neg",
+     "cell": "20일 누적 외국인 강도 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 549,
+     "runs": 21,
+     "days": 1399,
+     "mean_sel": 1.205,
+     "base": 0.594,
+     "excess": 0.611,
+     "ci90": [
+      -0.1,
+      1.37
+     ],
+     "sig": false,
+     "sd": 4.354,
+     "excess_sd": 0.14,
+     "hit_pred": 0.406,
+     "base_pred": 0.439,
+     "hit_up": 0.594,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_top20",
+     "cell": "20일 누적 외국인 강도 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 284,
+     "runs": 20,
+     "days": 1399,
+     "mean_sel": 0.466,
+     "base": 0.594,
+     "excess": -0.128,
+     "ci90": [
+      -1.1,
+      0.83
+     ],
+     "sig": false,
+     "sd": 4.354,
+     "excess_sd": -0.029,
+     "hit_pred": 0.574,
+     "base_pred": 0.561,
+     "hit_up": 0.574,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_bot20",
+     "cell": "20일 누적 외국인 강도 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 278,
+     "runs": 18,
+     "days": 1399,
+     "mean_sel": 1.433,
+     "base": 0.594,
+     "excess": 0.839,
+     "ci90": [
+      -0.02,
+      1.75
+     ],
+     "sig": false,
+     "sd": 4.354,
+     "excess_sd": 0.193,
+     "hit_pred": 0.378,
+     "base_pred": 0.439,
+     "hit_up": 0.622,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_rho",
+     "cell": "20일 누적 외국인 강도 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 1399,
+     "rho": -0.085,
+     "ci90_b20": [
+      -0.221,
+      0.034
+     ],
+     "ci90_b60": [
+      -0.223,
+      0.022
+     ],
+     "ci90": [
+      -0.221,
+      0.034
+     ],
+     "sig": false,
+     "hit_pred": 0.487,
+     "base_pred": 0.513,
+     "base_up": 0.561,
+     "excess": -0.085
+    }
+   ],
+   "control": [
+    {
+     "hyp": "H6c",
+     "key": "H6c_pos",
+     "cell": "지난 20일 지수 수익 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 799,
+     "runs": 64,
+     "days": 1399,
+     "mean_sel": 0.049,
+     "base": 0.594,
+     "excess": -0.545,
+     "ci90": [
+      -0.99,
+      -0.11
+     ],
+     "sig": true,
+     "sd": 4.354,
+     "excess_sd": -0.125,
+     "hit_pred": 0.522,
+     "base_pred": 0.561,
+     "hit_up": 0.522,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_neg",
+     "cell": "지난 20일 지수 수익 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 600,
+     "runs": 63,
+     "days": 1399,
+     "mean_sel": 1.319,
+     "base": 0.594,
+     "excess": 0.725,
+     "ci90": [
+      0.14,
+      1.33
+     ],
+     "sig": true,
+     "sd": 4.354,
+     "excess_sd": 0.167,
+     "hit_pred": 0.387,
+     "base_pred": 0.439,
+     "hit_up": 0.613,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_top20",
+     "cell": "지난 20일 지수 수익 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 284,
+     "runs": 55,
+     "days": 1399,
+     "mean_sel": 0.333,
+     "base": 0.594,
+     "excess": -0.261,
+     "ci90": [
+      -1.24,
+      0.53
+     ],
+     "sig": false,
+     "sd": 4.354,
+     "excess_sd": -0.06,
+     "hit_pred": 0.592,
+     "base_pred": 0.561,
+     "hit_up": 0.592,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_bot20",
+     "cell": "지난 20일 지수 수익 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 280,
+     "runs": 59,
+     "days": 1399,
+     "mean_sel": 1.925,
+     "base": 0.594,
+     "excess": 1.331,
+     "ci90": [
+      0.53,
+      2.18
+     ],
+     "sig": true,
+     "sd": 4.354,
+     "excess_sd": 0.306,
+     "hit_pred": 0.314,
+     "base_pred": 0.439,
+     "hit_up": 0.686,
+     "base_up": 0.561
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_rho",
+     "cell": "지난 20일 지수 수익 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 1399,
+     "rho": -0.135,
+     "ci90_b20": [
+      -0.267,
+      -0.032
+     ],
+     "ci90_b60": [
+      -0.258,
+      -0.033
+     ],
+     "ci90": [
+      -0.267,
+      -0.032
+     ],
+     "sig": true,
+     "hit_pred": 0.464,
+     "base_pred": 0.509,
+     "base_up": 0.561,
+     "excess": -0.135
+    }
+   ],
+   "volatility": [
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 69,
+      "days": 1438,
+      "mean_flag": 0.974,
+      "mean_other": 0.775,
+      "ratio": 1.257,
+      "ratio_ci90": [
+       1.02,
+       1.523
+      ],
+      "excess": 0.19,
+      "ci90": [
+       0.01,
+       0.38
+      ],
+      "sig": true,
+      "hit_above_median": 0.565,
+      "base_hit": 0.5,
+      "share_big_flag": 0.13,
+      "share_big_other": 0.064
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 69,
+      "days": 289,
+      "mean_flag": 0.974,
+      "mean_other": 0.796,
+      "ratio": 1.224,
+      "ratio_ci90": [
+       0.983,
+       1.436
+      ],
+      "excess": 0.136,
+      "ci90": [
+       -0.01,
+       0.24
+      ],
+      "sig": false,
+      "hit_above_median": 0.551,
+      "base_hit": 0.5,
+      "share_big_flag": 0.13,
+      "share_big_other": 0.082
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 69,
+      "days": 1438,
+      "mean_flag": 1.323,
+      "mean_other": 1.139,
+      "ratio": 1.162,
+      "ratio_ci90": [
+       1.059,
+       1.278
+      ],
+      "excess": 0.175,
+      "ci90": [
+       0.06,
+       0.3
+      ],
+      "sig": true,
+      "hit_above_median": 0.623,
+      "base_hit": 0.5,
+      "share_big_flag": 0.116,
+      "share_big_other": 0.089
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 69,
+      "days": 1438,
+      "mean_flag": 0.84,
+      "mean_other": 0.782,
+      "ratio": 1.074,
+      "ratio_ci90": [
+       0.904,
+       1.263
+      ],
+      "excess": 0.055,
+      "ci90": [
+       -0.07,
+       0.19
+      ],
+      "sig": false,
+      "hit_above_median": 0.565,
+      "base_hit": 0.5,
+      "share_big_flag": 0.029,
+      "share_big_other": 0.069
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 69,
+      "days": 289,
+      "mean_flag": 0.84,
+      "mean_other": 0.817,
+      "ratio": 1.027,
+      "ratio_ci90": [
+       0.851,
+       1.249
+      ],
+      "excess": 0.017,
+      "ci90": [
+       -0.11,
+       0.13
+      ],
+      "sig": false,
+      "hit_above_median": 0.565,
+      "base_hit": 0.5,
+      "share_big_flag": 0.029,
+      "share_big_other": 0.077
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 69,
+      "days": 1438,
+      "mean_flag": 1.233,
+      "mean_other": 1.143,
+      "ratio": 1.078,
+      "ratio_ci90": [
+       0.996,
+       1.174
+      ],
+      "excess": 0.085,
+      "ci90": [
+       -0.0,
+       0.19
+      ],
+      "sig": false,
+      "hit_above_median": 0.638,
+      "base_hit": 0.5,
+      "share_big_flag": 0.116,
+      "share_big_other": 0.089
+     }
+    }
+   ]
+  },
+  "B": {
+   "from": "2015-01-02",
+   "to": "2019-12-30",
+   "days": 1227,
+   "direction": [
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 1,
+     "pred": 1,
+     "n": 134,
+     "runs": 37,
+     "days": 1226,
+     "mean_sel": -0.067,
+     "base": 0.014,
+     "excess": -0.081,
+     "ci90": [
+      -0.19,
+      -0.0
+     ],
+     "sig": false,
+     "sd": 0.778,
+     "excess_sd": -0.104,
+     "hit_pred": 0.448,
+     "base_pred": 0.533,
+     "hit_up": 0.448,
+     "base_up": 0.533
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 5,
+     "pred": 1,
+     "n": 134,
+     "runs": 37,
+     "days": 1222,
+     "mean_sel": -0.11,
+     "base": 0.076,
+     "excess": -0.186,
+     "ci90": [
+      -0.5,
+      0.13
+     ],
+     "sig": false,
+     "sd": 1.817,
+     "excess_sd": -0.102,
+     "hit_pred": 0.478,
+     "base_pred": 0.549,
+     "hit_up": 0.478,
+     "base_up": 0.549
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 20,
+     "pred": 1,
+     "n": 134,
+     "runs": 37,
+     "days": 1207,
+     "mean_sel": -0.078,
+     "base": 0.248,
+     "excess": -0.326,
+     "ci90": [
+      -1.07,
+      0.46
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.092,
+     "hit_pred": 0.552,
+     "base_pred": 0.577,
+     "hit_up": 0.552,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 1,
+     "pred": -1,
+     "n": 144,
+     "runs": 32,
+     "days": 1226,
+     "mean_sel": -0.047,
+     "base": 0.014,
+     "excess": -0.061,
+     "ci90": [
+      -0.2,
+      0.06
+     ],
+     "sig": false,
+     "sd": 0.778,
+     "excess_sd": -0.078,
+     "hit_pred": 0.5,
+     "base_pred": 0.467,
+     "hit_up": 0.5,
+     "base_up": 0.533
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 5,
+     "pred": -1,
+     "n": 144,
+     "runs": 32,
+     "days": 1222,
+     "mean_sel": 0.06,
+     "base": 0.076,
+     "excess": -0.016,
+     "ci90": [
+      -0.43,
+      0.4
+     ],
+     "sig": false,
+     "sd": 1.817,
+     "excess_sd": -0.009,
+     "hit_pred": 0.458,
+     "base_pred": 0.451,
+     "hit_up": 0.542,
+     "base_up": 0.549
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 20,
+     "pred": -1,
+     "n": 140,
+     "runs": 32,
+     "days": 1207,
+     "mean_sel": 0.815,
+     "base": 0.248,
+     "excess": 0.566,
+     "ci90": [
+      -0.78,
+      1.63
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": 0.16,
+     "hit_pred": 0.386,
+     "base_pred": 0.423,
+     "hit_up": 0.614,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 1,
+     "pred": 1,
+     "n": 52,
+     "runs": 48,
+     "days": 1226,
+     "mean_sel": 0.069,
+     "base": 0.014,
+     "excess": 0.055,
+     "ci90": [
+      -0.07,
+      0.17
+     ],
+     "sig": false,
+     "sd": 0.778,
+     "excess_sd": 0.071,
+     "hit_pred": 0.596,
+     "base_pred": 0.533,
+     "hit_up": 0.596,
+     "base_up": 0.533
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 5,
+     "pred": 1,
+     "n": 52,
+     "runs": 48,
+     "days": 1222,
+     "mean_sel": 0.12,
+     "base": 0.076,
+     "excess": 0.044,
+     "ci90": [
+      -0.37,
+      0.4
+     ],
+     "sig": false,
+     "sd": 1.817,
+     "excess_sd": 0.024,
+     "hit_pred": 0.558,
+     "base_pred": 0.549,
+     "hit_up": 0.558,
+     "base_up": 0.549
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 20,
+     "pred": 1,
+     "n": 49,
+     "runs": 46,
+     "days": 1207,
+     "mean_sel": 0.356,
+     "base": 0.248,
+     "excess": 0.108,
+     "ci90": [
+      -0.69,
+      0.99
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": 0.031,
+     "hit_pred": 0.551,
+     "base_pred": 0.577,
+     "hit_up": 0.551,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_top",
+     "cell": "외국인 강도 상위 10% → 다음 날",
+     "h": 1,
+     "pred": 1,
+     "n": 123,
+     "runs": 86,
+     "days": 1226,
+     "mean_sel": 0.102,
+     "base": 0.014,
+     "excess": 0.088,
+     "ci90": [
+      -0.01,
+      0.17
+     ],
+     "sig": false,
+     "sd": 0.778,
+     "excess_sd": 0.114,
+     "hit_pred": 0.561,
+     "base_pred": 0.533,
+     "hit_up": 0.561,
+     "base_up": 0.533
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_bot",
+     "cell": "외국인 강도 하위 10% → 다음 날",
+     "h": 1,
+     "pred": -1,
+     "n": 122,
+     "runs": 75,
+     "days": 1226,
+     "mean_sel": 0.006,
+     "base": 0.014,
+     "excess": -0.008,
+     "ci90": [
+      -0.14,
+      0.11
+     ],
+     "sig": false,
+     "sd": 0.778,
+     "excess_sd": -0.01,
+     "hit_pred": 0.459,
+     "base_pred": 0.467,
+     "hit_up": 0.541,
+     "base_up": 0.533
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 5,
+     "pred": 1,
+     "n": 107,
+     "runs": 95,
+     "days": 1222,
+     "mean_sel": 0.053,
+     "base": 0.076,
+     "excess": -0.022,
+     "ci90": [
+      -0.32,
+      0.23
+     ],
+     "sig": false,
+     "sd": 1.817,
+     "excess_sd": -0.012,
+     "hit_pred": 0.505,
+     "base_pred": 0.549,
+     "hit_up": 0.505,
+     "base_up": 0.549
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 20,
+     "pred": 1,
+     "n": 102,
+     "runs": 91,
+     "days": 1207,
+     "mean_sel": 0.194,
+     "base": 0.248,
+     "excess": -0.054,
+     "ci90": [
+      -0.76,
+      0.52
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.015,
+     "hit_pred": 0.539,
+     "base_pred": 0.577,
+     "hit_up": 0.539,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 5,
+     "pred": -1,
+     "n": 109,
+     "runs": 100,
+     "days": 1222,
+     "mean_sel": -0.103,
+     "base": 0.076,
+     "excess": -0.179,
+     "ci90": [
+      -0.63,
+      0.2
+     ],
+     "sig": false,
+     "sd": 1.817,
+     "excess_sd": -0.098,
+     "hit_pred": 0.459,
+     "base_pred": 0.451,
+     "hit_up": 0.541,
+     "base_up": 0.549
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 20,
+     "pred": -1,
+     "n": 108,
+     "runs": 99,
+     "days": 1207,
+     "mean_sel": 0.041,
+     "base": 0.248,
+     "excess": -0.207,
+     "ci90": [
+      -0.94,
+      0.28
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.059,
+     "hit_pred": 0.454,
+     "base_pred": 0.423,
+     "hit_up": 0.546,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_pos",
+     "cell": "20일 누적 외국인 강도 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 633,
+     "runs": 32,
+     "days": 1207,
+     "mean_sel": -0.206,
+     "base": 0.248,
+     "excess": -0.454,
+     "ci90": [
+      -0.84,
+      -0.0
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.128,
+     "hit_pred": 0.536,
+     "base_pred": 0.577,
+     "hit_up": 0.536,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_neg",
+     "cell": "20일 누적 외국인 강도 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 574,
+     "runs": 33,
+     "days": 1207,
+     "mean_sel": 0.749,
+     "base": 0.248,
+     "excess": 0.501,
+     "ci90": [
+      0.0,
+      1.0
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": 0.142,
+     "hit_pred": 0.378,
+     "base_pred": 0.423,
+     "hit_up": 0.622,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_top20",
+     "cell": "20일 누적 외국인 강도 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 246,
+     "runs": 19,
+     "days": 1207,
+     "mean_sel": -0.161,
+     "base": 0.248,
+     "excess": -0.409,
+     "ci90": [
+      -1.3,
+      0.54
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.116,
+     "hit_pred": 0.553,
+     "base_pred": 0.577,
+     "hit_up": 0.553,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_bot20",
+     "cell": "20일 누적 외국인 강도 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 233,
+     "runs": 24,
+     "days": 1207,
+     "mean_sel": 1.492,
+     "base": 0.248,
+     "excess": 1.243,
+     "ci90": [
+      0.31,
+      2.16
+     ],
+     "sig": true,
+     "sd": 3.533,
+     "excess_sd": 0.352,
+     "hit_pred": 0.27,
+     "base_pred": 0.423,
+     "hit_up": 0.73,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_rho",
+     "cell": "20일 누적 외국인 강도 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 1207,
+     "rho": -0.165,
+     "ci90_b20": [
+      -0.301,
+      -0.012
+     ],
+     "ci90_b60": [
+      -0.341,
+      0.044
+     ],
+     "ci90": [
+      -0.301,
+      -0.012
+     ],
+     "sig": true,
+     "hit_pred": 0.461,
+     "base_pred": 0.504,
+     "base_up": 0.577,
+     "excess": -0.165
+    }
+   ],
+   "control": [
+    {
+     "hyp": "H6c",
+     "key": "H6c_pos",
+     "cell": "지난 20일 지수 수익 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 691,
+     "runs": 51,
+     "days": 1207,
+     "mean_sel": 0.106,
+     "base": 0.248,
+     "excess": -0.142,
+     "ci90": [
+      -0.52,
+      0.24
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.04,
+     "hit_pred": 0.563,
+     "base_pred": 0.577,
+     "hit_up": 0.563,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_neg",
+     "cell": "지난 20일 지수 수익 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 516,
+     "runs": 52,
+     "days": 1207,
+     "mean_sel": 0.439,
+     "base": 0.248,
+     "excess": 0.19,
+     "ci90": [
+      -0.32,
+      0.7
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": 0.054,
+     "hit_pred": 0.405,
+     "base_pred": 0.423,
+     "hit_up": 0.595,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_top20",
+     "cell": "지난 20일 지수 수익 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 238,
+     "runs": 45,
+     "days": 1207,
+     "mean_sel": 0.019,
+     "base": 0.248,
+     "excess": -0.229,
+     "ci90": [
+      -0.85,
+      0.42
+     ],
+     "sig": false,
+     "sd": 3.533,
+     "excess_sd": -0.065,
+     "hit_pred": 0.542,
+     "base_pred": 0.577,
+     "hit_up": 0.542,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_bot20",
+     "cell": "지난 20일 지수 수익 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 243,
+     "runs": 41,
+     "days": 1207,
+     "mean_sel": 1.277,
+     "base": 0.248,
+     "excess": 1.028,
+     "ci90": [
+      0.39,
+      1.77
+     ],
+     "sig": true,
+     "sd": 3.533,
+     "excess_sd": 0.291,
+     "hit_pred": 0.309,
+     "base_pred": 0.423,
+     "hit_up": 0.691,
+     "base_up": 0.577
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_rho",
+     "cell": "지난 20일 지수 수익 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 1207,
+     "rho": -0.096,
+     "ci90_b20": [
+      -0.224,
+      0.03
+     ],
+     "ci90_b60": [
+      -0.26,
+      0.035
+     ],
+     "ci90": [
+      -0.224,
+      0.03
+     ],
+     "sig": false,
+     "hit_pred": 0.495,
+     "base_pred": 0.511,
+     "base_up": 0.577,
+     "excess": -0.096
+    }
+   ],
+   "volatility": [
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 60,
+      "days": 1227,
+      "mean_flag": 0.764,
+      "mean_other": 0.56,
+      "ratio": 1.365,
+      "ratio_ci90": [
+       1.085,
+       1.677
+      ],
+      "excess": 0.194,
+      "ci90": [
+       0.05,
+       0.35
+      ],
+      "sig": true,
+      "hit_above_median": 0.583,
+      "base_hit": 0.5,
+      "share_big_flag": 0.067,
+      "share_big_other": 0.017
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 60,
+      "days": 250,
+      "mean_flag": 0.764,
+      "mean_other": 0.54,
+      "ratio": 1.414,
+      "ratio_ci90": [
+       1.076,
+       1.66
+      ],
+      "excess": 0.17,
+      "ci90": [
+       0.03,
+       0.27
+      ],
+      "sig": true,
+      "hit_above_median": 0.567,
+      "base_hit": 0.5,
+      "share_big_flag": 0.067,
+      "share_big_other": 0.0
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 60,
+      "days": 1227,
+      "mean_flag": 1.0,
+      "mean_other": 0.889,
+      "ratio": 1.125,
+      "ratio_ci90": [
+       1.025,
+       1.235
+      ],
+      "excess": 0.106,
+      "ci90": [
+       0.02,
+       0.2
+      ],
+      "sig": true,
+      "hit_above_median": 0.617,
+      "base_hit": 0.5,
+      "share_big_flag": 0.067,
+      "share_big_other": 0.025
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 60,
+      "days": 1227,
+      "mean_flag": 0.701,
+      "mean_other": 0.563,
+      "ratio": 1.246,
+      "ratio_ci90": [
+       1.056,
+       1.406
+      ],
+      "excess": 0.132,
+      "ci90": [
+       0.03,
+       0.21
+      ],
+      "sig": true,
+      "hit_above_median": 0.65,
+      "base_hit": 0.5,
+      "share_big_flag": 0.0,
+      "share_big_other": 0.021
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 60,
+      "days": 250,
+      "mean_flag": 0.701,
+      "mean_other": 0.562,
+      "ratio": 1.248,
+      "ratio_ci90": [
+       1.038,
+       1.361
+      ],
+      "excess": 0.106,
+      "ci90": [
+       0.02,
+       0.15
+      ],
+      "sig": true,
+      "hit_above_median": 0.7,
+      "base_hit": 0.5,
+      "share_big_flag": 0.0,
+      "share_big_other": 0.032
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 60,
+      "days": 1227,
+      "mean_flag": 0.869,
+      "mean_other": 0.896,
+      "ratio": 0.97,
+      "ratio_ci90": [
+       0.883,
+       1.077
+      ],
+      "excess": -0.026,
+      "ci90": [
+       -0.1,
+       0.06
+      ],
+      "sig": false,
+      "hit_above_median": 0.417,
+      "base_hit": 0.5,
+      "share_big_flag": 0.05,
+      "share_big_other": 0.026
+     }
+    }
+   ]
+  },
+  "C": {
+   "from": "2020-01-02",
+   "to": "2023-08-30",
+   "days": 907,
+   "direction": [
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 1,
+     "pred": 1,
+     "n": 67,
+     "runs": 20,
+     "days": 906,
+     "mean_sel": 0.093,
+     "base": 0.026,
+     "excess": 0.066,
+     "ci90": [
+      -0.15,
+      0.23
+     ],
+     "sig": false,
+     "sd": 1.29,
+     "excess_sd": 0.052,
+     "hit_pred": 0.567,
+     "base_pred": 0.54,
+     "hit_up": 0.567,
+     "base_up": 0.54
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 5,
+     "pred": 1,
+     "n": 67,
+     "runs": 20,
+     "days": 902,
+     "mean_sel": 0.893,
+     "base": 0.135,
+     "excess": 0.758,
+     "ci90": [
+      -0.19,
+      1.47
+     ],
+     "sig": false,
+     "sd": 3.024,
+     "excess_sd": 0.251,
+     "hit_pred": 0.701,
+     "base_pred": 0.552,
+     "hit_up": 0.701,
+     "base_up": 0.552
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_buy",
+     "cell": "외국인 연속 순매수 5일 이상",
+     "h": 20,
+     "pred": 1,
+     "n": 67,
+     "runs": 20,
+     "days": 887,
+     "mean_sel": 1.586,
+     "base": 0.544,
+     "excess": 1.042,
+     "ci90": [
+      -1.7,
+      3.48
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.164,
+     "hit_pred": 0.552,
+     "base_pred": 0.517,
+     "hit_up": 0.552,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 1,
+     "pred": -1,
+     "n": 95,
+     "runs": 29,
+     "days": 906,
+     "mean_sel": 0.375,
+     "base": 0.026,
+     "excess": 0.349,
+     "ci90": [
+      0.05,
+      0.69
+     ],
+     "sig": true,
+     "sd": 1.29,
+     "excess_sd": 0.27,
+     "hit_pred": 0.347,
+     "base_pred": 0.46,
+     "hit_up": 0.653,
+     "base_up": 0.54
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 5,
+     "pred": -1,
+     "n": 95,
+     "runs": 29,
+     "days": 902,
+     "mean_sel": 0.792,
+     "base": 0.135,
+     "excess": 0.657,
+     "ci90": [
+      -0.34,
+      1.55
+     ],
+     "sig": false,
+     "sd": 3.024,
+     "excess_sd": 0.217,
+     "hit_pred": 0.337,
+     "base_pred": 0.448,
+     "hit_up": 0.663,
+     "base_up": 0.552
+    },
+    {
+     "hyp": "H1",
+     "key": "H1_sell",
+     "cell": "외국인 연속 순매도 5일 이상",
+     "h": 20,
+     "pred": -1,
+     "n": 95,
+     "runs": 29,
+     "days": 887,
+     "mean_sel": 2.811,
+     "base": 0.544,
+     "excess": 2.267,
+     "ci90": [
+      -0.71,
+      4.4
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.356,
+     "hit_pred": 0.326,
+     "base_pred": 0.483,
+     "hit_up": 0.674,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 1,
+     "pred": 1,
+     "n": 86,
+     "runs": 75,
+     "days": 906,
+     "mean_sel": -0.149,
+     "base": 0.026,
+     "excess": -0.176,
+     "ci90": [
+      -0.35,
+      -0.01
+     ],
+     "sig": true,
+     "sd": 1.29,
+     "excess_sd": -0.136,
+     "hit_pred": 0.488,
+     "base_pred": 0.54,
+     "hit_up": 0.488,
+     "base_up": 0.54
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 5,
+     "pred": 1,
+     "n": 86,
+     "runs": 75,
+     "days": 902,
+     "mean_sel": 0.115,
+     "base": 0.135,
+     "excess": -0.02,
+     "ci90": [
+      -0.51,
+      0.46
+     ],
+     "sig": false,
+     "sd": 3.024,
+     "excess_sd": -0.007,
+     "hit_pred": 0.5,
+     "base_pred": 0.552,
+     "hit_up": 0.5,
+     "base_up": 0.552
+    },
+    {
+     "hyp": "H2",
+     "key": "H2_joint",
+     "cell": "외국인·기관 동반 강매수(둘 다 상위 30%)",
+     "h": 20,
+     "pred": 1,
+     "n": 86,
+     "runs": 75,
+     "days": 887,
+     "mean_sel": 0.267,
+     "base": 0.544,
+     "excess": -0.277,
+     "ci90": [
+      -1.46,
+      0.81
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.043,
+     "hit_pred": 0.477,
+     "base_pred": 0.517,
+     "hit_up": 0.477,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_top",
+     "cell": "외국인 강도 상위 10% → 다음 날",
+     "h": 1,
+     "pred": 1,
+     "n": 91,
+     "runs": 63,
+     "days": 906,
+     "mean_sel": 0.109,
+     "base": 0.026,
+     "excess": 0.083,
+     "ci90": [
+      -0.12,
+      0.26
+     ],
+     "sig": false,
+     "sd": 1.29,
+     "excess_sd": 0.064,
+     "hit_pred": 0.593,
+     "base_pred": 0.54,
+     "hit_up": 0.593,
+     "base_up": 0.54
+    },
+    {
+     "hyp": "H3",
+     "key": "H3_bot",
+     "cell": "외국인 강도 하위 10% → 다음 날",
+     "h": 1,
+     "pred": -1,
+     "n": 91,
+     "runs": 59,
+     "days": 906,
+     "mean_sel": -0.145,
+     "base": 0.026,
+     "excess": -0.171,
+     "ci90": [
+      -0.5,
+      0.25
+     ],
+     "sig": false,
+     "sd": 1.29,
+     "excess_sd": -0.133,
+     "hit_pred": 0.44,
+     "base_pred": 0.46,
+     "hit_up": 0.56,
+     "base_up": 0.54
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 5,
+     "pred": 1,
+     "n": 88,
+     "runs": 70,
+     "days": 902,
+     "mean_sel": 0.058,
+     "base": 0.135,
+     "excess": -0.077,
+     "ci90": [
+      -0.54,
+      0.34
+     ],
+     "sig": false,
+     "sd": 3.024,
+     "excess_sd": -0.026,
+     "hit_pred": 0.534,
+     "base_pred": 0.552,
+     "hit_up": 0.534,
+     "base_up": 0.552
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_sellup",
+     "cell": "개인 강매도(하위 10%) & 지수 상승",
+     "h": 20,
+     "pred": 1,
+     "n": 88,
+     "runs": 70,
+     "days": 887,
+     "mean_sel": 0.428,
+     "base": 0.544,
+     "excess": -0.115,
+     "ci90": [
+      -1.43,
+      1.05
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.018,
+     "hit_pred": 0.523,
+     "base_pred": 0.517,
+     "hit_up": 0.523,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 5,
+     "pred": -1,
+     "n": 89,
+     "runs": 77,
+     "days": 902,
+     "mean_sel": -0.328,
+     "base": 0.135,
+     "excess": -0.463,
+     "ci90": [
+      -1.11,
+      0.22
+     ],
+     "sig": false,
+     "sd": 3.024,
+     "excess_sd": -0.153,
+     "hit_pred": 0.494,
+     "base_pred": 0.448,
+     "hit_up": 0.506,
+     "base_up": 0.552
+    },
+    {
+     "hyp": "H4",
+     "key": "H4_buydown",
+     "cell": "개인 강매수(상위 10%) & 지수 하락",
+     "h": 20,
+     "pred": -1,
+     "n": 89,
+     "runs": 77,
+     "days": 887,
+     "mean_sel": -0.207,
+     "base": 0.544,
+     "excess": -0.751,
+     "ci90": [
+      -1.89,
+      0.36
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.118,
+     "hit_pred": 0.539,
+     "base_pred": 0.483,
+     "hit_up": 0.461,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_pos",
+     "cell": "20일 누적 외국인 강도 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 370,
+     "runs": 20,
+     "days": 887,
+     "mean_sel": 0.094,
+     "base": 0.544,
+     "excess": -0.449,
+     "ci90": [
+      -1.68,
+      0.84
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.071,
+     "hit_pred": 0.476,
+     "base_pred": 0.517,
+     "hit_up": 0.476,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_neg",
+     "cell": "20일 누적 외국인 강도 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 517,
+     "runs": 20,
+     "days": 887,
+     "mean_sel": 0.865,
+     "base": 0.544,
+     "excess": 0.322,
+     "ci90": [
+      -0.54,
+      1.16
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.051,
+     "hit_pred": 0.453,
+     "base_pred": 0.483,
+     "hit_up": 0.547,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_top20",
+     "cell": "20일 누적 외국인 강도 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 182,
+     "runs": 9,
+     "days": 887,
+     "mean_sel": -0.71,
+     "base": 0.544,
+     "excess": -1.253,
+     "ci90": [
+      -2.97,
+      0.63
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.197,
+     "hit_pred": 0.396,
+     "base_pred": 0.517,
+     "hit_up": 0.396,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_bot20",
+     "cell": "20일 누적 외국인 강도 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 182,
+     "runs": 12,
+     "days": 887,
+     "mean_sel": 1.688,
+     "base": 0.544,
+     "excess": 1.145,
+     "ci90": [
+      -1.14,
+      3.08
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.18,
+     "hit_pred": 0.429,
+     "base_pred": 0.483,
+     "hit_up": 0.571,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6",
+     "key": "H6_rho",
+     "cell": "20일 누적 외국인 강도 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 887,
+     "rho": -0.141,
+     "ci90_b20": [
+      -0.329,
+      0.06
+     ],
+     "ci90_b60": [
+      -0.353,
+      0.068
+     ],
+     "ci90": [
+      -0.329,
+      0.06
+     ],
+     "sig": false,
+     "hit_pred": 0.462,
+     "base_pred": 0.497,
+     "base_up": 0.517,
+     "excess": -0.141
+    }
+   ],
+   "control": [
+    {
+     "hyp": "H6c",
+     "key": "H6c_pos",
+     "cell": "지난 20일 지수 수익 > 0",
+     "h": 20,
+     "pred": 1,
+     "n": 468,
+     "runs": 44,
+     "days": 887,
+     "mean_sel": 0.9,
+     "base": 0.544,
+     "excess": 0.356,
+     "ci90": [
+      -0.48,
+      1.38
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.056,
+     "hit_pred": 0.511,
+     "base_pred": 0.517,
+     "hit_up": 0.511,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_neg",
+     "cell": "지난 20일 지수 수익 < 0",
+     "h": 20,
+     "pred": -1,
+     "n": 419,
+     "runs": 43,
+     "days": 887,
+     "mean_sel": 0.146,
+     "base": 0.544,
+     "excess": -0.398,
+     "ci90": [
+      -1.51,
+      0.49
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": -0.062,
+     "hit_pred": 0.475,
+     "base_pred": 0.483,
+     "hit_up": 0.525,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_top20",
+     "cell": "지난 20일 지수 수익 상위 20%",
+     "h": 20,
+     "pred": 1,
+     "n": 182,
+     "runs": 31,
+     "days": 887,
+     "mean_sel": 2.369,
+     "base": 0.544,
+     "excess": 1.826,
+     "ci90": [
+      -0.4,
+      3.83
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.287,
+     "hit_pred": 0.544,
+     "base_pred": 0.517,
+     "hit_up": 0.544,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_bot20",
+     "cell": "지난 20일 지수 수익 하위 20%",
+     "h": 20,
+     "pred": -1,
+     "n": 176,
+     "runs": 30,
+     "days": 887,
+     "mean_sel": 1.484,
+     "base": 0.544,
+     "excess": 0.941,
+     "ci90": [
+      -1.4,
+      2.91
+     ],
+     "sig": false,
+     "sd": 6.364,
+     "excess_sd": 0.148,
+     "hit_pred": 0.403,
+     "base_pred": 0.483,
+     "hit_up": 0.597,
+     "base_up": 0.517
+    },
+    {
+     "hyp": "H6c",
+     "key": "H6c_rho",
+     "cell": "지난 20일 지수 수익 ↔ 20일 뒤 수익 순위상관",
+     "h": 20,
+     "pred": 1,
+     "n": 887,
+     "rho": 0.022,
+     "ci90_b20": [
+      -0.168,
+      0.205
+     ],
+     "ci90_b60": [
+      -0.196,
+      0.188
+     ],
+     "ci90": [
+      -0.168,
+      0.205
+     ],
+     "sig": false,
+     "hit_pred": 0.494,
+     "base_pred": 0.501,
+     "base_up": 0.517,
+     "excess": 0.022
+    }
+   ],
+   "volatility": [
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 44,
+      "days": 907,
+      "mean_flag": 0.76,
+      "mean_other": 0.935,
+      "ratio": 0.813,
+      "ratio_ci90": [
+       0.606,
+       0.983
+      ],
+      "excess": -0.166,
+      "ci90": [
+       -0.35,
+       -0.01
+      ],
+      "sig": true,
+      "hit_above_median": 0.386,
+      "base_hit": 0.5,
+      "share_big_flag": 0.045,
+      "share_big_other": 0.083
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 44,
+      "days": 187,
+      "mean_flag": 0.76,
+      "mean_other": 0.983,
+      "ratio": 0.773,
+      "ratio_ci90": [
+       0.589,
+       0.971
+      ],
+      "excess": -0.171,
+      "ci90": [
+       -0.34,
+       -0.02
+      ],
+      "sig": true,
+      "hit_above_median": 0.386,
+      "base_hit": 0.5,
+      "share_big_flag": 0.045,
+      "share_big_other": 0.084
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기일 당일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 44,
+      "days": 907,
+      "mean_flag": 1.16,
+      "mean_other": 1.34,
+      "ratio": 0.866,
+      "ratio_ci90": [
+       0.772,
+       0.975
+      ],
+      "excess": -0.171,
+      "ci90": [
+       -0.3,
+       -0.03
+      ],
+      "sig": true,
+      "hit_above_median": 0.364,
+      "base_hit": 0.5,
+      "share_big_flag": 0.068,
+      "share_big_other": 0.132
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "abs_return",
+     "vs_all": {
+      "n": 44,
+      "days": 907,
+      "mean_flag": 1.093,
+      "mean_other": 0.918,
+      "ratio": 1.191,
+      "ratio_ci90": [
+       1.01,
+       1.407
+      ],
+      "excess": 0.167,
+      "ci90": [
+       0.01,
+       0.34
+      ],
+      "sig": true,
+      "hit_above_median": 0.705,
+      "base_hit": 0.5,
+      "share_big_flag": 0.159,
+      "share_big_other": 0.078
+     },
+     "vs_other_thursday_or_friday": {
+      "n": 44,
+      "days": 187,
+      "mean_flag": 1.093,
+      "mean_other": 0.867,
+      "ratio": 1.26,
+      "ratio_ci90": [
+       1.081,
+       1.625
+      ],
+      "excess": 0.173,
+      "ci90": [
+       0.06,
+       0.36
+      ],
+      "sig": true,
+      "hit_above_median": 0.705,
+      "base_hit": 0.5,
+      "share_big_flag": 0.159,
+      "share_big_other": 0.07
+     }
+    },
+    {
+     "hyp": "H5",
+     "cell": "만기 다음 거래일",
+     "measure": "intraday_range",
+     "vs_all": {
+      "n": 44,
+      "days": 907,
+      "mean_flag": 1.331,
+      "mean_other": 1.331,
+      "ratio": 1.0,
+      "ratio_ci90": [
+       0.878,
+       1.128
+      ],
+      "excess": -0.0,
+      "ci90": [
+       -0.16,
+       0.17
+      ],
+      "sig": false,
+      "hit_above_median": 0.409,
+      "base_hit": 0.5,
+      "share_big_flag": 0.091,
+      "share_big_other": 0.131
+     }
+    }
+   ]
+  }
+ },
+ "multiplicity": {
+  "direction_cells_OOS": 20,
+  "expected_false_sig_at_90pct": 2.0,
+  "observed_sig_OOS": 5,
+  "observed_sig_IS": 3,
+  "holm_pass_OOS": [],
+  "bh_pass_OOS": []
+ },
+ "verdicts": {
+  "cells": [
+   {
+    "cell": "H1_buy_h1",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H1_buy_h5",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H1_buy_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": false,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H1_sell_h1",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": false,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H1_sell_h5",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H1_sell_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H2_joint_h1",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H2_joint_h5",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H2_joint_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H3_top_h1",
+    "c1_oos_ci_excl0": true,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H3_bot_h1",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H4_sellup_h5",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H4_sellup_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H4_buydown_h5",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H4_buydown_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": false,
+    "c4_is_sign": true,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H6_pos_h20",
+    "c1_oos_ci_excl0": true,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H6_neg_h20",
+    "c1_oos_ci_excl0": true,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H6_top20_h20",
+    "c1_oos_ci_excl0": false,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": false,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H6_bot20_h20",
+    "c1_oos_ci_excl0": true,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   },
+   {
+    "cell": "H6_rho_h20",
+    "c1_oos_ci_excl0": true,
+    "c2_holm": false,
+    "c3_subperiod_sign": true,
+    "c4_is_sign": false,
+    "c5_size_exec": true,
+    "pass_all": false,
+    "ref_only": false
+   }
+  ],
+  "hypotheses": {
+   "H1": "보여 주지 말 것",
+   "H2": "보여 주지 말 것",
+   "H3": "보여 주지 말 것",
+   "H4": "보여 주지 말 것",
+   "H6": "보여 주지 말 것",
+   "H5": "참고만"
+  },
+  "H5_detail": [
+   {
+    "cell": "만기일 당일",
+    "c1": false,
+    "c2": true,
+    "c3_sub_is": false,
+    "c4_vs_thu": true
+   },
+   {
+    "cell": "만기 다음 거래일",
+    "c1": true,
+    "c2": true,
+    "c3_sub_is": false,
+    "c4_vs_thu": true
+   }
+  ]
+ }
+}

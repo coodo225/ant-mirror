@@ -1,0 +1,103 @@
+DATA {"flows_first": "2009-03-23", "flows_last": "2026-10-02", "flows_rows": 4322, "pre2009_supplement": {"first": "2005-01-03", "last": "2009-03-20", "rows": 1044, "with_tradingValue": 1044}, "index_first": "1999-01-04", "index_rows": 6843, "code7000_median_abs_intensity_pre2009": 0.815, "other_corp_median_abs_intensity_2009_2010": 0.249}
+
+== IS_2023-08-31~2026-10-02  2023-08-31~2026-10-02  n=750 basis=intensity base20=3.17
+   individual_top20       n20= 144 r20= +2.38 excess= -0.79 ci90=[-2.37, 0.57] sig=False
+   foreign_top20          n20= 149 r20= +3.60 excess= +0.43 ci90=[-0.95, 1.98] sig=False
+   institution_top20      n20= 143 r20= +3.27 excess= +0.10 ci90=[-1.61, 1.75] sig=False
+   individual_bottom20    n20= 140 r20= +4.73 excess= +1.56 ci90=[0.16, 2.98] sig=True
+
+== OOS_A_2009-03~2014  2009-03-23~2014-12-30  n=1438 basis=intensity base20=0.69
+   individual_top20       n20= 285 r20= +0.64 excess= -0.05 ci90=[-0.42, 0.28] sig=False
+   foreign_top20          n20= 286 r20= +0.96 excess= +0.27 ci90=[-0.23, 0.79] sig=False
+   institution_top20      n20= 276 r20= +0.89 excess= +0.20 ci90=[-0.35, 0.8] sig=False
+   individual_bottom20    n20= 285 r20= +1.00 excess= +0.31 ci90=[-0.13, 0.73] sig=False
+
+== OOS_B_2015~2019  2015-01-02~2019-12-30  n=1227 basis=intensity base20=0.25
+   individual_top20       n20= 242 r20= +0.16 excess= -0.09 ci90=[-0.49, 0.3] sig=False
+   foreign_top20          n20= 241 r20= +0.23 excess= -0.02 ci90=[-0.4, 0.43] sig=False
+   institution_top20      n20= 237 r20= +0.67 excess= +0.42 ci90=[-0.1, 0.95] sig=False
+   individual_bottom20    n20= 237 r20= +0.33 excess= +0.08 ci90=[-0.33, 0.5] sig=False
+
+== OOS_C_2020~2023-08-30  2020-01-02~2023-08-30  n=907 basis=intensity base20=0.54
+   individual_top20       n20= 180 r20= -0.20 excess= -0.74 ci90=[-1.63, 0.13] sig=False
+   foreign_top20          n20= 180 r20= +0.39 excess= -0.15 ci90=[-1.29, 0.67] sig=False
+   institution_top20      n20= 180 r20= +0.61 excess= +0.07 ci90=[-0.78, 0.95] sig=False
+   individual_bottom20    n20= 180 r20= +0.62 excess= +0.08 ci90=[-0.84, 1.02] sig=False
+
+== OOS_pooled_2009-03~2023-08-30  2009-03-23~2023-08-30  n=3572 basis=intensity base20=0.51
+   individual_top20       n20= 709 r20= +0.31 excess= -0.20 ci90=[-0.62, 0.19] sig=False
+   foreign_top20          n20= 715 r20= +0.62 excess= +0.11 ci90=[-0.3, 0.41] sig=False
+   institution_top20      n20= 714 r20= +0.56 excess= +0.05 ci90=[-0.28, 0.41] sig=False
+   individual_bottom20    n20= 714 r20= +0.73 excess= +0.22 ci90=[-0.11, 0.57] sig=False
+
+== FULL_2009-03~2026-10-02  2009-03-23~2026-10-02  n=4322 basis=intensity base20=0.95
+   individual_top20       n20= 859 r20= +0.86 excess= -0.09 ci90=[-0.59, 0.39] sig=False
+   foreign_top20          n20= 864 r20= +1.10 excess= +0.15 ci90=[-0.24, 0.52] sig=False
+   institution_top20      n20= 858 r20= +1.08 excess= +0.13 ci90=[-0.28, 0.61] sig=False
+   individual_bottom20    n20= 853 r20= +1.49 excess= +0.54 ci90=[0.14, 0.96] sig=True
+
+== SUPP_2005~2009-03-20(기관 정의 다름)  2005-01-03~2009-03-20  n=1044 basis=intensity base20=0.64
+   individual_top20       n20= 206 r20= -0.67 excess= -1.31 ci90=[-2.49, -0.28] sig=True
+   foreign_top20          n20= 206 r20= +1.68 excess= +1.04 ci90=[0.12, 1.95] sig=True
+   institution_top20      n20= 206 r20= +0.52 excess= -0.12 ci90=[-0.78, 0.59] sig=False
+   individual_bottom20    n20= 205 r20= +1.89 excess= +1.25 ci90=[0.37, 2.23] sig=True
+
+SHIFT NULL
+  IS_2023-08-31~2026-10-02 {'individual_top20': {'obs': -0.79, 'p_two_sided': 0.523, 'p_family_max_abs': 0.842}, 'foreign_top20': {'obs': 0.44, 'p_two_sided': 0.594, 'p_family_max_abs': 0.983}, 'institution_top20': {'obs': 0.1, 'p_two_sided': 0.917, 'p_family_max_abs': 1.0}, 'individual_bottom20': {'obs': 1.56, 'p_two_sided': 0.091, 'p_family_max_abs': 0.295}, '_shifts': 650}
+  OOS_A_2009-03~2014 {'individual_top20': {'obs': -0.06, 'p_two_sided': 0.805, 'p_family_max_abs': 0.999}, 'foreign_top20': {'obs': 0.26, 'p_two_sided': 0.537, 'p_family_max_abs': 0.842}, 'institution_top20': {'obs': 0.2, 'p_two_sided': 0.558, 'p_family_max_abs': 0.916}, 'individual_bottom20': {'obs': 0.31, 'p_two_sided': 0.374, 'p_family_max_abs': 0.784}, '_shifts': 1338}
+  OOS_B_2015~2019 {'individual_top20': {'obs': -0.08, 'p_two_sided': 0.752, 'p_family_max_abs': 0.998}, 'foreign_top20': {'obs': -0.02, 'p_two_sided': 0.957, 'p_family_max_abs': 1.0}, 'institution_top20': {'obs': 0.42, 'p_two_sided': 0.222, 'p_family_max_abs': 0.484}, 'individual_bottom20': {'obs': 0.08, 'p_two_sided': 0.78, 'p_family_max_abs': 0.999}, '_shifts': 1127}
+  OOS_C_2020~2023-08-30 {'individual_top20': {'obs': -0.75, 'p_two_sided': 0.164, 'p_family_max_abs': 0.568}, 'foreign_top20': {'obs': -0.15, 'p_two_sided': 0.836, 'p_family_max_abs': 0.999}, 'institution_top20': {'obs': 0.06, 'p_two_sided': 0.881, 'p_family_max_abs': 1.0}, 'individual_bottom20': {'obs': 0.07, 'p_two_sided': 0.924, 'p_family_max_abs': 1.0}, '_shifts': 807}
+  OOS_pooled_2009-03~2023-08-30 {'individual_top20': {'obs': -0.19, 'p_two_sided': 0.344, 'p_family_max_abs': 0.855}, 'foreign_top20': {'obs': 0.12, 'p_two_sided': 0.688, 'p_family_max_abs': 0.97}, 'institution_top20': {'obs': 0.05, 'p_two_sided': 0.853, 'p_family_max_abs': 0.998}, 'individual_bottom20': {'obs': 0.22, 'p_two_sided': 0.314, 'p_family_max_abs': 0.781}, '_shifts': 3472}
+
+IS panic robustness {"seed7_site": [0.16, 2.98], "seeds_1_50_lower_gt0": 48, "seeds_1_50_lower_range": [-0.01, 0.33], "reps5000_ci90": [0.17, 2.99], "reps5000_ci95": [-0.08, 3.27], "reps5000_ci97.5(bonferroni4)": [-0.3, 3.6], "block40_ci90": [0.29, 3.06], "block60_ci90": [0.21, 3.26]}
+
+ROLLING (trailing 750d percentile)  first judged 2008-01-11
+ == 2008-01~2014 2008-01-11~2014-12-30 days=1733 base20=0.33
+     individual_top20       n20= 344 excess= -0.45 ci90=[-1.1, 0.15] sig=False
+     foreign_top20          n20= 416 excess= +0.45 ci90=[-0.15, 0.99] sig=False
+     institution_top20      n20= 329 excess= -0.04 ci90=[-0.7, 0.73] sig=False
+     individual_bottom20    n20= 362 excess= +0.63 ci90=[0.1, 1.24] sig=True
+ == 2015~2019 2015-01-02~2019-12-30 days=1227 base20=0.29
+     individual_top20       n20= 241 excess= -0.05 ci90=[-0.44, 0.36] sig=False
+     foreign_top20          n20= 213 excess= -0.03 ci90=[-0.48, 0.4] sig=False
+     institution_top20      n20= 251 excess= +0.39 ci90=[-0.13, 0.9] sig=False
+     individual_bottom20    n20= 241 excess= +0.10 ci90=[-0.4, 0.49] sig=False
+ == 2020~2023-08-30 2020-01-02~2023-08-30 days=907 base20=0.52
+     individual_top20       n20= 226 excess= -0.53 ci90=[-1.65, 0.56] sig=False
+     foreign_top20          n20= 181 excess= -0.11 ci90=[-1.36, 1.02] sig=False
+     institution_top20      n20= 164 excess= -0.72 ci90=[-1.44, 0.09] sig=False
+     individual_bottom20    n20= 184 excess= +0.24 ci90=[-0.69, 1.22] sig=False
+ == IS_2023-08-31~ 2023-08-31~2026-09-02 days=730 base20=3.17
+     individual_top20       n20= 161 excess= -0.60 ci90=[-2.32, 0.8] sig=False
+     foreign_top20          n20= 156 excess= +0.34 ci90=[-0.95, 1.88] sig=False
+     institution_top20      n20= 175 excess= -0.11 ci90=[-1.55, 1.19] sig=False
+     individual_bottom20    n20= 168 excess= +1.19 ci90=[-0.02, 2.37] sig=False
+ == OOS_2008~2023-08-30 2008-01-11~2023-08-30 days=3867 base20=0.36
+     individual_top20       n20= 811 excess= -0.34 ci90=[-0.82, 0.1] sig=False
+     foreign_top20          n20= 810 excess= +0.20 ci90=[-0.23, 0.61] sig=False
+     institution_top20      n20= 744 excess= -0.05 ci90=[-0.45, 0.32] sig=False
+     individual_bottom20    n20= 787 excess= +0.38 ci90=[-0.0, 0.76] sig=False
+
+YEARLY
+ 2005 base= +3.58 indivT= -0.78   foreiT= +1.27   instiT= -0.26   indivB= +0.84*
+ 2006 base= +0.13 indivT= +0.38   foreiT= +0.37   instiT= +0.35   indivB= +2.11*
+ 2007 base= +2.12 indivT= -0.86   foreiT= +1.49   instiT= -0.20   indivB= -0.38 
+ 2008 base= -2.79 indivT= -2.80   foreiT= +0.23   instiT= +1.67   indivB= +2.76*
+ 2009 base= +3.20 indivT= +0.59   foreiT= -1.30*  instiT= +0.90   indivB= -0.22 
+ 2010 base= +1.83 indivT= -0.03   foreiT= -0.08   instiT= +1.86*  indivB= +0.45 
+ 2011 base= -0.61 indivT= -0.09   foreiT= +0.67   instiT= -0.33   indivB= +0.25 
+ 2012 base= +0.49 indivT= -0.05   foreiT= +0.60   instiT= +1.30*  indivB= +0.83 
+ 2013 base= -0.11 indivT= -0.24   foreiT= +0.49   instiT= -0.48   indivB= -0.51 
+ 2014 base= -0.09 indivT= +0.61*  foreiT= -0.27   instiT= +0.61   indivB= -0.27 
+ 2015 base= -0.04 indivT= +0.01   foreiT= +0.74   instiT= +0.19   indivB= +0.08 
+ 2016 base= +0.71 indivT= +0.16   foreiT= -0.03   instiT= +0.21   indivB= -0.03 
+ 2017 base= +1.69 indivT= +0.14   foreiT= -0.26   instiT= -0.21   indivB= +0.60 
+ 2018 base= -1.43 indivT= +0.24   foreiT= -0.24   instiT= +0.54   indivB= +0.24 
+ 2019 base= +0.52 indivT= +0.87*  foreiT= -1.11*  instiT= +0.80*  indivB= -0.14 
+ 2020 base= +3.21 indivT= -1.09   foreiT= -2.13   instiT= +1.47   indivB= +2.43*
+ 2021 base= -0.56 indivT= -0.16   foreiT= -0.70   instiT= -0.75   indivB= -0.52 
+ 2022 base= -1.40 indivT= -1.16   foreiT= +0.41   instiT= +0.23   indivB= +0.28 
+ 2023 base= +0.61 indivT= -0.22   foreiT= +0.03   instiT= +0.03   indivB= -0.18 
+ 2024 base= +0.02 indivT= +0.80   foreiT= -0.43   instiT= -0.94*  indivB= +0.34 
+ 2025 base= +5.74 indivT= +0.17   foreiT= +0.56   instiT= +0.47   indivB= +1.96 
+ 2026 base= +5.67 indivT= -4.17   foreiT= +2.57   instiT= -1.79   indivB= +1.29 

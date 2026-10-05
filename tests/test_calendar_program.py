@@ -2,6 +2,7 @@
 국내 장 일정(휴장일·만기·금통위), 프로그램 매매, 공매도 — 네트워크 없이 파싱·계산·실패 경로를 본다.
 """
 import json
+from pathlib import Path
 from datetime import date, datetime, timedelta, timezone
 
 import pytest
@@ -499,9 +500,12 @@ def test_build_universe_gives_up_when_too_many_fail(monkeypatch, tmp_path):
     monkeypatch.setattr(c.time, "sleep", lambda s: None)
     monkeypatch.setattr(c, "fetch_universe", lambda m, n: [{"code": f"{m[:1]}{k}", "name": "x", "market": m}
                                                           for k in range(n)])
-    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: (_ for _ in ()).throw(RuntimeError("HTTP 500")))
+    calls = []
+    monkeypatch.setattr(c, "fetch_stock_trend",
+                        lambda code, days: calls.append(code) or (_ for _ in ()).throw(RuntimeError("HTTP 500")))
     assert c.build_universe(datetime(2026, 10, 5, 7, 37, tzinfo=K)) is None
-    assert any("버립니다" in w for w in c.WARNINGS)
+    assert len(calls) == c.STOCK_MAX_CONSECUTIVE_FAIL                 # 연달아 실패하면 나머지는 부르지 않는다
+    assert any("직전 요약" in w for w in c.WARNINGS)
 
 
 def test_patch_daily_keeps_cumulative_chain():
@@ -523,9 +527,14 @@ def test_universe_due_rules():
     assert c.universe_due({**done, "universePending": 30}, "2026-10-06", now)           # 채우는 중
     assert c.universe_due({**done, "universe": [{"asOf": "2026-10-02"}]}, "2026-10-06", now)   # 새 거래일
     assert not c.universe_due(done, "2026-10-06", now)                                 # 오늘 이미 돎
-    assert c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 18, 40, tzinfo=K))  # 18시 뒤 확정치 한 번
-    assert not c.universe_due({**done, "universeAt": "2026-10-06T18:40:00+09:00"}, "2026-10-06",
-                              datetime(2026, 10, 6, 20, 23, tzinfo=K))
+    assert not c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 18, 40, tzinfo=K))   # 확정(20:05) 전
+    assert c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 20, 10, tzinfo=K))      # 확정 뒤 한 번
+    assert not c.universe_due({**done, "universeAt": "2026-10-06T20:10:00+09:00"}, "2026-10-06",
+                              datetime(2026, 10, 6, 20, 40, tzinfo=K))
+    fri = {**done, "universe": [{"asOf": "2026-10-02"}], "universeAt": "2026-10-02T20:20:00+09:00"}
+    assert not c.universe_due(fri, "2026-10-02", datetime(2026, 10, 3, 19, 0, tzinfo=K))    # 주말엔 다시 안 돎
+    assert c.universe_due({**fri, "universeAt": "2026-10-02T18:30:00+09:00"}, "2026-10-02",
+                          datetime(2026, 10, 3, 9, 0, tzinfo=K))                               # 금요일 확정을 놓쳤으면 한 번
 
 
 def test_mode_decide_every_five_minutes_all_day():
@@ -541,10 +550,213 @@ def test_mode_decide_every_five_minutes_all_day():
     assert md.decide(meta(at(7, 35)), hols, at(7, 45)) == "skip"
     assert md.decide(meta(at(16, 40)), hols, at(17, 0)) == "skip"                      # 마감 뒤는 1시간마다
     assert md.decide(meta(at(16, 40)), hols, at(17, 45)) == "full"
-    assert md.decide(meta(at(19, 50)), hols, at(20, 10)) == "full"                     # 20시 확정 한 번
+    assert md.decide(meta(at(19, 50)), hols, at(20, 10)) == "skip"                     # 방금 돈 전체 수집 뒤 30분은 쉼
+    assert md.decide(meta(at(19, 50)), hols, at(20, 25)) == "full"                     # 20시 확정 한 번
     assert md.decide(meta(at(20, 10)), hols, at(20, 40)) == "skip"
     assert md.decide(meta(at(20, 10)), hols, at(22, 0)) == "skip"
     assert md.decide(meta(at(10, 0, 9)), hols, at(12, 0, 9)) == "skip"                 # 휴장일은 6시간마다
     assert md.decide(meta(at(5, 0, 9)), hols, at(12, 0, 9)) == "full"
     assert md.decide({}, hols, at(3, 0)) == "skip" and md.decide({}, hols, at(10, 0)) == "full"
     assert md.decide(meta(at(2, 0)), hols, at(2, 1), force=True) == "full"
+
+
+
+def test_mode_backs_off_after_failed_attempts_and_follows_session_hours(monkeypatch, tmp_path):
+    import mode as md
+    hols = {"2026-10-09"}
+    at = lambda h, m, d=6, mo=10, y=2026: datetime(y, mo, d, h, m, tzinfo=K)
+    ok = lambda t: {"generatedAt": t.isoformat(), "fullAt": t.isoformat()}
+    fail = lambda m, t, mode="full": {**m, "lastAttempt": {"at": t.isoformat(), "mode": mode, "ok": False}}
+    m = fail(ok(at(9, 50)), at(10, 55))
+    assert md.decide(m, hols, at(10, 56)) == "skip"                                    # 실패 직후 중복
+    assert md.decide(m, hols, at(11, 0)) == "intraday"                                 # 실패해도 장중엔 가벼운 수집
+    assert md.decide(m, hols, at(11, 55)) == "full"                                    # 한 시간 뒤 다시
+    h = fail(ok(at(6, 0, 9)), at(12, 0, 9))
+    assert md.decide(h, hols, at(12, 30, 9)) == "skip" and md.decide(h, hols, at(18, 5, 9)) == "full"
+    pm = fail(ok(at(19, 0)), at(20, 10))
+    assert md.decide(pm, hols, at(20, 20)) == "skip" and md.decide(pm, hols, at(20, 45)) == "full"
+    # 수능일(16:30 마감)엔 16:00 에도 장중, 새해 첫 거래일(10시 개장)엔 09:40 은 장 전
+    special = {"2026-11-19": ("1000", "1630")}
+    assert md.decide(ok(at(15, 30, 19, 11)), hols, at(16, 0, 19, 11), special=special) == "intraday"
+    assert md.decide(ok(at(15, 30, 19, 11)), hols, at(16, 0, 19, 11)) == "skip"         # 평일 규칙이면 마감 뒤(1시간마다)
+    assert md._session(date(2027, 1, 4), {"2027-01-01"}, {}) == (600, 930)
+    # 실패 기록: 마지막 시도와 요청 수
+    (tmp_path / ".cache").mkdir()
+    (tmp_path / ".cache" / "attempt.json").write_text('{"requests": 40}', encoding="utf-8")
+    f = tmp_path / "meta.json"
+    f.write_text(json.dumps({"requests": {"date": "2026-10-06", "count": 100}}), encoding="utf-8")
+    got = md.record_failure(f, "full", root=tmp_path, now=at(11, 0))
+    assert got["lastAttempt"] == {"at": at(11, 0).isoformat(timespec="seconds"), "mode": "full", "ok": False}
+    assert got["requests"] == {"date": "2026-10-06", "count": 140}
+
+
+def test_stock_store_marker_matches_workflow(monkeypatch, tmp_path):
+    import re as _re
+    monkeypatch.delenv("STOCK_STORE", raising=False)
+    c.save_stock_store({"codes": {}})
+    marker = c.stock_store_marker()
+    assert marker.exists()
+    yml = (Path(c.__file__).resolve().parent.parent / ".github" / "workflows" / "collect.yml").read_text(encoding="utf-8")
+    lit = _re.search(r"hashFiles\('([^']+)'\)", yml).group(1)
+    assert marker.relative_to(c.ROOT).as_posix() == lit
+
+
+def test_estimated_ranks_never_used_even_after_cutoff(monkeypatch):
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "fetch_rank", lambda inv, mkt, per: _rank())
+    prev = c.build_ranks(None, datetime(2026, 10, 2, 20, 30, tzinfo=K), "장마감")
+    for now, phase in ((datetime(2026, 10, 6, 20, 30, tzinfo=K), "장마감"), (datetime(2026, 10, 7, 7, 35, tzinfo=K), "장전")):
+        monkeypatch.setattr(c, "fetch_rank", lambda inv, mkt, per: _rank("2026-10-06", estimated=True))
+        r = c.build_ranks(prev, now, phase)
+        assert r["asOf"] == "2026-10-02" and r["final"] is False
+        assert r["markets"]["KOSPI"]["foreign"]["day"]["to"] == "2026-10-02"
+
+
+def test_ranks_mark_lists_left_from_an_older_day(monkeypatch):
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "fetch_rank", lambda inv, mkt, per: _rank())
+    prev = c.build_ranks(None, datetime(2026, 10, 2, 20, 30, tzinfo=K), "장마감")
+    def flaky(inv, mkt, per):
+        if mkt == "KOSDAQ" and inv == "ORGANIZATION":
+            raise RuntimeError("HTTP 500")
+        return _rank("2026-10-06")
+    monkeypatch.setattr(c, "fetch_rank", flaky)
+    r = c.build_ranks(prev, datetime(2026, 10, 6, 20, 30, tzinfo=K), "장마감")
+    assert r["asOf"] == "2026-10-06" and r["mixed"] == ["코스닥 기관 하루"]
+    assert r["markets"]["KOSDAQ"]["institution"]["day"]["stale"] is True
+    assert any(s_["key"] == "ranks" for s_ in c.STALE)
+
+
+def test_rank_streak_counts_as_of_list_date():
+    rows_by = {"000660": [["20260929", -5, 1, 0, 1.0, 1.0, 1], ["20260930", -5, 1, 0, 1.0, 1.0, 1],
+                          ["20261001", -5, 1, 0, 1.0, 1.0, 1], ["20261002", -5, -1, 0, 1.0, 1.0, 1],
+                          ["20261006", 9, 1, 0, 1.0, 1.0, 1]]}
+    fn = c.rank_streak_fn({}, rows_by)
+    st = fn("000660", "foreign", "2026-10-02")
+    assert st["days"] == 4 and st["side"] == "sell" and st.get("atLeast")      # 맨 앞 행까지 이어짐 → 그 이상일 수 있음
+    assert fn("000660", "foreign", "2026-10-06")["days"] == 1
+    assert fn("000660", "institution", "2026-10-02") == {"days": 1, "side": "sell", "total": -1.0}
+    assert fn("999999", "foreign", "2026-10-02") is None
+
+
+@pytest.mark.parametrize("kind,data,expect", [
+    ("streak", {"days": 2, "pct": 2.0}, False), ("streak", {"days": 3, "pct": 2.0}, True),
+    ("streak", {"days": 3, "pct": 5.1}, False), ("streak", {"days": 3, "pct": 5.0}, True),
+    ("program", {"pctl": 97.4, "total": 5000}, False), ("program", {"pctl": 97.5, "total": 5000}, True),
+    ("program", {"pctl": 99.0, "total": 999}, False), ("program", {"pctl": 98.0, "total": -5000}, False),
+    ("program", {"pctl": 2.0, "total": 5000}, False), ("program", {"pctl": 2.5, "total": -5000}, True),
+    ("credit", {"q": 97.4, "d5": 9000}, False), ("credit", {"q": 97.5, "d5": 9000}, True),
+    ("credit", {"q": 1.2, "d5": 120}, False), ("credit", {"q": 2.5, "d5": -9000}, True),
+    ("short", {"q": 97.4}, False), ("short", {"q": 97.5}, True),
+    ("overnight", {"q": 97.4}, False), ("overnight", {"q": 97.5}, True),
+])
+def test_build_today_thresholds(kind, data, expect):
+    day = "2026-10-02"
+    flows, stocks, credit, program, glob, short = {"markets": {"KOSPI": {"latest": {"date": day}}}}, {}, {}, {}, {}, {}
+    if kind == "streak":
+        flows["markets"]["KOSPI"]["streaks"] = {"foreign": {"days": data["days"], "side": "sell",
+                                                            "rarity": {"since": "2009-03", "pctRuns": data["pct"]}}}
+    if kind == "program":
+        program = {"markets": {"KOSPI": {"latest": {"date": day, "pctl": data["pctl"], "total": data["total"], "days": 250}}}}
+    if kind == "credit":
+        credit = {"latest": {"loans": {"d5": data["d5"], "d5Pctl": data["q"], "days": 146}}}
+    if kind == "short":
+        short = {"markets": {"KOSPI": {"latest": {"daily": {"pct": 9.0, "pctPctl": data["q"], "days": 369}}}}}
+    if kind == "overnight":
+        glob = {"items": [{"symbol": "EWY", "name": "한국 ETF(EWY)", "changeRate": -5.0, "movePctl": data["q"],
+                           "asOf": "2026-10-02"}], "preopen": ["EWY"]}
+    t = c.build_today(flows, stocks, credit, program, glob, short, datetime(2026, 10, 5, 7, 37, tzinfo=K))
+    assert (len(t["items"]) == 1) is expect, t["items"]
+
+
+def test_today_concentration_wording_never_rounds_to_100():
+    uni = [{"code": f"{i:06d}", "name": f"S{i}", "foreign": {"v60": -5.0}, "institution": {"v60": 1.0}} for i in range(30)]
+    uni[0]["foreign"]["v60"], uni[1]["foreign"]["v60"] = -218700.0, -83000.0
+    conc = c.concentration(uni)
+    conc["foreign"]["share"] = 99.7
+    flows = {"markets": {"KOSPI": {"latest": {"date": "2026-10-02"}}}}
+    t = c.build_today(flows, {"concentration": conc}, {}, {}, {}, {}, datetime(2026, 10, 5, 7, 37, tzinfo=K))
+    assert "99.7%" in t["items"][0]["text"] and "수집 30종목" in t["items"][0]["detail"]
+    conc["foreign"]["share"] = 140.0
+    t = c.build_today(flows, {"concentration": conc}, {}, {}, {}, {}, datetime(2026, 10, 5, 7, 37, tzinfo=K))
+    assert "두 종목 합계" in t["items"][0]["text"] and "반대 방향" in t["items"][0]["detail"]
+    t = c.build_today({"markets": {"KOSPI": {"latest": {"date": "2026-10-06"}, "streaks": {
+        "foreign": {"days": 9, "side": "sell", "rarity": {"since": "2009-03", "pctRuns": 1.0}}}}}},
+        {}, {}, {}, {}, {}, datetime(2026, 10, 6, 11, 0, tzinfo=K))
+    assert t["provisional"] is True and t["items"][0]["text"].endswith("(잠정)")
+
+
+def test_feed_orders_by_day_and_keeps_timestamp_when_unchanged():
+    flows = {"markets": {"KOSPI": {"latest": {"date": "2026-10-06", "individual": 1.0, "foreign": 2.0, "institution": 3.0}}}}
+    f1 = c.build_feed({}, flows, {"indices": {}}, [], datetime(2026, 10, 6, 20, 30, tzinfo=K))
+    f2 = c.build_feed(f1, flows, {"indices": {}}, [], datetime(2026, 10, 7, 7, 37, tzinfo=K),
+                      {"id": "2026-10-07-pre", "kind": "pre", "date": "2026-10-07", "title": "t", "summary": "",
+                       "final": True, "updated": "2026-10-07T07:37:00+09:00"})
+    assert [e["id"] for e in f2["entries"]] == ["2026-10-07-pre", "2026-10-06-post"]
+    assert f2["entries"][1]["updated"] == f1["entries"][0]["updated"]               # 내용이 같으면 시각 그대로
+
+
+def test_intraday_hist_waits_for_program_final(monkeypatch):
+    pts = [{"t": "15:30", "individual": 1.0, "foreign": -1.0, "institution": 0.0, "other_corp": 0.0}]
+    flows = {"markets": {c_: {"latest": {"date": "2026-10-06", "individual": 1.0}, "intraday": {
+        "date": "2026-10-06", "points": pts, "final": {"t": "20:01"}}} for c_ in ("KOSPI", "KOSDAQ")}}
+    monkeypatch.setattr(c, "fetch_program_intraday", lambda m: {"_date": "2026-10-06"})
+    assert c.record_intraday_hist(None, flows, {}, datetime(2026, 10, 6, 20, 2, tzinfo=K)) is None
+    assert c.record_intraday_hist(None, flows, {}, datetime(2026, 10, 6, 20, 6, tzinfo=K)) is not None
+
+
+def test_universe_backfill_completes_over_runs(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 150)
+    uni = lambda m, n: [{"code": f"{1 if m == 'KOSPI' else 2}{k:05d}", "name": f"{m}{k}", "market": m} for k in range(n)]
+    monkeypatch.setattr(c, "fetch_universe", uni)
+    asked = []
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: asked.append(days) or _trend_rows(min(days, 80)))
+    now = datetime(2026, 10, 5, 7, 37, tzinfo=K)
+    assert c.build_universe(now)[2] == 200
+    asked.clear()
+    _, _, pending2 = c.build_universe(now + timedelta(days=1))
+    assert pending2 == 50 and asked.count(c.STOCK_BACKFILL_DAYS) == 150 and asked.count(60) == 50
+    assert sum(1 for d in asked if d not in (c.STOCK_BACKFILL_DAYS, 60)) == 150     # 다 채운 종목은 최근 며칠만
+    asked.clear()
+    _, _, pending3 = c.build_universe(now + timedelta(days=2))
+    assert pending3 == 0 and asked.count(c.STOCK_BACKFILL_DAYS) == 50 and asked.count(60) == 0
+    asked.clear()
+    _, _, pending4 = c.build_universe(now + timedelta(days=3))
+    assert pending4 == 0 and c.STOCK_BACKFILL_DAYS not in asked
+
+
+def test_universe_time_budget_carries_rest_to_next_run(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "fetch_universe", lambda m, n: [{"code": f"{m}{k}", "name": "x", "market": m}
+                                                          for k in range(n)])
+    clock = iter(range(0, 10 ** 6, 10))                       # 종목마다 10초씩 흐르는 가짜 시계
+    monkeypatch.setattr(c.time, "monotonic", lambda: next(clock))
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: _trend_rows(30))
+    summaries, rows_by, pending = c.build_universe(datetime(2026, 10, 5, 7, 37, tzinfo=K))
+    assert 0 < len(summaries) < 350 and pending >= 350 - len(summaries)   # 못 받은 종목은 다음 실행으로
+    assert any("시간 예산" in w for w in c.WARNINGS)
+
+
+def test_request_counter_wraps_session(monkeypatch):
+    monkeypatch.setattr(c, "_session_request", lambda method, url, **kw: "ok")
+    before = c.REQUESTS["n"]
+    assert c._counted_request("GET", "x") == "ok" and c._counted_request("POST", "y") == "ok"
+    assert c.REQUESTS["n"] == before + 2
+
+
+
+def test_empty_backfill_response_keeps_stock_partial(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 0)
+    uni = lambda m, n: [{"code": f"{m}{k}", "name": "x", "market": m} for k in range(n)]
+    monkeypatch.setattr(c, "fetch_universe", uni)
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: _trend_rows(60))
+    now = datetime(2026, 10, 5, 7, 37, tzinfo=K)
+    assert c.build_universe(now)[2] == 350                       # 처음엔 모두 60일만(채우는 중)
+    monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 1000)
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: [])   # 처음부터 받기가 빈 응답
+    assert c.build_universe(now + timedelta(days=1))[2] == 350   # 빈 응답이면 '다 채움'으로 바꾸지 않는다

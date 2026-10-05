@@ -107,6 +107,7 @@ jobs:
       - name: 데이터 수집
         id: collect
         if: steps.mode.outputs.mode != 'skip'
+        timeout-minutes: 20        # 잡 전체 시간 초과로 취소되면 아래 '실패한 시도 기록'이 못 돈다 — 단계에서 먼저 끊는다
         env:
           # 선택사항. 없으면 미국 CPI/고용/PCE 일정과 매크로 실측치만 빠집니다.
           # 무료 발급: https://fred.stlouisfed.org/docs/api/api_key.html
@@ -128,7 +129,7 @@ jobs:
           if [ "$code" -ne 0 ] && [ "$code" -ne 3 ]; then exit "$code"; fi
 
       - name: 종목 이력 캐시 저장
-        if: ${{ !cancelled() && steps.mode.outputs.mode == 'full' && hashFiles('.cache/stockhist.changed') != '' }}
+        if: ${{ !cancelled() && steps.mode.outputs.mode == 'full' && hashFiles('.cache/stockhist.json.gz.changed') != '' }}
         continue-on-error: true
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
         with:
@@ -154,6 +155,26 @@ jobs:
             sleep $((i * 5))
           done
           exit 1
+
+      # 실패한 실행은 데이터를 올리지 않아 meta.json 의 수집 시각이 그대로다. 그대로 두면 5분마다 깨울 때마다
+      # 무거운 전체 수집을 다시 시도하므로, data 브랜치의 meta.json 에 '실패한 시도'와 쓴 요청 수만 적어 둔다.
+      - name: 실패한 시도 기록
+        if: ${{ !cancelled() && failure() && steps.mode.outputs.mode != 'skip' }}
+        continue-on-error: true
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch -q --depth=1 origin data || exit 0
+          git show FETCH_HEAD:docs/data/meta.json > "$RUNNER_TEMP/meta.json" 2>/dev/null || echo '{}' > "$RUNNER_TEMP/meta.json"
+          python3 collector/mode.py --record-failure "$RUNNER_TEMP/meta.json" "${{ steps.mode.outputs.mode }}"
+          export GIT_INDEX_FILE="$RUNNER_TEMP/fail-index"
+          rm -f "$GIT_INDEX_FILE"
+          git read-tree FETCH_HEAD
+          blob="$(git hash-object -w "$RUNNER_TEMP/meta.json")"
+          git update-index --add --cacheinfo "100644,$blob,docs/data/meta.json"
+          tree="$(git write-tree)"
+          commit="$(git commit-tree "$tree" -m "실패한 수집 시도 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')")"
+          git push -q -f origin "$commit:refs/heads/data"
 
       # 수집하는 동안 화면 코드가 바뀌었을 수 있다 — 배포 직전에 main 의 최신 화면 코드로 맞춘다(데이터는 그대로)
       - name: 최신 화면 코드로 맞추기

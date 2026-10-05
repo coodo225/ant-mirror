@@ -37,6 +37,7 @@ def clean_state(tmp_path, monkeypatch):
     monkeypatch.setattr(c, "HOLIDAYS", dict(c.HOLIDAYS))
     monkeypatch.setattr(c, "MPC", {y: list(v) for y, v in c.MPC.items()})
     monkeypatch.setattr(c, "SPECIAL_SESSIONS", dict(c.SPECIAL_SESSIONS))
+    monkeypatch.setitem(c.REQUESTS, "n", 0)
     yield
 
 
