@@ -448,7 +448,7 @@ code {
 @media (max-width: 780px) { .grid-2 { grid-template-columns: 1fr; } }
 
 /* 세그먼트 토글 */
-.seg-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.seg-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .seg { display: inline-flex; background: #0d1220; border: 1px solid var(--line); border-radius: 9px; padding: 2px; }
 .seg button {
   border: 0; background: transparent; color: var(--dim);

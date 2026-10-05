@@ -1,0 +1,36 @@
+name: 테스트
+
+# 코드가 바뀔 때만 돈다. 봇의 데이터 커밋(docs/data, og.png)은 건드리지 않는다.
+on:
+  push:
+    paths:
+      - 'collector/**'
+      - 'tests/**'
+      - 'docs/app.js'
+      - '.github/workflows/**'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: '3.11'
+
+      # 테스트는 외부 소스를 전부 가짜로 바꾸므로 requests 와 pytest 만 있으면 된다
+      - name: 의존성 설치
+        run: pip install -r requirements-dev.txt
+
+      - name: 수집기 테스트
+        run: python -m pytest -q tests
+
+      - name: 화면 스크립트 문법 검사
+        run: node --check docs/app.js

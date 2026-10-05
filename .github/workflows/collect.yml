@@ -1,32 +1,37 @@
 name: 시장 데이터 수집
 
-# 한국 증시 09:00~15:30 KST = 00:00~06:30 UTC
-# GitHub Actions 의 cron 은 UTC 기준이며, 실제 실행은 수 분 지연될 수 있습니다.
+# GitHub Actions 의 cron 은 UTC 기준이고, 부하가 몰리면 실행이 늦어지거나 아예 빠진다(특히 정각).
+# 그래서 정각을 피한 분(7·17·23·37분)에 돌리고, 장중 간격도 현실적으로 30분으로 둔다.
 on:
   schedule:
-    - cron: '*/10 0-6 * * 1-5'   # 장중 10분마다 (KST 09:00~15:59, 평일)
-    - cron: '40 6 * * 1-5'       # KST 15:40 — 장 마감 직후
-    - cron: '0 9 * * 1-5'        # KST 18:00 — 수급 확정치 반영
-    - cron: '30 22 * * 0-4'      # KST 07:30 — 간밤 미국장 마감 반영
+    - cron: '7,37 0-6 * * 1-5'   # KST 09:07~15:37, 30분마다 (장중 잠정치)
+    - cron: '17 9 * * 1-5'       # KST 18:17 — 장 마감 후
+    - cron: '23 11 * * 1-5'      # KST 20:23 — 투자자별 수급 확정치 (KRX 값은 20시 전후까지 바뀐다)
+    - cron: '37 22 * * 0-4'      # KST 07:37 — 간밤 미국장 마감 반영
   workflow_dispatch:             # 수동 실행 버튼
 
 permissions:
   contents: write
 
-# 앞 실행이 끝나기 전에 다음 실행이 겹쳐 push 충돌 나는 것을 막는다
+# 앞 실행이 끝나기 전에 다음 실행이 겹치지 않게 한다
 concurrency:
   group: collect-data
   cancel-in-progress: false
 
 jobs:
   collect:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 는 2026-10-19 부터 26.04 로 바뀐다. 새 이미지용 파이썬 빌드가 늦게 나올 수 있어 버전을 고정한다
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      # 대기열에 있던 실행도 '지금의' 브랜치 끝을 받는다. 기본값(이벤트 시점 커밋)이면 앞 실행이 올린
+      # 데이터를 모른 채 수집해, 커밋할 때 데이터 JSON 이 충돌한다(2026-08 에 실제로 3번 실패)
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          ref: ${{ github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           python-version: '3.11'
           cache: pip
@@ -35,8 +40,27 @@ jobs:
       - name: 의존성 설치
         run: pip install -r collector/requirements.txt
 
-      - name: 한글 폰트 설치 (OG 공유 카드용)
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+      - name: 한글 폰트 캐시 (OG 공유 카드용)
+        id: font-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+        with:
+          path: ~/.cache/og-fonts
+          key: og-fonts-nanumgothic-v1
+
+      # 공유 카드용이라 실패해도 데이터 수집은 계속한다.
+      # (예전엔 매번 apt-get 으로 설치했는데, 미러가 멈추면 15분 타임아웃으로 수집까지 취소됐다)
+      - name: 한글 폰트 받기
+        if: steps.font-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          tmp="$(mktemp -d)"
+          for f in NanumGothic-Regular NanumGothic-Bold; do
+            curl -fsSL --retry 2 -o "$tmp/$f.ttf" \
+              "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothic/$f.ttf"
+          done
+          # 둘 다 받았을 때만 캐시 경로로 옮긴다 — 반쪽짜리가 캐시에 남지 않게
+          mkdir -p ~/.cache && mv "$tmp" ~/.cache/og-fonts
 
       - name: 데이터 수집
         id: collect
@@ -48,26 +72,43 @@ jobs:
         # 나머지 데이터는 커밋해야 하므로 여기서는 멈추지 않고, 마지막 단계에서 실패로 표시한다.
         run: |
           set +e
-          python collector/collect.py
+          OG_FONT_DIR="$HOME/.cache/og-fonts" python collector/collect.py
           code=$?
           echo "code=$code" >> "$GITHUB_OUTPUT"
           if [ "$code" -ne 0 ] && [ "$code" -ne 3 ]; then exit "$code"; fi
 
+      # 다른 실행이 먼저 push 했을 수 있다. 매번 최신 브랜치 위에 '데이터 파일만' 얹어 커밋한다.
+      # (rebase 로 합치면 같은 데이터 JSON 이 충돌한다. 데이터는 매 실행 통째로 다시 만들므로 이번 실행 것이 맞다.
+      #  인덱스만 최신으로 되돌리므로, 그사이 사람이 올린 코드 변경은 건드리지 않는다)
       - name: 변경분 커밋
+        env:
+          BRANCH: ${{ github.ref_name }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data docs/og.png
-          if git diff --staged --quiet; then
-            echo "변경 없음 — 커밋 생략"
-            exit 0
-          fi
-          git commit -m "데이터 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')"
-          # 다른 실행이 먼저 push 했을 수 있으므로 rebase 후 재시도
+          CHECKOUT_SHA="$(git rev-parse HEAD)"
           for i in 1 2 3; do
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            if ! git fetch -q origin "$BRANCH"; then
+              echo "fetch 재시도 $i"; sleep $((i * 5)); continue
+            fi
+            # 실행 도중 사람이 수집기나 데이터를 바꿔 올렸으면, 옛 코드로 만든 이번 결과로 덮어쓰지 않는다
+            # (다음 실행이 새 코드로 다시 만든다). 동시 실행은 concurrency 가 막으므로 이 차이는 사람 커밋뿐이다.
+            if ! git diff --quiet "$CHECKOUT_SHA" "origin/$BRANCH" -- collector docs/data docs/og.png; then
+              echo "::warning::실행 중 수집기·데이터가 바뀌어 이번 결과는 커밋하지 않습니다"
+              exit 0
+            fi
+            git reset -q "origin/$BRANCH"
+            # 삭제는 스테이징하지 않는다 — 인덱스(최신)에만 있는 파일을 지우지 않게
+            git add --ignore-removal docs/data
+            if [ -f docs/og.png ]; then git add docs/og.png; fi
+            if git diff --cached --quiet; then
+              echo "변경 없음 — 커밋 생략"
+              exit 0
+            fi
+            git commit -q -m "데이터 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')"
+            if git push -q origin "HEAD:$BRANCH"; then exit 0; fi
             echo "push 재시도 $i"
-            sleep 5
+            sleep $((i * 5))
           done
           exit 1
 

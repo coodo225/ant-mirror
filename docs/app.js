@@ -36,6 +36,7 @@ let heroMarket = 'KOSPI';
 let flowMode   = 'cum';
 let flowRange  = 40;
 let treeMarket = 'KOSPI';
+let reportMarket = 'KOSPI';
 let selectedStock = null;
 
 /* ── 포맷 ─────────────────────────────────────────────── */
@@ -155,50 +156,45 @@ async function boot() {
   $('#loading').hidden = true;
   $('#app').hidden = false;
 
-  safe(renderMeta, '헤더');
-  safe(renderMirror, '거울 한 줄');
-  safe(renderHero, '줄다리기');
-  safe(renderThermo, '개미 온도계');
-  safe(renderFutures, '선물');
-  safe(renderCredit, '빚투 체온계');
-  safe(renderReportCard, '성적표');
-  safe(renderOppose, '반대로 가는 본능');
-  safe(renderHall, '흑역사');
-  safe(renderCaveats, '한계 고백');
-  safe(renderInsights, '브리핑');
-  safe(renderIndices, '지수');
-  safe(renderAnalog, '유사 국면');
-  safe(renderBaskets, '장바구니 비교');
-  safe(renderFlowChart, '수급 차트');
-  safe(renderStreaks, '연속 매매');
-  safe(renderInstBreakdown, '기관 분해');
-  safe(renderTreemap, '트리맵');
-  safe(renderIndustries, '업종');
-  safe(renderGlobals, '글로벌');
-  safe(renderEvents, '이벤트');
+  renderAll();
   safe(wireControls, '컨트롤');
   reportRenderErrors();
 
-  // 장중이면 60초마다 조용히 갱신
-  if ((D.meta.phase || '').includes('장중')) setInterval(refresh, 60000);
+  // 수집은 장중에도 30분 간격(그마저 GitHub 사정으로 늦어진다)이라 1분마다 파일 12개를 받을 이유가 없다.
+  // 5분마다 meta 하나만 확인해 새 수집이 있을 때만 전부 다시 받는다. 탭이 안 보이면 쉰다.
+  // 장 상태와 상관없이 돌려서, 장 전에 열어 둔 페이지도 장중 수집을 받는다.
+  if (!POLL) POLL = setInterval(() => { if (!document.hidden) refresh(); }, 5 * 60 * 1000);
 }
+let POLL = null;
+
+/** 데이터가 바뀌면 다시 그릴 섹션 전부 (컨트롤 연결은 한 번만) */
+const RENDERERS = [
+  [renderMeta, '헤더'], [renderMirror, '거울 한 줄'], [renderHero, '줄다리기'], [renderIntraday, '장중 흐름'],
+  [renderThermo, '개미 온도계'], [renderFutures, '선물'], [renderCredit, '빚투 체온계'],
+  [renderReportCard, '성적표'], [renderOppose, '반대로 가는 본능'], [renderHall, '흑역사'],
+  [renderCaveats, '한계 고백'], [renderInsights, '브리핑'], [renderIndices, '지수'],
+  [renderAnalog, '유사 국면'], [renderBaskets, '장바구니 비교'], [renderFlowChart, '수급 차트'],
+  [renderStreaks, '연속 매매'], [renderInstBreakdown, '기관 분해'], [renderTreemap, '트리맵'],
+  [renderIndustries, '업종'], [renderGlobals, '글로벌'], [renderEvents, '이벤트'],
+];
+function renderAll() { RENDERERS.forEach(([fn, label]) => safe(fn, label)); }
 
 async function refresh() {
   try {
+    const meta = await fetchJSON('meta', { timeout: 8000, tries: 1 });
+    if (meta.generatedAt === D.meta.generatedAt) return;          // 새 수집이 없으면 아무것도 안 한다
     const results = await Promise.all(
-      FILES.map(async f => [f, await fetchJSON(f, { timeout: 8000, tries: 1 })])
+      FILES.filter(f => f !== 'meta').map(async f => [f, await fetchJSON(f, { timeout: 8000, tries: 1 })])
     );
     results.forEach(([k, v]) => { D[k] = v; });
+    D.meta = meta;
   } catch (e) {
     console.warn('자동 갱신 실패, 다음 주기에 재시도:', e.message);
     return;                       // 이미 그려진 화면은 그대로 둔다
   }
   RENDER_ERRORS.length = 0;
-  [[renderMeta, '헤더'], [renderMirror, '거울 한 줄'], [renderHero, '줄다리기'],
-   [renderThermo, '개미 온도계'], [renderFutures, '선물'], [renderCredit, '빚투 체온계'],
-   [renderAnalog, '유사 국면'], [renderInsights, '브리핑'], [renderIndices, '지수'],
-   [renderFlowChart, '수급 차트'], [renderStreaks, '연속 매매'],
-   [renderInstBreakdown, '기관 분해']].forEach(([fn, label]) => safe(fn, label));
+  renderAll();
+  if (selectedStock && !$('#stock-detail').hidden) safe(() => showStock(selectedStock, { scroll: false }), '종목 상세');
   reportRenderErrors();
 }
 
@@ -339,6 +335,120 @@ function renderBalance(vals, last) {
       : '순매수와 순매도는 서로의 거울입니다. 누군가 판 물량은 누군가 받습니다.'}</span>`;
 }
 
+/* ── 장중 수급 흐름 ──────────────────────────────────── */
+
+const INTRA_EXTRA = { other_corp: { name: '기타법인', raw: '#7a869e' } };
+
+/** 가장 최근 거래일의 분 단위 누적 순매수(5분 간격). 줄다리기의 코스피/코스닥 선택을 따른다. */
+function renderIntraday() {
+  const card = $('#intraday-card');
+  const it = D.flows.markets[heroMarket]?.intraday;
+  card.hidden = !(it && it.points?.length >= 2);
+  if (card.hidden) return;
+
+  const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+  const settled = !!it.final;             // 20시 이후 값이 있어야 확정. 그 전(장중·마감 직후)은 잠정
+  $('#intraday-title').textContent = it.date === today ? '오늘 장중 수급 흐름' : '장중 수급 흐름';
+  $('#intraday-date').textContent =
+    `${it.date} · ${heroMarket === 'KOSPI' ? '코스피' : '코스닥'} · 누적 순매수(억원)${settled ? '' : ' · 잠정치'}`;
+
+  const keys = ['individual', 'foreign', 'institution', 'other_corp'];
+  const who = k => ACTORS[k] || INTRA_EXTRA[k];
+  const pts = it.points;
+  const mins = t => +t.slice(0, 2) * 60 + +t.slice(3, 5);
+  const T0 = mins(it.open || '09:00'), T1 = mins(it.close || '15:30');   // 수능일은 10:00~16:30
+
+  const W = 900, H = 260, M = { t: 14, r: 86, b: 28, l: 62 };
+  const pw = W - M.l - M.r, ph = H - M.t - M.b;
+  const vals = pts.flatMap(p => keys.map(k => p[k] ?? 0));
+  let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const pad = (hi - lo) * 0.1 || 1; lo -= pad; hi += pad;
+  const X = t => M.l + (Math.min(Math.max(mins(t), T0), T1) - T0) / (T1 - T0) * pw;
+  const Y = v => M.t + ph - (v - lo) / (hi - lo) * ph;
+
+  let g = '';
+  for (let i = 0; i <= 4; i++) {
+    const v = lo + (hi - lo) * i / 4, y = Y(v);
+    g += `<line x1="${M.l}" y1="${y.toFixed(1)}" x2="${W - M.r}" y2="${y.toFixed(1)}" stroke="#232b40"/>`;
+    g += `<text x="${M.l - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="#5d6780"
+           font-size="10.5" font-family="ui-monospace,monospace">${eok(v, { sign: false })}</text>`;
+  }
+  g += `<line x1="${M.l}" y1="${Y(0).toFixed(1)}" x2="${W - M.r}" y2="${Y(0).toFixed(1)}" stroke="#4a5570" stroke-width="1.3"/>`;
+  const hh = n => `${String(Math.floor(n / 60)).padStart(2, '0')}:${String(n % 60).padStart(2, '0')}`;
+  const ticks = [];
+  for (let m = Math.ceil(T0 / 60) * 60; m < T1; m += 60) ticks.push(hh(m));
+  if (!ticks.includes(hh(T0))) ticks.unshift(hh(T0));
+  ticks.push(hh(T1));
+  ticks.forEach(t => {
+    g += `<text x="${X(t).toFixed(1)}" y="${H - 8}" text-anchor="middle" fill="#5d6780"
+           font-size="10" font-family="ui-monospace,monospace">${t}</text>`;
+  });
+  // 끝값 라벨이 겹치지 않게 위아래로 밀어 둔다
+  const ends = keys.map(k => ({ k, v: pts[pts.length - 1][k] ?? 0 })).sort((a, b) => Y(a.v) - Y(b.v));
+  let lastY = -Infinity;
+  ends.forEach(e => { e.y = Math.max(Y(e.v), lastY + 13); lastY = e.y; });
+  keys.forEach(k => {
+    const line = pts.map(p => `${X(p.t).toFixed(1)},${Y(p[k] ?? 0).toFixed(1)}`).join(' ');
+    g += `<polyline points="${line}" fill="none" stroke="${who(k).raw}" stroke-width="${k === 'other_corp' ? 1.6 : 2.2}"
+           ${k === 'other_corp' ? 'stroke-dasharray="5 3"' : ''} stroke-linejoin="round" stroke-linecap="round"/>`;
+    const e = ends.find(x => x.k === k);
+    g += `<text x="${(X(pts[pts.length - 1].t) + 6).toFixed(1)}" y="${(e.y + 4).toFixed(1)}" fill="${who(k).raw}"
+           font-size="10.5" font-family="ui-monospace,monospace">${eok(e.v)}</text>`;
+  });
+  g += `<line id="intra-cursor" y1="${M.t}" y2="${M.t + ph}" stroke="#ffffff" stroke-opacity=".22" visibility="hidden"/>`;
+  g += `<rect id="intra-hit" x="${M.l}" y="${M.t}" width="${pw}" height="${ph}" fill="transparent"/>`;
+  const svg = $('#intraday-chart');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = g;
+
+  $('#intraday-legend').innerHTML = keys.map(k =>
+    `<span><i style="background:${who(k).raw}"></i>${who(k).name}</span>`).join('');
+
+  const f = it.final, a = it.after;
+  const close = it.close || '15:30';
+  const list = x => keys.map(k => `${who(k).name} ${eok(x[k])}`).join(' · ');
+  $('#intraday-note').textContent = f
+    ? `정규장 마감(${close}) 뒤에도 값은 조금씩 바뀝니다. ${f.t} 기준 확정: ${list(f)}.`
+    : a
+      ? `정규장 마감(${close}) 뒤 ${a.t} 기준(20시 전후 확정 전까지 바뀝니다): ${list(a)}.`
+      : `${pts[pts.length - 1].t}까지의 누적입니다. 장중 값은 잠정치이고, 장 마감 후 확정치로 바뀝니다.`;
+
+  // 포인터 이벤트라 터치에서도 동작하고, 세로 스크롤은 막지 않는다
+  const hit = $('#intra-hit', svg), cursor = $('#intra-cursor', svg), tip = $('#tooltip');
+  const move = ev => {
+    const box = svg.getBoundingClientRect();
+    const px = (ev.clientX - box.left) / box.width * W;
+    let i = 0;
+    pts.forEach((p, j) => { if (Math.abs(X(p.t) - px) < Math.abs(X(pts[i].t) - px)) i = j; });
+    const p = pts[i];
+    cursor.setAttribute('x1', X(p.t)); cursor.setAttribute('x2', X(p.t));
+    cursor.setAttribute('visibility', 'visible');
+    tip.hidden = false;
+    tip.innerHTML = `<div class="t-date">${it.date} ${p.t} · 누적</div>` + keys.map(k => `<div class="t-row">
+        <span><i style="background:${who(k).raw}"></i>${who(k).name}</span>
+        <b class="${dirCls(p[k])}">${eok(p[k])}</b></div>`).join('');
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = `${Math.min(ev.clientX + 14, window.innerWidth - tw - 8)}px`;
+    tip.style.top = `${Math.max(8, ev.clientY - th - 12)}px`;
+  };
+  const hide = () => { tip.hidden = true; cursor.setAttribute('visibility', 'hidden'); };
+  // 터치는 손을 떼는 순간 pointerleave 가 오므로, 마우스일 때만 떠날 때 숨긴다.
+  // 터치에서 가로로 끌면 차트 상자가 스크롤되고(좁은 화면), 값은 누른 자리의 것이 남는다.
+  const leave = ev => { if (ev.pointerType === 'mouse') hide(); };
+  hit.addEventListener('pointermove', move);
+  hit.addEventListener('pointerdown', move);
+  hit.addEventListener('pointerleave', leave);
+  if (!renderIntraday._bound) {
+    renderIntraday._bound = true;
+    document.addEventListener('pointerdown', ev => {
+      if (ev.pointerType !== 'mouse' && !ev.target.closest('#intraday-chart')) {
+        $('#tooltip').hidden = true;
+        $('#intra-cursor')?.setAttribute('visibility', 'hidden');
+      }
+    });
+  }
+}
+
 /* ══════════════════════════════════════════════════════
    개미 파트 — 풍자는 톤에만, 숫자는 있는 그대로
    ══════════════════════════════════════════════════════ */
@@ -351,10 +461,8 @@ const setText = (sel, text) => { const n = $(sel); if (n) n.textContent = text; 
 /** 헤더 아래 한 줄. 무작위 농담이 아니라 오늘 데이터에서 나온 문장이어야 한다. */
 function renderMirror() {
   const line = $('#mirror-line'), sub = $('#mirror-sub');
-  if (!hasAnt()) {
-    $('#mirror').hidden = true;
-    return;
-  }
+  $('#mirror').hidden = !hasAnt();
+  if (!hasAnt()) return;
   const a = D.ant.actors.individual;
   const p = a.todayPercentile;
   const opp = D.ant.oppositeRate.vsForeign;
@@ -383,7 +491,8 @@ function renderMirror() {
 
 /** 오늘의 매수 강도(거래대금 대비 순매수)를 표본 기간 분포 안에 놓아 본다 */
 function renderThermo() {
-  if (!hasAnt()) { $('#thermo-card').hidden = true; return; }
+  $('#thermo-card').hidden = !hasAnt();
+  if (!hasAnt()) return;
   const a = D.ant.actors.individual;
   const p = a.todayPercentile;
 
@@ -548,7 +657,8 @@ function renderBaskets() {
 function renderFutures() {
   const card = $('#futures-card');
   const f = D.futures;
-  if (!f || !f.daily?.length) { card.hidden = true; return; }
+  card.hidden = !(f && f.daily?.length);
+  if (card.hidden) return;
 
   const div = f.divergence;
   const box = $('#fut-divergence');
@@ -633,7 +743,8 @@ function renderFutures() {
 function renderCredit() {
   const card = $('#credit-card');
   const c = D.credit;
-  if (!c || !c.loans?.length) { card.hidden = true; return; }
+  card.hidden = !(c && c.loans?.length);
+  if (card.hidden) return;
 
   const ln = c.latest.loans || {};
   const mo = c.latest.money || {};
@@ -748,15 +859,32 @@ function quip(k, grade, significant) {
     : '기관이라고 다 잘하지는 않습니다. 남의 돈이라 그런지도 모르겠습니다.';
 }
 
+/** 성적표에 쓸 시장의 계산 결과. 코스닥은 ant.byMarket 안에 있다(없으면 코스피). */
+function reportAnt() {
+  const kq = D.ant.byMarket?.KOSDAQ;
+  if (reportMarket === 'KOSDAQ' && !kq) reportMarket = 'KOSPI';
+  return reportMarket === 'KOSDAQ' ? kq : D.ant;
+}
+
 function renderReportCard() {
-  if (!hasAnt()) { $('#report-card').hidden = true; return; }
-  const ant = D.ant, base = ant.baseline;
+  $('#report-card').hidden = !hasAnt();
+  if (!hasAnt()) return;
+  const ant = reportAnt(), base = ant.baseline;
+  const mkName = reportMarket === 'KOSDAQ' ? '코스닥' : '코스피';
+  const seg = $('#report-market-seg');
+  if (seg) {
+    seg.hidden = !D.ant.byMarket?.KOSDAQ;
+    $$('button', seg).forEach(b => b.classList.toggle('on', b.dataset.market === reportMarket));
+  }
   $('#report-sample').textContent =
-    `${ant.sample.from} ~ ${ant.sample.to} · ${ant.sample.days}거래일 · 코스피 기준`;
+    `${ant.sample.from} ~ ${ant.sample.to} · ${ant.sample.days}거래일 · ${mkName} 기준`;
+  // 흑역사·반대로 가는 본능·한계 고백·온도계는 코스피 기준이다 — 코스닥 성적표를 보는 동안 헷갈리지 않게
+  setText('#kospi-only-note', reportMarket === 'KOSDAQ'
+    ? '아래 흑역사·반대로 가는 본능·한계 고백과 위 온도계는 코스피 기준입니다.' : '');
   const hasCI = ACTOR_KEYS.some(k => ant.actors[k].excessCI !== undefined);
   const rule = basisOf(ant) === 'intensity' ? '그날 거래대금 대비 순매수 상위 20%' : '순매수 금액 상위 20%';
   setText('#report-intro',
-    `각 주체가 크게 사들인 날(${rule})로부터 20거래일 뒤, 코스피 지수가 얼마나 움직였는지를 시장 평균과 비교했습니다. ` +
+    `각 주체가 크게 사들인 날(${rule})로부터 20거래일 뒤, ${mkName} 지수가 얼마나 움직였는지를 시장 평균과 비교했습니다. ` +
     `실제 손익이 아니라 '산 시점'의 채점입니다.` +
     (hasCI ? ' 차이가 표본의 잡음 범위(90% 범위가 0을 포함) 안이면 C로 둡니다.' : ''));
 
@@ -800,7 +928,7 @@ function renderReportCard() {
 
 /** 주체별 · 기간별 '크게 산 날 이후 수익률' 을 시장 평균선과 함께 */
 function renderTimingChart() {
-  const svg = $('#timing-chart'), ant = D.ant;
+  const svg = $('#timing-chart'), ant = reportAnt();
   const W = 900, H = 230, M = { t: 16, r: 16, b: 34, l: 56 };
   const pw = W - M.l - M.r, ph = H - M.t - M.b;
   const HS = [1, 5, 20];
@@ -857,7 +985,7 @@ function renderTimingChart() {
 /** 연도별 분해 — 학점이 장세 탓인지 볼 수 있게 한다. 결론 문장도 표의 숫자에서 만든다. */
 function renderYearly() {
   const box = $('#yearly');
-  const rows = D.ant.yearly || [];
+  const rows = reportAnt().yearly || [];
   if (rows.length < 2) { box.innerHTML = ''; return; }
 
   const gc = { A: '#4dd4ac', B: '#4dd4ac', C: '#7a869e', D: '#ffb02e', F: '#ff4d4d' };
@@ -935,8 +1063,8 @@ function renderHall() {
   const rows = ant.hallOfFame;
   const max = Math.max(...rows.map(r => Math.abs(r.return20)), 1);
   setText('#hall-sub', rows[0].intensity != null
-    ? '거래대금 대비 순매수 기준 · 서로 다른 국면 · 20거래일 뒤 벌어진 일'
-    : '순매수 금액 기준 · 그리고 20거래일 뒤 벌어진 일');
+    ? '코스피 · 거래대금 대비 순매수 기준 · 서로 다른 국면 · 20거래일 뒤 벌어진 일'
+    : '코스피 · 순매수 금액 기준 · 그리고 20거래일 뒤 벌어진 일');
 
   box.innerHTML = '';
   rows.forEach((r, i) => {
@@ -1317,26 +1445,28 @@ function renderTreemap() {
       tile.innerHTML = `<div class="tile-name">${t.name}</div>
                         <div class="tile-chg">${pct(t.changeRate)}</div>`;
       tile.title = `${t.name}  ${nfmt(t.price, 0)}원  ${pct(t.changeRate)}\n시총 ${t.marketCapText || ''}`;
+      tile.dataset.code = t.code;
       tile.addEventListener('click', () => showStock(t.code));
       box.appendChild(tile);
     });
   };
 
   draw();
+  renderTreemap._draw = draw;
   clearTimeout(renderTreemap._t);
   if (!renderTreemap._bound) {
     renderTreemap._bound = true;
     window.addEventListener('resize', () => {
       clearTimeout(renderTreemap._t);
-      renderTreemap._t = setTimeout(draw, 180);
+      renderTreemap._t = setTimeout(() => renderTreemap._draw(), 180);
     });
   }
 }
 
-function showStock(code) {
+function showStock(code, { scroll = true } = {}) {
   const s = (D.stocks.top || []).find(x => x.code === code);
   const box = $('#stock-detail');
-  if (!s) { box.hidden = true; return; }
+  if (!s) { box.hidden = true; selectedStock = null; return; }
   selectedStock = code;
   $$('.tile').forEach(t => t.classList.remove('sel'));
 
@@ -1368,10 +1498,8 @@ function showStock(code) {
       ACTOR_KEYS.map(k => `<span><i style="background:${ACTORS[k].raw}"></i>${ACTORS[k].name}</span>`).join('')
     }<span class="dim">진한 색 = 순매수, 흐린 색 = 순매도 · 막대 길이 = 수량</span></div>`;
 
-  $$('.tile').forEach(t => {
-    if (t.title.startsWith(s.name)) t.classList.add('sel');
-  });
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  $$('.tile').forEach(t => t.classList.toggle('sel', t.dataset.code === code));
+  if (scroll) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 /* ── 업종 ─────────────────────────────────────────────── */
@@ -1463,7 +1591,12 @@ function wireControls() {
   $$('#hero-market-seg button').forEach(b => b.addEventListener('click', () => {
     $$('#hero-market-seg button').forEach(x => x.classList.toggle('on', x === b));
     heroMarket = b.dataset.market;
-    renderHero(); renderFlowChart(); renderStreaks(); renderInstBreakdown();
+    renderHero(); renderIntraday(); renderFlowChart(); renderStreaks(); renderInstBreakdown();
+  }));
+
+  $$('#report-market-seg button').forEach(b => b.addEventListener('click', () => {
+    reportMarket = b.dataset.market;
+    safe(renderReportCard, '성적표');
   }));
 
   $$('#flow-mode-seg button').forEach(b => b.addEventListener('click', () => {

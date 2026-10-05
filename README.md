@@ -93,23 +93,38 @@ python -m venv .venv
 
 > macOS / Linux 는 `.venv/Scripts/python` 대신 `.venv/bin/python` 을 씁니다.
 
+### 테스트
+
+수집기 테스트는 외부 소스를 전부 가짜 데이터로 바꿔서 돌기 때문에 네트워크가 필요 없습니다.
+소스가 죽거나 멈췄을 때의 동작(직전 정상본 유지, 멈춤 감지, 예비 소스 병합, exit 3)과
+통계 함수(순매수 강도, 90% 범위, 학점)를 확인합니다. 코드를 푸시하면 Actions 에서도 자동으로 돕니다.
+
+```bash
+.venv/Scripts/python -m pip install -r requirements-dev.txt
+```
+
+```bash
+.venv/Scripts/python -m pytest -q tests
+```
+
 ---
 
 ## 배포 (GitHub Pages)
 
 1. 이 폴더를 GitHub 저장소로 올립니다.
 2. **Settings → Pages → Source** 를 `Deploy from a branch`, 브랜치는 `main`, 폴더는 `/docs` 로 지정합니다.
-3. **Settings → Actions → General → Workflow permissions** 를 `Read and write permissions` 로 바꿉니다.
-   (워크플로가 `docs/data` 를 커밋해야 합니다.)
-4. **Actions** 탭에서 `시장 데이터 수집` 을 한 번 수동 실행(`Run workflow`)해 봅니다.
+3. **Actions** 탭에서 `시장 데이터 수집` 을 한 번 수동 실행(`Run workflow`)해 봅니다.
+   (워크플로가 `contents: write` 권한을 직접 선언하므로 저장소 설정을 바꿀 필요는 없습니다.)
 
-이후 평일 장중에는 10분마다, 마감 후와 다음 날 아침에 한 번씩 자동 갱신됩니다.
+이후 평일에는 장중 30분마다(KST 09:07~15:37), 장 마감 후 18:17, 수급 확정치가 나오는 20:23,
+다음 날 아침 07:37 에 자동 갱신됩니다(하루 약 17회). GitHub 의 예약 실행은 부하가 몰리면 늦어지거나
+빠지기도 해서, 정각을 피한 분에 돌립니다. 화면은 5분마다 새 수집이 있는지만 확인합니다.
 
 ### 저장소는 public 을 권합니다
 
 Actions 스케줄 실행은 **public 저장소에서 무료**입니다.
-private 이면 장중 10분 주기(하루 약 42회)로 무료 사용량을 빠르게 소진합니다.
-private 으로 쓰려면 `collect.yml` 의 첫 cron 을 `*/30` 정도로 늘리세요.
+private 이면 하루 약 17회 실행이 무료 사용량에서 차감됩니다(1회 약 1~2분).
+더 아끼려면 `collect.yml` 의 첫 cron 을 `7 0-6 * * 1-5`(1시간마다) 정도로 줄이세요.
 
 > 참고: GitHub 는 60일간 커밋이 없는 저장소의 예약 워크플로를 자동 비활성화합니다.
 
@@ -188,13 +203,18 @@ docs/                  ← GitHub Pages 루트
   style.css
   app.js               의존성 없는 바닐라 JS + 손으로 그린 SVG 차트
   data/*.json          수집 결과 (워크플로가 갱신)
-    flows.json           120거래일 수급 (화면 차트용)
+    flows.json           120거래일 수급 (화면 차트용, 거래대금 포함)
     ant.json             성적표·상관계수·백분위·흑역사·연도별 (750거래일 통계)
+    analog.json          유사 국면 매칭
+    antstocks.json       개미/외인 장바구니 비교
     futures.json         코스피200 선물 투자자별 순매수 + 현선물 다이버전스
     credit.json          신용융자 잔고·반대매매·예탁금 (금융투자협회)
     market/stocks/global/events/insights/meta.json
+  og.png               공유 미리보기 카드 (수집기가 그림)
+tests/                 수집기 테스트 (네트워크 없이 pytest)
 .github/workflows/
-  collect.yml
+  collect.yml          데이터 수집 (예약 실행)
+  test.yml             코드가 바뀌면 테스트
 ```
 
 ---

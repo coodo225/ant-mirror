@@ -14,7 +14,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
 </head>
 <body>
@@ -87,6 +87,17 @@
       <span class="arrow">◀</span> 순매도 (팔았다) &nbsp;·&nbsp; 순매수 (샀다) <span class="arrow">▶</span>
       &nbsp;·&nbsp; 단위 억원
     </p>
+  </section>
+
+  <!-- ══════════════════ 장중 수급 흐름 ══════════════════ -->
+  <section class="card" id="intraday-card" hidden>
+    <div class="card-head">
+      <h2 id="intraday-title">오늘 장중 수급 흐름</h2>
+      <span class="dim small" id="intraday-date"></span>
+    </div>
+    <div class="legend" id="intraday-legend"></div>
+    <div class="chart-wrap"><svg id="intraday-chart" class="chart chart-sm"></svg></div>
+    <p class="dim small" id="intraday-note" style="margin:8px 0 0"></p>
   </section>
 
   <!-- ══════════════════ 개미 온도계 ══════════════════ -->
@@ -166,7 +177,13 @@
   <section class="card" id="report-card">
     <div class="card-head">
       <h2>성적표</h2>
-      <span class="dim small" id="report-sample"></span>
+      <div class="seg-group">
+        <span class="dim small" id="report-sample"></span>
+        <div class="seg" id="report-market-seg" hidden>
+          <button data-market="KOSPI" class="on">코스피</button>
+          <button data-market="KOSDAQ">코스닥</button>
+        </div>
+      </div>
     </div>
     <p class="report-intro" id="report-intro">
       각 주체가 <b>크게 사들인 날</b>(그날 거래대금 대비 순매수 상위 20%)로부터 20거래일 뒤,
@@ -180,12 +197,13 @@
       막대가 점선(시장 평균)보다 높으면 그 주체가 산 시점이 평균보다 좋았다는 뜻입니다.
     </p>
     <div class="yearly" id="yearly"></div>
+    <p class="dim small" id="kospi-only-note" style="margin:8px 0 0"></p>
   </section>
 
   <!-- ══════════════════ 반대로 가는 본능 ══════════════════ -->
   <section class="grid-2">
     <div class="card">
-      <div class="card-head"><h2>반대로 가는 본능</h2></div>
+      <div class="card-head"><h2>반대로 가는 본능</h2><span class="dim small">코스피</span></div>
       <div class="oppose" id="oppose"></div>
     </div>
     <div class="card">
@@ -315,7 +333,7 @@
   <section class="card caveat-card">
     <div class="card-head">
       <h2>성적표를 믿기 전에 읽을 것</h2>
-      <span class="dim small">이 페이지가 스스로에 대해 하는 고백</span>
+      <span class="dim small">이 페이지가 스스로에 대해 하는 고백 · 숫자는 코스피 기준</span>
     </div>
     <ul class="caveats" id="caveats"></ul>
     <p class="caveat-close">
@@ -341,6 +359,6 @@
 
 <div id="tooltip" class="tooltip" hidden></div>
 
-<script src="app.js?v=8"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

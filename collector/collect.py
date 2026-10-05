@@ -33,9 +33,6 @@ from pathlib import Path
 
 import requests
 
-if hasattr(sys.stdout, "buffer"):
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "docs" / "data"
@@ -424,6 +421,91 @@ def _merge_by_date(*sources: list[dict]) -> list[dict]:
     return sorted(by.values(), key=lambda r_: r_["date"])
 
 
+# 정규장이 평소(09:00~15:30)와 다른 날 — 수능일은 10:00 개장, 16:30 마감. 매년 수능 날짜를 더한다.
+SPECIAL_SESSIONS: dict[str, tuple[str, str]] = {
+    "2026-11-19": ("1000", "1630"),
+}
+FINAL_AFTER = "200000"    # KRX 투자자별 값은 20시 전후까지 바뀐다 — 그 뒤 값만 '확정'으로 부른다
+
+
+def session_hours(day: str) -> tuple[str, str]:
+    """그날 정규장 (시작, 끝) 'HHMM'."""
+    return SPECIAL_SESSIONS.get(day, ("0900", "1530"))
+
+
+NAVER_TREND_TIME_URL = "https://stock.naver.com/api/domestic/market/trend/time"
+INTRADAY_KEYS = ("individual", "foreign", "institution", "other_corp")
+INTRADAY_STEP = 5          # 분. 화면에는 5분 간격이면 충분하다(하루 약 80점)
+
+
+def fetch_intraday(market: str) -> dict | None:
+    """
+    가장 최근 거래일의 분 단위 투자자별 '누적' 순매수(억원). 장중이면 지금까지, 장 마감 뒤면 하루 전체.
+    정규장은 5분 간격으로 줄인다. 종가 단일가 체결분은 마감 다음 분(15:31) 행에 찍히므로 마감 점에 반영한다.
+    마감 뒤 값은 20시 전이면 after(아직 바뀌는 중), 20시 뒤면 final(확정)로 따로 싣는다.
+    """
+    if market not in ("KOSPI", "KOSDAQ"):
+        raise ValueError(market)
+    by_time: dict[str, dict] = {}
+    day = None
+    for page in range(5):                                   # 하루 약 440행 = 200행씩 3페이지
+        j = get_json(NAVER_TREND_TIME_URL, headers={"Referer": NAVER_TREND_REFERER},
+                     params={"tradeType": "KRX", "marketType": market, "startIdx": page, "pageSize": 200})
+        content = j.get("content") if isinstance(j, dict) else None
+        if not isinstance(content, list):
+            raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
+        for c in content:
+            d, t = str(c.get("bizdate") or ""), str(c.get("time") or "")
+            if not re.fullmatch(r"\d{8}", d) or not re.fullmatch(r"\d{6}", t):
+                continue
+            day = day or d
+            if d != day:                                    # 가장 최근 하루만
+                continue
+            amt = {}
+            for n in c.get("netAmounts") or []:
+                try:
+                    amt[str(n["investorGubun"])] = int(str(n["diffValue"]).replace(",", ""))
+                except (KeyError, TypeError, ValueError):
+                    pass
+            if not _REQUIRED_CODES <= amt.keys():
+                continue
+            by_time[t] = {k: float(round(sum(amt.get(code, 0) for code in INVESTOR_GROUPS[k]) / 1e8))
+                          for k in INTRADAY_KEYS}
+        if not content or str(j.get("last")).lower() == "true":
+            break
+        time.sleep(0.3)
+    if not by_time:
+        return None
+    iso = f"{day[:4]}-{day[4:6]}-{day[6:]}"
+    open_, close = session_hours(iso)
+    times = sorted(by_time)
+    session = [t for t in times if open_ + "00" <= t <= close + "00"]
+    # 분 단위 기록에 빈 분이 있어, 5분 구간마다 그 구간의 마지막 값을 쓴다(지금까지의 마지막 값도 자연히 들어간다)
+    buckets: dict[int, str] = {}
+    for t in session:
+        buckets[(int(t[:2]) * 60 + int(t[2:4]) - 1) // INTRADAY_STEP] = t
+    hm = lambda t: f"{t[:2]}:{t[2:4]}"
+    points = [{"t": hm(buckets[b]), **by_time[buckets[b]]} for b in sorted(buckets)]
+    # 종가 단일가(마감 직전 10분 동시호가) 체결 결과는 마감 다음 분 행에 찍힌다 — 마감 점을 그 값으로
+    end_m = int(close[:2]) * 60 + int(close[2:])
+    after_close = [t for t in times if close + "00" < t < f"{(end_m + 10) // 60:02d}{(end_m + 10) % 60:02d}00"]
+    if after_close:
+        settled = {"t": hm(close + "00"), **by_time[after_close[0]]}
+        if points and points[-1]["t"] == settled["t"]:
+            points[-1] = settled
+        else:
+            points.append(settled)
+    last = times[-1]
+    tail = {"t": hm(last), **by_time[last]} if last > close + "00" else None
+    return {
+        "date": iso,
+        "open": hm(open_ + "00"), "close": hm(close + "00"),
+        "points": points,
+        "final": tail if tail and last >= FINAL_AFTER else None,
+        "after": tail if tail and last < FINAL_AFTER else None,
+    }
+
+
 def fetch_flows(market: str, days: int, prev_rows: list[dict] | None = None) -> list[dict]:
     """
     주 소스(네이버)가 실패하거나 비면 예비 소스(다음)로. 둘 다 안 되면 빈 리스트.
@@ -507,6 +589,13 @@ def build_flows() -> tuple[dict, dict]:
                 "streaks": {k: streak(rows, k) for k in ("individual", "foreign", "institution")},
             }
             print(f"  {code} 수급 {len(rows)}일 ({rows[0]['date']} ~ {rows[-1]['date']})")
+            try:
+                intra = fetch_intraday(code)
+                if intra:
+                    out["markets"][code]["intraday"] = intra
+                    print(f"  {code} 장중 흐름 {len(intra['points'])}점 ({intra['date']})")
+            except Exception as e:  # noqa: BLE001
+                warn(f"{code} 장중 수급 흐름 실패: {type(e).__name__}: {e}")
         except Exception as e:  # noqa: BLE001
             warn(f"{code} 수급 수집 실패: {type(e).__name__}: {e}")
     return out, full
@@ -818,7 +907,7 @@ def _weekdays_between(a: str, b: str) -> int:
     return sum(1 for k in range(1, (db - da).days + 1) if (da + timedelta(days=k)).weekday() < 5)
 
 
-def check_freshness(flows: dict, market: dict, closes: dict) -> set[str]:
+def check_freshness(flows: dict, market: dict, closes: dict, today: str | None = None) -> set[str]:
     """
     '성공했는데 멈춘' 소스를 잡는다 — 2026-09 에 FDR 지수 캐시가 경고 없이 9/17 에 멈춰 있었다.
     멈춘 것으로 판단한 섹션 키를 돌려준다.
@@ -833,7 +922,7 @@ def check_freshness(flows: dict, market: dict, closes: dict) -> set[str]:
     - 수급 최신일 뒤로 지수 거래일이 2일 이상 쌓였으면 수급 소스가 멈춘 것으로 본다.
     """
     stale: set[str] = set()
-    today = datetime.now(KST).date().isoformat()
+    today = today or datetime.now(KST).date().isoformat()
     for code, e in market["indices"].items():
         px = closes.get(code)
         if not px:
@@ -1442,7 +1531,7 @@ def build_ant(full: dict, closes: dict, code: str = "KOSPI") -> dict:
     px = closes.get(code) or {}
     rows, basis = flow_basis([r for r in (full.get(code) or []) if r["date"] in px])
     if basis == "amount" and rows:
-        warn(f"개미 성적표: 거래대금이 없는 날이 많아 금액 기준으로 계산합니다")
+        warn(f"{MARKET_NAME.get(code, code)} 성적표: 거래대금이 없는 날이 많아 금액 기준으로 계산합니다")
     if len(rows) < 60:
         warn(f"개미 성적표: {code} 표본 부족({len(rows)}일) — 건너뜀")
         return {}
@@ -1871,8 +1960,10 @@ def build_insights(flows: dict, market: dict, glob: dict, ant: dict,
 # ---------------------------------------------------------------- OG 공유 카드
 
 def find_korean_font() -> tuple[str | None, str | None]:
-    """(굵은 폰트, 보통 폰트) 경로. 윈도우/리눅스(Actions) 겸용."""
+    """(굵은 폰트, 보통 폰트) 경로. 윈도우/리눅스(Actions) 겸용. Actions 는 OG_FONT_DIR 에 나눔고딕을 받아 둔다."""
+    font_dir = os.environ.get("OG_FONT_DIR", "").strip()
     candidates = [
+        *([(f"{font_dir}/NanumGothic-Bold.ttf", f"{font_dir}/NanumGothic-Regular.ttf")] if font_dir else []),
         ("C:/Windows/Fonts/malgunbd.ttf", "C:/Windows/Fonts/malgun.ttf"),
         ("/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
          "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"),
@@ -1979,17 +2070,27 @@ def build_og_card(flows: dict, market: dict, ant: dict) -> None:
 
 # ---------------------------------------------------------------- main
 
-def market_phase(now: datetime) -> str:
+def market_phase(now: datetime, kospi: dict | None = None) -> str:
+    """
+    장 상태 라벨. kospi 는 이번에 받은 네이버 지수 시세(tradedAt 이 있어야 휴장일을 안다).
+    평일인데 장이 열릴 시각(09:05)이 지나도 시세 기준일이 오늘이 아니면 휴장일 — 예전엔 추석에도 '장중'으로 떴다.
+    """
     if now.weekday() >= 5:
         return "주말"
     hm = now.hour * 60 + now.minute
-    if hm < 8 * 60 + 30:
+    traded = str((kospi or {}).get("tradedAt") or "")[:10]
+    o_ = int(session_hours(now.date().isoformat())[0][:2]) * 60
+    if hm >= o_ + 5 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", traded) and traded < now.date().isoformat():
+        return "휴장일"
+    open_, close = session_hours(now.date().isoformat())
+    o, cl = int(open_[:2]) * 60 + int(open_[2:]), int(close[:2]) * 60 + int(close[2:])
+    if hm < o - 30:
         return "장전"
-    if hm < 9 * 60:
+    if hm < o:
         return "동시호가"
-    if hm <= 15 * 60 + 30:
+    if hm <= cl:
         return "장중"
-    if hm <= 18 * 60:
+    if hm < 20 * 60:                       # KRX 투자자별 값은 20시 전후까지 바뀐다
         return "장마감(수급 확정 반영중)"
     return "장마감"
 
@@ -2002,9 +2103,21 @@ def main() -> int:
     flows, full = build_flows()
     print("[2/8] 지수")
     market, closes = build_market()
+    phase = market_phase(now, market["indices"].get("KOSPI"))
     stale_keys = check_freshness(flows, market, closes)
     print("[3/8] 개미 성적표")
     ant = build_ant(full, closes, "KOSPI")
+    # 코스닥 성적표는 코스피 성적표 안에 싣는다. 코스닥 수급이나 일봉이 멈췄으면 싣지 않는다(지난 '오늘'을 보이지 않게)
+    if ant and not stale_keys & {"flows.KOSDAQ", "market.KOSDAQ.history"}:
+        kq = build_ant(full, closes, "KOSDAQ")
+        prev_kq = ((load_prev("ant.json") or {}).get("byMarket") or {}).get("KOSDAQ")
+        if kq and kq.get("basis") == "amount" and prev_kq and prev_kq.get("basis") == "intensity":
+            warn(f"코스닥 성적표: 이번 계산은 기준이 낮아져 직전 데이터({prev_kq['sample']['to']}까지)를 유지합니다")
+            mark_stale("ant.KOSDAQ", "코스닥 성적표", asOf=prev_kq["sample"]["to"])
+            kq = prev_kq
+        if kq:
+            ant["byMarket"] = {"KOSDAQ": {k: kq[k] for k in
+                                          ("market", "basis", "yearly", "sample", "baseline", "actors", "correlation")}}
     if ant:
         a = ant["actors"]
         print(f"  표본 {ant['sample']['days']}일 · 개인↔외인 상관 {ant['correlation']['individual_foreign']:+.3f}"
@@ -2060,13 +2173,16 @@ def main() -> int:
         write(name, payload)
     write("insights.json", {"items": insights})
     if core_ok:
-        build_og_card(out["flows.json"], out["market.json"], ant_today)
+        try:
+            build_og_card(out["flows.json"], out["market.json"], ant_today)
+        except Exception as e:  # noqa: BLE001
+            warn(f"공유 카드(og.png) 생성 실패: {type(e).__name__}: {e}")
     else:
         warn("코스피 수급이 갱신되지 않아 공유 카드(og.png)를 다시 그리지 않았습니다")
     write("meta.json", {
         "generatedAt": now.isoformat(),
         "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),
-        "phase": market_phase(now),
+        "phase": phase,
         "warnings": WARNINGS,
         "stale": STALE,
         "freshAt": FRESH_AT,
@@ -2094,6 +2210,9 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # 윈도우 콘솔에서도 한글이 깨지지 않게 (import 할 때는 건드리지 않는다 — 테스트 출력 캡처와 충돌)
+    if hasattr(sys.stdout, "buffer"):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     try:
         sys.exit(main())
     except Exception:  # noqa: BLE001

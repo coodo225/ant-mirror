@@ -1,0 +1,3 @@
+# 테스트용 (네트워크를 쓰지 않는다): python -m pytest -q tests
+requests>=2.31
+pytest>=8.0
