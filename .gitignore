@@ -11,3 +11,5 @@ _fomc.py
 # 수집 결과는 data 브랜치에 있다 (main 에는 두지 않는다)
 docs/data/
 docs/og.png
+# 수집기의 종목 이력 저장소(Actions 캐시에만 둔다)
+.cache/

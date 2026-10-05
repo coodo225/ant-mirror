@@ -182,6 +182,15 @@ def _offline(monkeypatch, *, naver=True, daum=False, fred=True, end=date(2026, 1
         return out
     monkeypatch.setattr(c, "_krx_market_rows", krx_rows)
 
+    # 외국인·기관 종목 순위: 마감 뒤 확정치
+    def rank(inv, mkt, per):
+        base = 1 if inv == "FOREIGNER" else 2
+        mk = lambda i, a: {"code": f"{base}{i:05d}", "name": f"{mkt}{inv[:1]}{i}", "amt": a, "qty": a * 100,
+                           "volPct": 3.0, "chg": 1.0}
+        return {"from": "2026-09-28" if per == "WEEK" else "2026-10-02", "to": "2026-10-02", "estimated": False,
+                "buy": [mk(i, 500 - i) for i in range(20)], "sell": [mk(i + 50, -(500 - i)) for i in range(20)]}
+    monkeypatch.setattr(c, "fetch_rank", rank)
+
     # 장 일정: 공식 소스가 저장소 seed 와 같은 값을 주는 것으로
     seed_by_year = {}
     for d, nm in c.CAL_SEED["holidays"].items():
@@ -423,7 +432,7 @@ def test_telegram_sends_final_once(monkeypatch):
 def test_main_writes_feed(monkeypatch):
     _offline(monkeypatch)
     assert c.main() == 0
-    assert _read("feed.json")["entries"][0]["id"] == "2026-10-02"
+    assert _read("feed.json")["entries"][0]["id"] == "2026-10-02-post"
     assert (c.OUT / "feed.xml").read_text(encoding="utf-8").startswith("<?xml")
     assert _read("stockflows.json")["unit"] == "주"
 
@@ -580,3 +589,63 @@ def test_next_session_and_briefing_words():
     tips = [t["text"] for t in c.build_insights(flows, {"indices": {}}, {"items": [{**sox, "asOf": "2026-10-04"}]}, {},
                                                 today="2026-10-02")]
     assert any(t.startswith("오늘은 외국인이") for t in tips)
+
+
+def test_main_writes_ranks_today_and_counts_requests(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    ranks = _read("ranks.json")
+    assert ranks["asOf"] == "2026-10-02" and ranks["final"] is True
+    assert len(ranks["markets"]["KOSPI"]["foreign"]["day"]["buy"]) == 20
+    today = _read("today.json")
+    assert today["footer"] and today["date"] == "2026-10-02"
+    meta = _read("meta.json")
+    assert meta["mode"] == "full" and meta["requests"]["date"] == "2026-10-05"
+    flows = _read("flows.json")
+    assert flows["streakBaseline"] and "rarity" in flows["markets"]["KOSPI"]["streaks"]["foreign"]
+    assert not any("순위" in w for w in c.WARNINGS)
+
+
+def test_run_intraday_patches_on_top_of_last_full_run(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0                                         # 전체 수집이 직전 정상본을 만든다
+    full_meta = _read("meta.json")
+    c.WARNINGS.clear()
+    freeze_now(monkeypatch, datetime(2026, 10, 6, 10, 7, tzinfo=c.KST))   # 다음 거래일 장중
+    basic = {"closePrice": "7,050.00", "compareToPreviousClosePrice": "46.26", "fluctuationsRatio": "0.66",
+             "marketStatus": "OPEN", "localTradedAt": "2026-10-06T10:07:00+09:00"}
+    monkeypatch.setattr(c, "get_json", lambda url, *a, **k: basic)
+    today = {"date": "2026-10-06", "individual": -100.0, "foreign": 80.0, "institution": 20.0, "other_corp": 0.0}
+    asked = {}
+    def trend(market, days, page_size=200):
+        asked["trend"] = (days, page_size)
+        return [dict(today)]
+    monkeypatch.setattr(c, "fetch_naver_trend", trend)
+    monkeypatch.setattr(c, "fetch_intraday", lambda m: {"date": "2026-10-06", "points": [], "final": None, "after": None})
+    monkeypatch.setattr(c, "fetch_program_daily", lambda m, d, now=None, page_size=200: [
+        {"date": "2026-10-06", "arb_net": 1.0, "nonarb_net": 2.0, "total_net": 3.0, "total_buy": 9.0, "provisional": True}])
+    assert c.run_intraday() == 0
+    assert asked["trend"] == (5, 10)                             # 오늘 행만 작게 받는다
+    flows = _read("flows.json")["markets"]["KOSPI"]
+    assert flows["latest"]["date"] == "2026-10-06" and flows["daily"][-2]["date"] == "2026-10-02"
+    assert flows["latest"]["cum"]["individual"] == round(flows["daily"][-2]["cum"]["individual"] - 100.0, 1)
+    assert flows["intraday"]["date"] == "2026-10-06"
+    prog = _read("program.json")["markets"]["KOSPI"]["latest"]
+    assert prog["date"] == "2026-10-06" and prog["provisional"] is True and prog["pctl"] is None
+    meta = _read("meta.json")
+    assert meta["mode"] == "intraday" and meta["phase"] == "장중" and meta["fullAt"] == full_meta["fullAt"]
+    assert meta["dataDate"] == "2026-10-06" and meta["dataFinal"] is False
+    assert _read("market.json")["indices"]["KOSPI"]["price"] == 7050.0
+    assert _read("ant.json") == json.loads((c.OUT / "ant.json").read_text(encoding="utf-8"))   # 다른 파일은 그대로
+
+
+def test_run_intraday_on_holiday_skips_flows(monkeypatch):
+    _offline(monkeypatch)
+    assert c.main() == 0
+    before = _read("flows.json")
+    basic = {"closePrice": "7,003.74", "marketStatus": "CLOSE", "localTradedAt": "2026-10-02T20:15:00+09:00"}
+    monkeypatch.setattr(c, "get_json", lambda url, *a, **k: basic)
+    monkeypatch.setattr(c, "fetch_naver_trend", lambda *a, **k: (_ for _ in ()).throw(AssertionError("받으면 안 됨")))
+    assert c.run_intraday() == 0                                 # 10/5 휴장일 07:37
+    assert _read("flows.json")["markets"]["KOSPI"]["latest"] == before["markets"]["KOSPI"]["latest"]
+    assert _read("meta.json")["phase"] == "휴장일"

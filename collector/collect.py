@@ -23,6 +23,7 @@
 
 from __future__ import annotations
 
+import gzip
 import io
 import json
 import os
@@ -48,6 +49,20 @@ UA = (
 
 session = requests.Session()
 session.headers.update({"User-Agent": UA, "Referer": "https://finance.naver.com/"})
+
+# 공개 소스에 보내는 요청 수. 하루 합계를 meta.json 에 이어 적고, 상한을 넘으면 무거운 섹션을 건너뛴다.
+# (stock.naver.com 의 robots.txt 는 전면 금지다 — 개인용 갱신 주기를 지키고 요청을 아낀다)
+REQUESTS = {"n": 0}
+REQUEST_CAP = 3500
+_session_request = session.request
+
+
+def _counted_request(method, url, **kw):
+    REQUESTS["n"] += 1
+    return _session_request(method, url, **kw)
+
+
+session.request = _counted_request
 
 WARNINGS: list[str] = []
 
@@ -235,6 +250,11 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
     stocks = out["stocks.json"]
     prev = load_prev("stocks.json") or {}
     stocks["top"] = keep("stocks.top", "시총 상위 종목", stocks.get("top"), prev.get("top"))
+    if "universe" in stocks or prev.get("universe"):
+        stocks["universe"] = keep("stocks.universe", "350종목 수급 요약", stocks.get("universe"), prev.get("universe"),
+                                  last=_last_date(lambda u: max(x.get("asOf") or "" for x in u)))
+        if stocks.get("universe") and not stocks.get("concentration"):
+            stocks["concentration"] = concentration(stocks["universe"])
     if "stockflows.json" in out:
         out["stockflows.json"] = keep("stockflows", "종목 60일 수급", out["stockflows.json"],
                                       load_prev("stockflows.json"), lambda x: bool(x and x.get("stocks")))
@@ -255,6 +275,12 @@ def apply_last_good(now_iso: str, out: dict, stale_keys: set[str] = frozenset())
         FRESH_AT.pop("global.macro", None)
     else:
         glob["macro"] = keep("global.macro", "미국 매크로 지표", glob["macro"], prev.get("macro"))
+
+    if "ranks.json" in out:
+        out["ranks.json"] = keep("ranks", "외국인·기관 종목 순위", out["ranks.json"], load_prev("ranks.json"),
+                                 lambda r: bool(r and r.get("markets")), _last_date(lambda r: r["asOf"]))
+        if out["ranks.json"] is None:
+            del out["ranks.json"]
 
     if "program.json" in out:
         prog = out["program.json"]
@@ -322,7 +348,7 @@ INVESTOR_GROUPS = {
 _REQUIRED_CODES = {"1000", "2000", "3000", "4000", "5000", "6000", "7000", "7100", "8000", "9000"}
 
 
-def fetch_naver_trend(market: str, days: int) -> list[dict]:
+def fetch_naver_trend(market: str, days: int, page_size: int = 200) -> list[dict]:
     """
     market: 'KOSPI' | 'KOSDAQ' | 'FUT'(코스피200 선물). 날짜 오름차순, 최근 days거래일.
     현물은 억원(원 단위 합계를 반올림), 선물은 계약. 장중이면 당일 잠정치가 들어올 수 있다.
@@ -332,12 +358,12 @@ def fetch_naver_trend(market: str, days: int) -> list[dict]:
         raise ValueError(market)
     by_date: dict[str, dict] = {}
     skipped = 0
-    for page in range(days // 200 + 2):            # startIdx 는 오프셋이 아니라 페이지 번호
+    for page in range(days // page_size + 2):      # startIdx 는 오프셋이 아니라 페이지 번호
         if len(by_date) >= days:
             break
         try:
             j = get_json(NAVER_TREND_URL, headers={"Referer": NAVER_TREND_REFERER},
-                         params={"tradeType": "KRX", "marketType": market, "startIdx": page, "pageSize": 200})
+                         params={"tradeType": "KRX", "marketType": market, "startIdx": page, "pageSize": page_size})
         except Exception as e:  # noqa: BLE001
             if not by_date:
                 raise
@@ -478,6 +504,24 @@ def _load_calendar_seed() -> None:
 
 
 _load_calendar_seed()
+
+REF_FILE = Path(__file__).resolve().parent / "reference.json"
+try:
+    REF: dict = json.loads(REF_FILE.read_text(encoding="utf-8"))
+except Exception:  # noqa: BLE001
+    REF = {}
+
+
+def streak_rarity(code: str, key: str, st: dict) -> dict:
+    """지금 연속 기록이 2009년 이후 같은 방향 연속 구간 중 몇 %만 도달한 길이인지(코스피만 기준표가 있다)."""
+    t = ((REF.get("streaks") or {}).get(code) or {}).get(key) or {}
+    if not t or not st.get("days") or st.get("side") not in ("buy", "sell"):
+        return {"since": "2009-03", "pctRuns": None, "longest": None}
+    reach = (t.get(st["side"]) or {}).get("reach") or []
+    L = st["days"]
+    pct = reach[L - 1] if 0 < L <= len(reach) else 0.0
+    return {"since": (REF.get("period") or {}).get("from", "2009-03")[:7], "pctRuns": pct,
+            "longest": {side: (t.get(side) or {}).get("longest") for side in ("buy", "sell")}}
 
 FINAL_AFTER = "200000"    # KRX 투자자별 값은 20시 전후까지 바뀐다 — 그 뒤 값만 '확정'으로 부른다
 
@@ -623,7 +667,8 @@ STAT_DAYS  = 750   # 성적표 통계에 쓸 일수 (약 3년)
 
 def build_flows() -> tuple[dict, dict]:
     """(화면용 flows, 통계용 전체 히스토리) 를 함께 돌려준다."""
-    out: dict = {"unit": "억원", "chartDays": CHART_DAYS, "markets": {}}
+    out: dict = {"unit": "억원", "chartDays": CHART_DAYS, "markets": {},
+                 "streakBaseline": REF.get("streakBaseline")}
     full: dict = {}
     prev = (load_prev("flows.json") or {}).get("markets") or {}
     for code in ("KOSPI", "KOSDAQ"):
@@ -644,7 +689,8 @@ def build_flows() -> tuple[dict, dict]:
             out["markets"][code] = {
                 "daily": series,
                 "latest": series[-1],
-                "streaks": {k: streak(rows, k) for k in ("individual", "foreign", "institution", "other_corp")},
+                "streaks": {k: {**streak(rows, k), "rarity": streak_rarity(code, k, streak(rows, k))}
+                            for k in ("individual", "foreign", "institution", "other_corp")},
             }
             print(f"  {code} 수급 {len(rows)}일 ({rows[0]['date']} ~ {rows[-1]['date']})")
             try:
@@ -798,7 +844,7 @@ def _program_won(c: dict) -> dict[str, float] | None:
     return won
 
 
-def fetch_program_daily(market: str, days: int, now: datetime | None = None) -> list[dict]:
+def fetch_program_daily(market: str, days: int, now: datetime | None = None, page_size: int = 200) -> list[dict]:
     """
     시장 전체 일별 프로그램 매매(억원), 날짜 오름차순 최근 days거래일. 키: arb_*·nonarb_*·total_* × buy/sell/net.
     마지막 행이 오늘이고 20:05 전이면 provisional — KRX 값이 장 마감 뒤에도 20시 무렵까지 바뀐다.
@@ -809,13 +855,13 @@ def fetch_program_daily(market: str, days: int, now: datetime | None = None) -> 
     name = MARKET_NAME[market]
     by_date: dict[str, dict] = {}
     skipped = seen = 0
-    for page in range(days // 200 + 2):
+    for page in range(days // page_size + 2):
         if len(by_date) >= days:
             break
         try:
             j = get_json(NAVER_PROGRAM_URL, headers={"Referer": NAVER_PROGRAM_REFERER},
                          params={"tradeType": "KRX", "krxMarketType": market, "bizdate": now.strftime("%Y%m%d"),
-                                 "startIdx": page, "pageSize": 200, "periodType": "DATE"})
+                                 "startIdx": page, "pageSize": page_size, "periodType": "DATE"})
             if not isinstance(j, dict) or not isinstance(j.get("content"), list):
                 raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
         except Exception as e:  # noqa: BLE001
@@ -1048,7 +1094,7 @@ def build_short(now: datetime | None = None) -> dict:
             start = end - timedelta(days=KRX_REFRESH_DAYS) if fresh else date.fromisoformat(SHORT_RESUMED)
             try:
                 raw = _krx_market_rows(bld, market, start, end, key)
-                if not raw:                             # 40일 창이 통째로 휴장일 수는 없다 — 파라미터·형식 변경 신호
+                if not raw:                             # 40일 창이 통째로 휴장일 수는 없다 — 파라미터·형식이 바뀐 것
                     raise RuntimeError(f"{start}~{end} 창에 행이 하나도 없음")
                 block[part] = _merge_short(prev_rows, parse(raw))
                 print(f"  {market} 공매도 {part} {len(block[part])}일 (받은 {len(raw)}행, 마지막 {block[part][-1]['date']})")
@@ -1270,6 +1316,13 @@ def build_market() -> tuple[dict, dict]:
         if bars:
             closes[code] = {b["date"]: b["close"] for b in bars}
             entry["history"] = bars[-CHART_DAYS:]
+            # 국면 한 줄 — 최근 250거래일 고점·저점과 지금의 거리
+            year = bars[-250:]
+            hi, lo = max(year, key=lambda b: b["close"]), min(year, key=lambda b: b["close"])
+            cur = entry.get("price") or bars[-1]["close"]
+            entry["high1y"] = {"value": hi["close"], "date": hi["date"]}
+            entry["low1y"] = {"value": lo["close"], "date": lo["date"]}
+            entry["fromHigh"] = round((cur / hi["close"] - 1) * 100, 2) if hi["close"] else None
             print(f"  {code} 일봉 {len(bars)}개 ({bars[0]['date']} ~ {bars[-1]['date']})")
         out["indices"][code] = entry
     return out, closes
@@ -1340,7 +1393,9 @@ def check_freshness(flows: dict, market: dict, closes: dict, today: str | None =
     return stale
 
 
-def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = None) -> dict:
+def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = None,
+                 store_rows: dict | None = None) -> dict:
+    """store_rows: {code: [[YYYYMMDD, f, o, i, hold, close, vol], ...]} — 350종목 저장소에 있는 종목은 다시 받지 않는다."""
     out: dict = {"top": [], "industries": [], "series": {}}
     for market, top_n in (("KOSPI", n_kospi), ("KOSDAQ", n_kosdaq)):
         try:
@@ -1382,9 +1437,15 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
     # 화면 상세에는 최근 5일만 싣고, 60일 전체는 장바구니 통계(stat60)로 요약한다.
     for s in out["top"]:
         try:
-            tr = get_json(
-                f"https://m.stock.naver.com/api/stock/{s['code']}/trend?pageSize=60&page=1"
-            )
+            rows_ = (store_rows or {}).get(s["code"])
+            if rows_:
+                tr = [{"bizdate": r[0], "foreignerPureBuyQuant": r[1], "organPureBuyQuant": r[2],
+                       "individualPureBuyQuant": r[3], "foreignerHoldRatio": r[4], "closePrice": r[5]}
+                      for r in rows_[-60:]]
+            else:
+                tr = get_json(
+                    f"https://m.stock.naver.com/api/stock/{s['code']}/trend?pageSize=60&page=1"
+                )
             days = []
             for d in tr if isinstance(tr, list) else []:
                 days.append(
@@ -1447,7 +1508,8 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
             }
             if days:
                 s["foreignHoldRatio"] = days[-1]["foreignHoldRatio"]
-            time.sleep(0.12)
+            if not rows_:
+                time.sleep(0.12)
         except Exception as e:  # noqa: BLE001
             warn(f"{s['name']} 수급 실패: {e}")
             s["flow"] = []
@@ -1471,7 +1533,208 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
     return out
 
 
+# ---------------------------------------------------------------- 종목 범위 350 (코스피 시총 상위 200 + 코스닥 150)
+# stock.naver.com 의 종목 일별 투자자 API 는 한 번에 2018-08 부터(2000거래일) 준다. 처음 한 번 받아 두고(실행당 일부씩),
+# 그 뒤로는 최근 며칠만 받아 이어 붙인다. 원천 이력은 공개 data 브랜치에 올리지 않고 Actions 캐시(.cache/)에만 둔다.
+# 화면에는 파생값(연속 일수, 5·20·60일 합계, 보유율 변화, 2018년 이후 최장 기록)과 종목별 1년 시계열만 싣는다.
+
+UNIVERSE_N = {"KOSPI": 200, "KOSDAQ": 150}
+STOCK_BACKFILL_DAYS = 2000
+STOCK_BACKFILL_PER_RUN = 70          # 한 실행에 처음부터 받는 종목 수(나머지는 우선 60일만, 다음 실행에서 이어서)
+STOCK_SERIES_DAYS = 250
+NAVER_STOCK_LIST_URL = "https://stock.naver.com/api/domestic/market/stock/default"
+_EXCLUDE_NAME = re.compile(r"(우[A-C]?|우\(전환\))$|스팩|리츠")
+
+
+def stock_store_path() -> Path:
+    return Path(os.environ.get("STOCK_STORE") or (ROOT / ".cache" / "stockhist.json.gz"))
+
+
+def load_stock_store() -> dict:
+    try:
+        with gzip.open(stock_store_path(), "rt", encoding="utf-8") as f:
+            st = json.load(f)
+        return st if isinstance(st.get("codes"), dict) else {"codes": {}}
+    except Exception:  # noqa: BLE001
+        return {"codes": {}}
+
+
+def save_stock_store(store: dict) -> None:
+    path = stock_store_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(path, "wt", encoding="utf-8") as f:
+        json.dump(store, f, ensure_ascii=False, separators=(",", ":"))
+    path.with_suffix(".changed").write_text("1", encoding="utf-8")   # 워크플로가 이 표시를 보고 캐시를 저장한다
+    print(f"  종목 이력 저장 {path} ({path.stat().st_size:,} bytes)")
+
+
+def fetch_universe(market: str, n: int) -> list[dict]:
+    """시가총액 순 상위 n 종목(보통주만: 우선주·스팩·리츠·ETF/ETN 제외)과 현재가·등락률·시총·외국인 보유율."""
+    out: list[dict] = []
+    for page in range(n // 100 + 3):
+        rows = get_json(NAVER_STOCK_LIST_URL, headers={"Referer": "https://stock.naver.com/market/stock/kr/stocklist"},
+                        params={"tradeType": "KRX", "marketType": market, "orderType": "marketSum",
+                                "startIdx": page, "pageSize": 100})
+        if not isinstance(rows, list):
+            raise RuntimeError(f"응답 형식이 바뀜: {str(rows)[:120]}")
+        for r in rows:
+            name = str(r.get("itemname") or "")
+            if r.get("type") != "ST" or _EXCLUDE_NAME.search(name):
+                continue
+            out.append({"code": str(r.get("itemcode")), "name": name, "market": market,
+                        "price": num(r.get("nowPrice")), "chg": num(r.get("prevChangeRate")),
+                        "marketCap": round(num(r.get("marketSum")) / 1e6) if num(r.get("marketSum")) else None,  # 백만원
+                        "holdRatio": num(r.get("frgnHoldRate"))})
+        if len(out) >= n or len(rows) < 100:
+            break
+        time.sleep(0.3)
+    return out[:n]
+
+
+def fetch_stock_trend(code: str, days: int) -> list[list]:
+    """[[YYYYMMDD, 외국인, 기관, 개인(주), 외국인 보유율, 종가, 거래량], ...] 날짜 오름차순."""
+    rows = get_json(f"https://stock.naver.com/api/domestic/detail/{code}/trend",
+                    headers={"Referer": f"https://stock.naver.com/domestic/stock/{code}/price"},
+                    params={"tradeType": "KRX", "startIdx": 0, "pageSize": min(days, STOCK_BACKFILL_DAYS)})
+    if not isinstance(rows, list):
+        raise RuntimeError(f"응답 형식이 바뀜: {str(rows)[:120]}")
+    out = []
+    for r in rows:
+        d = str(r.get("bizdate") or "")
+        if not re.fullmatch(r"\d{8}", d):
+            continue
+        out.append([d, _int(r.get("foreignerPureBuyQuant")), _int(r.get("organPureBuyQuant")),
+                    _int(r.get("individualPureBuyQuant")),
+                    round(num(r.get("frgnHoldRatio")), 2) if num(r.get("frgnHoldRatio")) is not None else None,
+                    num(r.get("closePrice")), _int(r.get("tradeVolume"))])
+    out.sort(key=lambda x: x[0])
+    return out
+
+
+def _merge_rows(old: list[list], new: list[list]) -> list[list]:
+    by = {r[0]: r for r in old}
+    by.update({r[0]: r for r in new})       # 새로 받은 값이 이긴다(장 마감 뒤 정정)
+    return [by[d] for d in sorted(by)]
+
+
+def _longest(vals: list) -> dict:
+    best = {"buy": 0, "sell": 0}
+    side, n = None, 0
+    for v in vals:
+        s_ = "buy" if (v or 0) > 0 else "sell" if (v or 0) < 0 else None
+        n = n + 1 if s_ and s_ == side else (1 if s_ else 0)
+        side = s_
+        if s_:
+            best[s_] = max(best[s_], n)
+    return best
+
+
+def stock_summary(u: dict, rows: list[list]) -> dict:
+    """종목 하나의 파생값. 금액은 수량×종가 근사(억원)."""
+    keys = (("foreign", 1), ("institution", 2), ("individual", 3))
+    out = {k: u.get(k) for k in ("code", "name", "market", "price", "chg", "marketCap")}
+    for key, i in keys:
+        series = [{"date": r[0], key: r[i]} for r in rows]
+        st = streak(series, key)
+        val = lambda n: round(sum((r[i] or 0) * (r[5] or 0) for r in rows[-n:]) / 1e8, 1)
+        out[key] = {"streak": {"days": st["days"], "side": st["side"]},
+                    "d5": sum(r[i] or 0 for r in rows[-5:]), "d20": sum(r[i] or 0 for r in rows[-20:]),
+                    "v20": val(20), "v60": val(60), "longest": _longest([r[i] for r in rows])}
+    holds = [r[4] for r in rows if r[4] is not None]
+    out["holdRatio"] = holds[-1] if holds else u.get("holdRatio")
+    out["holdChg20"] = round(holds[-1] - holds[-21], 2) if len(holds) > 20 else None
+    out["since"] = f"{rows[0][0][:4]}-{rows[0][0][4:6]}" if rows else None
+    out["asOf"] = f"{rows[-1][0][:4]}-{rows[-1][0][4:6]}-{rows[-1][0][6:]}" if rows else None
+    return out
+
+
+def build_universe(now: datetime) -> tuple[list[dict], dict] | None:
+    """
+    350종목 요약과 저장소 행. 장중엔 부르지 않는다(main 이 직전 요약을 쓴다).
+    처음 보는 종목은 실행당 STOCK_BACKFILL_PER_RUN 개까지 2000거래일, 나머지는 우선 60일만 받는다.
+    """
+    store = load_stock_store()
+    codes = store["codes"]
+    try:
+        uni = fetch_universe("KOSPI", UNIVERSE_N["KOSPI"]) + fetch_universe("KOSDAQ", UNIVERSE_N["KOSDAQ"])
+    except Exception as e:  # noqa: BLE001
+        warn(f"종목 범위(시총 상위) 실패: {type(e).__name__}: {e}")
+        return None
+    if len(uni) < 200:
+        warn(f"종목 범위가 {len(uni)}개뿐이라 이번엔 갱신하지 않습니다")
+        return None
+    backfilled = failed = 0
+    changed = False
+    for u in uni:
+        rec = codes.get(u["code"]) or {}
+        rows = rec.get("rows") or []
+        try:
+            if not rows or rec.get("partial"):
+                full_ = backfilled < STOCK_BACKFILL_PER_RUN
+                new = fetch_stock_trend(u["code"], STOCK_BACKFILL_DAYS if full_ else 60)
+                backfilled += full_
+                rec["partial"] = not full_
+            else:
+                gap = _weekdays_between(f"{rows[-1][0][:4]}-{rows[-1][0][4:6]}-{rows[-1][0][6:]}", now.date().isoformat())
+                new = fetch_stock_trend(u["code"], min(STOCK_BACKFILL_DAYS, gap + 5))
+            if new:
+                rec["rows"] = _merge_rows(rows, new)
+                rec.update(name=u["name"], market=u["market"])
+                codes[u["code"]] = rec
+                changed = True
+        except Exception as e:  # noqa: BLE001
+            failed += 1
+            if failed <= 5:
+                warn(f"{u['name']} 종목 수급 실패: {type(e).__name__}: {e}")
+        time.sleep(0.3)
+    if failed > 5:
+        warn(f"종목 수급 실패 {failed}개(처음 5개만 적음)")
+    if failed > len(uni) // 3:
+        warn("종목 수급 실패가 많아 이번 요약은 버립니다")
+        return None
+    if changed:
+        store["updated"] = now.isoformat(timespec="seconds")
+        save_stock_store(store)
+    print(f"  종목 범위 {len(uni)}개 · 처음 받은 종목 {backfilled}개 · 실패 {failed}개")
+    rows_by = {u["code"]: (codes.get(u["code"]) or {}).get("rows") or [] for u in uni}
+    summaries = [stock_summary(u, rows_by[u["code"]]) for u in uni if rows_by[u["code"]]]
+    return summaries, rows_by
+
+
+def write_stock_series(rows_by: dict, keep: set) -> int:
+    """종목 상세의 1년 시계열(docs/data/stockseries/{code}.json). 범위에서 빠진 종목 파일은 지운다."""
+    d = OUT / "stockseries"
+    d.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for code, rows in rows_by.items():
+        rows = rows[-STOCK_SERIES_DAYS:]
+        if not rows:
+            continue
+        payload = {"code": code, "unit": "주", "d": [r[0] for r in rows], "f": [r[1] for r in rows],
+                   "o": [r[2] for r in rows], "i": [r[3] for r in rows], "h": [r[4] for r in rows],
+                   "c": [r[5] for r in rows]}
+        (d / f"{code}.json").write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        n += 1
+    for f in d.glob("*.json"):
+        if f.stem not in keep:
+            f.unlink()
+    return n
+
+
 # ---------------------------------------------------------------- 개미 장바구니 vs 외인 장바구니
+
+def stock_streaks(stocks: dict) -> dict:
+    """{code: {'foreign': {days, side}, 'institution': {...}}} — 순위 행에 붙일 연속 일수."""
+    out = {}
+    for u in stocks.get("universe") or []:
+        out[u["code"]] = {k: (u.get(k) or {}).get("streak") for k in ("foreign", "institution")}
+    for s_ in stocks.get("top") or []:
+        if s_.get("code") in out or not s_.get("flow"):
+            continue
+        rows = [{"date": d["date"], "foreign": d.get("foreign"), "institution": d.get("institution")} for d in s_["flow"]]
+        out[s_["code"]] = {k: streak(rows, k) for k in ("foreign", "institution")}
+    return out
+
 
 def build_ant_stocks(stocks: dict, closes: dict | None = None) -> dict:
     """
@@ -1547,11 +1810,14 @@ def build_ant_stocks(stocks: dict, closes: dict | None = None) -> dict:
 
 # ---------------------------------------------------------------- 글로벌 / 매크로
 
+PREOPEN_SYMBOLS = ("^SOX", "^GSPC", "EWY", "KRW=X")   # 장 전 '간밤' 4칸 — 시가 갭과 상관 0.64~0.75(2009~2023)
+
 GLOBAL_TICKERS = [
     ("^GSPC", "S&P 500", "us"),
     ("^IXIC", "나스닥", "us"),
     ("^DJI", "다우", "us"),
     ("^SOX", "필라델피아 반도체", "us"),
+    ("EWY", "한국 ETF(EWY)", "us"),             # 미국에 상장된 한국 주식 ETF — 간밤 한국 주식에 대한 미국장 평가
     ("^VIX", "VIX 공포지수", "risk"),
     ("ES=F", "S&P500 선물", "futures"),
     ("NQ=F", "나스닥100 선물", "futures"),
@@ -1564,13 +1830,13 @@ GLOBAL_TICKERS = [
 
 
 def build_global() -> dict:
-    out = {"items": [], "sparkDays": 30}
+    out = {"items": [], "sparkDays": 30, "preopen": list(PREOPEN_SYMBOLS)}
     try:
         import yfinance as yf
 
         symbols = [t[0] for t in GLOBAL_TICKERS]
         df = yf.download(
-            symbols, period="3mo", interval="1d",
+            symbols, period="1y", interval="1d",
             progress=False, auto_adjust=False, group_by="ticker", threads=True,
         )
         for sym, name, cat in GLOBAL_TICKERS:
@@ -1581,6 +1847,9 @@ def build_global() -> dict:
                     continue
                 last, prev = float(closes.iloc[-1]), float(closes.iloc[-2])
                 spark = [round(float(v), 4) for v in closes.tail(30)]
+                # 오늘 움직임 크기가 최근 1년 하루 움직임 중 어디쯤인지(방향이 아니라 크기)
+                moves = [abs(float(x)) for x in closes.pct_change().dropna().tail(250)]
+                move_pctl = round(_percentile(moves, abs(last / prev - 1)), 1) if prev and len(moves) >= 120 else None
                 out["items"].append(
                     {
                         "symbol": sym, "name": name, "category": cat,
@@ -1589,6 +1858,7 @@ def build_global() -> dict:
                         "changeRate": round((last - prev) / prev * 100, 2) if prev else None,
                         "asOf": closes.index[-1].strftime("%Y-%m-%d"),
                         "spark": spark,
+                        "movePctl": move_pctl,
                     }
                 )
             except Exception as e:  # noqa: BLE001
@@ -2036,6 +2306,30 @@ def fetch_fred_series(api_key: str) -> list[dict]:
 UPCOMING_MAX = 10
 
 
+KR_INDICATORS = ("수출", "수입", "무역수지", "소비자물가", "생산자물가", "GDP", "국내총생산", "실업", "고용", "경상수지")
+
+
+def korean_indicator_events(today: date, days: int = 41) -> list[dict]:
+    """
+    국내 주요 경제지표 발표 일정(수출입·물가·성장률·고용·경상수지). 기준금리는 금통위 일정이 따로 있어 뺀다.
+    원천의 중요도 값은 모두 '매우 높음'이라 쓰지 않고, 지표 이름으로 고른다. 같은 날 여러 개는 한 건으로 묶는다.
+    """
+    by_day: dict[str, list[tuple[str, str]]] = {}
+    for d, name, sub in fetch_naver_calendar("economicIndicators", today, today + timedelta(days=days)):
+        name = (name or "").strip()
+        if not name or "기준금리" in name or not any(k in name for k in KR_INDICATORS):
+            continue
+        when = sub.split("·")[0].strip()                  # '10:00 예정 · 시장 영향력 매우 높음' → '10:00 예정'
+        by_day.setdefault(d, []).append((name, when))
+    out = []
+    for d, items in sorted(by_day.items()):
+        names = list(dict.fromkeys(n for n, _ in items))
+        when = next((w for _, w in items if re.match(r"\d{1,2}:\d{2}", w)), "")
+        out.append({"type": "지표", "date": d, "title": " · ".join(names[:3]) + (" 외" if len(names) > 3 else ""),
+                    "note": f"{when.replace('예정', '').strip()} 발표 예정" if when else "", "impact": "mid"})
+    return out
+
+
 def build_events() -> tuple[dict, list[dict] | None]:
     """(이벤트, 매크로 지표). FRED 키가 없으면 매크로는 None — 실패가 아니라 '쓰지 않음'."""
     events: list[dict] = []
@@ -2072,6 +2366,12 @@ def build_events() -> tuple[dict, list[dict] | None]:
         print(f"  국내 일정 {len(kr)}건 (금통위·만기·휴장)")
     except Exception as e:  # noqa: BLE001
         warn(f"국내 일정 계산 실패: {type(e).__name__}: {e}")
+    try:
+        ind = korean_indicator_events(datetime.now(KST).date())
+        events.extend(ind)
+        print(f"  국내 경제지표 {len(ind)}건 (네이버 증시 캘린더)")
+    except Exception as e:  # noqa: BLE001
+        warn(f"국내 경제지표 일정 실패: {type(e).__name__}: {e}")
 
     if SEED.exists():
         try:
@@ -2094,7 +2394,7 @@ def build_events() -> tuple[dict, list[dict] | None]:
     # (type, date) 중복 제거
     uniq: dict[tuple, dict] = {}
     for e in events:
-        uniq.setdefault((e["type"], e["date"]), e)
+        uniq.setdefault((e["type"], e["date"], e["title"] if e["type"] == "지표" else ""), e)
     events = sorted(uniq.values(), key=lambda e: e["date"])
     future = [e for e in events if e["dday"] >= 0]
     upcoming = future[:UPCOMING_MAX]
@@ -2224,7 +2524,7 @@ def flow_scale(rows: list[dict], basis: str, key: str) -> list[float]:
 
 # 같은 계산(개인 거래대금 대비 순매수 상·하위 20% → 20거래일 뒤 지수 − 모든 날 평균, 블록 부트스트랩 90% 범위)을
 # 2009-03~2023-08 코스피 3,572거래일에 돌린 결과(2026-10-05 표본 외 검증). 사이트 표본 3년은 상승장이라 이보다 크게 나온다.
-# 화면이 '이 3년'의 숫자만 보여 주면 신호처럼 읽히므로 함께 싣는다. 성적표 표본을 늘리면 이 상수는 계산값으로 바꾼다.
+# 화면이 '이 3년'의 숫자만 보여 주면 방향 정보처럼 읽히므로 함께 싣는다. 성적표 표본을 늘리면 이 상수는 계산값으로 바꾼다.
 LONG_RUN_CONTRARIAN = {
     "sell": {"period": "2009-03~2023-08", "excess": 0.22, "ci": [-0.11, 0.57], "significant": False},
     "buy": {"period": "2009-03~2023-08", "excess": -0.20, "ci": [-0.62, 0.19], "significant": False},
@@ -2708,12 +3008,20 @@ def _eok_text(v) -> str:
     return f"{v / 10000:+.2f}조" if abs(v) >= 10000 else f"{v:+,.0f}억"
 
 
-def build_feed(prev: dict, flows: dict | None, market: dict, insights: list[dict], now: datetime) -> dict:
+def build_feed(prev: dict, flows: dict | None, market: dict, insights: list[dict], now: datetime,
+               pre: dict | None = None) -> dict:
     """
-    거래일마다 한 항목의 요약. 항목 id 는 수급 기준일이고, 같은 날은 실행마다 덮어쓴다.
-    20시(KRX 확정) 이후 수집분이면 final, 그 전이면 잠정. flows 가 없으면(이번 수집 실패) 직전 피드 그대로.
+    거래일마다 '마감 후'(id 날짜-post) 한 항목, 장 전 실행이 있으면 '장 전'(id 날짜-pre) 한 항목.
+    마감 후 항목은 수급 기준일 기준으로 같은 날은 실행마다 덮어쓴다. 20:05(수급·프로그램 확정) 이후 수집분이면 final.
+    flows 가 없으면(이번 수집 실패) 마감 후 항목은 직전 그대로.
     """
-    entries = {e["id"]: e for e in (prev or {}).get("entries", [])}
+    entries = {}
+    for e in (prev or {}).get("entries", []):
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", e.get("id", "")):      # 예전 형식(날짜만) → 마감 후 항목
+            e = {**e, "id": f"{e['id']}-post", "kind": "post"}
+        entries[e["id"]] = e
+    if pre:
+        entries[pre["id"]] = pre
     ks = (flows or {}).get("markets", {}).get("KOSPI")
     if ks:
         latest = ks["latest"]
@@ -2724,15 +3032,45 @@ def build_feed(prev: dict, flows: dict | None, market: dict, insights: list[dict
         title = (f"{day} {head}개인 {_eok_text(latest.get('individual'))} · "
                  f"외국인 {_eok_text(latest.get('foreign'))} · 기관 {_eok_text(latest.get('institution'))}"
                  + ("" if final else " (잠정)"))
-        old = entries.get(day) or {}
-        entries[day] = {
-            "id": day, "title": title, "final": final,
+        old = entries.get(f"{day}-post") or {}
+        entries[f"{day}-post"] = {
+            "id": f"{day}-post", "kind": "post", "date": day, "title": title, "final": final,
             "summary": "\n".join(t["text"] for t in insights),
             "updated": now.isoformat(timespec="seconds"),
             "sent": bool(old.get("sent")) and bool(old.get("final")),   # 확정본을 보낸 적이 있을 때만 '보냄'
         }
-    ordered = sorted(entries.values(), key=lambda e: e["id"], reverse=True)[:FEED_DAYS]
+    ordered = sorted(entries.values(), key=lambda e: e.get("updated", ""), reverse=True)[:FEED_DAYS * 2]
     return {"title": "개미들을 위한 투자정보 — 하루 요약", "link": SITE_URL, "entries": ordered}
+
+
+def build_pre_entry(now: datetime, flows: dict, glob: dict, events: dict, today: dict) -> dict | None:
+    """장 전(거래일 08:59 까지) 요약: 간밤 4칸, 지난 장 확정 수급, 오늘·내일 일정, 평소와 다른 것."""
+    d = now.date()
+    if not is_trading_day(d) or now.strftime("%H%M") >= "0900":
+        return None
+    by_sym = {x.get("symbol"): x for x in (glob or {}).get("items", [])}
+    cells = []
+    for sym in (glob or {}).get("preopen") or PREOPEN_SYMBOLS:
+        x = by_sym.get(sym)
+        if x and x.get("changeRate") is not None:
+            cells.append(f"{x['name']} {x['changeRate']:+.2f}%")
+    ks = (flows.get("markets") or {}).get("KOSPI") or {}
+    lt = ks.get("latest") or {}
+    lines = []
+    if lt:
+        lines.append(f"지난 장({_day_label(lt['date'])}) 코스피 수급: 개인 {_eok_text(lt.get('individual'))} · "
+                     f"외국인 {_eok_text(lt.get('foreign'))} · 기관 {_eok_text(lt.get('institution'))} · "
+                     f"기타법인 {_eok_text(lt.get('other_corp'))}")
+    if cells:
+        lines.append("간밤: " + " · ".join(cells) + " — 시가 갭과는 함께 움직였지만 장중 방향 정보는 아닙니다")
+    soon = [e for e in (events or {}).get("upcoming", []) if e.get("dday") in (0, 1)]
+    for e in soon:
+        lines.append(f"{'오늘' if e['dday'] == 0 else '내일'} {e['title']}" + (f" ({e['note']})" if e.get("note") else ""))
+    for it in (today or {}).get("items", []):
+        lines.append(f"평소와 다른 것: {it['text']} — {it['detail']}")
+    title = f"{_day_label(d.isoformat())} 장 전 · " + (" · ".join(cells[:2]) if cells else "간밤 지표 없음")
+    return {"id": f"{d.isoformat()}-pre", "kind": "pre", "date": d.isoformat(), "title": title, "final": True,
+            "summary": "\n".join(lines), "updated": now.isoformat(timespec="seconds"), "sent": False}
 
 
 def feed_xml(feed: dict) -> str:
@@ -2775,8 +3113,8 @@ def notify_telegram(feed: dict) -> None:
     if not (token and chat and entries):
         return
     SECRETS.add(token)
-    e = entries[0]
-    if not e.get("final") or e.get("sent"):
+    e = next((x for x in entries if x.get("kind", "post") == "post"), None)
+    if not e or not e.get("final") or e.get("sent"):
         return
     try:
         r = session.post(f"https://api.telegram.org/bot{token}/sendMessage", timeout=20, json={
@@ -2892,8 +3230,8 @@ def build_og_card(flows: dict, market: dict, ant: dict) -> None:
         dr.rounded_rectangle([1140 - 216, track_y, 1140, track_y + 22], radius=11, fill=(156, 62, 62))
         ax = 60 + (1140 - 60) * p / 100
         dr.ellipse([ax - 18, track_y - 8, ax + 18, track_y + 30], fill=(255, 176, 46))
-        dr.text((60, track_y + 40), "패닉 매도", font=font(20, b=False), fill=DOWN)
-        dr.text((1040, track_y + 40), "영끌 매수", font=font(20, b=False), fill=UP)
+        dr.text((60, track_y + 40), "강한 매도", font=font(20, b=False), fill=DOWN)
+        dr.text((1040, track_y + 40), "강한 매수", font=font(20, b=False), fill=UP)
 
     dr.text((60, H - 46), "coodo225.github.io/ant-mirror · 투자 조언이 아닙니다",
             font=font(20, b=False), fill=(93, 103, 128))
@@ -2901,6 +3239,287 @@ def build_og_card(flows: dict, market: dict, ant: dict) -> None:
     out = ROOT / "docs" / "og.png"
     img.save(out, "PNG", optimize=True)
     print(f"  -> {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)")
+
+
+# ---------------------------------------------------------------- 외국인·기관 종목 순위 (마감 확정치)
+# stock.naver.com 외국인·기관 매매 상위 화면이 쓰는 공개 JSON. 외국인·기관만 있고 개인은 400.
+# 장중 외국인 DAY 는 외국계 창구 '추정'(estimated=true)이라 확정치와 부호까지 다를 수 있어 쓰지 않는다.
+# KRX 체결분만(NXT 제외)이고 ETF 가 섞여 있어 주식(ST)만 남긴다. 상·하위 100 중 20개씩.
+
+NAVER_RANK_URL = "https://stock.naver.com/api/domestic/market/trend/trendForeignOrg"
+RANK_REFERER = {"FOREIGNER": "https://stock.naver.com/market/stock/kr/trend/foreigner",
+                "ORGANIZATION": "https://stock.naver.com/market/stock/kr/trend/organization"}
+RANK_KEEP = 20
+RANK_FINAL_AFTER = "1800"   # 그날 순위를 확정치로 받는 시각(장 마감 뒤 갱신 시각을 재기 전까지 보수적으로)
+
+
+def _int(v) -> int | None:
+    n = num(v)
+    return int(n) if n is not None else None
+
+
+def fetch_rank(investor: str, market: str, period: str) -> dict:
+    if investor not in RANK_REFERER or market not in ("KOSPI", "KOSDAQ"):
+        raise ValueError((investor, market))
+    j = get_json(NAVER_RANK_URL, headers={"Referer": RANK_REFERER[investor]},
+                 params={"investorType": investor, "tradeType": "KRX", "marketType": market,
+                         "startIdx": 0, "pageSize": 100, "periodType": period})
+    sec = j.get("sections") if isinstance(j, dict) else None
+    if not isinstance(sec, dict):
+        raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
+    first, lists = None, {}
+    for side, key in (("buy", "buyRankList"), ("sell", "sellRankList")):
+        rows = []
+        for x in sec.get(key) or []:
+            first = first or x
+            if x.get("type") != "ST":
+                continue
+            q, a, vol = _int(x.get("accTradeVolume")), num(x.get("accTradeAmount")), _int(x.get("dailyTradeVolume"))
+            if q is None or a is None:
+                continue
+            if (a > 0) != (side == "buy") and a != 0:
+                raise RuntimeError(f"{key} 에 부호가 다른 값({x.get('itemname')} {a}) — 형식 변경 의심")
+            rows.append({"code": str(x.get("itemcode") or ""), "name": str(x.get("itemname") or ""),
+                         "amt": round(a / 1e8), "qty": q,
+                         "volPct": round(abs(q) / vol * 100, 1) if vol else None,
+                         "chg": num(x.get("prevChangeRate"))})
+        rows.sort(key=lambda r_: -r_["amt"] if side == "buy" else r_["amt"])
+        lists[side] = rows[:RANK_KEEP]
+    if not first:
+        raise RuntimeError("순위가 비어 있음")
+    iso = lambda d: f"{d[:4]}-{d[4:6]}-{d[6:]}" if re.fullmatch(r"\d{8}", d) else None
+    return {"from": iso(str(first.get("bizdateFrom") or "")), "to": iso(str(first.get("bizdateTo") or "")),
+            "estimated": first.get("estimated") is True, **lists}
+
+
+def build_ranks(prev: dict | None, now: datetime, phase: str, streaks: dict | None = None) -> dict | None:
+    """
+    외국인·기관 × 코스피·코스닥 × 하루·1주 순위. 장중엔 받지 않고 직전 확정본을 쓴다(final=False 로 '전 거래일 확정' 표시).
+    그날 순위는 RANK_FINAL_AFTER 뒤에만 받아들이고, 그 전 값·추정 값은 직전 것을 둔다. 한 목록이 실패하면 그 목록만 직전 것.
+    streaks: {code: {'foreign': {days, side}, 'institution': {...}}} — 수집 범위 안 종목이면 행에 연속 일수를 붙인다.
+    """
+    prev = prev if isinstance(prev, dict) else {}
+    today = now.date().isoformat()
+    live = phase in ("장중", "동시호가")
+    out = {"scope": "KRX 체결분(NXT 제외) · 주식만(ETF 제외)", "markets": {}}
+    pending = live
+    if not live:
+        for mkt in ("KOSPI", "KOSDAQ"):
+            for inv, key in (("FOREIGNER", "foreign"), ("ORGANIZATION", "institution")):
+                for per, pk in (("DAY", "day"), ("WEEK", "week")):
+                    try:
+                        r = fetch_rank(inv, mkt, per)
+                        time.sleep(0.3)
+                    except Exception as e:  # noqa: BLE001
+                        warn(f"{MARKET_NAME[mkt]} {'외국인' if key == 'foreign' else '기관'} 순위({per}) 실패: {type(e).__name__}: {e}")
+                        continue
+                    if r["estimated"] or not r["to"] or (r["to"] == today and now.strftime("%H%M") < RANK_FINAL_AFTER):
+                        pending = True                  # 오늘 값이 아직 확정 전 — 직전 확정본을 둔다
+                        continue
+                    out["markets"].setdefault(mkt, {}).setdefault(key, {})[pk] = {
+                        k: r[k] for k in ("from", "to", "buy", "sell")}
+    # 빠진 목록은 직전 확정본으로
+    for mkt, invs in (prev.get("markets") or {}).items():
+        for key, pers in (invs or {}).items():
+            for pk, lst in (pers or {}).items():
+                out["markets"].setdefault(mkt, {}).setdefault(key, {}).setdefault(pk, lst)
+    days = sorted({v["day"]["to"] for m in out["markets"].values() for v in m.values() if v.get("day", {}).get("to")})
+    if not days:
+        return None
+    out["asOf"] = days[-1]
+    out["final"] = not pending
+    if streaks:
+        for m in out["markets"].values():
+            for key, pers in m.items():
+                for lst in pers.values():
+                    for side in ("buy", "sell"):
+                        for row in lst.get(side) or []:
+                            st = (streaks.get(row["code"]) or {}).get(key)
+                            row["streak"] = {"days": st["days"], "side": st["side"]} if st and st.get("days") else None
+    return out
+
+
+# ---------------------------------------------------------------- '평소와 다른 것' (자기 이력 대비 드문 사실만, 최대 3개)
+# 방향을 말하지 않는다. 사전 검정에서 방향 정보가 없던 것(외국인 연속·동반 매수·강도 극단 등)은 트리거로 쓰지 않고,
+# '얼마나 드문가'(빈도)만 고른다. 드문 게 없는 날은 없다고 쓴다.
+
+TODAY_FOOTER = "드묾은 빈도이지 방향이 아닙니다 · 예측 아님"
+
+
+def build_today(flows: dict, stocks: dict, credit: dict, program: dict, glob: dict, short: dict) -> dict:
+    items: list[tuple[float, dict]] = []
+    ks = (flows.get("markets") or {}).get("KOSPI") or {}
+    day = (ks.get("latest") or {}).get("date")
+    names = {"individual": "개인", "foreign": "외국인", "institution": "기관", "other_corp": "기타법인"}
+
+    def cho(v):
+        return f"{abs(v) / 10000:.2f}조" if abs(v) >= 10000 else f"{abs(v):,.0f}억"
+
+    for k, st in (ks.get("streaks") or {}).items():
+        r = st.get("rarity") or {}
+        pct = r.get("pctRuns")
+        if pct is None or st.get("days", 0) < 3 or pct > 5:
+            continue
+        side = "순매수" if st["side"] == "buy" else "순매도"
+        detail = (f"{r.get('since', '2009')[:4]}년 이후 같은 방향 연속 구간 중 {pct:.1f}%만 이 길이까지 갔습니다"
+                  if pct > 0 else f"{r.get('since', '2009')[:4]}년 이후 가장 긴 같은 방향 연속 기록입니다")
+        items.append((pct, {"kind": "streak", "text": f"{names.get(k, k)} {st['days']}거래일 연속 {side}", "detail": detail}))
+
+    conc = (stocks or {}).get("concentration") or {}
+    for key, nm in (("foreign", "외국인"), ("institution", "기관")):
+        c = conc.get(key) or {}
+        if not c.get("top") or c.get("share") is None or abs(c.get("total") or 0) < 10000 or c["share"] < 80:
+            continue
+        side = "순매수" if c["total"] > 0 else "순매도"
+        rest = c["total"] - sum(t["value"] for t in c["top"])
+        rest_txt = ("나머지 종목은 합쳐서 반대 방향" if (rest > 0) != (c["total"] > 0) and abs(rest) >= 1
+                    else f"나머지 종목 합계 {'+' if rest >= 0 else '−'}{cho(rest)}")
+        items.append((4.0 if c["share"] >= 100 else 8.0, {
+            "kind": "concentration",
+            "text": f"{nm} {conc.get('days', 60)}일 {side}의 {c['share']:.0f}%가 {'·'.join(t['name'] for t in c['top'])}",
+            "detail": f"{rest_txt} — 지수 움직임과 나머지 종목의 수급을 나눠서 볼 만한 쏠림입니다"}))
+
+    ln = ((credit or {}).get("latest") or {}).get("loans") or {}
+    q = ln.get("d5Pctl")
+    if q is not None and ln.get("d5") is not None and (q >= 97.5 or q <= 2.5):
+        up = ln["d5"] > 0
+        items.append((min(q, 100 - q), {"kind": "credit",
+                      "text": f"신용융자 잔고 5거래일 {'+' if up else '−'}{cho(ln['d5'])}",
+                      "detail": f"최근 {ln.get('days')}거래일의 5일 변화 중 {'가장 크게 는' if up else '가장 크게 준'} 쪽 {rank_text(100 - q if up else q)}"}))
+    mo = ((credit or {}).get("latest") or {}).get("money") or {}
+    if mo.get("liqPctl") is not None and mo["liqPctl"] >= 97.5 and mo.get("liquidation"):
+        items.append((100 - mo["liqPctl"], {"kind": "credit", "text": f"반대매매 {cho(mo['liquidation'])}",
+                      "detail": f"최근 {mo.get('days')}거래일 중 상위 {rank_text(100 - mo['liqPctl'])} 규모"}))
+
+    pg = (((program or {}).get("markets") or {}).get("KOSPI") or {}).get("latest") or {}
+    q = pg.get("pctl")
+    if q is not None and pg.get("date") == day and (q >= 97.5 or q <= 2.5) and abs(pg.get("total") or 0) >= 1000:
+        buy = pg["total"] > 0
+        if (buy and q >= 97.5) or (not buy and q <= 2.5):
+            items.append((min(q, 100 - q), {"kind": "program",
+                          "text": f"코스피 프로그램 {'순매수' if buy else '순매도'} {cho(pg['total'])}"
+                                  + (" (잠정)" if pg.get("provisional") else ""),
+                          "detail": f"최근 {pg.get('days')}거래일 중 {'순매수' if buy else '순매도'} 쪽 상위 {rank_text(100 - q if buy else q)}"}))
+
+    sh = ((((short or {}).get("markets") or {}).get("KOSPI") or {}).get("latest") or {}).get("daily") or {}
+    if sh.get("pctPctl") is not None and sh["pctPctl"] >= 97.5:
+        items.append((100 - sh["pctPctl"], {"kind": "short", "text": f"코스피 공매도 비중 {sh['pct']:.2f}%",
+                      "detail": f"전면 재개 뒤 {sh.get('days')}거래일 중 상위 {rank_text(100 - sh['pctPctl'])}"}))
+
+    by_sym = {x.get("symbol"): x for x in (glob or {}).get("items", [])}
+    for sym in (glob or {}).get("preopen") or PREOPEN_SYMBOLS:
+        x = by_sym.get(sym)
+        if x and x.get("movePctl") is not None and x["movePctl"] >= 97.5 and x.get("changeRate") is not None:
+            items.append((100 - x["movePctl"], {"kind": "overnight",
+                          "text": f"{x['name']} {x['changeRate']:+.2f}% ({x.get('asOf', '')[5:].replace('-', '/')})",
+                          "detail": f"최근 1년 하루 움직임 중 크기 상위 {rank_text(100 - x['movePctl'])}"}))
+
+    picked = [it for _, it in sorted(items, key=lambda t: t[0])[:3]]
+    return {"date": day, "items": picked, "none": "최근 이력과 견줘 특별히 드문 숫자가 없습니다.", "footer": TODAY_FOOTER}
+
+
+def concentration(universe: list[dict], days: int = 60) -> dict | None:
+    """외국인·기관 n일 순매수(억원, 근사) 가운데 상위 2종목이 차지하는 몫. 한 방향으로 크게 몰렸는지 보는 숫자."""
+    out = {"days": days, "universe": len(universe)}
+    for key in ("foreign", "institution"):
+        vals = [(u["code"], u["name"], (u.get(key) or {}).get(f"v{days}")) for u in universe]
+        vals = [(c_, n, v) for c_, n, v in vals if v is not None]
+        if len(vals) < 20:
+            return None
+        total = sum(v for _, _, v in vals)
+        same = sorted((x for x in vals if (x[2] > 0) == (total > 0)), key=lambda x: -abs(x[2]))[:2]
+        out[key] = {"total": round(total), "top": [{"code": c_, "name": n, "value": round(v)} for c_, n, v in same],
+                    "share": round(sum(v for _, _, v in same) / total * 100, 1) if total else None}
+    return out
+
+
+# ---------------------------------------------------------------- 장중 잠정치 기록 (원천이 그날 하루치만 주므로 지금부터 쌓는다)
+
+HIST_TIMES = ("10:00", "11:00", "13:00", "14:30", "15:30")
+HIST_DAYS = 120
+
+
+def fetch_program_intraday(market: str) -> dict[str, dict]:
+    """가장 최근 거래일의 분 단위 누적 프로그램 순매수(억원) {HHMMSS: {total, nonarb, arb}}. 시장당 4요청 안팎."""
+    out: dict[str, dict] = {}
+    day = None
+    for page in range(6):
+        j = get_json(NAVER_PROGRAM_URL, headers={"Referer": NAVER_PROGRAM_REFERER},
+                     params={"tradeType": "KRX", "krxMarketType": market,
+                             "bizdate": datetime.now(KST).strftime("%Y%m%d"),
+                             "startIdx": page, "pageSize": 200, "periodType": "TIME"})
+        content = j.get("content") if isinstance(j, dict) else None
+        if not isinstance(content, list):
+            raise RuntimeError(f"응답 형식이 바뀜: {str(j)[:120]}")
+        for c_ in content:
+            d, t = str(c_.get("bizdate") or ""), str(c_.get("time") or "")
+            if not re.fullmatch(r"\d{8}", d) or not re.fullmatch(r"\d{6}", t):
+                continue
+            day = day or d
+            if d != day:
+                continue
+            won = _program_won(c_)
+            if won:
+                out[t] = {k: float(round(won[f"{k}_net"] / 1e8)) for k in ("total", "nonarb", "arb")}
+        if not content or str(j.get("last")).lower() == "true":
+            break
+        time.sleep(0.3)
+    out["_date"] = f"{day[:4]}-{day[4:6]}-{day[6:]}" if day else None   # type: ignore[assignment]
+    return out
+
+
+def record_intraday_hist(prev: dict | None, flows: dict, program: dict, now: datetime) -> dict | None:
+    """
+    20:05 이후(그날 확정 뒤) 한 번, 그날 장중 몇 시각의 잠정치와 확정치를 짝지어 남긴다.
+    나중에 '15:30 값에서 확정까지 얼마나 바뀌나'를 보여 줄 바탕이다(20거래일 쌓이기 전엔 통계를 내지 않는다).
+    """
+    hist = prev if isinstance(prev, dict) and isinstance(prev.get("days"), list) else {"days": []}
+    ks = (flows.get("markets") or {}).get("KOSPI") or {}
+    day = (ks.get("latest") or {}).get("date")
+    intra = ks.get("intraday") or {}
+    if not day or intra.get("date") != day or not intra.get("final"):
+        return None                                        # 그날 확정 전이면 기록하지 않는다
+    if any(d.get("date") == day for d in hist["days"]):
+        return None
+    entry = {"date": day, "times": {}, "final": {}}
+    for code in ("KOSPI", "KOSDAQ"):
+        m = (flows.get("markets") or {}).get(code) or {}
+        pts = (m.get("intraday") or {}).get("points") or []
+        snap = {}
+        for t in HIST_TIMES:
+            got = [p_ for p_ in pts if p_["t"] <= t]
+            if got:
+                snap[t] = {k: got[-1].get(k) for k in ("individual", "foreign", "institution", "other_corp")}
+        try:
+            pi = fetch_program_intraday(code)
+            if pi.pop("_date", None) == day:
+                for t in HIST_TIMES:
+                    key = t.replace(":", "") + "00"
+                    got = [v for tt, v in sorted(pi.items()) if tt <= key]
+                    if got and t in snap:
+                        snap[t]["program"] = got[-1]["total"]
+        except Exception as e:  # noqa: BLE001
+            warn(f"{MARKET_NAME[code]} 장중 프로그램 기록 실패: {type(e).__name__}: {e}")
+        lt = m.get("latest") or {}
+        pl = (((program or {}).get("markets") or {}).get(code) or {}).get("latest") or {}
+        entry["times"][code] = snap
+        entry["final"][code] = {**{k: lt.get(k) for k in ("individual", "foreign", "institution", "other_corp")},
+                                "program": pl.get("total") if pl.get("date") == day else None}
+    hist["days"] = (hist["days"] + [entry])[-HIST_DAYS:]
+    hist["count"] = len(hist["days"])
+    return hist
+
+
+# ---------------------------------------------------------------- 문구 검사 (방향·추천으로 읽히는 말을 내보내지 않는다)
+
+BANNED_WORDS = ("추천", "신호", "타이밍", "목표가", "기회", "투매", "쌍끌이", "본심", "패닉")
+
+
+def check_copy(texts, where: str) -> list[str]:
+    bad = sorted({w for t in texts for w in BANNED_WORDS if w in str(t)})
+    if bad:
+        warn(f"{where}: 쓰지 않기로 한 말({', '.join(bad)})이 들어갔습니다")
+    return bad
 
 
 # ---------------------------------------------------------------- main
@@ -3009,8 +3628,24 @@ def main() -> int:
     if analog:
         print(f"  매칭 {len(analog['matches'])}건 · 평균 20일 뒤 {analog['avgRet20']:+.2f}% "
               f"(기준 {analog['baseline20']:+.2f}%)")
-    print("[7/9] 종목·업종 + 장바구니")
-    stocks = build_stocks(closes=closes)
+    print("[7/9] 종목·업종 + 장바구니 (+ 350종목 범위는 장 밖에서만)")
+    prev_meta = load_prev("meta.json") or {}
+    used = (prev_meta.get("requests") or {})
+    used_today = used.get("count", 0) if used.get("date") == now.date().isoformat() else 0
+    universe = None
+    if phase in ("장중", "동시호가"):
+        pass                                            # 장중엔 350종목을 돌리지 않는다(직전 요약 유지)
+    elif used_today + REQUESTS["n"] + 400 > REQUEST_CAP:
+        warn(f"오늘 요청 수가 상한({REQUEST_CAP})에 가까워 350종목 범위를 갱신하지 않았습니다")
+    else:
+        universe = build_universe(now)
+    stocks = build_stocks(closes=closes, store_rows=universe[1] if universe else None)
+    if universe:
+        stocks["universe"] = universe[0]
+        keep = {u["code"] for u in universe[0]}
+        print(f"  종목 1년 시계열 {write_stock_series(universe[1], keep)}개")
+    else:
+        stocks["universe"] = (load_prev("stocks.json") or {}).get("universe") or []
     antstocks = build_ant_stocks(stocks, closes)
     if antstocks:
         print(f"  장바구니 비교(산 뒤 등락): 개미 {antstocks['antAvgSinceBuy']}% vs "
@@ -3020,6 +3655,17 @@ def main() -> int:
     print("[9/9] 이벤트 일정 / 매크로")
     events, macro = build_events()
     glob["macro"] = macro
+    print("[+] 외국인·기관 종목 순위 · 평소와 다른 것")
+    if used_today + REQUESTS["n"] > REQUEST_CAP:
+        warn(f"오늘 요청 수가 상한({REQUEST_CAP})을 넘어 종목 순위를 다시 받지 않았습니다")
+        ranks = load_prev("ranks.json")
+    else:
+        ranks = build_ranks(load_prev("ranks.json"), now, phase, stock_streaks(stocks))
+    if stocks.get("universe"):
+        stocks["concentration"] = concentration(stocks["universe"])
+    today_card = build_today(flows if "flows.KOSPI" not in stale_keys else {"markets": {}},
+                             stocks, credit, program, glob, short)
+    hist = record_intraday_hist(load_prev("intraday_hist.json"), flows, program, now)
 
     # 성적표·유사 국면은 수급과 종가가 둘 다 있는 날까지만 계산돼, 어느 쪽이 멈춰도 '오늘'이 그날에 묶인다.
     # 여기서는 이번에 계산한 결과의 기준일로 표시해 두고, 직전 정상본이 더 최신이면 apply_last_good 이 고쳐 쓴다.
@@ -3043,7 +3689,11 @@ def main() -> int:
         insights = build_insights({"markets": {}}, market, glob, {}, None, credit, None, now.date().isoformat())
 
     # 하루 요약 피드도 이번 수집분으로만 (apply_last_good 이 market 을 직전 값으로 바꾸기 전에)
-    feed = build_feed(load_prev("feed.json") or {}, flows if core_ok else None, market, insights, now)
+    pre = build_pre_entry(now, flows, glob, events, today_card) if core_ok else None
+    feed = build_feed(load_prev("feed.json") or {}, flows if core_ok else None, market, insights, now, pre)
+    check_copy([t["text"] for t in insights], "브리핑")
+    check_copy([f"{i['text']} {i['detail']}" for i in today_card["items"]], "평소와 다른 것")
+    check_copy([f"{e['title']} {e['summary']}" for e in feed["entries"][:2]], "하루 요약 피드")
 
     out = apply_last_good(now.isoformat(), {
         "flows.json": flows, "ant.json": ant, "analog.json": analog,
@@ -3051,12 +3701,14 @@ def main() -> int:
         "market.json": market, "stocks.json": stocks, "global.json": glob,
         "stockflows.json": {"unit": "주", "stocks": stocks.pop("series", {})},
         "program.json": program, "short.json": short,
-        "events.json": events,
+        "events.json": events, "ranks.json": ranks, "today.json": today_card,
     }, stale_keys)
     for name, payload in out.items():
-        write(name, payload, compact=name in ("stockflows.json", "short.json"))
+        write(name, payload, compact=name in ("stockflows.json", "short.json", "stocks.json"))
     if calendar:
         write("calendar.json", calendar)
+    if hist:
+        write("intraday_hist.json", hist, compact=True)
     write("insights.json", {"items": insights})
     notify_telegram(feed)
     write("feed.json", feed)
@@ -3078,6 +3730,8 @@ def main() -> int:
         "dataFinal": bool(data_day) and (data_day < now.date().isoformat()
                                          or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER),
         "nextSession": next_session(now).isoformat(),
+        "mode": "full", "fullAt": now.isoformat(), "intradayAt": prev_meta.get("intradayAt"),
+        "requests": {"date": now.date().isoformat(), "count": used_today + REQUESTS["n"]},
         "warnings": WARNINGS,
         "stale": STALE,
         "freshAt": FRESH_AT,
@@ -3106,12 +3760,124 @@ def main() -> int:
     return 0
 
 
+# ---------------------------------------------------------------- 장중 가벼운 수집 (--intraday)
+# 외부 스케줄러가 장중 5분마다 워크플로를 깨우면, 매시 한 번의 전체 수집 사이에는 이것만 돈다(요청 약 12번, 수 초).
+# 장중에 바뀌는 것(코스피·코스닥 수급 오늘 행·분 단위 흐름, 프로그램 매매 오늘 행, 지수 시세)만 받아
+# 직전 정상본(data 브랜치) 위에 덮어쓴다. 실패하면 그 부분은 직전 값을 두고, 실행을 실패로 만들지 않는다
+# (매시 전체 수집이 핵심 데이터 멈춤을 잡는다).
+
+def _patch_daily(daily: list[dict], new_rows: list[dict], keys=("individual", "foreign", "institution")) -> list[dict]:
+    """최근 행을 날짜로 바꿔 끼우고, 바뀐 첫 행부터 누적(cum)을 다시 잇는다."""
+    if not new_rows:
+        return daily
+    by = {r["date"]: r for r in daily}
+    first = min(r["date"] for r in new_rows)
+    for r in new_rows:
+        by[r["date"]] = {k: v for k, v in r.items() if k != "cum"}
+    rows = [by[d] for d in sorted(by)][-CHART_DAYS:]
+    base = {k: 0.0 for k in keys}
+    out = []
+    for r in rows:
+        if r["date"] < first and r.get("cum"):
+            base = dict(r["cum"])
+            out.append(r)
+            continue
+        base = {k: round(base.get(k, 0.0) + (r.get(k) or 0.0), 1) for k in keys}
+        out.append({**r, "cum": base})
+    return out
+
+
+def run_intraday() -> int:
+    now = datetime.now(KST)
+    print(f"장중 가벼운 수집 {now:%Y-%m-%d %H:%M:%S} KST")
+    try:
+        refresh_calendar(now)                          # 대개 직전 calendar.json 만 읽는다(주 1회만 받음)
+    except Exception as e:  # noqa: BLE001
+        warn(f"장 일정 확인 실패: {type(e).__name__}: {e}")
+    flows, market = load_prev("flows.json"), load_prev("market.json")
+    program, meta = load_prev("program.json") or {"unit": "억원", "markets": {}}, load_prev("meta.json") or {}
+    if not flows or not market or not flows.get("markets"):
+        print("직전 데이터가 없어 전체 수집으로 돌립니다")
+        return main()
+    fresh: dict[str, str] = {}
+    for code in ("KOSPI", "KOSDAQ"):
+        try:
+            b = get_json(f"https://m.stock.naver.com/api/index/{code}/basic")
+            e = market["indices"].setdefault(code, {"code": code})
+            e.update(price=num(b.get("closePrice")), change=num(b.get("compareToPreviousClosePrice")),
+                     changeRate=num(b.get("fluctuationsRatio")), marketStatus=b.get("marketStatus"),
+                     tradedAt=b.get("localTradedAt"))
+            hi = (e.get("high1y") or {}).get("value")
+            if hi and e.get("price"):
+                e["fromHigh"] = round((e["price"] / hi - 1) * 100, 2)
+            fresh[f"market.{code}.price"] = now.isoformat()
+        except Exception as ex:  # noqa: BLE001
+            warn(f"{code} 지수 시세 실패: {type(ex).__name__}: {ex}")
+    phase = market_phase(now, market["indices"].get("KOSPI"))
+    if phase in ("주말", "휴장일"):
+        print(f"  {phase} — 수급은 받지 않습니다")
+    else:
+        for code in ("KOSPI", "KOSDAQ"):
+            m = flows["markets"].setdefault(code, {})
+            try:
+                rows = fetch_naver_trend(code, 5, page_size=10)
+                if rows:
+                    m["daily"] = _patch_daily(m.get("daily") or [], rows)
+                    m["latest"] = m["daily"][-1]
+                    m["streaks"] = {k: {**streak(m["daily"], k), "rarity": streak_rarity(code, k, streak(m["daily"], k))}
+                                    for k in ("individual", "foreign", "institution", "other_corp")}
+                    fresh[f"flows.{code}"] = now.isoformat()
+                intra = fetch_intraday(code)
+                if intra:
+                    m["intraday"] = intra
+            except Exception as ex:  # noqa: BLE001
+                warn(f"{MARKET_NAME[code]} 장중 수급 실패 — 직전 값 유지: {type(ex).__name__}: {ex}")
+            try:
+                prow = fetch_program_daily(code, 5, now, page_size=10)
+                if prow:
+                    pm = program["markets"].setdefault(code, {})
+                    new = prow[-1]
+                    shaped = {"date": new["date"], "arb": new["arb_net"], "nonarb": new["nonarb_net"],
+                              "total": new["total_net"], **({"provisional": True} if new.get("provisional") else {})}
+                    daily = [r for r in pm.get("daily") or [] if r["date"] != new["date"]]
+                    pm["daily"] = (daily + [shaped])[-PROGRAM_CHART_DAYS:]
+                    old = pm.get("latest") or {}
+                    keep_ = {k: old[k] for k in ("pctl", "days") if old.get("date") == new["date"] and k in old}
+                    pm["latest"] = {"date": new["date"], "arb": new["arb_net"], "nonarb": new["nonarb_net"],
+                                    "total": new["total_net"], "provisional": bool(new.get("provisional")),
+                                    "pctl": keep_.get("pctl"), "days": keep_.get("days", old.get("days")),
+                                    "streak": streak(prow, "total_net")}
+                    fresh[f"program.{code}"] = now.isoformat()
+            except Exception as ex:  # noqa: BLE001
+                warn(f"{MARKET_NAME[code]} 장중 프로그램 매매 실패 — 직전 값 유지: {type(ex).__name__}: {ex}")
+    write("flows.json", flows)
+    write("program.json", program)
+    write("market.json", market)
+    data_day = ((flows["markets"].get("KOSPI") or {}).get("latest") or {}).get("date")
+    used = meta.get("requests") or {}
+    used_today = used.get("count", 0) if used.get("date") == now.date().isoformat() else 0
+    meta.update({
+        "generatedAt": now.isoformat(), "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),
+        "phase": phase, "dataDate": data_day,
+        "dataFinal": bool(data_day) and (data_day < now.date().isoformat() or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER),
+        "nextSession": next_session(now).isoformat(),
+        "mode": "intraday", "intradayAt": now.isoformat(), "fullAt": meta.get("fullAt") or meta.get("generatedAt"),
+        "freshAt": {**(meta.get("freshAt") or {}), **fresh},
+        "requests": {"date": now.date().isoformat(), "count": used_today + REQUESTS["n"]},
+        # 전체 수집의 경고는 남기고(다음 전체 수집이 다시 쓴다) 이번 경고를 덧붙인다
+        "warnings": list(dict.fromkeys([*(meta.get("warnings") or []), *WARNINGS])),
+    })
+    write("meta.json", meta)
+    print(f"완료. 요청 {REQUESTS['n']}번 · 경고 {len(WARNINGS)}건")
+    return 0
+
+
 if __name__ == "__main__":
     # 윈도우 콘솔에서도 한글이 깨지지 않게 (import 할 때는 건드리지 않는다 — 테스트 출력 캡처와 충돌)
     if hasattr(sys.stdout, "buffer"):
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     try:
-        sys.exit(main())
+        sys.exit(run_intraday() if "--intraday" in sys.argv[1:] else main())
     except Exception:  # noqa: BLE001
         traceback.print_exc()
         sys.exit(1)

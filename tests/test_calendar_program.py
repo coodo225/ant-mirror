@@ -316,3 +316,200 @@ def test_krx_srt_post_marks_blocking_errors(monkeypatch):
     monkeypatch.setattr(c.session, "post", lambda *a, **k: (_ for _ in ()).throw(c.requests.ConnectionError("x")))
     with pytest.raises(c.KrxBlocked):                                       # 연결 자체가 안 됨
         c.krx_srt_post("MDCSTAT30201_OUT")
+
+
+# ── 종목 순위 · 평소와 다른 것 · 장중 기록 · 문구 ─────────────
+
+def _rank(to="2026-10-02", estimated=False, amt=100):
+    row = lambda code, a: {"code": code, "name": code, "amt": a, "qty": a, "volPct": 1.0, "chg": 0.0}
+    return {"from": to, "to": to, "estimated": estimated, "buy": [row("000660", amt)], "sell": [row("005930", -amt)]}
+
+
+def test_build_ranks_keeps_previous_until_final(monkeypatch):
+    calls = []
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "fetch_rank", lambda inv, mkt, per: calls.append(1) or _rank())
+    r = c.build_ranks(None, datetime(2026, 10, 2, 20, 30, tzinfo=K), "장마감",
+                      {"000660": {"foreign": {"days": 3, "side": "buy"}, "institution": None}})
+    assert r["final"] and r["asOf"] == "2026-10-02" and len(calls) == 8
+    assert r["markets"]["KOSPI"]["foreign"]["day"]["buy"][0]["streak"] == {"days": 3, "side": "buy"}
+    # 장중엔 받지 않고 직전 확정본(전 거래일)을 쓴다
+    calls.clear()
+    r2 = c.build_ranks(r, datetime(2026, 10, 6, 10, 0, tzinfo=K), "장중")
+    assert calls == [] and r2["final"] is False and r2["asOf"] == "2026-10-02"
+    # 마감 뒤라도 18시 전 오늘 값·장중 추정 값은 받아들이지 않는다
+    monkeypatch.setattr(c, "fetch_rank", lambda inv, mkt, per: _rank("2026-10-06", estimated=(inv == "FOREIGNER")))
+    r3 = c.build_ranks(r, datetime(2026, 10, 6, 16, 0, tzinfo=K), "장마감(수급 확정 반영중)")
+    assert r3["asOf"] == "2026-10-02" and r3["final"] is False
+
+
+def test_fetch_rank_parses_and_rejects_sign_flip(monkeypatch):
+    def item(code, q, a, typ="ST"):
+        return {"itemcode": code, "itemname": code, "type": typ, "bizdateFrom": "20261002",
+                "bizdateTo": "20261002", "accTradeVolume": str(q), "accTradeAmount": str(a),
+                "dailyTradeVolume": "1000", "prevChangeRate": "1.5", "estimated": False}
+    j = {"sections": {"buyRankList": [item("A", 100, 5e9), item("ETF", 10, 9e9, "EF")],
+                      "sellRankList": [item("B", -300, -2e10)]}}
+    monkeypatch.setattr(c, "get_json", lambda *a, **k: j)
+    r = c.fetch_rank("FOREIGNER", "KOSPI", "DAY")
+    assert [x["code"] for x in r["buy"]] == ["A"] and r["buy"][0]["amt"] == 50 and r["buy"][0]["volPct"] == 10.0
+    assert r["sell"][0]["amt"] == -200 and r["to"] == "2026-10-02" and r["estimated"] is False
+    j["sections"]["buyRankList"].append(item("C", -5, -1e9))
+    with pytest.raises(RuntimeError, match="부호"):
+        c.fetch_rank("FOREIGNER", "KOSPI", "DAY")
+
+
+def test_streak_rarity_from_reference():
+    r = c.streak_rarity("KOSPI", "other_corp", {"days": 19, "side": "buy"})
+    assert 2 < r["pctRuns"] < 4 and r["longest"]["buy"]["days"] >= 58
+    assert c.streak_rarity("KOSPI", "foreign", {"days": 999, "side": "sell"})["pctRuns"] == 0.0   # 사상 최장
+    assert c.streak_rarity("KOSDAQ", "foreign", {"days": 3, "side": "buy"})["pctRuns"] is None
+
+
+def test_build_today_picks_rare_facts_only():
+    flows = {"markets": {"KOSPI": {"latest": {"date": "2026-10-02"}, "streaks": {
+        "other_corp": {"days": 19, "side": "buy", "rarity": {"since": "2009-03", "pctRuns": 2.9}},
+        "foreign": {"days": 6, "side": "sell", "rarity": {"since": "2009-03", "pctRuns": 12.2}}}}}}
+    uni = [{"code": f"{i:06d}", "name": f"S{i}", "foreign": {"v60": -5.0}, "institution": {"v60": 1.0}}
+           for i in range(30)]
+    uni[0]["foreign"]["v60"], uni[1]["foreign"]["v60"] = -218700.0, -83000.0
+    stocks = {"concentration": c.concentration(uni)}
+    t = c.build_today(flows, stocks, {}, {}, {"items": []}, {})
+    kinds = [i["kind"] for i in t["items"]]
+    assert kinds == ["streak", "concentration"]                     # 외국인 6일(12.2%)은 드물지 않아 빠짐
+    assert t["items"][0]["text"] == "기타법인 19거래일 연속 순매수" and "2.9%" in t["items"][0]["detail"]
+    assert t["items"][1]["text"].startswith("외국인 60일 순매도의 100%")
+    assert not c.check_copy([f"{i['text']} {i['detail']}" for i in t["items"]], "x")
+    empty = c.build_today({"markets": {}}, {}, {}, {}, {}, {})
+    assert empty["items"] == [] and empty["none"]
+
+
+def test_record_intraday_hist_once_after_final(monkeypatch):
+    pts = [{"t": t, "individual": 1.0, "foreign": -1.0, "institution": 0.0, "other_corp": 0.0}
+           for t in ("09:05", "10:00", "11:00", "13:00", "14:30", "15:30")]
+
+    def mk(final):
+        return {"markets": {code: {"latest": {"date": "2026-10-02", "individual": 5.0, "foreign": -5.0,
+                                              "institution": 0.0, "other_corp": 0.0},
+                                   "intraday": {"date": "2026-10-02", "points": pts,
+                                                "final": {"t": "20:04"} if final else None}}
+                            for code in ("KOSPI", "KOSDAQ")}}
+    monkeypatch.setattr(c, "fetch_program_intraday", lambda m: {"_date": "2026-10-02", "100000": {"total": 7.0},
+                                                               "153000": {"total": 9.0}})
+    assert c.record_intraday_hist(None, mk(False), {}, datetime(2026, 10, 2, 19, 0, tzinfo=K)) is None
+    h = c.record_intraday_hist(None, mk(True), {}, datetime(2026, 10, 2, 20, 30, tzinfo=K))
+    snap = h["days"][0]["times"]["KOSPI"]
+    assert list(snap) == list(c.HIST_TIMES) and snap["10:00"]["program"] == 7.0 and snap["15:30"]["program"] == 9.0
+    assert h["days"][0]["final"]["KOSPI"]["individual"] == 5.0
+    assert c.record_intraday_hist(h, mk(True), {}, datetime(2026, 10, 2, 21, 0, tzinfo=K)) is None   # 하루 한 번
+
+
+def test_pre_entry_and_feed_kinds():
+    flows = {"markets": {"KOSPI": {"latest": {"date": "2026-10-02", "individual": -17897.0, "foreign": -1080.0,
+                                              "institution": 4155.0, "other_corp": 14822.0}}}}
+    glob = {"items": [{"symbol": "^SOX", "name": "필라델피아 반도체", "changeRate": 2.4},
+                      {"symbol": "^GSPC", "name": "S&P 500", "changeRate": 0.73}], "preopen": ["^SOX", "^GSPC"]}
+    ev = {"upcoming": [{"title": "옵션 만기", "dday": 0, "note": "코스피200 옵션 최종거래일"}]}
+    pre = c.build_pre_entry(datetime(2026, 10, 8, 7, 37, tzinfo=K), flows, glob, ev, {"items": []})
+    assert pre["id"] == "2026-10-08-pre" and "필라델피아 반도체 +2.40%" in pre["title"]
+    assert "오늘 옵션 만기" in pre["summary"]
+    assert c.build_pre_entry(datetime(2026, 10, 9, 7, 37, tzinfo=K), flows, glob, ev, {}) is None   # 휴장일
+    assert c.build_pre_entry(datetime(2026, 10, 8, 9, 5, tzinfo=K), flows, glob, ev, {}) is None    # 장 시작 뒤
+    old = {"entries": [{"id": "2026-10-01", "title": "t", "summary": "", "updated": "2026-10-01T20:30:00+09:00",
+                        "final": True}]}
+    f = c.build_feed(old, flows, {"indices": {}}, [], datetime(2026, 10, 8, 7, 37, tzinfo=K), pre)
+    ids = [e["id"] for e in f["entries"]]
+    assert ids[0] == "2026-10-08-pre" and "2026-10-01-post" in ids
+
+
+def test_korean_indicator_events(monkeypatch):
+    monkeypatch.setattr(c, "fetch_naver_calendar", lambda cat, a, b: [
+        ("2026-10-06", "외환보유고 (미국달러)", "06:00 예정"),
+        ("2026-10-15", "수출 전년대비(확정치)", "09:00 예정 · 시장 영향력 매우 높음"),
+        ("2026-10-15", "수입 전년대비(확정치)", "09:00 예정"),
+        ("2026-10-22", "중앙은행 기준금리", "10:00 예정")])
+    ev = c.korean_indicator_events(date(2026, 10, 5))
+    assert ev == [{"type": "지표", "date": "2026-10-15", "title": "수출 전년대비(확정치) · 수입 전년대비(확정치)",
+                   "note": "09:00 발표 예정", "impact": "mid"}]
+
+
+def test_check_copy_flags_banned_words():
+    assert c.check_copy(["외국인 매수 신호"], "x") == ["신호"]
+    assert any("신호" in w for w in c.WARNINGS)
+
+
+# ── 350종목 범위 · 장중 가벼운 수집 ─────────────────────────
+
+def _trend_rows(n, start=date(2025, 1, 2), f=100, o=-50, i=-50, hold0=40.0):
+    out, d, k = [], start, 0
+    while len(out) < n:
+        if d.weekday() < 5:
+            out.append([d.strftime("%Y%m%d"), f if k % 7 else -f, o, i, round(hold0 + k * 0.01, 2), 1000.0 + k, 10000])
+            k += 1
+        d += timedelta(days=1)
+    return out
+
+
+def test_universe_name_filter():
+    pat = c._EXCLUDE_NAME
+    for name in ("삼성전자우", "현대차2우B", "미래에셋비전스팩5호", "ESR켄달스퀘어리츠", "LG화학우(전환)"):
+        assert pat.search(name), name
+    for name in ("우리금융지주", "삼성전자", "LG에너지솔루션", "HD현대중공업"):
+        assert not pat.search(name), name
+
+
+def test_stock_summary_values():
+    rows = _trend_rows(30)
+    u = {"code": "000001", "name": "가", "market": "KOSPI", "price": 1.0, "chg": 0.5, "marketCap": 10}
+    s = c.stock_summary(u, rows)
+    assert s["foreign"]["d5"] == sum(r[1] for r in rows[-5:]) and s["institution"]["streak"] == {"days": 30, "side": "sell"}
+    assert s["institution"]["longest"]["sell"] == 30 and s["foreign"]["longest"]["buy"] == 6
+    assert s["foreign"]["v20"] == round(sum(r[1] * r[5] for r in rows[-20:]) / 1e8, 1)
+    assert s["holdChg20"] == round(rows[-1][4] - rows[-21][4], 2) and s["asOf"] == f"{rows[-1][0][:4]}-{rows[-1][0][4:6]}-{rows[-1][0][6:]}"
+
+
+def test_build_universe_backfills_in_batches_and_writes_series(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 150)
+    uni = lambda m, n: [{"code": f"{1 if m == 'KOSPI' else 2}{k:05d}", "name": f"{m}{k}", "market": m, "price": 1.0,
+                         "chg": 0.0, "marketCap": 1, "holdRatio": 10.0} for k in range(n)]
+    monkeypatch.setattr(c, "fetch_universe", uni)
+    asked = []
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: asked.append(days) or _trend_rows(min(days, 80)))
+    now = datetime(2026, 10, 5, 7, 37, tzinfo=K)
+    summaries, rows_by = c.build_universe(now)
+    assert len(summaries) == 350 and asked.count(c.STOCK_BACKFILL_DAYS) == 150 and asked.count(60) == 200
+    store = c.load_stock_store()
+    assert sum(1 for r in store["codes"].values() if r.get("partial")) == 200
+    # 다음 실행: 남은 종목을 이어서 처음부터, 끝난 종목은 최근 며칠만
+    asked.clear()
+    c.build_universe(now + timedelta(days=1))
+    assert asked.count(c.STOCK_BACKFILL_DAYS) == 150 and all(d == c.STOCK_BACKFILL_DAYS or d < 2000 for d in asked)
+    n = c.write_stock_series(rows_by, {"100000"})
+    files = list((c.OUT / "stockseries").glob("*.json"))
+    assert n == 350 and [f.stem for f in files] == ["100000"]          # 범위 밖 파일은 지운다
+    x = json.loads(files[0].read_text(encoding="utf-8"))
+    assert set(x) == {"code", "unit", "d", "f", "o", "i", "h", "c"} and len(x["d"]) <= c.STOCK_SERIES_DAYS
+
+
+def test_build_universe_gives_up_when_too_many_fail(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "fetch_universe", lambda m, n: [{"code": f"{m[:1]}{k}", "name": "x", "market": m}
+                                                          for k in range(n)])
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: (_ for _ in ()).throw(RuntimeError("HTTP 500")))
+    assert c.build_universe(datetime(2026, 10, 5, 7, 37, tzinfo=K)) is None
+    assert any("버립니다" in w for w in c.WARNINGS)
+
+
+def test_patch_daily_keeps_cumulative_chain():
+    daily = [{"date": f"2026-09-{d:02d}", "individual": 1.0, "foreign": 2.0, "institution": 3.0,
+              "cum": {"individual": float(k + 1), "foreign": 2.0 * (k + 1), "institution": 3.0 * (k + 1)}}
+             for k, d in enumerate((28, 29, 30))]
+    new = [{"date": "2026-09-30", "individual": 10.0, "foreign": 0.0, "institution": 0.0},
+           {"date": "2026-10-01", "individual": 1.0, "foreign": 1.0, "institution": 1.0}]
+    out = c._patch_daily(daily, new)
+    assert [r["date"] for r in out] == ["2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01"]
+    assert out[2]["cum"] == {"individual": 12.0, "foreign": 4.0, "institution": 6.0}
+    assert out[3]["cum"] == {"individual": 13.0, "foreign": 5.0, "institution": 7.0}

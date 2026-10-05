@@ -131,9 +131,36 @@ git archive FETCH_HEAD docs | tar -x
 저장소가 데이터 이력으로 불어나지 않습니다(대신 데이터 변경 이력은 남지 않습니다).
 화면 코드(`docs/`)를 main 에 올리면 `사이트 배포` 워크플로가 data 브랜치의 최신 데이터와 묶어 바로 배포합니다.
 
-이후 평일에는 장중 30분마다(KST 09:07~15:37), 장 마감 후 18:17, 수급 확정치가 나오는 20:23,
-다음 날 아침 07:37 에 자동 갱신됩니다(하루 약 17회). GitHub 의 예약 실행은 부하가 몰리면 늦어지거나
-빠지기도 해서, 정각을 피한 분에 돌립니다. 화면은 5분마다 새 수집이 있는지만 확인합니다.
+GitHub 의 예약 실행(장중 30분마다, 18:17, 20:23, 07:37)도 걸어 두었지만, 부하가 몰리면 늦어지거나 빠집니다
+(2026-09~10 실측: 장중 갱신이 하루 2번꼴, 13시 이후는 거의 없음). 장중 숫자를 매매에 쓰려면 아래
+**장중 5분 갱신**을 켜 두세요. 화면은 5분마다 새 수집이 있는지만 확인하고, 헤더에 '수집 HH:MM (N분 전)'을 띄웁니다.
+
+### 장중 5분 갱신 (외부 스케줄러, 무료, 설정 약 20분)
+
+외부 스케줄러가 GitHub API 로 `시장 데이터 수집` 워크플로를 깨웁니다. 워크플로는 깨어날 때마다 스스로 고릅니다.
+
+- 장중(평일 08:55~15:40)이고 1시간 안에 전체 수집이 있었으면 → **가벼운 수집**: 수급 오늘 행·분 단위 흐름, 프로그램 매매, 지수 시세만(요청 약 12번, 수 초)
+- 그 밖 → **전체 수집**(장 밖이면 350종목 범위까지)
+- 2.5분 안에 이미 돈 실행이 있으면 → 건너뜀. 휴장일·주말은 6시간에 한 번만 전체 수집
+
+1. **토큰 만들기**: GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token
+   - Repository access: **Only select repositories** → 이 저장소 하나만
+   - Permissions → Repository permissions → **Actions: Read and write** (다른 권한은 주지 않습니다)
+   - Expiration: 1년(만료 전에 다시 만들어 바꿔 끼웁니다)
+   - 토큰은 채팅·이슈·저장소 어디에도 붙여 넣지 마세요. 새면 바로 Revoke 하면 됩니다.
+     이 토큰으로는 워크플로 실행·취소만 할 수 있고 코드나 시크릿은 바꿀 수 없습니다.
+2. **cron-job.org** 에 가입하고 작업(Cronjob)을 하나 만듭니다.
+   - URL: `https://api.github.com/repos/<계정>/<저장소>/actions/workflows/collect.yml/dispatches`
+   - Request method: **POST**, Request body: `{"ref":"main"}`
+   - Headers: `Authorization: Bearer <토큰>`, `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28`
+   - Schedule: 시간대 **Asia/Seoul**, 월~금, 08:55~15:40 사이 **5분마다**(처음 하루는 10분으로 시작해도 됩니다)
+   - 같은 설정으로 작업을 하나 더 만들어 07:35, 18:15, 20:25 에 돌립니다(장 전 요약, 마감 후, 20시 확정치).
+   - 실패 알림 메일을 켜 둡니다(연속 실패가 쌓이면 cron-job.org 가 작업을 멈춥니다).
+3. 다음 장중에 Actions 탭에서 실행이 5분 간격으로 생기는지, 사이트 헤더의 'N분 전'이 10분 안팎인지 확인합니다.
+   응답 코드 204 가 정상입니다.
+
+요청량: 장중 가벼운 수집 하루 약 80번 × 12요청에 전체 수집을 더해 네이버 요청은 하루 3천 번 안팎입니다.
+수집기는 하루 요청 수를 `meta.json` 에 이어 적고, 상한(`REQUEST_CAP`, 기본 3,500)을 넘으면 무거운 섹션(350종목, 종목 순위)을 건너뜁니다.
 
 ### 저장소는 public 을 권합니다
 
@@ -243,6 +270,8 @@ collector/
   collect.py           수집기 본체
   requirements.txt
   krx_calendar.json    휴장일·수능일 장 시간·금통위 (해마다 확인)
+  reference.json       연속 매매 기록이 얼마나 드문지의 기준표(2009년 이후 코스피) — build_reference.py 로 분기마다
+  build_reference.py   reference.json 을 다시 만드는 스크립트
   events_seed.json     직접 추가하는 일정
 docs/                  ← GitHub Pages 루트
   index.html
@@ -260,6 +289,11 @@ docs/                  ← GitHub Pages 루트
     program.json         프로그램 매매(차익·비차익) 60일
     short.json           공매도 거래·순보유잔고 (2025-03-31 재개 뒤 전체)
     calendar.json        수집기가 받아 둔 휴장일·금통위 (다음 실행이 이어서 쓴다)
+    ranks.json           외국인·기관 종목별 순매수·순매도 상위 20 (하루·1주, 마감 확정치)
+    today.json           '평소와 다른 것' — 자기 이력 대비 드문 사실 최대 3개(방향은 말하지 않음)
+    intraday_hist.json   장중 잠정치와 20시 확정치 짝 기록(원천이 하루치만 줘서 쌓는 중)
+    stockseries/*.json   350종목 각각의 1년 일별 투자자 수량·종가·외국인 보유율 (종목 상세를 열 때만 받는다)
+  evidence.json        수급 속설 검증표(사전 등록 검정 결과, 분기마다 다시 계산)
     market/stocks/global/events/insights/meta.json
   og.png               공유 미리보기 카드 (수집기가 그림, data 브랜치)
 tests/                 수집기 테스트 (네트워크 없이 pytest)
