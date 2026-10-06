@@ -11,9 +11,10 @@
 거래일 (장 시간은 특별 장 시간·새해 첫 거래일을 따른다)
   - 장중(개장 5분 전 ~ 마감 10분 뒤): 1시간 안에 전체 수집을 시도했으면 가벼운 수집, 아니면 전체
   - 장 전(07:30 ~ 장중 전): 오늘 07:30 이후 성공한 전체 수집이 없으면 한 번
-  - 마감 뒤(장중 뒤 ~ 20:05): 잠정치가 바뀌는 동안 1시간에 한 번
-  - 20시 확정(20:05 ~ 21:30): 20:05 이후 성공한 전체 수집이 없으면 한 번
-  - 밤(21:30 ~ 07:30): 쉼
+  - 마감 뒤(장중 뒤 ~ 20:15): 잠정치가 바뀌는 동안 1시간에 한 번
+  - 확정(20:15 ~ 23:30): 20:15 이후 성공한 전체 수집이 없으면 한 번. 그 뒤에도 종목 순위·종목별 수급이 덜 들어왔으면
+    (meta.pendingFinal — 2026-10-06 엔 20:05 뒤에 올라왔다) 30분마다 다시
+  - 밤(23:30 ~ 07:30): 쉼(못 받은 것은 07:30 장 전 수집이 채운다)
 휴장일·주말: 6시간에 한 번 전체
 어느 때든 2.5분 안에 이미 돈(또는 실패한) 실행이 있으면 건너뜀.
 실패한 전체 수집은 'fullAt' 을 바꾸지 못하므로, 실패 기록(lastAttempt)으로 쉬는 간격을 잰다 — 실패가 이어져도
@@ -94,10 +95,12 @@ def decide(meta: dict, hols: set[str], now: datetime, force: bool = False, speci
         return "skip"
     if hm < o - 5:
         return "full" if not done_since(7, 30) and age(tried_full) >= 30 else "skip"
-    if hm < 20 * 60 + 5:
+    if hm < 20 * 60 + 15:
         return "full" if age(tried_full) >= 60 else "skip"
-    if hm < 21 * 60 + 30:
-        return "full" if not done_since(20, 5) and age(tried_full) >= 30 else "skip"
+    if hm < 23 * 60 + 30:
+        if age(tried_full) < 30:
+            return "skip"
+        return "full" if not done_since(20, 15) or meta.get("pendingFinal") else "skip"
     return "skip"
 
 

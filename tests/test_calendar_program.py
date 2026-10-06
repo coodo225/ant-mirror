@@ -527,10 +527,11 @@ def test_universe_due_rules():
     assert c.universe_due({**done, "universePending": 30}, "2026-10-06", now)           # 채우는 중
     assert c.universe_due({**done, "universe": [{"asOf": "2026-10-02"}]}, "2026-10-06", now)   # 새 거래일
     assert not c.universe_due(done, "2026-10-06", now)                                 # 오늘 이미 돎
-    assert not c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 18, 40, tzinfo=K))   # 확정(20:05) 전
-    assert c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 20, 10, tzinfo=K))      # 확정 뒤 한 번
-    assert not c.universe_due({**done, "universeAt": "2026-10-06T20:10:00+09:00"}, "2026-10-06",
-                              datetime(2026, 10, 6, 20, 40, tzinfo=K))
+    assert not c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 18, 40, tzinfo=K))   # 확정(20:15) 전
+    assert not c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 20, 10, tzinfo=K))
+    assert c.universe_due(done, "2026-10-06", datetime(2026, 10, 6, 20, 20, tzinfo=K))      # 확정 뒤 한 번
+    assert not c.universe_due({**done, "universeAt": "2026-10-06T20:20:00+09:00"}, "2026-10-06",
+                              datetime(2026, 10, 6, 20, 50, tzinfo=K))
     fri = {**done, "universe": [{"asOf": "2026-10-02"}], "universeAt": "2026-10-02T20:20:00+09:00"}
     assert not c.universe_due(fri, "2026-10-02", datetime(2026, 10, 3, 19, 0, tzinfo=K))    # 주말엔 다시 안 돎
     assert c.universe_due({**fri, "universeAt": "2026-10-02T18:30:00+09:00"}, "2026-10-02",
@@ -550,10 +551,14 @@ def test_mode_decide_every_five_minutes_all_day():
     assert md.decide(meta(at(7, 35)), hols, at(7, 45)) == "skip"
     assert md.decide(meta(at(16, 40)), hols, at(17, 0)) == "skip"                      # 마감 뒤는 1시간마다
     assert md.decide(meta(at(16, 40)), hols, at(17, 45)) == "full"
-    assert md.decide(meta(at(19, 50)), hols, at(20, 10)) == "skip"                     # 방금 돈 전체 수집 뒤 30분은 쉼
-    assert md.decide(meta(at(19, 50)), hols, at(20, 25)) == "full"                     # 20시 확정 한 번
-    assert md.decide(meta(at(20, 10)), hols, at(20, 40)) == "skip"
-    assert md.decide(meta(at(20, 10)), hols, at(22, 0)) == "skip"
+    assert md.decide(meta(at(19, 50)), hols, at(20, 10)) == "skip"                     # 마감 뒤는 1시간마다
+    assert md.decide(meta(at(19, 50)), hols, at(20, 25)) == "full"                     # 20:15 확정 한 번
+    assert md.decide(meta(at(20, 10)), hols, at(20, 40)) == "full"                     # 20:10 은 확정 전 — 한 번 더
+    assert md.decide(meta(at(20, 20)), hols, at(20, 55)) == "skip"
+    assert md.decide(meta(at(20, 20)), hols, at(22, 0)) == "skip"
+    pend = {**meta(at(20, 20)), "pendingFinal": True}                                    # 순위·종목 수급이 덜 들어옴
+    assert md.decide(pend, hols, at(20, 40)) == "skip" and md.decide(pend, hols, at(20, 55)) == "full"
+    assert md.decide(pend, hols, at(23, 40)) == "skip"                                 # 밤엔 쉬고 07:30 에 채운다
     assert md.decide(meta(at(10, 0, 9)), hols, at(12, 0, 9)) == "skip"                 # 휴장일은 6시간마다
     assert md.decide(meta(at(5, 0, 9)), hols, at(12, 0, 9)) == "full"
     assert md.decide({}, hols, at(3, 0)) == "skip" and md.decide({}, hols, at(10, 0)) == "full"
@@ -797,3 +802,15 @@ def test_build_stocks_reuses_previous_flows_without_fetching(monkeypatch):
     s = out["top"][0]
     assert s["flow"] == prev["005930"]["flow"] and s["stat60"] == {"days": 60} and out["series"]["005930"]["d"] == ["20261002"]
     assert not any("/trend" in u_ for u_ in asked)
+
+
+
+def test_universe_waits_until_stock_rows_are_published(monkeypatch):
+    prev = {"universe": [{"code": "005930", "asOf": "2026-10-02"}], "universePending": 0}
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: _trend_rows(3, start=date(2026, 9, 30)))
+    assert not c.stock_rows_published(prev, "2026-10-06")                  # 9/30~10/2 만 있음
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: [["20261006", 1, 1, 1, 1.0, 1.0, 1]])
+    assert c.stock_rows_published(prev, "2026-10-06")
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: (_ for _ in ()).throw(RuntimeError("HTTP 500")))
+    assert not c.stock_rows_published(prev, "2026-10-06")
+    assert c.stock_rows_published({}, "2026-10-06")                        # 처음이면 확인 없이 받는다

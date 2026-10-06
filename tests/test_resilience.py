@@ -700,3 +700,26 @@ def test_run_intraday_extends_long_program_streak(monkeypatch):
     assert c.run_intraday() == 0
     st = _read("program.json")["markets"]["KOSPI"]["latest"]["streak"]
     assert st["days"] == 13 and st["side"] == "buy"              # 받은 5행이 아니라 이어 붙인 전체에서 센다
+
+
+def test_main_waits_for_stock_rows_and_flags_pending_final(monkeypatch):
+    _offline(monkeypatch)
+    freeze_now(monkeypatch, datetime(2026, 10, 2, 20, 30, tzinfo=c.KST))    # 그날 확정 수집 시각
+    c.write("stocks.json", {"top": [], "industries": [], "universe": [{"code": "005930", "name": "삼성전자", "asOf": "2026-10-01"}],
+                            "universeAt": "2026-10-01T20:20:00+09:00", "universePending": 0})
+    called = []
+    monkeypatch.setattr(c, "build_universe", lambda now, backfill_only=False: called.append(backfill_only))
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: [["20261001", 1, 1, 1, 1.0, 1.0, 1]])
+    assert c.main() == 0
+    assert called == []                                                      # 종목별 10/2 수급이 아직 없음 → 350종목 안 받음
+    assert _read("meta.json")["pendingFinal"] is True                       # 23:30 까지 다시 시도하라는 표시
+    c.WARNINGS.clear(); c.STALE.clear(); c.FRESH_AT.clear()
+    _offline(monkeypatch)
+    freeze_now(monkeypatch, datetime(2026, 10, 2, 21, 0, tzinfo=c.KST))
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: [["20261002", 1, 1, 1, 1.0, 1.0, 1]])
+    uni = [{"code": f"{i:06d}", "name": "x", "market": "KOSPI", "asOf": "2026-10-02",
+            "foreign": {"v60": 1.0}, "institution": {"v60": 1.0}} for i in range(30)]
+    monkeypatch.setattr(c, "build_universe", lambda now, backfill_only=False: (called.append(backfill_only) or (uni, {}, 0)))
+    assert c.main() == 0
+    assert called == [False]                                                 # 올라왔으니 받는다(채우는 중 아님 → 전체)
+    assert _read("meta.json")["pendingFinal"] is False

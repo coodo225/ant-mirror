@@ -821,6 +821,7 @@ NAVER_PROGRAM_REFERER = "https://stock.naver.com/market/stock/kr/trend/program"
 _PROGRAM_KINDS = {"diff": "arb", "biDiff": "nonarb", "totalDiff": "total"}     # 차익·비차익·전체
 _PROGRAM_SIDES = {"BuyAmt": "buy", "SellAmt": "sell", "PureBuyAmt": "net"}
 PROGRAM_FINAL_AFTER = "2005"   # 10-02 코스피 전체 순매수 15:30 −970억 → 18:00 −742억 → 20:00 −225억(확정)
+FINAL_RUN_AFTER = "2015"       # 그날 확정 수집을 하는 시각 — 공매도(20:10 확정)까지 담기게. 종목별 수급·순위는 더 늦게 올라올 수 있다
 PROGRAM_DAYS = 250             # 1년 — 오늘 규모를 견줄 분포
 PROGRAM_CHART_DAYS = 60
 
@@ -1749,7 +1750,10 @@ def universe_as_of(stocks: dict) -> str:
 
 
 def universe_due(prev_stocks: dict, data_day: str | None, now: datetime) -> bool:
-    """350종목을 다시 돌릴 때: 처음이거나, 채우는 중이거나, 새 거래일 데이터가 생겼거나, 그 거래일 20:05(확정) 뒤 아직 안 돌았을 때."""
+    """
+    350종목을 다시 돌릴 때: 처음이거나, 채우는 중이거나, 새 거래일 데이터가 아직 안 붙었거나(→ main 이 먼저 한 종목으로
+    올라왔는지 확인), 그 거래일 20:15(확정 수집) 뒤 아직 안 돌았을 때.
+    """
     uni = prev_stocks.get("universe") or []
     if not uni or prev_stocks.get("universePending"):
         return True
@@ -1758,8 +1762,22 @@ def universe_due(prev_stocks: dict, data_day: str | None, now: datetime) -> bool
         return True
     at = prev_stocks.get("universeAt") or ""
     ref = data_day or now.date().isoformat()
-    cut = f"{ref}T{PROGRAM_FINAL_AFTER[:2]}:{PROGRAM_FINAL_AFTER[2:]}"
-    return (ref < now.date().isoformat() or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER) and at < cut
+    cut = f"{ref}T{FINAL_RUN_AFTER[:2]}:{FINAL_RUN_AFTER[2:]}"
+    return (ref < now.date().isoformat() or now.strftime("%H%M") >= FINAL_RUN_AFTER) and at < cut
+
+
+def stock_rows_published(prev_stocks: dict, day: str) -> bool:
+    """시총 1위 종목에 그날 일별 수급 행이 붙었는지(요청 1번). 확인에 실패하면 '아직'으로 본다."""
+    uni = prev_stocks.get("universe") or []
+    code = (uni[0] or {}).get("code") if uni else None
+    if not code:
+        return True                                        # 처음이라 비교할 직전 요약이 없다 — 그냥 받는다
+    try:
+        rows = fetch_stock_trend(code, 3)
+    except Exception as e:  # noqa: BLE001
+        print(f"  350종목: 확인용 종목 수급 실패({type(e).__name__}) — 다음 실행에서")
+        return False
+    return bool(rows) and rows[-1][0] >= day.replace("-", "")
 
 
 def write_stock_series(rows_by: dict, keep: set) -> int:
@@ -3789,11 +3807,14 @@ def main() -> int:
         print("  350종목: 새 거래일 데이터가 없어 직전 요약 유지")
     elif used_today + REQUESTS["n"] + 400 + 100 > REQUEST_CAP:      # 뒤의 종목 순위(약 8번)·나머지 몫을 남긴다
         warn(f"오늘 요청 수가 상한({REQUEST_CAP})에 가까워 350종목 범위를 갱신하지 않았습니다")
+    elif data_day0 and universe_as_of(prev_stocks) < data_day0 and not stock_rows_published(prev_stocks, data_day0):
+        # 종목별 일별 수급은 장 마감 뒤 늦게(2026-10-06 엔 20:05 뒤) 올라온다 — 한 종목으로 먼저 보고, 없으면 다음 실행에서
+        print(f"  350종목: 종목별 {data_day0} 수급이 아직 올라오지 않아 직전 요약 유지(다음 실행에서 다시 확인)")
     else:
         # 최신 거래일 행이 이미 다 붙었고(=새 데이터 없음) 채우는 중이기만 하면, 채우는 종목만 받는다
         fresh_rows = data_day0 and universe_as_of(prev_stocks) >= data_day0 and not (
-            now.strftime("%H%M") >= PROGRAM_FINAL_AFTER and (prev_stocks.get("universeAt") or "")
-            < f"{data_day0}T{PROGRAM_FINAL_AFTER[:2]}:{PROGRAM_FINAL_AFTER[2:]}")
+            now.strftime("%H%M") >= FINAL_RUN_AFTER and (prev_stocks.get("universeAt") or "")
+            < f"{data_day0}T{FINAL_RUN_AFTER[:2]}:{FINAL_RUN_AFTER[2:]}")
         universe = build_universe(now, backfill_only=bool(fresh_rows))
     prev_flows_by = {s_["code"]: s_ for s_ in prev_stocks.get("top") or []}
     reuse = ({"top": prev_flows_by, "series": (load_prev("stockflows.json") or {}).get("stocks") or {}}
@@ -3884,6 +3905,10 @@ def main() -> int:
     else:
         warn("코스피 수급이 갱신되지 않아 공유 카드(og.png)를 다시 그리지 않았습니다")
     data_day = ((out["flows.json"]["markets"].get("KOSPI") or {}).get("latest") or {}).get("date")
+    rk = out.get("ranks.json") or {}
+    pending_final = bool(data_day) and data_day == now.date().isoformat() and now.strftime("%H%M") >= FINAL_RUN_AFTER and (
+        not rk.get("final") or (rk.get("asOf") or "") < data_day
+        or universe_as_of(out.get("stocks.json") or {}) < data_day)
     write("meta.json", {
         "generatedAt": now.isoformat(),
         "generatedAtText": now.strftime("%Y-%m-%d %H:%M:%S KST"),
@@ -3894,6 +3919,7 @@ def main() -> int:
                                          or now.strftime("%H%M") >= PROGRAM_FINAL_AFTER),
         "nextSession": next_session(now).isoformat(),
         "mode": "full", "fullAt": now.isoformat(), "intradayAt": prev_meta.get("intradayAt"),
+        "pendingFinal": pending_final,      # 확정 수집 뒤에도 순위·종목 수급이 덜 들어옴 → 23:30 까지 다시 시도
         "requests": {"date": now.date().isoformat(), "count": used_today + REQUESTS["n"]},
         "warnings": WARNINGS,
         "stale": STALE,
