@@ -760,3 +760,40 @@ def test_empty_backfill_response_keeps_stock_partial(monkeypatch, tmp_path):
     monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 1000)
     monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: [])   # 처음부터 받기가 빈 응답
     assert c.build_universe(now + timedelta(days=1))[2] == 350   # 빈 응답이면 '다 채움'으로 바꾸지 않는다
+
+
+
+def test_universe_backfill_only_fetches_just_the_next_batch(monkeypatch, tmp_path):
+    monkeypatch.setenv("STOCK_STORE", str(tmp_path / "store.json.gz"))
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    monkeypatch.setattr(c, "STOCK_BACKFILL_PER_RUN", 70)
+    monkeypatch.setattr(c, "fetch_universe", lambda m, n: [{"code": f"{m}{k}", "name": "x", "market": m} for k in range(n)])
+    asked = []
+    monkeypatch.setattr(c, "fetch_stock_trend", lambda code, days: asked.append(days) or _trend_rows(min(days, 80)))
+    now = datetime(2026, 10, 6, 7, 30, tzinfo=K)
+    assert c.build_universe(now)[2] == 280
+    asked.clear()
+    summaries, rows_by, pending = c.build_universe(now + timedelta(hours=9), backfill_only=True)
+    assert asked == [c.STOCK_BACKFILL_DAYS] * 70                 # 이미 최신인 종목은 건너뛰고 다음 70종목만
+    assert pending == 210 and len(summaries) == 350 and len(rows_by) == 350
+
+
+def test_build_stocks_reuses_previous_flows_without_fetching(monkeypatch):
+    listing = {"stocks": [{"itemCode": "005930", "stockName": "삼성전자", "closePrice": "1", "marketValue": "1",
+                           "fluctuationsRatio": "0", "stockEndType": "stock"}]}
+    asked = []
+    def fake_get(url, *a, **k):
+        asked.append(url)
+        if "marketValue" in url:
+            return listing if "page=1" in url else {"stocks": []}
+        if "industry" in url:
+            return {"groups": []}
+        raise AssertionError(f"종목 수급을 다시 받으면 안 됨: {url}")
+    monkeypatch.setattr(c, "get_json", fake_get)
+    monkeypatch.setattr(c.time, "sleep", lambda s: None)
+    prev = {"005930": {"code": "005930", "flow": [{"date": "20261002", "foreign": -1}], "stat60": {"days": 60},
+                       "foreignHoldRatio": 46.4}}
+    out = c.build_stocks(1, 0, reuse={"top": prev, "series": {"005930": {"d": ["20261002"]}}})
+    s = out["top"][0]
+    assert s["flow"] == prev["005930"]["flow"] and s["stat60"] == {"days": 60} and out["series"]["005930"]["d"] == ["20261002"]
+    assert not any("/trend" in u_ for u_ in asked)

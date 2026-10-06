@@ -1395,8 +1395,12 @@ def check_freshness(flows: dict, market: dict, closes: dict, today: str | None =
 
 
 def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = None,
-                 store_rows: dict | None = None) -> dict:
-    """store_rows: {code: [[YYYYMMDD, f, o, i, hold, close, vol], ...]} — 350종목 저장소에 있는 종목은 다시 받지 않는다."""
+                 store_rows: dict | None = None, reuse: dict | None = None) -> dict:
+    """
+    store_rows: {code: [[YYYYMMDD, f, o, i, hold, close, vol], ...]} — 350종목 저장소에 있는 종목은 다시 받지 않는다.
+    reuse: {'top': {code: 직전 top 항목}, 'series': {code: 직전 60일 시계열}} — 주면 저장소에 없는 종목도 직전 값을 쓴다
+    (종목별 일별 투자자 수량은 장 마감 뒤에야 하루치가 붙으므로, 장중 전체 수집마다 100번씩 다시 받을 필요가 없다).
+    """
     out: dict = {"top": [], "industries": [], "series": {}}
     for market, top_n in (("KOSPI", n_kospi), ("KOSDAQ", n_kosdaq)):
         try:
@@ -1436,7 +1440,17 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
 
     # 종목별 개인/외인/기관 — 네이버 API 는 최대 60거래일까지 준다.
     # 화면 상세에는 최근 5일만 싣고, 60일 전체는 장바구니 통계(stat60)로 요약한다.
+    reused = 0
     for s in out["top"]:
+        old = ((reuse or {}).get("top") or {}).get(s["code"])
+        if not (store_rows or {}).get(s["code"]) and old and old.get("flow") is not None:
+            for k in ("flow", "stat60", "foreignHoldRatio"):
+                if k in old:
+                    s[k] = old[k]
+            if ((reuse or {}).get("series") or {}).get(s["code"]):
+                out["series"][s["code"]] = reuse["series"][s["code"]]
+            reused += 1
+            continue
         try:
             rows_ = (store_rows or {}).get(s["code"])
             if rows_:
@@ -1515,6 +1529,8 @@ def build_stocks(n_kospi: int = 60, n_kosdaq: int = 40, closes: dict | None = No
             warn(f"{s['name']} 수급 실패: {e}")
             s["flow"] = []
 
+    if reused:
+        print(f"  종목 60일 수급 {reused}종목은 직전 값 재사용(새 일별 행이 붙기 전)")
     try:
         ind = get_json("https://m.stock.naver.com/api/stocks/industry?page=1&pageSize=100")
         for g in ind.get("groups", []):
@@ -1657,10 +1673,11 @@ def stock_summary(u: dict, rows: list[list]) -> dict:
     return out
 
 
-def build_universe(now: datetime) -> tuple[list[dict], dict] | None:
+def build_universe(now: datetime, backfill_only: bool = False) -> tuple[list[dict], dict] | None:
     """
     350종목 요약과 저장소 행. 장중엔 부르지 않는다(main 이 직전 요약을 쓴다).
     처음 보는 종목은 실행당 STOCK_BACKFILL_PER_RUN 개까지 2000거래일, 나머지는 우선 60일만 받는다.
+    backfill_only: 이미 최신 거래일 행이 다 붙어 있을 때 — 아직 2018년부터 채우지 못한 종목만 받는다(요청 절약).
     """
     store = load_stock_store()
     codes = store["codes"]
@@ -1682,6 +1699,8 @@ def build_universe(now: datetime) -> tuple[list[dict], dict] | None:
             continue
         rec = dict(codes.get(u["code"]) or {})
         rows = rec.get("rows") or []
+        if backfill_only and rows and (not rec.get("partial") or backfilled >= STOCK_BACKFILL_PER_RUN):
+            continue                                       # 이미 최신 — 이번엔 처음부터 채울 차례인 종목만
         attempted += 1
         try:
             if not rows or rec.get("partial"):
@@ -1725,12 +1744,16 @@ def build_universe(now: datetime) -> tuple[list[dict], dict] | None:
     return summaries, rows_by, pending
 
 
+def universe_as_of(stocks: dict) -> str:
+    return max((u.get("asOf") or "" for u in stocks.get("universe") or []), default="")
+
+
 def universe_due(prev_stocks: dict, data_day: str | None, now: datetime) -> bool:
     """350종목을 다시 돌릴 때: 처음이거나, 채우는 중이거나, 새 거래일 데이터가 생겼거나, 그 거래일 20:05(확정) 뒤 아직 안 돌았을 때."""
     uni = prev_stocks.get("universe") or []
     if not uni or prev_stocks.get("universePending"):
         return True
-    as_of = max((u.get("asOf") or "" for u in uni), default="")
+    as_of = universe_as_of(prev_stocks)
     if data_day and as_of < data_day:
         return True
     at = prev_stocks.get("universeAt") or ""
@@ -3764,11 +3787,18 @@ def main() -> int:
         pass                                            # 장중엔 350종목을 돌리지 않는다(직전 요약 유지)
     elif not universe_due(prev_stocks, data_day0, now):
         print("  350종목: 새 거래일 데이터가 없어 직전 요약 유지")
-    elif used_today + REQUESTS["n"] + 400 > REQUEST_CAP:
+    elif used_today + REQUESTS["n"] + 400 + 100 > REQUEST_CAP:      # 뒤의 종목 순위(약 8번)·나머지 몫을 남긴다
         warn(f"오늘 요청 수가 상한({REQUEST_CAP})에 가까워 350종목 범위를 갱신하지 않았습니다")
     else:
-        universe = build_universe(now)
-    stocks = build_stocks(closes=closes, store_rows=universe[1] if universe else None)
+        # 최신 거래일 행이 이미 다 붙었고(=새 데이터 없음) 채우는 중이기만 하면, 채우는 종목만 받는다
+        fresh_rows = data_day0 and universe_as_of(prev_stocks) >= data_day0 and not (
+            now.strftime("%H%M") >= PROGRAM_FINAL_AFTER and (prev_stocks.get("universeAt") or "")
+            < f"{data_day0}T{PROGRAM_FINAL_AFTER[:2]}:{PROGRAM_FINAL_AFTER[2:]}")
+        universe = build_universe(now, backfill_only=bool(fresh_rows))
+    prev_flows_by = {s_["code"]: s_ for s_ in prev_stocks.get("top") or []}
+    reuse = ({"top": prev_flows_by, "series": (load_prev("stockflows.json") or {}).get("stocks") or {}}
+             if not universe else None)
+    stocks = build_stocks(closes=closes, store_rows=universe[1] if universe else None, reuse=reuse)
     if universe:
         stocks["universe"] = universe[0]
         stocks["universeAt"] = now.isoformat(timespec="seconds")
