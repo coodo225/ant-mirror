@@ -1,0 +1,317 @@
+{
+ "window": {
+  "days": 60,
+  "from": "20260710",
+  "to": "20261008"
+ },
+ "universe": 97,
+ "antBasket": [
+  {
+   "code": "005380",
+   "name": "현대차",
+   "market": "KOSPI",
+   "value": 13068.8,
+   "change": -29.07,
+   "sinceBuy": -14.97,
+   "marketSinceBuy": -2.19,
+   "price": 324500.0
+  },
+  {
+   "code": "009150",
+   "name": "삼성전기",
+   "market": "KOSPI",
+   "value": 11284.4,
+   "change": -1.58,
+   "sinceBuy": 16.15,
+   "marketSinceBuy": -0.44,
+   "price": 1559000.0
+  },
+  {
+   "code": "005935",
+   "name": "삼성전자우",
+   "market": "KOSPI",
+   "value": 10952.4,
+   "change": 0.1,
+   "sinceBuy": 2.88,
+   "marketSinceBuy": -1.66,
+   "price": 194500.0
+  },
+  {
+   "code": "034020",
+   "name": "두산에너빌리티",
+   "market": "KOSPI",
+   "value": 7236.2,
+   "change": -1.79,
+   "sinceBuy": -4.73,
+   "marketSinceBuy": -2.95,
+   "price": 76700.0
+  },
+  {
+   "code": "298040",
+   "name": "효성중공업",
+   "market": "KOSPI",
+   "value": 3630.8,
+   "change": -14.02,
+   "sinceBuy": -6.84,
+   "marketSinceBuy": -1.38,
+   "price": 2514000.0
+  },
+  {
+   "code": "028300",
+   "name": "HLB",
+   "market": "KOSDAQ",
+   "value": 2968.7,
+   "change": 25.68,
+   "sinceBuy": 32.66,
+   "marketSinceBuy": 8.66,
+   "price": 46000.0
+  },
+  {
+   "code": "011070",
+   "name": "LG이노텍",
+   "market": "KOSPI",
+   "value": 2831.1,
+   "change": -22.91,
+   "sinceBuy": -1.87,
+   "marketSinceBuy": -2.59,
+   "price": 572000.0
+  },
+  {
+   "code": "000150",
+   "name": "두산",
+   "market": "KOSPI",
+   "value": 2806.3,
+   "change": -3.69,
+   "sinceBuy": 2.28,
+   "marketSinceBuy": -2.36,
+   "price": 1331000.0
+  },
+  {
+   "code": "015760",
+   "name": "한국전력",
+   "market": "KOSPI",
+   "value": 2591.0,
+   "change": -19.61,
+   "sinceBuy": -9.43,
+   "marketSinceBuy": -2.65,
+   "price": 29100.0
+  },
+  {
+   "code": "012330",
+   "name": "현대모비스",
+   "market": "KOSPI",
+   "value": 2379.6,
+   "change": -26.23,
+   "sinceBuy": -17.6,
+   "marketSinceBuy": -2.6,
+   "price": 360000.0
+  }
+ ],
+ "foreignBasket": [
+  {
+   "code": "402340",
+   "name": "SK스퀘어",
+   "market": "KOSPI",
+   "value": 15101.9,
+   "change": -24.84,
+   "sinceBuy": 0.61,
+   "marketSinceBuy": 0.33,
+   "price": 1059000.0
+  },
+  {
+   "code": "316140",
+   "name": "우리금융지주",
+   "market": "KOSPI",
+   "value": 10944.7,
+   "change": 3.02,
+   "sinceBuy": -4.78,
+   "marketSinceBuy": -2.74,
+   "price": 32400.0
+  },
+  {
+   "code": "096770",
+   "name": "SK이노베이션",
+   "market": "KOSPI",
+   "value": 4658.5,
+   "change": 56.95,
+   "sinceBuy": 19.59,
+   "marketSinceBuy": -3.36,
+   "price": 161500.0
+  },
+  {
+   "code": "006800",
+   "name": "미래에셋증권",
+   "market": "KOSPI",
+   "value": 3326.1,
+   "change": -30.33,
+   "sinceBuy": -16.96,
+   "marketSinceBuy": -0.27,
+   "price": 29400.0
+  },
+  {
+   "code": "036930",
+   "name": "주성엔지니어링",
+   "market": "KOSDAQ",
+   "value": 3322.6,
+   "change": 37.31,
+   "sinceBuy": 38.82,
+   "marketSinceBuy": 9.54,
+   "price": 263500.0
+  },
+  {
+   "code": "012330",
+   "name": "현대모비스",
+   "market": "KOSPI",
+   "value": 3122.6,
+   "change": -26.23,
+   "sinceBuy": -21.44,
+   "marketSinceBuy": -1.45,
+   "price": 360000.0
+  },
+  {
+   "code": "011070",
+   "name": "LG이노텍",
+   "market": "KOSPI",
+   "value": 2983.6,
+   "change": -22.91,
+   "sinceBuy": -4.9,
+   "marketSinceBuy": -1.87,
+   "price": 572000.0
+  },
+  {
+   "code": "000270",
+   "name": "기아",
+   "market": "KOSPI",
+   "value": 2865.8,
+   "change": -27.46,
+   "sinceBuy": -19.35,
+   "marketSinceBuy": -1.2,
+   "price": 107000.0
+  },
+  {
+   "code": "214450",
+   "name": "파마리서치",
+   "market": "KOSDAQ",
+   "value": 2669.7,
+   "change": -6.42,
+   "sinceBuy": -19.89,
+   "marketSinceBuy": 7.53,
+   "price": 299000.0
+  },
+  {
+   "code": "278470",
+   "name": "에이피알",
+   "market": "KOSPI",
+   "value": 2507.8,
+   "change": -1.6,
+   "sinceBuy": -3.16,
+   "marketSinceBuy": -2.79,
+   "price": 369000.0
+  }
+ ],
+ "antAvgChange": -9.31,
+ "foreignAvgChange": -4.25,
+ "antAvgSinceBuy": -0.15,
+ "foreignAvgSinceBuy": -3.15,
+ "antAvgMarketSinceBuy": -1.02,
+ "foreignAvgMarketSinceBuy": 0.37,
+ "market": {
+  "KOSPI": -11.37,
+  "KOSDAQ": 6.55
+ },
+ "tears": [
+  {
+   "code": "012330",
+   "name": "현대모비스",
+   "market": "KOSPI",
+   "value": 2379.6,
+   "change": -26.23,
+   "sinceBuy": -17.6,
+   "marketSinceBuy": -2.6,
+   "price": 360000.0
+  },
+  {
+   "code": "005380",
+   "name": "현대차",
+   "market": "KOSPI",
+   "value": 13068.8,
+   "change": -29.07,
+   "sinceBuy": -14.97,
+   "marketSinceBuy": -2.19,
+   "price": 324500.0
+  },
+  {
+   "code": "015760",
+   "name": "한국전력",
+   "market": "KOSPI",
+   "value": 2591.0,
+   "change": -19.61,
+   "sinceBuy": -9.43,
+   "marketSinceBuy": -2.65,
+   "price": 29100.0
+  },
+  {
+   "code": "298040",
+   "name": "효성중공업",
+   "market": "KOSPI",
+   "value": 3630.8,
+   "change": -14.02,
+   "sinceBuy": -6.84,
+   "marketSinceBuy": -1.38,
+   "price": 2514000.0
+  },
+  {
+   "code": "034020",
+   "name": "두산에너빌리티",
+   "market": "KOSPI",
+   "value": 7236.2,
+   "change": -1.79,
+   "sinceBuy": -4.73,
+   "marketSinceBuy": -2.95,
+   "price": 76700.0
+  }
+ ],
+ "wins": [
+  {
+   "code": "028300",
+   "name": "HLB",
+   "market": "KOSDAQ",
+   "value": 2968.7,
+   "change": 25.68,
+   "sinceBuy": 32.66,
+   "marketSinceBuy": 8.66,
+   "price": 46000.0
+  },
+  {
+   "code": "009150",
+   "name": "삼성전기",
+   "market": "KOSPI",
+   "value": 11284.4,
+   "change": -1.58,
+   "sinceBuy": 16.15,
+   "marketSinceBuy": -0.44,
+   "price": 1559000.0
+  },
+  {
+   "code": "005935",
+   "name": "삼성전자우",
+   "market": "KOSPI",
+   "value": 10952.4,
+   "change": 0.1,
+   "sinceBuy": 2.88,
+   "marketSinceBuy": -1.66,
+   "price": 194500.0
+  },
+  {
+   "code": "000150",
+   "name": "두산",
+   "market": "KOSPI",
+   "value": 2806.3,
+   "change": -3.69,
+   "sinceBuy": 2.28,
+   "marketSinceBuy": -2.36,
+   "price": 1331000.0
+  }
+ ],
+ "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. '산 뒤 등락'은 그 주체가 순매수한 날들의 종가를 수량으로 가중한 평균 가격 대비 마지막 종가의 등락으로, 판 날은 반영하지 않은 추정치입니다. '지수였다면'은 같은 날짜·같은 비중으로 그 종목의 시장 지수를 샀을 때의 같은 계산입니다. 대상은 지금의 시총 상위 종목(ETF 제외)이라, 그사이 크게 빠져 순위 밖으로 밀린 종목은 빠져 있습니다."
+}
