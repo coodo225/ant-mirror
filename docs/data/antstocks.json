@@ -1,0 +1,276 @@
+{
+ "window": {
+  "days": 60,
+  "from": "20260722",
+  "to": "20261020"
+ },
+ "universe": 96,
+ "antBasket": [
+  {
+   "code": "005935",
+   "name": "삼성전자우",
+   "market": "KOSPI",
+   "value": 17290.8,
+   "change": -11.83,
+   "sinceBuy": -13.25,
+   "marketSinceBuy": -16.42,
+   "price": 166200.0
+  },
+  {
+   "code": "009150",
+   "name": "삼성전기",
+   "market": "KOSPI",
+   "value": 15589.7,
+   "change": -16.36,
+   "sinceBuy": -15.33,
+   "marketSinceBuy": -14.83,
+   "price": 1111000.0
+  },
+  {
+   "code": "005380",
+   "name": "현대차",
+   "market": "KOSPI",
+   "value": 12627.9,
+   "change": -26.91,
+   "sinceBuy": -19.8,
+   "marketSinceBuy": -17.94,
+   "price": 293000.0
+  },
+  {
+   "code": "034020",
+   "name": "두산에너빌리티",
+   "market": "KOSPI",
+   "value": 7788.1,
+   "change": -10.84,
+   "sinceBuy": -23.07,
+   "marketSinceBuy": -18.02,
+   "price": 58900.0
+  },
+  {
+   "code": "298040",
+   "name": "효성중공업",
+   "market": "KOSPI",
+   "value": 5315.9,
+   "change": -31.06,
+   "sinceBuy": -27.87,
+   "marketSinceBuy": -15.34,
+   "price": 1853000.0
+  },
+  {
+   "code": "402340",
+   "name": "SK스퀘어",
+   "market": "KOSPI",
+   "value": 3268.5,
+   "change": -41.14,
+   "sinceBuy": -28.69,
+   "marketSinceBuy": -14.98,
+   "price": 764000.0
+  },
+  {
+   "code": "000150",
+   "name": "두산",
+   "market": "KOSPI",
+   "value": 3220.6,
+   "change": -18.27,
+   "sinceBuy": -22.23,
+   "marketSinceBuy": -16.76,
+   "price": 959000.0
+  },
+  {
+   "code": "267260",
+   "name": "HD현대일렉트릭",
+   "market": "KOSPI",
+   "value": 2665.9,
+   "change": -39.43,
+   "sinceBuy": -29.47,
+   "marketSinceBuy": -16.22,
+   "price": 466500.0
+  },
+  {
+   "code": "012330",
+   "name": "현대모비스",
+   "market": "KOSPI",
+   "value": 2574.6,
+   "change": -32.65,
+   "sinceBuy": -20.91,
+   "marketSinceBuy": -18.36,
+   "price": 325500.0
+  },
+  {
+   "code": "017670",
+   "name": "SK텔레콤",
+   "market": "KOSPI",
+   "value": 2439.7,
+   "change": -18.92,
+   "sinceBuy": -17.38,
+   "marketSinceBuy": -16.71,
+   "price": 74200.0
+  }
+ ],
+ "foreignBasket": [
+  {
+   "code": "316140",
+   "name": "우리금융지주",
+   "market": "KOSPI",
+   "value": 10156.0,
+   "change": 3.43,
+   "sinceBuy": -6.99,
+   "marketSinceBuy": -18.35,
+   "price": 30300.0
+  },
+  {
+   "code": "402340",
+   "name": "SK스퀘어",
+   "market": "KOSPI",
+   "value": 8987.4,
+   "change": -41.14,
+   "sinceBuy": -27.89,
+   "marketSinceBuy": -14.26,
+   "price": 764000.0
+  },
+  {
+   "code": "096770",
+   "name": "SK이노베이션",
+   "market": "KOSPI",
+   "value": 4389.0,
+   "change": 25.68,
+   "sinceBuy": 9.14,
+   "marketSinceBuy": -18.75,
+   "price": 137800.0
+  },
+  {
+   "code": "214450",
+   "name": "파마리서치",
+   "market": "KOSDAQ",
+   "value": 3293.7,
+   "change": -18.45,
+   "sinceBuy": -26.41,
+   "marketSinceBuy": -5.36,
+   "price": 236500.0
+  },
+  {
+   "code": "006800",
+   "name": "미래에셋증권",
+   "market": "KOSPI",
+   "value": 2688.1,
+   "change": -34.44,
+   "sinceBuy": -25.62,
+   "marketSinceBuy": -13.88,
+   "price": 24150.0
+  },
+  {
+   "code": "011200",
+   "name": "HMM",
+   "market": "KOSPI",
+   "value": 2646.6,
+   "change": 14.53,
+   "sinceBuy": 6.57,
+   "marketSinceBuy": -13.89,
+   "price": 22500.0
+  },
+  {
+   "code": "042660",
+   "name": "한화오션",
+   "market": "KOSPI",
+   "value": 2257.8,
+   "change": -30.39,
+   "sinceBuy": -30.88,
+   "marketSinceBuy": -14.0,
+   "price": 54600.0
+  },
+  {
+   "code": "000270",
+   "name": "기아",
+   "market": "KOSPI",
+   "value": 2200.6,
+   "change": -24.32,
+   "sinceBuy": -14.17,
+   "marketSinceBuy": -16.36,
+   "price": 106700.0
+  },
+  {
+   "code": "222800",
+   "name": "심텍",
+   "market": "KOSDAQ",
+   "value": 2088.5,
+   "change": 22.95,
+   "sinceBuy": -2.82,
+   "marketSinceBuy": -4.33,
+   "price": 111400.0
+  },
+  {
+   "code": "098460",
+   "name": "고영",
+   "market": "KOSDAQ",
+   "value": 2020.4,
+   "change": 12.45,
+   "sinceBuy": -3.53,
+   "marketSinceBuy": -6.4,
+   "price": 28750.0
+  }
+ ],
+ "antAvgChange": -24.74,
+ "foreignAvgChange": -6.97,
+ "antAvgSinceBuy": -21.8,
+ "foreignAvgSinceBuy": -12.26,
+ "antAvgMarketSinceBuy": -16.56,
+ "foreignAvgMarketSinceBuy": -12.56,
+ "market": {
+  "KOSPI": -18.31,
+  "KOSDAQ": 4.11
+ },
+ "tears": [
+  {
+   "code": "267260",
+   "name": "HD현대일렉트릭",
+   "market": "KOSPI",
+   "value": 2665.9,
+   "change": -39.43,
+   "sinceBuy": -29.47,
+   "marketSinceBuy": -16.22,
+   "price": 466500.0
+  },
+  {
+   "code": "402340",
+   "name": "SK스퀘어",
+   "market": "KOSPI",
+   "value": 3268.5,
+   "change": -41.14,
+   "sinceBuy": -28.69,
+   "marketSinceBuy": -14.98,
+   "price": 764000.0
+  },
+  {
+   "code": "298040",
+   "name": "효성중공업",
+   "market": "KOSPI",
+   "value": 5315.9,
+   "change": -31.06,
+   "sinceBuy": -27.87,
+   "marketSinceBuy": -15.34,
+   "price": 1853000.0
+  },
+  {
+   "code": "034020",
+   "name": "두산에너빌리티",
+   "market": "KOSPI",
+   "value": 7788.1,
+   "change": -10.84,
+   "sinceBuy": -23.07,
+   "marketSinceBuy": -18.02,
+   "price": 58900.0
+  },
+  {
+   "code": "000150",
+   "name": "두산",
+   "market": "KOSPI",
+   "value": 3220.6,
+   "change": -18.27,
+   "sinceBuy": -22.23,
+   "marketSinceBuy": -16.76,
+   "price": 959000.0
+  }
+ ],
+ "wins": [],
+ "note": "순매수 금액은 일별 순매수 수량 × 그날 종가의 합산 근사치입니다. '산 뒤 등락'은 그 주체가 순매수한 날들의 종가를 수량으로 가중한 평균 가격 대비 마지막 종가의 등락으로, 판 날은 반영하지 않은 추정치입니다. '지수였다면'은 같은 날짜·같은 비중으로 그 종목의 시장 지수를 샀을 때의 같은 계산입니다. 대상은 지금의 시총 상위 종목(ETF 제외)이라, 그사이 크게 빠져 순위 밖으로 밀린 종목은 빠져 있습니다."
+}

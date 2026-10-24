@@ -1,0 +1,116 @@
+{
+ "upcoming": [
+  {
+   "type": "FOMC",
+   "date": "2026-10-28",
+   "title": "FOMC 금리 결정",
+   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
+   "kstHour": 3,
+   "impact": "high",
+   "dday": 4
+  },
+  {
+   "type": "GDP",
+   "date": "2026-10-29",
+   "title": "미국 GDP",
+   "impact": "mid",
+   "dday": 5
+  },
+  {
+   "type": "PCE",
+   "date": "2026-10-29",
+   "title": "미국 PCE 물가",
+   "impact": "high",
+   "dday": 5
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-01",
+   "title": "수출 전년대비 · 수입 전년대비",
+   "note": "09:00 발표 예정",
+   "impact": "mid",
+   "dday": 8
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-03",
+   "title": "소비자물가지수(CPI) 전년대비",
+   "note": "08:00 발표 예정",
+   "impact": "mid",
+   "dday": 10
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-05",
+   "title": "경상수지",
+   "note": "08:00 발표 예정",
+   "impact": "mid",
+   "dday": 12
+  },
+  {
+   "type": "고용",
+   "date": "2026-11-06",
+   "title": "미국 고용보고서",
+   "impact": "high",
+   "dday": 13
+  },
+  {
+   "type": "CPI",
+   "date": "2026-11-10",
+   "title": "미국 CPI 발표",
+   "impact": "high",
+   "dday": 17
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-11",
+   "title": "실업률(계절조정계열)",
+   "note": "08:00 발표 예정",
+   "impact": "mid",
+   "dday": 18
+  },
+  {
+   "type": "금통위",
+   "date": "2026-11-26",
+   "title": "한국은행 기준금리 결정",
+   "note": "통화정책방향 결정회의 · 결과 발표 오전 10시경",
+   "impact": "high",
+   "dday": 33
+  }
+ ],
+ "recent": [
+  {
+   "type": "휴장",
+   "date": "2026-10-05",
+   "title": "증시 휴장 · 개천절(대체휴일)",
+   "note": "다음 거래일 10/6(화)",
+   "impact": "low",
+   "dday": -19
+  },
+  {
+   "type": "만기",
+   "date": "2026-10-08",
+   "title": "옵션 만기",
+   "note": "코스피200 옵션 최종거래일",
+   "impact": "low",
+   "dday": -16
+  },
+  {
+   "type": "휴장",
+   "date": "2026-10-09",
+   "title": "증시 휴장 · 한글날",
+   "note": "다음 거래일 10/12(월)",
+   "impact": "low",
+   "dday": -15
+  },
+  {
+   "type": "금통위",
+   "date": "2026-10-22",
+   "title": "한국은행 기준금리 결정",
+   "note": "통화정책방향 결정회의 · 결과 발표 오전 10시경",
+   "impact": "high",
+   "dday": -2
+  }
+ ],
+ "today": "2026-10-24"
+}
