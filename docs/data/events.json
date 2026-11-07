@@ -1,0 +1,118 @@
+{
+ "upcoming": [
+  {
+   "type": "CPI",
+   "date": "2026-11-10",
+   "title": "미국 CPI 발표",
+   "impact": "high",
+   "dday": 3
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-11",
+   "title": "실업률(계절조정계열)",
+   "note": "08:00 발표 예정",
+   "impact": "mid",
+   "dday": 4
+  },
+  {
+   "type": "만기",
+   "date": "2026-11-12",
+   "title": "옵션 만기",
+   "note": "코스피200 옵션 최종거래일",
+   "impact": "low",
+   "dday": 5
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-13",
+   "title": "수출가격지수 전년대비 · 수입물가지수 전년대비",
+   "note": "06:00 발표 예정",
+   "impact": "mid",
+   "dday": 6
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-15",
+   "title": "수출 전년대비(확정치) · 수입 전년대비(확정치) · 무역수지",
+   "note": "09:00 발표 예정",
+   "impact": "mid",
+   "dday": 8
+  },
+  {
+   "type": "지표",
+   "date": "2026-11-20",
+   "title": "생산자물가지수 전월대비",
+   "note": "06:00 발표 예정",
+   "impact": "mid",
+   "dday": 13
+  },
+  {
+   "type": "GDP",
+   "date": "2026-11-25",
+   "title": "미국 GDP",
+   "impact": "mid",
+   "dday": 18
+  },
+  {
+   "type": "PCE",
+   "date": "2026-11-25",
+   "title": "미국 PCE 물가",
+   "impact": "high",
+   "dday": 18
+  },
+  {
+   "type": "금통위",
+   "date": "2026-11-26",
+   "title": "한국은행 기준금리 결정",
+   "note": "통화정책방향 결정회의 · 결과 발표 오전 10시경",
+   "impact": "high",
+   "dday": 19
+  },
+  {
+   "type": "FOMC",
+   "date": "2026-12-09",
+   "title": "FOMC 금리 결정 + 점도표(SEP)",
+   "note": "결과 발표는 한국시간 다음날 새벽 4시경",
+   "kstHour": 4,
+   "impact": "high",
+   "dday": 32
+  }
+ ],
+ "recent": [
+  {
+   "type": "만기",
+   "date": "2026-10-08",
+   "title": "옵션 만기",
+   "note": "코스피200 옵션 최종거래일",
+   "impact": "low",
+   "dday": -30
+  },
+  {
+   "type": "휴장",
+   "date": "2026-10-09",
+   "title": "증시 휴장 · 한글날",
+   "note": "다음 거래일 10/12(월)",
+   "impact": "low",
+   "dday": -29
+  },
+  {
+   "type": "금통위",
+   "date": "2026-10-22",
+   "title": "한국은행 기준금리 결정",
+   "note": "통화정책방향 결정회의 · 결과 발표 오전 10시경",
+   "impact": "high",
+   "dday": -16
+  },
+  {
+   "type": "FOMC",
+   "date": "2026-10-28",
+   "title": "FOMC 금리 결정",
+   "note": "결과 발표는 한국시간 다음날 새벽 3시경",
+   "kstHour": 3,
+   "impact": "high",
+   "dday": -10
+  }
+ ],
+ "today": "2026-11-07"
+}
