@@ -1,0 +1,3843 @@
+{
+ "scope": "KRX 체결분(NXT 제외) · 주식만(ETF 제외)",
+ "markets": {
+  "KOSPI": {
+   "foreign": {
+    "day": {
+     "from": "2026-11-27",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "005930",
+       "name": "삼성전자",
+       "amt": 4513,
+       "qty": 2554942,
+       "volPct": 17.9,
+       "chg": 4.79,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "000660",
+       "name": "SK하이닉스",
+       "amt": 4009,
+       "qty": 367865,
+       "volPct": 12.2,
+       "chg": 5.51,
+       "streak": {
+        "days": 18,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "009150",
+       "name": "삼성전기",
+       "amt": 429,
+       "qty": 50146,
+       "volPct": 5.4,
+       "chg": 4.97,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "402340",
+       "name": "SK스퀘어",
+       "amt": 266,
+       "qty": 39918,
+       "volPct": 9.7,
+       "chg": 5.37,
+       "streak": {
+        "days": 5,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "042700",
+       "name": "한미반도체",
+       "amt": 254,
+       "qty": 162922,
+       "volPct": 24.6,
+       "chg": 8.87,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "034020",
+       "name": "두산에너빌리티",
+       "amt": 242,
+       "qty": 563487,
+       "volPct": 27.3,
+       "chg": 8.89,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006400",
+       "name": "삼성SDI",
+       "amt": 222,
+       "qty": 50127,
+       "volPct": 8.8,
+       "chg": 8.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005935",
+       "name": "삼성전자우",
+       "amt": 212,
+       "qty": 150503,
+       "volPct": 4.4,
+       "chg": 6.2,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "010120",
+       "name": "LS ELECTRIC",
+       "amt": 183,
+       "qty": 154045,
+       "volPct": 31.5,
+       "chg": 7.14,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "298040",
+       "name": "효성중공업",
+       "amt": 178,
+       "qty": 10619,
+       "volPct": 28.3,
+       "chg": 6.01,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "003670",
+       "name": "포스코퓨처엠",
+       "amt": 166,
+       "qty": 95855,
+       "volPct": 34.1,
+       "chg": 6.74,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "064400",
+       "name": "LG씨엔에스",
+       "amt": 160,
+       "qty": 228331,
+       "volPct": 31.0,
+       "chg": 8.79,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "105560",
+       "name": "KB금융",
+       "amt": 159,
+       "qty": 109961,
+       "volPct": 17.2,
+       "chg": 0.14,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "035420",
+       "name": "NAVER",
+       "amt": 151,
+       "qty": 92384,
+       "volPct": 21.6,
+       "chg": 2.37,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "005490",
+       "name": "POSCO홀딩스",
+       "amt": 117,
+       "qty": 45800,
+       "volPct": 29.5,
+       "chg": 3.82,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "180640",
+       "name": "한진칼",
+       "amt": 112,
+       "qty": 44359,
+       "volPct": 15.6,
+       "chg": 4.76,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "009830",
+       "name": "한화솔루션",
+       "amt": 107,
+       "qty": 529635,
+       "volPct": 21.4,
+       "chg": 8.58,
+       "streak": {
+        "days": 5,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "010140",
+       "name": "삼성중공업",
+       "amt": 106,
+       "qty": 732481,
+       "volPct": 21.6,
+       "chg": 5.18,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "047040",
+       "name": "대우건설",
+       "amt": 103,
+       "qty": 1001552,
+       "volPct": 37.2,
+       "chg": 6.84,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "007660",
+       "name": "이수페타시스",
+       "amt": 101,
+       "qty": 151485,
+       "volPct": 18.4,
+       "chg": 5.86,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "278470",
+       "name": "에이피알",
+       "amt": -777,
+       "qty": -257480,
+       "volPct": 33.7,
+       "chg": 0.34,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "039490",
+       "name": "키움증권",
+       "amt": -303,
+       "qty": -131212,
+       "volPct": 48.9,
+       "chg": 16.91,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "006800",
+       "name": "미래에셋증권",
+       "amt": -136,
+       "qty": -607538,
+       "volPct": 20.5,
+       "chg": 16.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "033780",
+       "name": "KT&G",
+       "amt": -130,
+       "qty": -73762,
+       "volPct": 21.0,
+       "chg": -1.62,
+       "streak": {
+        "days": 7,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "326030",
+       "name": "SK바이오팜",
+       "amt": -117,
+       "qty": -117876,
+       "volPct": 16.5,
+       "chg": 7.85,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "017670",
+       "name": "SK텔레콤",
+       "amt": -107,
+       "qty": -166661,
+       "volPct": 18.9,
+       "chg": 1.71,
+       "streak": {
+        "days": 13,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "030200",
+       "name": "KT",
+       "amt": -85,
+       "qty": -189843,
+       "volPct": 39.8,
+       "chg": -2.4,
+       "streak": {
+        "days": 43,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012330",
+       "name": "현대모비스",
+       "amt": -84,
+       "qty": -24939,
+       "volPct": 11.6,
+       "chg": 3.19,
+       "streak": {
+        "days": 5,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "0126Z0",
+       "name": "삼성에피스홀딩스",
+       "amt": -83,
+       "qty": -21348,
+       "volPct": 23.3,
+       "chg": 7.78,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "000270",
+       "name": "기아",
+       "amt": -78,
+       "qty": -82366,
+       "volPct": 16.2,
+       "chg": 1.49,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012450",
+       "name": "한화에어로스페이스",
+       "amt": -74,
+       "qty": -11272,
+       "volPct": 7.9,
+       "chg": 5.42,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "016360",
+       "name": "삼성증권",
+       "amt": -66,
+       "qty": -89670,
+       "volPct": 19.7,
+       "chg": 8.65,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "128940",
+       "name": "한미약품",
+       "amt": -64,
+       "qty": -12792,
+       "volPct": 10.6,
+       "chg": 5.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "003230",
+       "name": "삼양식품",
+       "amt": -62,
+       "qty": -4792,
+       "volPct": 14.3,
+       "chg": -0.99,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "192820",
+       "name": "코스맥스",
+       "amt": -51,
+       "qty": -15874,
+       "volPct": 7.4,
+       "chg": -6.69,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "181710",
+       "name": "NHN",
+       "amt": -50,
+       "qty": -81726,
+       "volPct": 13.0,
+       "chg": 14.94,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "000880",
+       "name": "한화",
+       "amt": -49,
+       "qty": -67737,
+       "volPct": 42.3,
+       "chg": 9.27,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005940",
+       "name": "NH투자증권",
+       "amt": -44,
+       "qty": -184703,
+       "volPct": 24.6,
+       "chg": 9.26,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "009540",
+       "name": "HD한국조선해양",
+       "amt": -42,
+       "qty": -18226,
+       "volPct": 14.3,
+       "chg": 3.59,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "259960",
+       "name": "크래프톤",
+       "amt": -41,
+       "qty": -19376,
+       "volPct": 30.0,
+       "chg": 0.0,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      }
+     ]
+    },
+    "week": {
+     "from": "2026-11-23",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "005935",
+       "name": "삼성전자우",
+       "amt": 849,
+       "qty": 569066,
+       "volPct": 2.9,
+       "chg": 6.2,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "009150",
+       "name": "삼성전기",
+       "amt": 651,
+       "qty": 66882,
+       "volPct": 1.5,
+       "chg": 4.97,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006400",
+       "name": "삼성SDI",
+       "amt": 585,
+       "qty": 137326,
+       "volPct": 4.9,
+       "chg": 8.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "034020",
+       "name": "두산에너빌리티",
+       "amt": 454,
+       "qty": 1063746,
+       "volPct": 10.3,
+       "chg": 8.89,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "018260",
+       "name": "삼성에스디에스",
+       "amt": 432,
+       "qty": 232084,
+       "volPct": 11.5,
+       "chg": 4.09,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "078930",
+       "name": "GS",
+       "amt": 404,
+       "qty": 588796,
+       "volPct": 33.0,
+       "chg": 2.63,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "010120",
+       "name": "LS ELECTRIC",
+       "amt": 400,
+       "qty": 338576,
+       "volPct": 12.8,
+       "chg": 7.14,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "007660",
+       "name": "이수페타시스",
+       "amt": 396,
+       "qty": 609948,
+       "volPct": 10.9,
+       "chg": 5.86,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "402340",
+       "name": "SK스퀘어",
+       "amt": 388,
+       "qty": 65648,
+       "volPct": 2.3,
+       "chg": 5.37,
+       "streak": {
+        "days": 5,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "353200",
+       "name": "대덕전자",
+       "amt": 387,
+       "qty": 537192,
+       "volPct": 8.8,
+       "chg": 5.29,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "042700",
+       "name": "한미반도체",
+       "amt": 384,
+       "qty": 246695,
+       "volPct": 7.6,
+       "chg": 8.87,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "298040",
+       "name": "효성중공업",
+       "amt": 379,
+       "qty": 22039,
+       "volPct": 11.1,
+       "chg": 6.01,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "064400",
+       "name": "LG씨엔에스",
+       "amt": 291,
+       "qty": 420418,
+       "volPct": 8.9,
+       "chg": 8.79,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "062040",
+       "name": "산일전기",
+       "amt": 284,
+       "qty": 282236,
+       "volPct": 23.2,
+       "chg": 8.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "010060",
+       "name": "OCI홀딩스",
+       "amt": 277,
+       "qty": 174179,
+       "volPct": 15.3,
+       "chg": 7.74,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "003670",
+       "name": "포스코퓨처엠",
+       "amt": 272,
+       "qty": 158816,
+       "volPct": 12.5,
+       "chg": 6.74,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "015760",
+       "name": "한국전력",
+       "amt": 261,
+       "qty": 1021939,
+       "volPct": 17.2,
+       "chg": 2.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "000990",
+       "name": "DB하이텍",
+       "amt": 228,
+       "qty": 338761,
+       "volPct": 17.8,
+       "chg": 6.32,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "006260",
+       "name": "LS",
+       "amt": 227,
+       "qty": 140740,
+       "volPct": 21.9,
+       "chg": 8.33,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "010140",
+       "name": "삼성중공업",
+       "amt": 225,
+       "qty": 1556168,
+       "volPct": 9.6,
+       "chg": 5.18,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "005930",
+       "name": "삼성전자",
+       "amt": -2021,
+       "qty": -1443049,
+       "volPct": 1.7,
+       "chg": 4.79,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "278470",
+       "name": "에이피알",
+       "amt": -1323,
+       "qty": -457105,
+       "volPct": 15.1,
+       "chg": 0.34,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "000660",
+       "name": "SK하이닉스",
+       "amt": -1178,
+       "qty": -119398,
+       "volPct": 0.7,
+       "chg": 5.51,
+       "streak": {
+        "days": 18,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "033780",
+       "name": "KT&G",
+       "amt": -744,
+       "qty": -411574,
+       "volPct": 20.9,
+       "chg": -1.62,
+       "streak": {
+        "days": 7,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "086790",
+       "name": "하나금융지주",
+       "amt": -677,
+       "qty": -566138,
+       "volPct": 18.1,
+       "chg": -0.67,
+       "streak": {
+        "days": 6,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012330",
+       "name": "현대모비스",
+       "amt": -640,
+       "qty": -185870,
+       "volPct": 15.9,
+       "chg": 3.19,
+       "streak": {
+        "days": 5,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "105560",
+       "name": "KB금융",
+       "amt": -601,
+       "qty": -410599,
+       "volPct": 9.1,
+       "chg": 0.14,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "039490",
+       "name": "키움증권",
+       "amt": -443,
+       "qty": -198898,
+       "volPct": 29.6,
+       "chg": 16.91,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "128940",
+       "name": "한미약품",
+       "amt": -409,
+       "qty": -88434,
+       "volPct": 18.5,
+       "chg": 5.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "030200",
+       "name": "KT",
+       "amt": -370,
+       "qty": -820795,
+       "volPct": 34.6,
+       "chg": -2.4,
+       "streak": {
+        "days": 43,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "066570",
+       "name": "LG전자",
+       "amt": -345,
+       "qty": -251612,
+       "volPct": 6.6,
+       "chg": 8.06,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "017670",
+       "name": "SK텔레콤",
+       "amt": -327,
+       "qty": -504418,
+       "volPct": 8.2,
+       "chg": 1.71,
+       "streak": {
+        "days": 13,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "012450",
+       "name": "한화에어로스페이스",
+       "amt": -305,
+       "qty": -47234,
+       "volPct": 7.4,
+       "chg": 5.42,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "326030",
+       "name": "SK바이오팜",
+       "amt": -296,
+       "qty": -321217,
+       "volPct": 21.4,
+       "chg": 7.85,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "000150",
+       "name": "두산",
+       "amt": -295,
+       "qty": -52329,
+       "volPct": 8.0,
+       "chg": 6.95,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "207940",
+       "name": "삼성바이오로직스",
+       "amt": -289,
+       "qty": -21803,
+       "volPct": 8.3,
+       "chg": 0.75,
+       "streak": {
+        "days": 11,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "003490",
+       "name": "대한항공",
+       "amt": -287,
+       "qty": -958320,
+       "volPct": 9.4,
+       "chg": 1.52,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "316140",
+       "name": "우리금융지주",
+       "amt": -273,
+       "qty": -881943,
+       "volPct": 13.9,
+       "chg": -0.32,
+       "streak": {
+        "days": 8,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "307950",
+       "name": "현대오토에버",
+       "amt": -256,
+       "qty": -69208,
+       "volPct": 7.1,
+       "chg": 8.02,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006800",
+       "name": "미래에셋증권",
+       "amt": -231,
+       "qty": -1089493,
+       "volPct": 12.9,
+       "chg": 16.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ]
+    }
+   },
+   "institution": {
+    "day": {
+     "from": "2026-11-27",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "005930",
+       "name": "삼성전자",
+       "amt": 867,
+       "qty": 495416,
+       "volPct": 3.5,
+       "chg": 4.79,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006400",
+       "name": "삼성SDI",
+       "amt": 722,
+       "qty": 161637,
+       "volPct": 28.4,
+       "chg": 8.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "326030",
+       "name": "SK바이오팜",
+       "amt": 376,
+       "qty": 384792,
+       "volPct": 53.9,
+       "chg": 7.85,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "066570",
+       "name": "LG전자",
+       "amt": 311,
+       "qty": 215888,
+       "volPct": 24.1,
+       "chg": 8.06,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "039490",
+       "name": "키움증권",
+       "amt": 297,
+       "qty": 128968,
+       "volPct": 48.0,
+       "chg": 16.91,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "128940",
+       "name": "한미약품",
+       "amt": 181,
+       "qty": 36407,
+       "volPct": 30.1,
+       "chg": 5.25,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "278470",
+       "name": "에이피알",
+       "amt": 177,
+       "qty": 59638,
+       "volPct": 7.8,
+       "chg": 0.34,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "009150",
+       "name": "삼성전기",
+       "amt": 170,
+       "qty": 19253,
+       "volPct": 2.1,
+       "chg": 4.97,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "272210",
+       "name": "한화시스템",
+       "amt": 162,
+       "qty": 293095,
+       "volPct": 33.7,
+       "chg": 13.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006800",
+       "name": "미래에셋증권",
+       "amt": 152,
+       "qty": 678387,
+       "volPct": 22.9,
+       "chg": 16.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "181710",
+       "name": "NHN",
+       "amt": 144,
+       "qty": 241330,
+       "volPct": 38.5,
+       "chg": 14.94,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "071050",
+       "name": "한국금융지주",
+       "amt": 130,
+       "qty": 92869,
+       "volPct": 38.1,
+       "chg": 14.29,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "307950",
+       "name": "현대오토에버",
+       "amt": 125,
+       "qty": 33577,
+       "volPct": 15.5,
+       "chg": 8.02,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "0126Z0",
+       "name": "삼성에피스홀딩스",
+       "amt": 121,
+       "qty": 31343,
+       "volPct": 34.1,
+       "chg": 7.78,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005380",
+       "name": "현대차",
+       "amt": 119,
+       "qty": 44362,
+       "volPct": 11.4,
+       "chg": 4.44,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "016360",
+       "name": "삼성증권",
+       "amt": 108,
+       "qty": 145765,
+       "volPct": 32.0,
+       "chg": 8.65,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012450",
+       "name": "한화에어로스페이스",
+       "amt": 95,
+       "qty": 14444,
+       "volPct": 10.1,
+       "chg": 5.42,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005940",
+       "name": "NH투자증권",
+       "amt": 95,
+       "qty": 395390,
+       "volPct": 52.6,
+       "chg": 9.26,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "034730",
+       "name": "SK",
+       "amt": 86,
+       "qty": 18529,
+       "volPct": 15.7,
+       "chg": 10.0,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "042660",
+       "name": "한화오션",
+       "amt": 80,
+       "qty": 182211,
+       "volPct": 21.2,
+       "chg": 7.13,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "000660",
+       "name": "SK하이닉스",
+       "amt": -2581,
+       "qty": -240971,
+       "volPct": 8.0,
+       "chg": 5.51,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "105560",
+       "name": "KB금융",
+       "amt": -261,
+       "qty": -181048,
+       "volPct": 28.3,
+       "chg": 0.14,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "055550",
+       "name": "신한지주",
+       "amt": -137,
+       "qty": -164676,
+       "volPct": 25.4,
+       "chg": -0.83,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "192820",
+       "name": "코스맥스",
+       "amt": -136,
+       "qty": -43184,
+       "volPct": 20.1,
+       "chg": -6.69,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "033780",
+       "name": "KT&G",
+       "amt": -83,
+       "qty": -46817,
+       "volPct": 13.3,
+       "chg": -1.62,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "007810",
+       "name": "코리아써키트",
+       "amt": -76,
+       "qty": -101315,
+       "volPct": 11.1,
+       "chg": 3.78,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "069960",
+       "name": "현대백화점",
+       "amt": -56,
+       "qty": -67454,
+       "volPct": 37.9,
+       "chg": -5.59,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "030200",
+       "name": "KT",
+       "amt": -50,
+       "qty": -112333,
+       "volPct": 23.5,
+       "chg": -2.4,
+       "streak": {
+        "days": 6,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "028050",
+       "name": "삼성E&A",
+       "amt": -46,
+       "qty": -77709,
+       "volPct": 5.3,
+       "chg": 3.17,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "047050",
+       "name": "포스코인터내셔널",
+       "amt": -45,
+       "qty": -95790,
+       "volPct": 32.7,
+       "chg": 2.79,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "007660",
+       "name": "이수페타시스",
+       "amt": -45,
+       "qty": -70484,
+       "volPct": 8.6,
+       "chg": 5.86,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "086280",
+       "name": "현대글로비스",
+       "amt": -45,
+       "qty": -22492,
+       "volPct": 26.8,
+       "chg": 1.72,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "023530",
+       "name": "롯데쇼핑",
+       "amt": -38,
+       "qty": -50217,
+       "volPct": 39.8,
+       "chg": -1.89,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "015760",
+       "name": "한국전력",
+       "amt": -37,
+       "qty": -142077,
+       "volPct": 15.9,
+       "chg": 2.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "353200",
+       "name": "대덕전자",
+       "amt": -36,
+       "qty": -49804,
+       "volPct": 4.4,
+       "chg": 5.29,
+       "streak": {
+        "days": 6,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "161890",
+       "name": "한국콜마",
+       "amt": -36,
+       "qty": -27712,
+       "volPct": 12.5,
+       "chg": -1.37,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "004170",
+       "name": "신세계",
+       "amt": -36,
+       "qty": -13826,
+       "volPct": 14.5,
+       "chg": -4.01,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "017670",
+       "name": "SK텔레콤",
+       "amt": -34,
+       "qty": -53143,
+       "volPct": 6.0,
+       "chg": 1.71,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "086790",
+       "name": "하나금융지주",
+       "amt": -33,
+       "qty": -27942,
+       "volPct": 4.4,
+       "chg": -0.67,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005830",
+       "name": "DB손해보험",
+       "amt": -33,
+       "qty": -20423,
+       "volPct": 12.3,
+       "chg": -2.24,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      }
+     ]
+    },
+    "week": {
+     "from": "2026-11-23",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "005930",
+       "name": "삼성전자",
+       "amt": 5886,
+       "qty": 3247125,
+       "volPct": 3.7,
+       "chg": 4.79,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "373220",
+       "name": "LG에너지솔루션",
+       "amt": 4940,
+       "qty": 1572634,
+       "volPct": 16.8,
+       "chg": 4.64,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "006400",
+       "name": "삼성SDI",
+       "amt": 1637,
+       "qty": 365581,
+       "volPct": 13.0,
+       "chg": 8.25,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "009150",
+       "name": "삼성전기",
+       "amt": 1268,
+       "qty": 144804,
+       "volPct": 3.3,
+       "chg": 4.97,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "066570",
+       "name": "LG전자",
+       "amt": 1179,
+       "qty": 840508,
+       "volPct": 22.2,
+       "chg": 8.06,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005380",
+       "name": "현대차",
+       "amt": 1089,
+       "qty": 407842,
+       "volPct": 18.2,
+       "chg": 4.44,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "068270",
+       "name": "셀트리온",
+       "amt": 901,
+       "qty": 423585,
+       "volPct": 16.9,
+       "chg": 2.55,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "278470",
+       "name": "에이피알",
+       "amt": 856,
+       "qty": 318022,
+       "volPct": 10.5,
+       "chg": 0.34,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012330",
+       "name": "현대모비스",
+       "amt": 699,
+       "qty": 201302,
+       "volPct": 17.3,
+       "chg": 3.19,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "086790",
+       "name": "하나금융지주",
+       "amt": 634,
+       "qty": 527289,
+       "volPct": 16.9,
+       "chg": -0.67,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "326030",
+       "name": "SK바이오팜",
+       "amt": 626,
+       "qty": 663901,
+       "volPct": 44.1,
+       "chg": 7.85,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "128940",
+       "name": "한미약품",
+       "amt": 555,
+       "qty": 116711,
+       "volPct": 24.5,
+       "chg": 5.25,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "307950",
+       "name": "현대오토에버",
+       "amt": 524,
+       "qty": 144741,
+       "volPct": 14.8,
+       "chg": 8.02,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "039490",
+       "name": "키움증권",
+       "amt": 491,
+       "qty": 223931,
+       "volPct": 33.3,
+       "chg": 16.91,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "012450",
+       "name": "한화에어로스페이스",
+       "amt": 489,
+       "qty": 77127,
+       "volPct": 12.1,
+       "chg": 5.42,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "090430",
+       "name": "아모레퍼시픽",
+       "amt": 448,
+       "qty": 307072,
+       "volPct": 26.5,
+       "chg": -2.4,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "352820",
+       "name": "하이브",
+       "amt": 425,
+       "qty": 229232,
+       "volPct": 16.9,
+       "chg": 1.78,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "003490",
+       "name": "대한항공",
+       "amt": 407,
+       "qty": 1336187,
+       "volPct": 13.1,
+       "chg": 1.52,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "034730",
+       "name": "SK",
+       "amt": 395,
+       "qty": 84983,
+       "volPct": 12.2,
+       "chg": 10.0,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "207940",
+       "name": "삼성바이오로직스",
+       "amt": 372,
+       "qty": 27524,
+       "volPct": 10.5,
+       "chg": 0.75,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "000660",
+       "name": "SK하이닉스",
+       "amt": -3764,
+       "qty": -350282,
+       "volPct": 1.9,
+       "chg": 5.51,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "007660",
+       "name": "이수페타시스",
+       "amt": -600,
+       "qty": -895914,
+       "volPct": 16.0,
+       "chg": 5.86,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "005935",
+       "name": "삼성전자우",
+       "amt": -416,
+       "qty": -314605,
+       "volPct": 1.6,
+       "chg": 6.2,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "353200",
+       "name": "대덕전자",
+       "amt": -313,
+       "qty": -453836,
+       "volPct": 7.5,
+       "chg": 5.29,
+       "streak": {
+        "days": 6,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "018260",
+       "name": "삼성에스디에스",
+       "amt": -304,
+       "qty": -177576,
+       "volPct": 8.8,
+       "chg": 4.09,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "006360",
+       "name": "GS건설",
+       "amt": -283,
+       "qty": -1132369,
+       "volPct": 19.4,
+       "chg": 6.73,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "006260",
+       "name": "LS",
+       "amt": -219,
+       "qty": -137864,
+       "volPct": 21.5,
+       "chg": 8.33,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "007810",
+       "name": "코리아써키트",
+       "amt": -216,
+       "qty": -279921,
+       "volPct": 7.0,
+       "chg": 3.78,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "062040",
+       "name": "산일전기",
+       "amt": -188,
+       "qty": -188044,
+       "volPct": 15.4,
+       "chg": 8.87,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "028050",
+       "name": "삼성E&A",
+       "amt": -142,
+       "qty": -250060,
+       "volPct": 2.3,
+       "chg": 3.17,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "096770",
+       "name": "SK이노베이션",
+       "amt": -140,
+       "qty": -160116,
+       "volPct": 6.5,
+       "chg": 3.88,
+       "streak": {
+        "days": 11,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "078930",
+       "name": "GS",
+       "amt": -133,
+       "qty": -194643,
+       "volPct": 10.9,
+       "chg": 2.63,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "015760",
+       "name": "한국전력",
+       "amt": -126,
+       "qty": -496023,
+       "volPct": 8.3,
+       "chg": 2.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "192820",
+       "name": "코스맥스",
+       "amt": -125,
+       "qty": -40017,
+       "volPct": 5.7,
+       "chg": -6.69,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "021240",
+       "name": "코웨이",
+       "amt": -122,
+       "qty": -123187,
+       "volPct": 16.4,
+       "chg": -1.6,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "089860",
+       "name": "롯데렌탈",
+       "amt": -106,
+       "qty": -181503,
+       "volPct": 33.4,
+       "chg": 0.17,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "089590",
+       "name": "제주항공",
+       "amt": -101,
+       "qty": -1296906,
+       "volPct": 19.6,
+       "chg": -4.56,
+       "streak": null
+      },
+      {
+       "code": "336260",
+       "name": "두산퓨얼셀",
+       "amt": -93,
+       "qty": -420549,
+       "volPct": 20.1,
+       "chg": 12.28,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "028670",
+       "name": "팬오션",
+       "amt": -84,
+       "qty": -1780074,
+       "volPct": 18.1,
+       "chg": 2.92,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "229640",
+       "name": "LS에코에너지",
+       "amt": -84,
+       "qty": -244896,
+       "volPct": 30.1,
+       "chg": 7.32,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      }
+     ]
+    }
+   }
+  },
+  "KOSDAQ": {
+   "foreign": {
+    "day": {
+     "from": "2026-11-27",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "036930",
+       "name": "주성엔지니어링",
+       "amt": 486,
+       "qty": 321359,
+       "volPct": 14.4,
+       "chg": 14.14,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "086520",
+       "name": "에코프로",
+       "amt": 155,
+       "qty": 225095,
+       "volPct": 18.2,
+       "chg": 14.69,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "403870",
+       "name": "HPSP",
+       "amt": 123,
+       "qty": 311726,
+       "volPct": 13.7,
+       "chg": 8.78,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "080220",
+       "name": "제주반도체",
+       "amt": 121,
+       "qty": 247248,
+       "volPct": 23.0,
+       "chg": 12.41,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "178320",
+       "name": "서진시스템",
+       "amt": 113,
+       "qty": 362806,
+       "volPct": 22.2,
+       "chg": 20.54,
+       "streak": {
+        "days": 14,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "222800",
+       "name": "심텍",
+       "amt": 94,
+       "qty": 91364,
+       "volPct": 6.9,
+       "chg": 4.19,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "108490",
+       "name": "로보티즈",
+       "amt": 91,
+       "qty": 29897,
+       "volPct": 5.6,
+       "chg": 8.38,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "010170",
+       "name": "대한광통신",
+       "amt": 76,
+       "qty": 546247,
+       "volPct": 19.7,
+       "chg": 3.07,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "277810",
+       "name": "레인보우로보틱스",
+       "amt": 55,
+       "qty": 10552,
+       "volPct": 2.5,
+       "chg": 13.92,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "042510",
+       "name": "라온시큐어",
+       "amt": 52,
+       "qty": 288324,
+       "volPct": 5.5,
+       "chg": 20.09,
+       "streak": null
+      },
+      {
+       "code": "323280",
+       "name": "태성",
+       "amt": 48,
+       "qty": 96860,
+       "volPct": 17.3,
+       "chg": 17.95,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "240810",
+       "name": "원익IPS",
+       "amt": 44,
+       "qty": 64603,
+       "volPct": 9.4,
+       "chg": 8.06,
+       "streak": {
+        "days": 6,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "032820",
+       "name": "우리기술",
+       "amt": 44,
+       "qty": 518452,
+       "volPct": 22.3,
+       "chg": 10.09,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "0039P0",
+       "name": "매드업",
+       "amt": 36,
+       "qty": 400469,
+       "volPct": 15.8,
+       "chg": 7.43,
+       "streak": null
+      },
+      {
+       "code": "027360",
+       "name": "아주IB투자",
+       "amt": 36,
+       "qty": 1283535,
+       "volPct": 19.4,
+       "chg": 12.02,
+       "streak": null
+      },
+      {
+       "code": "089970",
+       "name": "브이엠",
+       "amt": 35,
+       "qty": 104094,
+       "volPct": 19.2,
+       "chg": 6.39,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "083450",
+       "name": "GST",
+       "amt": 35,
+       "qty": 85301,
+       "volPct": 46.4,
+       "chg": 8.7,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "347700",
+       "name": "스피어",
+       "amt": 34,
+       "qty": 143313,
+       "volPct": 4.1,
+       "chg": 7.49,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "328130",
+       "name": "루닛",
+       "amt": 34,
+       "qty": 190509,
+       "volPct": 9.4,
+       "chg": 6.15,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "043260",
+       "name": "성호전자",
+       "amt": 34,
+       "qty": 143299,
+       "volPct": 5.9,
+       "chg": 10.18,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "298380",
+       "name": "에이비엘바이오",
+       "amt": -140,
+       "qty": -304929,
+       "volPct": 19.8,
+       "chg": 29.63,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "141080",
+       "name": "리가켐바이오",
+       "amt": -140,
+       "qty": -206882,
+       "volPct": 27.2,
+       "chg": 22.05,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "226950",
+       "name": "올릭스",
+       "amt": -127,
+       "qty": -119429,
+       "volPct": 16.9,
+       "chg": 18.23,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "218410",
+       "name": "RFHIC",
+       "amt": -81,
+       "qty": -126451,
+       "volPct": 10.0,
+       "chg": 10.67,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "041510",
+       "name": "에스엠",
+       "amt": -67,
+       "qty": -66505,
+       "volPct": 22.8,
+       "chg": 0.2,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "310210",
+       "name": "보로노이",
+       "amt": -55,
+       "qty": -36674,
+       "volPct": 16.2,
+       "chg": 9.68,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "437730",
+       "name": "삼현",
+       "amt": -46,
+       "qty": -75939,
+       "volPct": 8.5,
+       "chg": 0.83,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "058610",
+       "name": "에스피지",
+       "amt": -45,
+       "qty": -48922,
+       "volPct": 9.0,
+       "chg": 4.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "237690",
+       "name": "에스티팜",
+       "amt": -44,
+       "qty": -49336,
+       "volPct": 19.1,
+       "chg": 13.21,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "121600",
+       "name": "나노신소재",
+       "amt": -32,
+       "qty": -45769,
+       "volPct": 24.3,
+       "chg": 6.54,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "035900",
+       "name": "JYP Ent.",
+       "amt": -31,
+       "qty": -62105,
+       "volPct": 9.2,
+       "chg": 3.08,
+       "streak": {
+        "days": 6,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "039030",
+       "name": "이오테크닉스",
+       "amt": -30,
+       "qty": -9792,
+       "volPct": 9.0,
+       "chg": 7.34,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "456160",
+       "name": "지투지바이오",
+       "amt": -29,
+       "qty": -58142,
+       "volPct": 10.7,
+       "chg": 13.93,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "295310",
+       "name": "에이치브이엠",
+       "amt": -28,
+       "qty": -43957,
+       "volPct": 11.6,
+       "chg": 8.73,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "466100",
+       "name": "클로봇",
+       "amt": -28,
+       "qty": -138405,
+       "volPct": 4.5,
+       "chg": 29.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "031980",
+       "name": "피에스케이홀딩스",
+       "amt": -26,
+       "qty": -18736,
+       "volPct": 10.0,
+       "chg": 13.99,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "145020",
+       "name": "휴젤",
+       "amt": -23,
+       "qty": -10987,
+       "volPct": 35.9,
+       "chg": 0.96,
+       "streak": {
+        "days": 5,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "091580",
+       "name": "상신이디피",
+       "amt": -23,
+       "qty": -120054,
+       "volPct": 21.7,
+       "chg": 16.43,
+       "streak": null
+      },
+      {
+       "code": "468530",
+       "name": "프로티나",
+       "amt": -20,
+       "qty": -28504,
+       "volPct": 6.9,
+       "chg": -1.56,
+       "streak": null
+      },
+      {
+       "code": "126340",
+       "name": "비나텍",
+       "amt": -20,
+       "qty": -22001,
+       "volPct": 19.2,
+       "chg": 4.51,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ]
+    },
+    "week": {
+     "from": "2026-11-23",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "196170",
+       "name": "알테오젠",
+       "amt": 431,
+       "qty": 257350,
+       "volPct": 7.2,
+       "chg": 10.45,
+       "streak": {
+        "days": 8,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "036930",
+       "name": "주성엔지니어링",
+       "amt": 428,
+       "qty": 281457,
+       "volPct": 3.4,
+       "chg": 14.14,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "010170",
+       "name": "대한광통신",
+       "amt": 404,
+       "qty": 2758707,
+       "volPct": 12.9,
+       "chg": 3.07,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "069510",
+       "name": "에스텍",
+       "amt": 194,
+       "qty": 810476,
+       "volPct": 54.2,
+       "chg": 2.27,
+       "streak": null
+      },
+      {
+       "code": "080220",
+       "name": "제주반도체",
+       "amt": 189,
+       "qty": 382941,
+       "volPct": 8.3,
+       "chg": 12.41,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "240810",
+       "name": "원익IPS",
+       "amt": 167,
+       "qty": 248100,
+       "volPct": 6.4,
+       "chg": 8.06,
+       "streak": {
+        "days": 6,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "058470",
+       "name": "리노공업",
+       "amt": 133,
+       "qty": 282056,
+       "volPct": 8.8,
+       "chg": 11.87,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "115180",
+       "name": "큐리언트",
+       "amt": 112,
+       "qty": 923316,
+       "volPct": 28.9,
+       "chg": 30.0,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "095340",
+       "name": "ISC",
+       "amt": 102,
+       "qty": 86678,
+       "volPct": 11.3,
+       "chg": 8.22,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "053800",
+       "name": "안랩",
+       "amt": 94,
+       "qty": 97872,
+       "volPct": 1.6,
+       "chg": 5.78,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "347700",
+       "name": "스피어",
+       "amt": 90,
+       "qty": 413204,
+       "volPct": 3.4,
+       "chg": 7.49,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "092870",
+       "name": "엑시콘",
+       "amt": 85,
+       "qty": 175562,
+       "volPct": 8.8,
+       "chg": 5.84,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "323280",
+       "name": "태성",
+       "amt": 83,
+       "qty": 174874,
+       "volPct": 10.8,
+       "chg": 17.95,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "0158S0",
+       "name": "엘리스",
+       "amt": 78,
+       "qty": 171491,
+       "volPct": 9.8,
+       "chg": 9.83,
+       "streak": {
+        "days": 1,
+        "side": "sell",
+        "atLeast": true
+       }
+      },
+      {
+       "code": "086450",
+       "name": "동국제약",
+       "amt": 77,
+       "qty": 304280,
+       "volPct": 12.2,
+       "chg": -0.78,
+       "streak": {
+        "days": 6,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "178320",
+       "name": "서진시스템",
+       "amt": 76,
+       "qty": 234344,
+       "volPct": 4.9,
+       "chg": 20.54,
+       "streak": {
+        "days": 14,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "031330",
+       "name": "에스에이엠티",
+       "amt": 72,
+       "qty": 1082744,
+       "volPct": 14.7,
+       "chg": 2.5,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "204620",
+       "name": "글로벌텍스프리",
+       "amt": 71,
+       "qty": 1109835,
+       "volPct": 12.3,
+       "chg": 2.32,
+       "streak": null
+      },
+      {
+       "code": "131970",
+       "name": "두산테스나",
+       "amt": 69,
+       "qty": 117861,
+       "volPct": 7.7,
+       "chg": 12.46,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "042510",
+       "name": "라온시큐어",
+       "amt": 67,
+       "qty": 391123,
+       "volPct": 2.5,
+       "chg": 20.09,
+       "streak": null
+      }
+     ],
+     "sell": [
+      {
+       "code": "277810",
+       "name": "레인보우로보틱스",
+       "amt": -330,
+       "qty": -77906,
+       "volPct": 5.7,
+       "chg": 13.92,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "218410",
+       "name": "RFHIC",
+       "amt": -187,
+       "qty": -310281,
+       "volPct": 7.2,
+       "chg": 10.67,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "058610",
+       "name": "에스피지",
+       "amt": -187,
+       "qty": -209741,
+       "volPct": 7.2,
+       "chg": 4.35,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "310210",
+       "name": "보로노이",
+       "amt": -186,
+       "qty": -143999,
+       "volPct": 19.5,
+       "chg": 9.68,
+       "streak": {
+        "days": 4,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "041510",
+       "name": "에스엠",
+       "amt": -182,
+       "qty": -180604,
+       "volPct": 12.9,
+       "chg": 0.2,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "141080",
+       "name": "리가켐바이오",
+       "amt": -175,
+       "qty": -267104,
+       "volPct": 15.9,
+       "chg": 22.05,
+       "streak": {
+        "days": 7,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "257720",
+       "name": "실리콘투",
+       "amt": -172,
+       "qty": -605987,
+       "volPct": 7.9,
+       "chg": 2.7,
+       "streak": {
+        "days": 5,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "298380",
+       "name": "에이비엘바이오",
+       "amt": -158,
+       "qty": -355043,
+       "volPct": 13.1,
+       "chg": 29.63,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "226950",
+       "name": "올릭스",
+       "amt": -147,
+       "qty": -138957,
+       "volPct": 9.1,
+       "chg": 18.23,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "241710",
+       "name": "코스메카코리아",
+       "amt": -145,
+       "qty": -123275,
+       "volPct": 14.6,
+       "chg": -4.37,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "095610",
+       "name": "테스",
+       "amt": -144,
+       "qty": -164446,
+       "volPct": 9.7,
+       "chg": 9.29,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "403870",
+       "name": "HPSP",
+       "amt": -142,
+       "qty": -349479,
+       "volPct": 2.9,
+       "chg": 8.78,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "263860",
+       "name": "지니언스",
+       "amt": -132,
+       "qty": -314615,
+       "volPct": 1.7,
+       "chg": 1.24,
+       "streak": null
+      },
+      {
+       "code": "237690",
+       "name": "에스티팜",
+       "amt": -97,
+       "qty": -118278,
+       "volPct": 17.7,
+       "chg": 13.21,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "290650",
+       "name": "엘앤씨바이오",
+       "amt": -94,
+       "qty": -416952,
+       "volPct": 17.1,
+       "chg": 3.3,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "098460",
+       "name": "고영",
+       "amt": -92,
+       "qty": -417856,
+       "volPct": 8.0,
+       "chg": 10.55,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "089030",
+       "name": "테크윙",
+       "amt": -78,
+       "qty": -236173,
+       "volPct": 11.7,
+       "chg": 10.55,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "089890",
+       "name": "코세스",
+       "amt": -71,
+       "qty": -199171,
+       "volPct": 9.1,
+       "chg": 2.12,
+       "streak": null
+      },
+      {
+       "code": "036710",
+       "name": "심텍홀딩스",
+       "amt": -64,
+       "qty": -1010267,
+       "volPct": 9.3,
+       "chg": 7.46,
+       "streak": null
+      },
+      {
+       "code": "056080",
+       "name": "유진로봇",
+       "amt": -58,
+       "qty": -629962,
+       "volPct": 6.2,
+       "chg": 14.2,
+       "streak": null
+      }
+     ]
+    }
+   },
+   "institution": {
+    "day": {
+     "from": "2026-11-27",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "277810",
+       "name": "레인보우로보틱스",
+       "amt": 343,
+       "qty": 66420,
+       "volPct": 15.5,
+       "chg": 13.92,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "196170",
+       "name": "알테오젠",
+       "amt": 333,
+       "qty": 181092,
+       "volPct": 25.2,
+       "chg": 10.45,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "108490",
+       "name": "로보티즈",
+       "amt": 290,
+       "qty": 96772,
+       "volPct": 18.1,
+       "chg": 8.38,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "086520",
+       "name": "에코프로",
+       "amt": 256,
+       "qty": 359004,
+       "volPct": 29.1,
+       "chg": 14.69,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "036930",
+       "name": "주성엔지니어링",
+       "amt": 210,
+       "qty": 137274,
+       "volPct": 6.1,
+       "chg": 14.14,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "247540",
+       "name": "에코프로비엠",
+       "amt": 205,
+       "qty": 226585,
+       "volPct": 40.4,
+       "chg": 13.32,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "298380",
+       "name": "에이비엘바이오",
+       "amt": 181,
+       "qty": 402047,
+       "volPct": 26.1,
+       "chg": 29.63,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "141080",
+       "name": "리가켐바이오",
+       "amt": 165,
+       "qty": 246174,
+       "volPct": 32.4,
+       "chg": 22.05,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "218410",
+       "name": "RFHIC",
+       "amt": 157,
+       "qty": 242919,
+       "volPct": 19.3,
+       "chg": 10.67,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "226950",
+       "name": "올릭스",
+       "amt": 128,
+       "qty": 121017,
+       "volPct": 17.1,
+       "chg": 18.23,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "058470",
+       "name": "리노공업",
+       "amt": 110,
+       "qty": 212993,
+       "volPct": 27.7,
+       "chg": 11.87,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "028300",
+       "name": "HLB",
+       "amt": 106,
+       "qty": 342222,
+       "volPct": 38.7,
+       "chg": 8.79,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "347850",
+       "name": "디앤디파마텍",
+       "amt": 99,
+       "qty": 235726,
+       "volPct": 13.2,
+       "chg": 17.01,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "237690",
+       "name": "에스티팜",
+       "amt": 93,
+       "qty": 107074,
+       "volPct": 41.4,
+       "chg": 13.21,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "456160",
+       "name": "지투지바이오",
+       "amt": 92,
+       "qty": 186613,
+       "volPct": 34.4,
+       "chg": 13.93,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "310210",
+       "name": "보로노이",
+       "amt": 89,
+       "qty": 59314,
+       "volPct": 26.2,
+       "chg": 9.68,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "087010",
+       "name": "펩트론",
+       "amt": 82,
+       "qty": 86081,
+       "volPct": 27.6,
+       "chg": 15.9,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "178320",
+       "name": "서진시스템",
+       "amt": 79,
+       "qty": 243320,
+       "volPct": 14.9,
+       "chg": 20.54,
+       "streak": {
+        "days": 10,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "078600",
+       "name": "대주전자재료",
+       "amt": 79,
+       "qty": 84153,
+       "volPct": 21.9,
+       "chg": 7.08,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "035900",
+       "name": "JYP Ent.",
+       "amt": 76,
+       "qty": 151588,
+       "volPct": 22.5,
+       "chg": 3.08,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "241710",
+       "name": "코스메카코리아",
+       "amt": -60,
+       "qty": -50418,
+       "volPct": 22.9,
+       "chg": -4.37,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "089970",
+       "name": "브이엠",
+       "amt": -36,
+       "qty": -104569,
+       "volPct": 19.3,
+       "chg": 6.39,
+       "streak": {
+        "days": 7,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "086450",
+       "name": "동국제약",
+       "amt": -31,
+       "qty": -123852,
+       "volPct": 31.5,
+       "chg": -0.78,
+       "streak": {
+        "days": 25,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "144960",
+       "name": "뉴파워프라즈마",
+       "amt": -24,
+       "qty": -253298,
+       "volPct": 17.9,
+       "chg": 5.11,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "089890",
+       "name": "코세스",
+       "amt": -22,
+       "qty": -62256,
+       "volPct": 15.5,
+       "chg": 2.12,
+       "streak": null
+      },
+      {
+       "code": "437730",
+       "name": "삼현",
+       "amt": -20,
+       "qty": -35459,
+       "volPct": 4.0,
+       "chg": 0.83,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "252990",
+       "name": "샘씨엔에스",
+       "amt": -20,
+       "qty": -158369,
+       "volPct": 14.6,
+       "chg": 4.37,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "030530",
+       "name": "원익홀딩스",
+       "amt": -19,
+       "qty": -66259,
+       "volPct": 1.8,
+       "chg": 5.46,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "204620",
+       "name": "글로벌텍스프리",
+       "amt": -18,
+       "qty": -270826,
+       "volPct": 17.1,
+       "chg": 2.32,
+       "streak": null
+      },
+      {
+       "code": "251970",
+       "name": "펌텍코리아",
+       "amt": -18,
+       "qty": -22937,
+       "volPct": 27.7,
+       "chg": -1.64,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "064290",
+       "name": "인텍플러스",
+       "amt": -17,
+       "qty": -48115,
+       "volPct": 13.1,
+       "chg": 2.67,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "222800",
+       "name": "심텍",
+       "amt": -14,
+       "qty": -17692,
+       "volPct": 1.3,
+       "chg": 4.19,
+       "streak": {
+        "days": 11,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "493280",
+       "name": "아이엠바이오로직스",
+       "amt": -12,
+       "qty": -77661,
+       "volPct": 25.1,
+       "chg": 15.63,
+       "streak": null
+      },
+      {
+       "code": "080580",
+       "name": "오킨스전자",
+       "amt": -11,
+       "qty": -85096,
+       "volPct": 15.9,
+       "chg": 6.22,
+       "streak": null
+      },
+      {
+       "code": "052710",
+       "name": "아모텍",
+       "amt": -11,
+       "qty": -88771,
+       "volPct": 12.3,
+       "chg": 5.56,
+       "streak": null
+      },
+      {
+       "code": "033160",
+       "name": "엠케이전자",
+       "amt": -10,
+       "qty": -107425,
+       "volPct": 19.3,
+       "chg": 8.07,
+       "streak": null
+      },
+      {
+       "code": "107640",
+       "name": "한중엔시에스",
+       "amt": -10,
+       "qty": -31450,
+       "volPct": 22.8,
+       "chg": 9.14,
+       "streak": null
+      },
+      {
+       "code": "232140",
+       "name": "와이씨",
+       "amt": -10,
+       "qty": -72303,
+       "volPct": 4.0,
+       "chg": 3.17,
+       "streak": {
+        "days": 3,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "059090",
+       "name": "미코",
+       "amt": -10,
+       "qty": -56816,
+       "volPct": 20.1,
+       "chg": 7.62,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "122640",
+       "name": "예스티",
+       "amt": -8,
+       "qty": -32504,
+       "volPct": 10.2,
+       "chg": 7.69,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      }
+     ]
+    },
+    "week": {
+     "from": "2026-11-23",
+     "to": "2026-11-27",
+     "buy": [
+      {
+       "code": "277810",
+       "name": "레인보우로보틱스",
+       "amt": 1241,
+       "qty": 261893,
+       "volPct": 19.1,
+       "chg": 13.92,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "108490",
+       "name": "로보티즈",
+       "amt": 1110,
+       "qty": 392858,
+       "volPct": 15.8,
+       "chg": 8.38,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "086520",
+       "name": "에코프로",
+       "amt": 525,
+       "qty": 754320,
+       "volPct": 18.7,
+       "chg": 14.69,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "036930",
+       "name": "주성엔지니어링",
+       "amt": 415,
+       "qty": 269094,
+       "volPct": 3.2,
+       "chg": 14.14,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "058610",
+       "name": "에스피지",
+       "amt": 407,
+       "qty": 463999,
+       "volPct": 15.9,
+       "chg": 4.35,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "247540",
+       "name": "에코프로비엠",
+       "amt": 337,
+       "qty": 376790,
+       "volPct": 18.8,
+       "chg": 13.32,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "218410",
+       "name": "RFHIC",
+       "amt": 322,
+       "qty": 525071,
+       "volPct": 12.2,
+       "chg": 10.67,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "437730",
+       "name": "삼현",
+       "amt": 289,
+       "qty": 486041,
+       "volPct": 9.9,
+       "chg": 0.83,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "456160",
+       "name": "지투지바이오",
+       "amt": 276,
+       "qty": 623627,
+       "volPct": 28.7,
+       "chg": 13.93,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "041510",
+       "name": "에스엠",
+       "amt": 261,
+       "qty": 263476,
+       "volPct": 18.9,
+       "chg": 0.2,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "028300",
+       "name": "HLB",
+       "amt": 244,
+       "qty": 832543,
+       "volPct": 29.8,
+       "chg": 8.79,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "035900",
+       "name": "JYP Ent.",
+       "amt": 243,
+       "qty": 500255,
+       "volPct": 15.2,
+       "chg": 3.08,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "141080",
+       "name": "리가켐바이오",
+       "amt": 234,
+       "qty": 374115,
+       "volPct": 22.2,
+       "chg": 22.05,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "298380",
+       "name": "에이비엘바이오",
+       "amt": 232,
+       "qty": 545437,
+       "volPct": 20.1,
+       "chg": 29.63,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "226950",
+       "name": "올릭스",
+       "amt": 214,
+       "qty": 213507,
+       "volPct": 13.9,
+       "chg": 18.23,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "237690",
+       "name": "에스티팜",
+       "amt": 213,
+       "qty": 262771,
+       "volPct": 39.2,
+       "chg": 13.21,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "310210",
+       "name": "보로노이",
+       "amt": 189,
+       "qty": 141062,
+       "volPct": 19.1,
+       "chg": 9.68,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "347850",
+       "name": "디앤디파마텍",
+       "amt": 185,
+       "qty": 471323,
+       "volPct": 10.4,
+       "chg": 17.01,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "098460",
+       "name": "고영",
+       "amt": 170,
+       "qty": 746383,
+       "volPct": 14.2,
+       "chg": 10.55,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "000250",
+       "name": "삼천당제약",
+       "amt": 163,
+       "qty": 98631,
+       "volPct": 12.0,
+       "chg": 14.96,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      }
+     ],
+     "sell": [
+      {
+       "code": "222800",
+       "name": "심텍",
+       "amt": -343,
+       "qty": -344947,
+       "volPct": 6.3,
+       "chg": 4.19,
+       "streak": {
+        "days": 11,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "030530",
+       "name": "원익홀딩스",
+       "amt": -197,
+       "qty": -677650,
+       "volPct": 2.5,
+       "chg": 5.46,
+       "streak": {
+        "days": 2,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "069510",
+       "name": "에스텍",
+       "amt": -117,
+       "qty": -484506,
+       "volPct": 32.4,
+       "chg": 2.27,
+       "streak": null
+      },
+      {
+       "code": "092870",
+       "name": "엑시콘",
+       "amt": -92,
+       "qty": -189401,
+       "volPct": 9.5,
+       "chg": 5.84,
+       "streak": {
+        "days": 1,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "115180",
+       "name": "큐리언트",
+       "amt": -79,
+       "qty": -673625,
+       "volPct": 21.1,
+       "chg": 30.0,
+       "streak": {
+        "days": 1,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "498150",
+       "name": "엠비디",
+       "amt": -78,
+       "qty": -1346315,
+       "volPct": 3.2,
+       "chg": 3.63,
+       "streak": null
+      },
+      {
+       "code": "144960",
+       "name": "뉴파워프라즈마",
+       "amt": -55,
+       "qty": -629660,
+       "volPct": 7.8,
+       "chg": 5.11,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "107640",
+       "name": "한중엔시에스",
+       "amt": -51,
+       "qty": -162735,
+       "volPct": 26.0,
+       "chg": 9.14,
+       "streak": null
+      },
+      {
+       "code": "252990",
+       "name": "샘씨엔에스",
+       "amt": -48,
+       "qty": -412288,
+       "volPct": 8.5,
+       "chg": 4.37,
+       "streak": {
+        "days": 3,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "086450",
+       "name": "동국제약",
+       "amt": -48,
+       "qty": -190930,
+       "volPct": 7.7,
+       "chg": -0.78,
+       "streak": {
+        "days": 25,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "441270",
+       "name": "파인엠텍",
+       "amt": -47,
+       "qty": -782053,
+       "volPct": 26.4,
+       "chg": 6.14,
+       "streak": null
+      },
+      {
+       "code": "131970",
+       "name": "두산테스나",
+       "amt": -46,
+       "qty": -84247,
+       "volPct": 5.5,
+       "chg": 12.46,
+       "streak": {
+        "days": 5,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "425420",
+       "name": "티에프이",
+       "amt": -41,
+       "qty": -73477,
+       "volPct": 6.1,
+       "chg": 2.08,
+       "streak": {
+        "days": 5,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "023160",
+       "name": "태광",
+       "amt": -41,
+       "qty": -219765,
+       "volPct": 22.8,
+       "chg": 6.0,
+       "streak": {
+        "days": 6,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "219130",
+       "name": "타이거일렉",
+       "amt": -40,
+       "qty": -51727,
+       "volPct": 13.8,
+       "chg": 6.24,
+       "streak": null
+      },
+      {
+       "code": "0009K0",
+       "name": "에임드바이오",
+       "amt": -40,
+       "qty": -255059,
+       "volPct": 14.3,
+       "chg": 18.9,
+       "streak": {
+        "days": 4,
+        "side": "buy"
+       }
+      },
+      {
+       "code": "095340",
+       "name": "ISC",
+       "amt": -39,
+       "qty": -36208,
+       "volPct": 4.7,
+       "chg": 8.22,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "080580",
+       "name": "오킨스전자",
+       "amt": -37,
+       "qty": -287537,
+       "volPct": 8.1,
+       "chg": 6.22,
+       "streak": null
+      },
+      {
+       "code": "059090",
+       "name": "미코",
+       "amt": -35,
+       "qty": -215228,
+       "volPct": 13.0,
+       "chg": 7.62,
+       "streak": {
+        "days": 2,
+        "side": "sell"
+       }
+      },
+      {
+       "code": "0162D0",
+       "name": "동원파츠",
+       "amt": -33,
+       "qty": -205755,
+       "volPct": 7.4,
+       "chg": 6.2,
+       "streak": null
+      }
+     ]
+    }
+   }
+  }
+ },
+ "asOf": "2026-11-27",
+ "final": true
+}

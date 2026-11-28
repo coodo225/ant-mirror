@@ -1,0 +1,92 @@
+{
+ "generatedAt": "2026-11-28T17:25:43.161235+09:00",
+ "generatedAtText": "2026-11-28 17:25:43 KST",
+ "phase": "주말",
+ "dataDate": "2026-11-27",
+ "dataFinal": true,
+ "nextSession": "2026-11-30",
+ "mode": "full",
+ "fullAt": "2026-11-28T17:25:43.161235+09:00",
+ "intradayAt": "2026-11-27T15:40:45.472254+09:00",
+ "pendingFinal": false,
+ "requests": {
+  "date": "2026-11-28",
+  "count": 179
+ },
+ "warnings": [
+  "신용융자 잔고(KOFIA 70BO) 실패: ConnectTimeout: HTTPSConnectionPool(host='freesis.kofia.or.kr', port=443): Max retries exceeded with url: /meta/getMetaDataList.do (Caused by ConnectTimeoutError(<HTTPSConnection(host='freesis.kofia.or.kr', port=443) at 0x7ff4592e2990>, 'Connection to freesis.kofia.or.kr timed out. (connect timeout=25)'))",
+  "증시자금(KOFIA 60BO) 실패: ConnectTimeout: HTTPSConnectionPool(host='freesis.kofia.or.kr', port=443): Max retries exceeded with url: /meta/getMetaDataList.do (Caused by ConnectTimeoutError(<HTTPSConnection(host='freesis.kofia.or.kr', port=443) at 0x7ff4594c0410>, 'Connection to freesis.kofia.or.kr timed out. (connect timeout=25)'))",
+  "신용융자 잔고: 이번 수집이 비어 직전 데이터를 유지합니다 (마지막 정상 수집 2026-11-27 11:55)",
+  "증시자금·반대매매: 이번 수집이 비어 직전 데이터를 유지합니다 (마지막 정상 수집 2026-11-27 11:55)"
+ ],
+ "stale": [
+  {
+   "key": "credit.loans",
+   "label": "신용융자 잔고",
+   "asOf": "2026-11-25",
+   "since": "2026-11-27T11:55:38.790373+09:00"
+  },
+  {
+   "key": "credit.money",
+   "label": "증시자금·반대매매",
+   "asOf": "2026-11-25",
+   "since": "2026-11-27T11:55:38.790373+09:00"
+  }
+ ],
+ "freshAt": {
+  "flows.KOSPI": "2026-11-28T17:25:43.161235+09:00",
+  "flows.KOSDAQ": "2026-11-28T17:25:43.161235+09:00",
+  "futures": "2026-11-28T17:25:43.161235+09:00",
+  "ant": "2026-11-28T17:25:43.161235+09:00",
+  "analog": "2026-11-28T17:25:43.161235+09:00",
+  "antstocks": "2026-11-28T17:25:43.161235+09:00",
+  "credit.loans": "2026-11-27T11:55:38.790373+09:00",
+  "credit.money": "2026-11-27T11:55:38.790373+09:00",
+  "market.KOSPI.history": "2026-11-28T17:25:43.161235+09:00",
+  "market.KOSPI.price": "2026-11-28T17:25:43.161235+09:00",
+  "market.KOSDAQ.history": "2026-11-28T17:25:43.161235+09:00",
+  "market.KOSDAQ.price": "2026-11-28T17:25:43.161235+09:00",
+  "stocks.top": "2026-11-28T17:25:43.161235+09:00",
+  "stocks.industries": "2026-11-28T17:25:43.161235+09:00",
+  "global.macro": "2026-11-28T17:25:43.161235+09:00",
+  "events": "2026-11-28T17:25:43.161235+09:00",
+  "stockflows": "2026-11-28T17:25:43.161235+09:00",
+  "program.KOSPI": "2026-11-28T17:25:43.161235+09:00",
+  "program.KOSDAQ": "2026-11-28T17:25:43.161235+09:00",
+  "short.KOSPI": "2026-11-28T17:25:43.161235+09:00",
+  "short.KOSDAQ": "2026-11-28T17:25:43.161235+09:00",
+  "stocks.universe": "2026-11-28T17:25:43.161235+09:00",
+  "ranks": "2026-11-28T17:25:43.161235+09:00"
+ },
+ "sources": [
+  {
+   "name": "네이버 증권",
+   "for": "개인/외국인/기관 수급, 프로그램 매매, 지수 일봉·시세, 종목, 업종"
+  },
+  {
+   "name": "한국거래소",
+   "for": "공매도, 휴장일"
+  },
+  {
+   "name": "한국은행",
+   "for": "금통위 일정"
+  },
+  {
+   "name": "다음 금융",
+   "for": "수급 예비 소스"
+  },
+  {
+   "name": "금융투자협회",
+   "for": "신용융자·증시자금"
+  },
+  {
+   "name": "yfinance",
+   "for": "미국 지수·선물·금리·환율·원자재"
+  },
+  {
+   "name": "Federal Reserve · FRED",
+   "for": "FOMC·경제지표 일정, 매크로 지표"
+  }
+ ],
+ "caveat": "장중 수급은 잠정치이며 장 마감 후 확정치로 정정됩니다."
+}
